@@ -1,10 +1,21 @@
 <?php
 
 use App\Http\Controllers\WebsiteController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/en', 302);
 Route::pattern('locale', 'en|ar');
+
+Route::get('/robots.txt', fn () => response()->view('seo.robots')->header('Content-Type', 'text/plain; charset=UTF-8'))
+    ->name('seo.robots');
+
+Route::get('/sitemap.xml', function () {
+    return response()->view('seo.sitemap', [
+        'locales' => ['en', 'ar'],
+        'categories' => Category::query()->where('is_published', true)->orderBy('sort_order')->get(['slug', 'updated_at']),
+    ])->header('Content-Type', 'application/xml; charset=UTF-8');
+})->name('seo.sitemap');
 
 Route::prefix('{locale}')->group(function () {
     Route::get('/', [WebsiteController::class, 'home'])->name('home');
@@ -14,5 +25,3 @@ Route::prefix('{locale}')->group(function () {
     Route::post('/request-a-quote', [WebsiteController::class, 'storeQuote'])
         ->middleware('throttle:5,1')->name('quote.store');
 });
-
-Route::view('/robots.txt', 'seo.robots')->name('seo.robots');
