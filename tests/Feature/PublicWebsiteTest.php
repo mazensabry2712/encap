@@ -5,6 +5,25 @@ use App\Models\ContactMessage;
 use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
 
+test('navbar language switcher is accessible and the old topbar is removed', function () {
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('data-language-switcher', false)
+        ->assertSee('data-language-trigger', false)
+        ->assertSee('data-language-menu', false)
+        ->assertSee('aria-expanded="false"', false)
+        ->assertSee('js/language-switcher.js', false)
+        ->assertSee('lang="en"', false)
+        ->assertSee('lang="ar"', false)
+        ->assertDontSee('topbar-note', false)
+        ->assertDontSee('Agricultural production · Sourcing · Processing · Export');
+    
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee('aria-current="page"', false)
+        ->assertSee('اختيار اللغة');
+});
+
 test('the home page uses central defaults without writing settings during a public read', function () {
     $this->get('/en')->assertOk()->assertSee('ENCAP');
 
