@@ -35,7 +35,6 @@
 </head>
 <body>
 @php($currentLocale = $locale ?? 'en')
-<div class="topbar"><div class="container topbar-inner"><span class="topbar-note">{{ __('Agricultural production · Sourcing · Processing · Export') }}</span><a href="{{ $currentLocale === 'en' ? $alternateArabicUrl : $alternateEnglishUrl }}" lang="{{ $currentLocale === 'en' ? 'ar' : 'en' }}">{{ $currentLocale === 'en' ? 'العربية' : 'English' }} ↗</a></div></div>
 <header class="site-header"><div class="container nav">
     <a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><span class="brand-mark" aria-hidden="true">E</span><span class="brand-word"><strong>ENCAP</strong><small>AGRICULTURE · EXPORT</small></span></a>
     <nav class="links desktop-links" aria-label="{{ __('Main navigation') }}">
@@ -46,7 +45,21 @@
         <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
         <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
     </nav>
-    <div class="nav-actions"><a class="button header-cta" href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} <span class="button-arrow">↗</span></a>
+    <div class="nav-actions">
+        <details class="language-switcher">
+            <summary aria-label="{{ __('Select language') }}" title="{{ __('Select language') }}">
+                <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path>
+                </svg>
+                <span class="language-chevron" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="language-menu" aria-label="{{ __('Select language') }}">
+                <a href="{{ $alternateEnglishUrl }}" lang="en" @if($currentLocale === 'en') aria-current="page" @endif><span>English</span>@if($currentLocale === 'en')<span class="language-check" aria-hidden="true">✓</span>@endif</a>
+                <a href="{{ $alternateArabicUrl }}" lang="ar" dir="rtl" @if($currentLocale === 'ar') aria-current="page" @endif><span>العربية</span>@if($currentLocale === 'ar')<span class="language-check" aria-hidden="true">✓</span>@endif</a>
+            </div>
+        </details>
+        <a class="button header-cta" href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} <span class="button-arrow">↗</span></a>
         <details class="mobile-menu"><summary aria-label="{{ __('Open navigation') }}"><span>Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary><nav class="mobile-nav-panel" aria-label="{{ __('Mobile navigation') }}">
             <a href="{{ route('home', ['locale' => $currentLocale]) }}">{{ __('Home') }}</a><a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a><a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Farms & Production') }}</a><a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Products') }}</a><a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality') }}</a><a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export') }}</a><a href="{{ route('gallery', ['locale' => $currentLocale]) }}">{{ __('Gallery') }}</a><a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a><a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} ↗</a>
         </nav></details>
