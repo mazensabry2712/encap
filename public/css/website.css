@@ -24,3 +24,16 @@
 .cta{background:var(--sun-soft);color:var(--forest)}
 .contact-details .button{background:var(--sun);border-color:var(--sun);color:var(--deep)}
 .contact-details .button:hover{background:var(--sun-soft);border-color:var(--sun-soft)}
+
+/* Compact, accessible language switcher in the main navigation. */
+.language-switcher{position:relative;z-index:70;flex:0 0 auto}
+.language-switcher summary{list-style:none;display:flex;align-items:center;justify-content:center;gap:2px;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--forest);cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+.language-switcher summary::-webkit-details-marker{display:none}
+.language-switcher summary:hover,.language-switcher[open] summary{border-color:var(--sun);background:var(--sun-soft);color:var(--deep)}
+.language-chevron{align-self:center;margin-top:-8px;font-size:12px;line-height:1;color:var(--muted)}
+.language-menu{position:absolute;top:calc(100% + 10px);inset-inline-end:0;z-index:80;display:grid;gap:3px;min-width:164px;padding:7px;background:#fff;border:1px solid var(--line);box-shadow:0 16px 38px rgba(25,55,43,.16)}
+.language-menu a{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:11px 12px;color:var(--ink);font-size:12px;font-weight:750;transition:background .16s,color .16s}
+.language-menu a:hover{background:var(--paper);color:var(--forest);text-decoration:none}
+.language-menu a[aria-current=page]{background:var(--sun-soft);color:var(--forest)}
+.language-check{color:#8a6818;font-size:13px}
+@media(max-width:560px){.language-switcher summary{width:39px;height:39px}.language-menu{top:calc(100% + 8px);min-width:150px}.nav-actions{gap:13px}}
