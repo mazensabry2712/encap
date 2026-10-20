@@ -32,11 +32,27 @@ class SeoSetting extends Model
 
     public static function current(): self
     {
-        return Cache::remember(
-            'encap.seo-settings',
-            300,
-            fn () => static::query()->first() ?? new static()
-        );
+        $key = 'encap.seo-settings';
+        $cached = Cache::get($key);
+
+        // Discard legacy cached objects to avoid incomplete-class errors.
+        if (!is_array($cached)) {
+            if ($cached !== null) {
+                Cache::forget($key);
+            }
+
+            $cached = Cache::remember(
+                $key,
+                300,
+                fn (): array => (static::query()->first() ?? new static())->getAttributes()
+            );
+        }
+
+        // Restore raw attributes, including the primary key, without losing the record ID.
+        $settings = new static();
+        $settings->setRawAttributes($cached, true);
+
+        return $settings;
     }
 
     /**
