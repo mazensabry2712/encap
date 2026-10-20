@@ -1,58 +1,29 @@
 # Performance and Smoothness
 
-Speed is a core requirement, not a final polish task. These are implementation choices and measurement targets; a score is not considered achieved until it has been measured.
+## Approach
 
-## Current implementation choices
+ENCAP remains a server-rendered Laravel Blade application. Keep the runtime simple and reduce the amount of work needed to display the first screen.
 
-- Blade server-side rendering for the website; no SPA framework or client-side router.
-- Native links and forms for navigation and submissions.
-- Shared CSS in public/css/website.css, allowing the browser to cache styling independently of page HTML.
-- No third-party font, analytics, chat or map scripts by default.
-- Homepage and product listing query only published categories and cap the homepage list at ten items. Product listings paginate.
-- Admin lists paginate; quote requests eager-load their category relationship.
-- Category and gallery images reserve dimensions and lazy-load below-the-fold images. The primary category image is not lazy-loaded.
-- Reduced-motion preference and visible keyboard focus states are supported.
-- Metadata defaults are cached briefly and explicitly invalidated after admin changes.
-- No image-processing dependency or thumbnail pipeline has been added yet; administrators should upload optimized, appropriately sized source images.
+- Use one cacheable stylesheet for the public site and one for the authenticated admin.
+- Keep navigation and forms native; do not introduce a JavaScript framework for ordinary page interactions.
+- Keep images responsive, define their dimensions, lazy-load below-the-fold catalogue images and prioritize the homepage hero.
+- Avoid repeated, page-specific inline CSS; shared design tokens and reusable Blade layouts keep rendering consistent.
+- Use pagination for catalogue categories and enquiry inboxes.
+- Respect reduced-motion user preferences; transitions should be brief and never required to understand the interface.
+- Preserve semantic landmarks, visible focus states, form labels and mobile-friendly tap targets.
+- Keep the public pages bilingual and verify RTL layout, not just text direction.
 
-## Principles
+## Visual design assets
 
-1. Prefer simple server-rendered HTML over JavaScript-heavy interactions.
-2. Use appropriately sized WebP/AVIF/JPEG images; never upload unnecessarily huge originals for small cards.
-3. Keep image width/height or aspect ratio stable to reduce layout shift.
-4. Avoid loading all gallery images on the initial category page.
-5. Keep database queries predictable and paginate growing lists.
-6. Add long-lived cache headers for versioned/static files at the web server/CDN level where supported.
-7. Avoid speculative abstractions and dependencies that do not materially improve measured behavior.
-8. Test on mobile widths and respect reduced-motion settings.
+The homepage uses a representative agricultural landscape image hosted by Unsplash as a visual direction, not a claim that the pictured land belongs to ENCAP. Replace it with an optimized, company-approved image when available; self-hosting an optimized asset would also remove the third-party image dependency. Product/category imagery should come from ENCAP-approved uploads.
 
-## Practical targets
+## Measure rather than assume
 
-These are targets rather than current verified results:
-- Lighthouse Performance: aim for 90+ on key public pages in a consistent test environment.
-- Core Web Vitals field goals when sufficient real-user data exists: LCP <= 2.5s, INP <= 200ms and CLS <= 0.1 at the 75th percentile.
-- No avoidable blocking JavaScript for core content/navigation.
-- No horizontal overflow at common mobile widths.
-- No major layout shift during initial render.
-- No N+1 query on the public category listing/detail routes.
+Performance and accessibility improvements are goals, not measured results. Before calling the release complete:
 
-## Image delivery
-
-- Upload only company-approved imagery or label temporary illustrations clearly.
-- Validate image type and size on the server.
-- Configure Laravel's public disk/storage link before expecting uploaded images to be visible.
-- Use meaningful alt text. Keep actual ENCAP farm/packing/export photography separate from generic placeholders.
-- A responsive image/thumbnail pipeline may be added later if image volume or field measurements justify it.
-
-## Production checks
-
-Only during an approved deployment:
-- Confirm production environment settings and APP_DEBUG=false.
-- Install production Composer dependencies, build frontend assets if required, and review route/config/view cache behavior.
-- Confirm storage permissions and check logs after smoke tests.
-- Use the configured trusted APP_URL for canonical links and sitemap output.
-- Do not run destructive commands or unreviewed migrations on production.
-
-## Measurement checklist
-
-Test Home, Products, a Category Detail and Contact/Quote pages on desktop and mobile. Record test date, URL, device mode and scores. Inspect network payloads, image transfers, CSS/JS size and browser console. Measure before/after substantial optimizations instead of assuming they improved performance.
+1. Run npm ci and npm run build where the deployment pipeline requires Vite assets.
+2. Run php artisan test --compact.
+3. Verify public routes and the admin in a browser at desktop and mobile widths.
+4. Check image loading, navigation, form validation/error messages and RTL layout.
+5. Run Lighthouse or equivalent checks on the deployed environment and record measured results.
+6. Recheck after adding real photography or changing fonts/assets.
