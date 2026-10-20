@@ -2,12 +2,8 @@
 @php($locale = request()->route('locale', 'en'))
 @php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
 @php($description = $locale === 'ar' && $category->description_ar ? $category->description_ar : $category->description_en)
-@php($seoTitle = ($locale === 'ar' ? $category->seo_title_ar : $category->seo_title_en) ?: $name.' | ENCAP')
-@php($seoDescription = ($locale === 'ar' ? $category->seo_description_ar : $category->seo_description_en) ?: ($locale === 'ar' ? $category->short_description_ar : $category->short_description_en))
 @php($siteBase = rtrim(config('app.url'), '/'))
 @php($breadcrumbSchema = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => $siteBase . '/' . $locale], ['@type' => 'ListItem', 'position' => 2, 'name' => __('Products'), 'item' => $siteBase . '/' . $locale . '/products'], ['@type' => 'ListItem', 'position' => 3, 'name' => $name, 'item' => $siteBase . '/' . $locale . '/products/' . $category->slug]]])
-@section('title', $seoTitle)
-@section('meta_description', $seoDescription ?: __('Agricultural products supplied by ENCAP for international markets.'))
 @push('head')<script type="application/ld+json">{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>@endpush
 @section('content')
 <section class="page-head"><div class="container"><div class="breadcrumbs"><a href="{{ route('home',['locale'=>$locale]) }}">{{ __('Home') }}</a> / <a href="{{ route('products.index',['locale'=>$locale]) }}">{{ __('Products') }}</a> / {{ $name }}</div><div class="eyebrow">{{ __('ENCAP product category') }}</div><h1>{{ $name }}</h1><p class="muted">{{ $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en }}</p></div></section>

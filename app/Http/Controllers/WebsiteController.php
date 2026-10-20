@@ -56,7 +56,18 @@ class WebsiteController extends Controller
         $this->useLocale($locale);
         abort_unless($category->is_published, 404);
 
-        return view('website.products.show', compact('category', 'locale'));
+        $settings = SeoSetting::current();
+        $name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en;
+        $shortDescription = $locale === 'ar' && $category->short_description_ar
+            ? $category->short_description_ar
+            : $category->short_description_en;
+        $seoTitle = ($locale === 'ar' ? $category->seo_title_ar : $category->seo_title_en)
+            ?: $name . ' | ENCAP';
+        $seoDescription = ($locale === 'ar' ? $category->seo_description_ar : $category->seo_description_en)
+            ?: ($shortDescription ?: ($locale === 'ar' ? $settings->site_description_ar : $settings->site_description_en));
+        $pageSeo = ['title' => $seoTitle, 'description' => $seoDescription];
+
+        return view('website.products.show', compact('category', 'locale', 'pageSeo'));
     }
 
     public function contentPage(string $locale, string $page): View
@@ -151,6 +162,8 @@ class WebsiteController extends Controller
             __('Request a Quote | ENCAP'),
             __('Send ENCAP your agricultural sourcing and export requirements.')
         );
+
+        $pageSeo['robots'] = 'noindex,follow';
 
         return view('website.quote', [
             'categories' => $categories,

@@ -10,12 +10,9 @@
 @php($alternateArabicUrl = $canonicalBase . '/ar' . $localizedSuffix)
 @php($defaultTitle = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_title_ar : $seoDefaults->site_title_en)
 @php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : $seoDefaults->site_description_en)
-@php($fallbackTitle = $pageSeo['title'] ?? $defaultTitle)
-@php($fallbackDescription = $pageSeo['description'] ?? $defaultDescription)
-@php($pageTitle = $__env->hasSection('title') ? (string) $__env->yieldContent('title') : $fallbackTitle)
-@php($pageDescription = $__env->hasSection('meta_description') ? (string) $__env->yieldContent('meta_description') : $fallbackDescription)
-@php($robotsDirective = $__env->hasSection('robots') ? (string) $__env->yieldContent('robots') : $seoDefaults->default_robots)
-@php($canonicalHref = $__env->hasSection('canonical') ? (string) $__env->yieldContent('canonical') : $canonicalUrl)
+@php($pageTitle = $pageSeo['title'] ?? $defaultTitle)
+@php($pageDescription = $pageSeo['description'] ?? $defaultDescription)
+@php($robotsDirective = $pageSeo['robots'] ?? $seoDefaults->default_robots)
 @php($ogImageUrl = $seoDefaults->default_og_image ? url(\Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image)) : null)
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
@@ -24,7 +21,7 @@
     <title>{{ $pageTitle }}</title>
     <meta name="description" content="{{ $pageDescription }}">
     <meta name="robots" content="{{ $robotsDirective }}">
-    <link rel="canonical" href="{{ $canonicalHref }}">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
     @if(!isset($category) || ($category->name_ar && $category->description_ar))
         <link rel="alternate" hreflang="en" href="{{ $alternateEnglishUrl }}">
         <link rel="alternate" hreflang="ar" href="{{ $alternateArabicUrl }}">

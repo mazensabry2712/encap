@@ -1,7 +1,5 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
-@section('title', $pageSeo['title'])
-@section('meta_description', $pageSeo['description'])
 @section('content')
 <section class="page-head"><div class="container"><div class="eyebrow">{{ __('Get in touch') }}</div><h1>{{ __('Contact ENCAP') }}</h1><p class="muted">{{ __('Tell us what you are looking for and we will follow up with you.') }}</p></div></section>
 <section class="section"><div class="container split" style="align-items:start"><div>

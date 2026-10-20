@@ -1,7 +1,5 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
-@section('title', $pageSeo['title'])
-@section('meta_description', $pageSeo['description'])
 @section('content')
 <section class="page-head"><div class="container"><div class="breadcrumbs"><a href="{{ route('home',['locale'=>$locale]) }}">{{ __('Home') }}</a> / {{ $pageContent['eyebrow'] }}</div><div class="eyebrow">{{ $pageContent['eyebrow'] }}</div><h1>{{ $pageContent['title'] }}</h1><p class="muted" style="max-width:760px;font-size:18px">{{ $pageContent['intro'] }}</p></div></section>
 <section class="section"><div class="container">

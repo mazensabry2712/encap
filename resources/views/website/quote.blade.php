@@ -1,8 +1,5 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
-@section('title', $pageSeo['title'])
-@section('meta_description', $pageSeo['description'])
-@section('robots', 'noindex,follow')
 @section('content')
 <section class="page-head"><div class="container"><div class="eyebrow">{{ __('Business enquiries') }}</div><h1>{{ __('Request an export quote') }}</h1><p class="muted">{{ __('Share your requirements and our team can follow up with availability and next steps.') }}</p></div></section>
 <section class="section"><div class="container" style="max-width:820px">@if(session('success'))<div class="notice" role="status">{{ session('success') }}</div>@endif
