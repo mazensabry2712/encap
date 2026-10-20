@@ -12,15 +12,19 @@
 @php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : $seoDefaults->site_description_en)
 @php($fallbackTitle = $pageSeo['title'] ?? $defaultTitle)
 @php($fallbackDescription = $pageSeo['description'] ?? $defaultDescription)
+@php($pageTitle = $__env->hasSection('title') ? $__env->yieldContent('title') : $fallbackTitle)
+@php($pageDescription = $__env->hasSection('meta_description') ? $__env->yieldContent('meta_description') : $fallbackDescription)
+@php($robotsDirective = $__env->hasSection('robots') ? $__env->yieldContent('robots') : $seoDefaults->default_robots)
+@php($canonicalHref = $__env->hasSection('canonical') ? $__env->yieldContent('canonical') : $canonicalUrl)
 @php($ogImageUrl = $seoDefaults->default_og_image ? url(\Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image)) : null)
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $__env->yieldContent('title', $fallbackTitle) }}</title>
-    <meta name="description" content="{{ $__env->yieldContent('meta_description', $fallbackDescription) }}">
-    <meta name="robots" content="{{ $__env->yieldContent('robots', $seoDefaults->default_robots) }}">
-    <link rel="canonical" href="{{ $__env->yieldContent('canonical', $canonicalUrl) }}">
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <meta name="robots" content="{{ $robotsDirective }}">
+    <link rel="canonical" href="{{ $canonicalHref }}">
     @if(!isset($category) || ($category->name_ar && $category->description_ar))
         <link rel="alternate" hreflang="en" href="{{ $alternateEnglishUrl }}">
         <link rel="alternate" hreflang="ar" href="{{ $alternateArabicUrl }}">
@@ -28,8 +32,8 @@
     @endif
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ $seoDefaults->organization_name }}">
-    <meta property="og:title" content="{{ $__env->yieldContent('title', $fallbackTitle) }}">
-    <meta property="og:description" content="{{ $__env->yieldContent('meta_description', $fallbackDescription) }}">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
     <meta property="og:url" content="{{ $canonicalUrl }}">
     @if($ogImageUrl)<meta property="og:image" content="{{ $ogImageUrl }}">@endif
     <meta name="twitter:card" content="{{ $ogImageUrl ? 'summary_large_image' : 'summary' }}">
