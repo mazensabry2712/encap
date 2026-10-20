@@ -41,7 +41,7 @@ test('admin can save shared seo defaults and configured contact details', functi
         'page_metadata' => [
             'about' => [
                 'en' => [
-                    'title' => 'ENCAP | About for Importers',
+                    'title' => 'ENCAP | About & Importers',
                     'description' => 'Learn how ENCAP connects Egyptian agricultural production and buyers.',
                 ],
             ],
@@ -56,7 +56,7 @@ test('admin can save shared seo defaults and configured contact details', functi
 
     $this->get('/en')->assertOk()->assertSee('<title>ENCAP Export Company</title>', false);
     $this->get('/en/about')->assertOk()
-        ->assertSee('<title>ENCAP | About for Importers</title>', false)
+        ->assertSee('<title>ENCAP | About &amp; Importers</title>', false)
         ->assertSee('<meta name="description" content="Learn how ENCAP connects Egyptian agricultural production and buyers.">', false);
 });
 

@@ -17,10 +17,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', $fallbackTitle)</title>
-    <meta name="description" content="@yield('meta_description', $fallbackDescription)">
-    <meta name="robots" content="@yield('robots', $seoDefaults->default_robots)">
-    <link rel="canonical" href="@yield('canonical', $canonicalUrl)">
+    <title>{{ $__env->yieldContent('title', $fallbackTitle) }}</title>
+    <meta name="description" content="{{ $__env->yieldContent('meta_description', $fallbackDescription) }}">
+    <meta name="robots" content="{{ $__env->yieldContent('robots', $seoDefaults->default_robots) }}">
+    <link rel="canonical" href="{{ $__env->yieldContent('canonical', $canonicalUrl) }}">
     @if(!isset($category) || ($category->name_ar && $category->description_ar))
         <link rel="alternate" hreflang="en" href="{{ $alternateEnglishUrl }}">
         <link rel="alternate" hreflang="ar" href="{{ $alternateArabicUrl }}">
@@ -28,8 +28,8 @@
     @endif
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ $seoDefaults->organization_name }}">
-    <meta property="og:title" content="@yield('title', $fallbackTitle)">
-    <meta property="og:description" content="@yield('meta_description', $fallbackDescription)">
+    <meta property="og:title" content="{{ $__env->yieldContent('title', $fallbackTitle) }}">
+    <meta property="og:description" content="{{ $__env->yieldContent('meta_description', $fallbackDescription) }}">
     <meta property="og:url" content="{{ $canonicalUrl }}">
     @if($ogImageUrl)<meta property="og:image" content="{{ $ogImageUrl }}">@endif
     <meta name="twitter:card" content="{{ $ogImageUrl ? 'summary_large_image' : 'summary' }}">
