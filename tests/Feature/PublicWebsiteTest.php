@@ -46,6 +46,24 @@ test('a published category has a stable detail page and category title', functio
         ->assertSee('Confirm current availability with ENCAP.');
 });
 
+test('robots.txt is served by Laravel and points to the sitemap', function () {
+    $this->get('/robots.txt')
+        ->assertOk()
+        ->assertHeader('content-type', 'text/plain; charset=UTF-8')
+        ->assertSee('Disallow: /admin')
+        ->assertSee('Sitemap: ' . rtrim(config('app.url'), '/') . '/sitemap.xml');
+});
+
+test('quote form is not indexable while public product pages use the configured default', function () {
+    $this->get('/en/request-a-quote')
+        ->assertOk()
+        ->assertSee('<meta name="robots" content="noindex,follow">', false);
+
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('<meta name="robots" content="index,follow">', false);
+});
+
 test('sitemap only includes published categories and is xml', function () {
     Category::query()->create(['name_en' => 'Visible Mango', 'slug' => 'visible-mango', 'is_published' => true]);
     Category::query()->create(['name_en' => 'Hidden Mango', 'slug' => 'hidden-mango', 'is_published' => false]);
