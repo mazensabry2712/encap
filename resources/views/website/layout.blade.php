@@ -25,7 +25,10 @@
     <meta property="og:type" content="website"><meta property="og:site_name" content="{{ $seoDefaults->organization_name }}"><meta property="og:title" content="{{ $pageTitle }}"><meta property="og:description" content="{{ $pageDescription }}"><meta property="og:url" content="{{ $canonicalUrl }}">
     @if($ogImageUrl)<meta property="og:image" content="{{ $ogImageUrl }}">@endif
     <meta name="twitter:card" content="{{ $ogImageUrl ? 'summary_large_image' : 'summary' }}"><meta name="theme-color" content="#08291e">
-    <link rel="preconnect" href="https://images.unsplash.com"><link rel="preload" as="image" href="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=1200&amp;q=78">
+    @if(request()->routeIs('home'))
+        <link rel="preconnect" href="https://images.unsplash.com">
+        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=1200&amp;q=78">
+    @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
     <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>
     @stack('head')
