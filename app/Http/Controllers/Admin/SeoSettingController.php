@@ -12,15 +12,24 @@ use Illuminate\View\View;
 
 class SeoSettingController extends Controller
 {
+    private const SEO_PAGES = [
+        'home', 'about', 'farms', 'products', 'quality', 'export', 'gallery', 'contact', 'quote',
+    ];
+
+    private const SEO_LOCALES = ['en', 'ar'];
+
     public function edit(): View
     {
-        return view('admin.seo.edit', ['settings' => SeoSetting::current()]);
+        return view('admin.seo.edit', [
+            'settings' => SeoSetting::current(),
+            'seoPages' => self::SEO_PAGES,
+        ]);
     }
 
     public function update(Request $request): RedirectResponse
     {
         $settings = SeoSetting::current();
-        $data = $request->validate([
+        $rules = [
             'site_title_en' => ['required', 'string', 'max:255'],
             'site_title_ar' => ['required', 'string', 'max:255'],
             'site_description_en' => ['nullable', 'string', 'max:500'],
@@ -36,8 +45,32 @@ class SeoSettingController extends Controller
             'address_en' => ['nullable', 'string', 'max:255'],
             'address_ar' => ['nullable', 'string', 'max:255'],
             'default_og_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-        ]);
+        ];
 
+        foreach (self::SEO_PAGES as $page) {
+            foreach (self::SEO_LOCALES as $locale) {
+                $rules["page_metadata.{$page}.{$locale}.title"] = ['nullable', 'string', 'max:255'];
+                $rules["page_metadata.{$page}.{$locale}.description"] = ['nullable', 'string', 'max:500'];
+            }
+        }
+
+        $data = $request->validate($rules);
+        $pageMetadata = [];
+        foreach (self::SEO_PAGES as $page) {
+            foreach (self::SEO_LOCALES as $locale) {
+                $title = data_get($data, "page_metadata.{$page}.{$locale}.title");
+                $description = data_get($data, "page_metadata.{$page}.{$locale}.description");
+
+                if (filled($title) || filled($description)) {
+                    $pageMetadata[$page][$locale] = [
+                        'title' => $title,
+                        'description' => $description,
+                    ];
+                }
+            }
+        }
+
+        $data['page_metadata'] = $pageMetadata;
         $oldImage = $settings->default_og_image;
         if ($request->hasFile('default_og_image')) {
             $data['default_og_image'] = $request->file('default_og_image')->store('seo', 'public');

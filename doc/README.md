@@ -17,7 +17,7 @@ A polished, responsive agricultural company website for ENCAP. The company produ
 - Eloquent models and focused controllers for categories, enquiries and shared SEO/site settings.
 - MySQL-compatible migrations; SQLite in-memory database for automated tests.
 - Small authenticated Blade admin area; no public registration and no role/permission framework until multiple staff roles are actually needed.
-- One central SEO settings record with category-specific SEO overrides.
+- One central SEO settings record with per-page and per-category SEO overrides.
 - Static, cacheable CSS file; native HTML links and forms; minimal JavaScript.
 - No extra Composer/npm dependencies were added for the first implementation.
 

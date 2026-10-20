@@ -38,6 +38,14 @@ test('admin can save shared seo defaults and configured contact details', functi
         'whatsapp_number' => '+201000000000',
         'address_en' => 'Egypt',
         'address_ar' => 'مصر',
+        'page_metadata' => [
+            'about' => [
+                'en' => [
+                    'title' => 'ENCAP | About for Importers',
+                    'description' => 'Learn how ENCAP connects Egyptian agricultural production and buyers.',
+                ],
+            ],
+        ],
     ])->assertRedirect()->assertSessionHas('success');
 
     $this->assertDatabaseHas('seo_settings', [
@@ -47,6 +55,9 @@ test('admin can save shared seo defaults and configured contact details', functi
     ]);
 
     $this->get('/en')->assertOk()->assertSee('<title>ENCAP Export Company</title>', false);
+    $this->get('/en/about')->assertOk()
+        ->assertSee('<title>ENCAP | About for Importers</title>', false)
+        ->assertSee('<meta name="description" content="Learn how ENCAP connects Egyptian agricultural production and buyers.">', false);
 });
 
 test('admin can update contact message status', function () {

@@ -20,6 +20,7 @@ Use this for each meaningful change. Mark an item complete only after it has act
 ## SEO
 
 - [ ] Central defaults save and render from server-generated HTML.
+- [ ] Static page SEO overrides render correctly in both languages.
 - [ ] Category SEO overrides render correctly.
 - [ ] Title/description/canonical tags are not duplicated.
 - [ ] Canonical URLs use configured APP_URL, not a request host header.

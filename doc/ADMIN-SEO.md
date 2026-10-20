@@ -40,7 +40,7 @@ A single shared Blade layout renders global metadata consistently. Global settin
 - Default social-sharing image.
 - Contact email, phone, WhatsApp number and address in both languages.
 
-Category pages support their own title and description overrides. Blank category metadata falls back to sensible category-specific or site defaults. Store the official production URL in APP_URL; canonical and sitemap URLs use that configured base rather than untrusted request host headers.
+Static public pages can also have English/Arabic title and description overrides from the same central settings screen. Category pages retain their own title and description overrides in category management. Blank fields fall back to the page's sensible title/description or the central site defaults. Store the official production URL in APP_URL; canonical and sitemap URLs use that configured base rather than untrusted request host headers.
 
 ### Technical behavior
 

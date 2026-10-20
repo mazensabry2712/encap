@@ -24,7 +24,14 @@ class WebsiteController extends Controller
         $categories = Category::query()->where('is_published', true)
             ->orderBy('sort_order')->orderBy('name_en')->limit(10)->get();
 
-        return view('website.home', compact('categories', 'locale'));
+        $settings = SeoSetting::current();
+        $defaultTitle = $locale === 'ar' ? $settings->site_title_ar : $settings->site_title_en;
+        $defaultDescription = $locale === 'ar'
+            ? $settings->site_description_ar
+            : $settings->site_description_en;
+        $pageSeo = $settings->metadataFor('home', $locale, $defaultTitle, $defaultDescription);
+
+        return view('website.home', compact('categories', 'locale', 'pageSeo'));
     }
 
     public function products(string $locale): View
@@ -33,7 +40,15 @@ class WebsiteController extends Controller
         $categories = Category::query()->where('is_published', true)
             ->orderBy('sort_order')->orderBy('name_en')->paginate(12);
 
-        return view('website.products.index', compact('categories', 'locale'));
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            'products',
+            $locale,
+            __('Our Products | ENCAP'),
+            __('Explore ENCAP agricultural product categories for international wholesale and export enquiries.')
+        );
+
+        return view('website.products.index', compact('categories', 'locale', 'pageSeo'));
     }
 
     public function category(string $locale, Category $category): View
@@ -74,22 +89,33 @@ class WebsiteController extends Controller
         abort_unless(isset($content[$page]), 404);
 
         $pageContent = $content[$page][$locale];
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            $page,
+            $locale,
+            $pageContent['title'] . ' | ENCAP',
+            $pageContent['intro']
+        );
 
         $categories = $page === 'gallery'
             ? Category::query()->where('is_published', true)->whereNotNull('image')->orderBy('sort_order')->get()
             : collect();
 
-        return view('website.content-page', compact('locale', 'page', 'pageContent', 'categories'));
+        return view('website.content-page', compact('locale', 'page', 'pageContent', 'categories', 'pageSeo'));
     }
 
     public function contact(string $locale): View
     {
         $this->useLocale($locale);
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            'contact',
+            $locale,
+            __('Contact ENCAP | Agricultural Export Enquiries'),
+            __('Contact ENCAP about agricultural products, wholesale supply and export requirements.')
+        );
 
-        return view('website.contact', [
-            'locale' => $locale,
-            'settings' => SeoSetting::current(),
-        ]);
+        return view('website.contact', compact('locale', 'settings', 'pageSeo'));
     }
 
     public function storeContact(Request $request, string $locale): RedirectResponse
@@ -118,10 +144,19 @@ class WebsiteController extends Controller
         $categories = Category::query()->where('is_published', true)
             ->orderBy('name_en')->get(['id', 'name_en', 'name_ar']);
 
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            'quote',
+            $locale,
+            __('Request a Quote | ENCAP'),
+            __('Send ENCAP your agricultural sourcing and export requirements.')
+        );
+
         return view('website.quote', [
             'categories' => $categories,
             'selectedCategory' => $request->integer('category') ?: null,
             'locale' => $locale,
+            'pageSeo' => $pageSeo,
         ]);
     }
 

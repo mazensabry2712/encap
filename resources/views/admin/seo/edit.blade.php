@@ -22,4 +22,23 @@
 <div class="field"><label for="whatsapp_number">WhatsApp number (international format)</label><input id="whatsapp_number" name="whatsapp_number" maxlength="50" value="{{ old('whatsapp_number',$settings->whatsapp_number) }}"></div>
 <div class="field"><label for="address_en">Address (English)</label><input id="address_en" name="address_en" maxlength="255" value="{{ old('address_en',$settings->address_en) }}"></div>
 <div class="field full"><label for="address_ar">Address (Arabic)</label><input id="address_ar" name="address_ar" maxlength="255" value="{{ old('address_ar',$settings->address_ar) }}"></div>
-</div><button class="btn" type="submit">Save settings</button></form></main></body></html>
+</div>
+<h2>Page-level SEO overrides</h2>
+<p>Leave a field blank to use that page's sensible default. English and Arabic can be customized independently. Category-specific SEO remains in category management.</p>
+@php($pageLabels = ['home' => 'Home', 'about' => 'About', 'farms' => 'Farms & Production', 'products' => 'Products', 'quality' => 'Quality & Processing', 'export' => 'Export', 'gallery' => 'Gallery', 'contact' => 'Contact', 'quote' => 'Request a Quote'])
+@foreach($pageLabels as $pageKey => $pageLabel)
+<details style="border:1px solid #e0e5dd;border-radius:5px;padding:14px;margin:12px 0">
+<summary style="font-weight:700;cursor:pointer">{{ $pageLabel }}</summary>
+<div class="grid" style="margin-top:10px">
+@foreach(['en' => 'English', 'ar' => 'Arabic'] as $localeKey => $localeLabel)
+@php($storedPageMeta = data_get($settings->page_metadata, $pageKey . '.' . $localeKey, []))
+<div>
+<strong>{{ $localeLabel }}</strong>
+<div class="field"><label for="seo_{{ $pageKey }}_{{ $localeKey }}_title">SEO title</label><input id="seo_{{ $pageKey }}_{{ $localeKey }}_title" name="page_metadata[{{ $pageKey }}][{{ $localeKey }}][title]" maxlength="255" value="{{ old('page_metadata.' . $pageKey . '.' . $localeKey . '.title', $storedPageMeta['title'] ?? '') }}"></div>
+<div class="field"><label for="seo_{{ $pageKey }}_{{ $localeKey }}_description">Meta description</label><textarea id="seo_{{ $pageKey }}_{{ $localeKey }}_description" name="page_metadata[{{ $pageKey }}][{{ $localeKey }}][description]" maxlength="500">{{ old('page_metadata.' . $pageKey . '.' . $localeKey . '.description', $storedPageMeta['description'] ?? '') }}</textarea></div>
+</div>
+@endforeach
+</div>
+</details>
+@endforeach
+<button class="btn" type="submit">Save settings</button></form></main></body></html>

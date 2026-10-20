@@ -1,7 +1,7 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
-@section('title', __('Our Products | ENCAP'))
-@section('meta_description', __('Explore ENCAP agricultural product categories for international wholesale and export enquiries.'))
+@section('title', $pageSeo['title'])
+@section('meta_description', $pageSeo['description'])
 @section('content')
 <section class="page-head"><div class="container"><div class="breadcrumbs"><a href="{{ route('home',['locale'=>$locale]) }}">{{ __('Home') }}</a> / {{ __('Products') }}</div><div class="eyebrow">{{ __('Our catalogue') }}</div><h1 style="font-size:clamp(36px,5vw,58px);line-height:1.1;margin:8px 0">{{ __('Products for global markets') }}</h1><p class="muted">{{ __('Explore our categories and contact us for current availability, specifications and packaging options.') }}</p></div></section>
 <section class="section"><div class="container">@if($categories->isEmpty())<p>{{ __('Product categories will be published here soon.') }}</p>@else<div class="grid">@foreach($categories as $category)<a class="category" href="{{ route('products.show',['locale'=>$locale,'category'=>$category->slug]) }}"><div class="category-image">@if($category->image)<img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $category->name_en }}" loading="lazy" width="500" height="300" style="width:100%;height:100%;object-fit:cover">@else<span>{{ $category->name_en }}</span>@endif</div><div class="category-body"><h3>{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}</h3><p class="muted">{{ $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en }}</p><span class="arrow">{{ __('View details') }} ↗</span></div></a>@endforeach</div><div class="pagination">{{ $categories->links() }}</div>@endif</div></section>

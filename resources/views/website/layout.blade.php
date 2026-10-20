@@ -10,13 +10,15 @@
 @php($alternateArabicUrl = $canonicalBase . '/ar' . $localizedSuffix)
 @php($defaultTitle = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_title_ar : $seoDefaults->site_title_en)
 @php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : $seoDefaults->site_description_en)
-@php($ogImageUrl = $seoDefaults->default_og_image ? \Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image) : null)
+@php($fallbackTitle = $pageSeo['title'] ?? $defaultTitle)
+@php($fallbackDescription = $pageSeo['description'] ?? $defaultDescription)
+@php($ogImageUrl = $seoDefaults->default_og_image ? url(\Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image)) : null)
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', $defaultTitle)</title>
-    <meta name="description" content="@yield('meta_description', $defaultDescription)">
+    <title>@yield('title', $fallbackTitle)</title>
+    <meta name="description" content="@yield('meta_description', $fallbackDescription)">
     <meta name="robots" content="@yield('robots', $seoDefaults->default_robots)">
     <link rel="canonical" href="@yield('canonical', $canonicalUrl)">
     @if(!isset($category) || ($category->name_ar && $category->description_ar))
@@ -26,8 +28,8 @@
     @endif
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ $seoDefaults->organization_name }}">
-    <meta property="og:title" content="@yield('title', $defaultTitle)">
-    <meta property="og:description" content="@yield('meta_description', $defaultDescription)">
+    <meta property="og:title" content="@yield('title', $fallbackTitle)">
+    <meta property="og:description" content="@yield('meta_description', $fallbackDescription)">
     <meta property="og:url" content="{{ $canonicalUrl }}">
     @if($ogImageUrl)<meta property="og:image" content="{{ $ogImageUrl }}">@endif
     <meta name="twitter:card" content="{{ $ogImageUrl ? 'summary_large_image' : 'summary' }}">
