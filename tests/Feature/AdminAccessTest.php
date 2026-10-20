@@ -3,6 +3,7 @@
 use App\Models\Category;
 use App\Models\ContactMessage;
 use App\Models\SeoSetting;
+use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 
 test('guests are sent to the admin login screen', function () {
@@ -20,6 +21,31 @@ test('authenticated administrators can access the admin inboxes', function () {
     $this->get('/admin/seo')->assertOk()->assertSee('Central SEO');
     $this->get('/admin/quote-requests')->assertOk()->assertSee('Quote requests');
     $this->get('/admin/contact-messages')->assertOk()->assertSee('Contact messages');
+});
+
+test('seo settings cache stores attributes and discards legacy model cache entries', function () {
+    Cache::forget('encap.seo-settings');
+
+    $stored = SeoSetting::query()->create([
+        'site_title_en' => 'Cached ENCAP title',
+        'site_title_ar' => 'عنوان ENCAP',
+        'default_robots' => 'index,follow',
+        'organization_name' => 'ENCAP',
+    ]);
+
+    Cache::put(
+        'encap.seo-settings',
+        new SeoSetting(['site_title_en' => 'Stale cached title']),
+        300
+    );
+
+    $settings = SeoSetting::current();
+
+    expect(Cache::get('encap.seo-settings'))->toBeArray()
+        ->and($settings->getKey())->toBe($stored->getKey())
+        ->and($settings->site_title_en)->toBe('Cached ENCAP title');
+
+    Cache::forget('encap.seo-settings');
 });
 
 test('admin can save shared seo defaults and configured contact details', function () {
