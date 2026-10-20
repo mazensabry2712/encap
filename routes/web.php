@@ -25,3 +25,5 @@ Route::prefix('{locale}')->group(function () {
     Route::post('/request-a-quote', [WebsiteController::class, 'storeQuote'])
         ->middleware('throttle:5,1')->name('quote.store');
 });
+
+require __DIR__.'/admin.php';
