@@ -1,57 +1,65 @@
 # Quality and Release Checklist
 
-Use this list for each meaningful change. Mark an item complete only after actually checking it.
+Use this for each meaningful change. Mark an item complete only after it has actually been checked in the target environment.
 
 ## Functional
-- [ ] Home, About, Products, Category Detail, Contact, and Quote pages render.
-- [ ] Every initial category has a valid slug and detail page.
-- [ ] Category card opens the correct detail page.
+
+- [ ] Home, About, Farms, Quality, Export, Gallery, Contact, Products, Category Detail and Quote pages render.
+- [ ] The ten initial categories are inserted in a new database by the category seeder.
+- [ ] Category links open the correct details page and work on direct refresh.
 - [ ] Main image and gallery render; missing images fail gracefully.
-- [ ] Arabic and English content and layout work.
-- [ ] Quote form validates input and persists the request.
-- [ ] Quote request can be reviewed/updated in the admin.
-- [ ] Admin routes reject unauthenticated users.
-- [ ] Invalid or oversized image uploads are rejected.
-- [ ] Draft/unpublished categories are not publicly exposed.
+- [ ] English/Arabic page content, language switching and RTL/LTR direction work.
+- [ ] Quote form validates and persists a request.
+- [ ] Contact form validates and persists a message; the honeypot rejects filled submissions.
+- [ ] Admin can review and update the status of both enquiry types.
+- [ ] Guest requests to admin routes redirect to /admin/login.
+- [ ] Admin can create/edit/publish/unpublish/delete categories.
+- [ ] Invalid/oversized image uploads are rejected.
+- [ ] Unpublished categories return 404 on public detail routes.
 
 ## SEO
-- [ ] Title and meta description are present and not duplicated.
-- [ ] Canonical URL is correct for the current language/page.
-- [ ] Open Graph values are populated.
-- [ ] Sitemap contains published, indexable pages only.
-- [ ] robots.txt and sitemap reference are correct.
-- [ ] Breadcrumb and structured data contain accurate information.
-- [ ] 404 pages return HTTP 404.
-- [ ] Arabic/English alternates are correct when translations exist.
+
+- [ ] Central defaults save and render from server-generated HTML.
+- [ ] Category SEO overrides render correctly.
+- [ ] Title/description/canonical tags are not duplicated.
+- [ ] Canonical URLs use configured APP_URL, not a request host header.
+- [ ] Open Graph, Twitter card and valid structured data are present.
+- [ ] Sitemap is valid XML and contains only public, published/indexable categories.
+- [ ] robots.txt resolves through Laravel and links to sitemap.
+- [ ] Quote form is noindex; admin/private routes are excluded.
+- [ ] English/Arabic alternates are emitted only when appropriate.
+- [ ] Missing public routes return HTTP 404.
 
 ## Performance and accessibility
-- [ ] Production assets are built and minified.
-- [ ] No avoidable JavaScript blocks navigation or page content.
-- [ ] Images have dimensions/aspect ratios and appropriate responsive sizes.
-- [ ] Below-the-fold images lazy-load.
-- [ ] Main hero image is not lazy-loaded when it is the LCP image.
-- [ ] No major layout shift on initial load.
-- [ ] Keyboard can reach links, navigation, gallery controls, and form fields.
-- [ ] Visible focus states and meaningful labels exist.
+
+- [ ] Production asset build passes.
+- [ ] Static CSS is independently cacheable.
+- [ ] Below-the-fold images lazy-load; the primary image is not unnecessarily delayed.
+- [ ] Images have dimensions and descriptive alt text.
 - [ ] Mobile widths have no horizontal overflow.
+- [ ] Keyboard focus is visible; controls have labels.
 - [ ] Reduced-motion preference is respected.
+- [ ] Lighthouse runs are recorded with URL, date, device mode and score; do not claim a score until measured.
 
 ## Engineering
-- [ ] Relevant Laravel tests pass.
+
+- [ ] Relevant Pest feature tests pass in CI.
 - [ ] Existing tests remain green.
-- [ ] No secrets or production credentials are committed.
-- [ ] No unrelated files or user data were changed.
-- [ ] Logs and browser console have been checked after smoke tests.
-- [ ] Documentation updated when behavior or scope changed.
+- [ ] No secrets or default admin credentials are committed.
+- [ ] Composer/npm dependencies were not changed without a requirement.
+- [ ] Logs and browser console were checked after smoke tests.
+- [ ] Documentation matches implemented behavior.
 
 ## Release safety
-- [ ] Confirm target branch and current commit before deployment.
-- [ ] Check repository status and review the diff.
-- [ ] Back up production data before risky migrations.
+
+- [ ] Confirm target branch and current commit.
+- [ ] Review full diff before deployment.
+- [ ] Back up production data before schema changes.
+- [ ] Review each migration and seeder before running it on an existing database.
 - [ ] Do not run destructive database commands.
-- [ ] Run migrations only after reviewing them and receiving deployment approval.
-- [ ] Verify health, public pages, quote submission, admin sign-in, and logs after deployment.
+- [ ] Verify health, public pages, form persistence, admin sign-in and logs after deployment.
 - [ ] Keep a rollback path.
 
 ## Status convention
-Report checks honestly as **Passed**, **Failed**, or **Not run**. Do not claim Lighthouse scores, tests, production deployment, or email delivery unless they were actually verified.
+
+Report checks as Passed, Failed, or Not run. Do not claim CI, Lighthouse, deployment, or email delivery succeeded without actual evidence.

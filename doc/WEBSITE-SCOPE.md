@@ -4,22 +4,24 @@
 
 **Name:** ENCAP  
 **Expanded name:** Egyptian National Agricultural Production Company  
-**Business:** Own-farm agricultural production, sourcing from partner farms, preparation/processing, and export to multiple international markets.
+**Business:** Own-farm agricultural production, sourcing from partner farms, preparation/processing and export enquiries.
 
-**Suggested message:** “From Our Farms to Global Markets.” Treat this as draft marketing copy, not a legal claim.
+**Suggested message:** “From Our Farms to Global Markets.” Treat this as marketing copy, not a separate legal or performance claim.
 
 ## Public pages
 
-1. **Home** — clear hero, short company introduction, featured categories, farm-to-export process, quality/processing overview, and contact/quote calls to action.
-2. **About ENCAP** — company overview, mission/vision if confirmed, and a transparent explanation of own production plus partner-farm sourcing.
-3. **Products** — responsive category grid, with category name and image, and optional short description.
-4. **Category details** — dedicated stable URL for each category; main image, gallery, description, available forms (fresh/frozen/processed), packaging information when confirmed, related categories, and Request a Quote action.
-5. **Farms and Production** — describe own farms and crop production. Use real company images and verified details when supplied.
-6. **Quality and Processing** — explain actual sorting, grading, handling, packaging, and processing capabilities only after they are confirmed.
-7. **Export** — describe the enquiry and export workflow without claiming unverified destinations or certifications.
-8. **Contact / Request a Quote** — contact details and a focused B2B quote form.
+- **Home** — introduction, categories and quote actions.
+- **About** — company positioning and own-farm/partner-farm sourcing.
+- **Farms & Production** — seasonality and production enquiry information; do not invent farm sizes or capacity.
+- **Products** — responsive category grid, category names and images.
+- **Category Detail** — stable URL, main image/gallery, descriptions, confirmed formats/packaging and quote CTA.
+- **Quality & Processing** — capabilities only when confirmed for the requested product.
+- **Export** — enquiry process without unsupported destination/certification claims.
+- **Gallery** — approved uploaded category imagery; add real farm/packing photography only when supplied.
+- **Contact** — validated general enquiry form and optional company contact details from Central SEO/Site Settings.
+- **Request a Quote** — B2B product enquiry, category preselection, quantity/unit, form, packaging and destination.
 
-Keep navigation short and predictable. Avoid adding separate pages that only repeat the same information.
+Locale-prefixed URLs use paths such as /en/products/mango and /ar/products/mango. English is the default language; Arabic supports RTL.
 
 ## Initial categories
 
@@ -34,66 +36,43 @@ Keep navigation short and predictable. Avoid adding separate pages that only rep
 - Strawberries
 - Other Fruits & Vegetables
 
-The first eight/nine categories can use dedicated records. “Other Fruits & Vegetables” should be a flexible category, not a dumping ground for unsupported claims.
+Run php artisan db:seed --class=CategorySeeder on a new/approved database to insert the starting catalogue. The seeder uses firstOrCreate, leaving existing records untouched.
 
-## Category content fields
+## Category fields
 
-Minimum fields:
-- Name
-- URL slug
-- Short description
-- Full description
-- Main image
-- Additional gallery images (optional)
-- Published/draft status
-- Display order
-- SEO title (optional override)
-- SEO description (optional override)
+- English/Arabic names and short/full descriptions.
+- Unique stable slug.
+- Main image and optional gallery.
+- Published/draft state and sort order.
+- Available forms and packaging details, only when known.
+- English/Arabic SEO title and description overrides.
 
-If the website is bilingual, store English and Arabic fields consistently. Do not store translated content in ambiguous mixed-language fields.
-
-Optional details should only be added if the company can maintain them: seasonality, sizes/grades, packaging options, origin, certifications, or fresh/frozen/processed formats.
-
-## Category interaction
-
-- The entire category card should be a normal accessible link.
-- Use a stable URL such as `/products/mango`; avoid query-string-only detail pages.
-- The detail page must still work when opened directly or refreshed.
-- Quote CTA should preselect the category on the quote form.
-- Gallery thumbnails should be keyboard accessible and have meaningful alt text.
-- Images should have a sensible fallback if a file is missing.
+Do not fill fields with fabricated sizes, grades, packaging, certifications or seasonal availability. Keep these blank until the company confirms them.
 
 ## Quote form
 
-Keep the form practical for an importer:
-- Contact name
-- Company name (optional if not available)
-- Business email
-- Country
-- Product/category
-- Estimated quantity and unit (optional)
-- Product form: fresh, frozen, or processed
-- Packaging requirements (optional)
-- Message
+- Contact name and business email.
+- Company (optional), country, category (optional).
+- Estimated quantity and unit (optional).
+- Product form: fresh, frozen or processed (requested preference, not a promise of availability).
+- Packaging requirements (optional) and free-text message.
 
-Validate on the server, rate-limit public submission, protect against spam proportionately, and show a clear success/error message. Persist enquiries in the database. Email notification is only complete after SMTP is configured and delivery is tested. Never expose private enquiry data publicly.
+Validate on the server, rate-limit submissions, persist requests in the database and keep inbox data behind authentication. Email notification is not considered implemented until SMTP credentials and real delivery are tested.
 
-## Languages
+## General contact form
 
-- English is the default language.
-- Arabic is supported with proper RTL direction, translated navigation, labels, validation messages, and category content.
-- Language switching should preserve the current page/category when a translation exists; otherwise fall back gracefully.
-- Each language version needs a stable URL and correct SEO metadata.
+Name, email, optional company/phone, subject and message are saved separately from quote requests. A simple honeypot and request rate limit reduce basic spam; they are not a complete anti-bot service.
 
 ## Admin essentials
 
-Keep admin focused:
-- Sign-in protected by authentication.
-- Category list/create/edit/publish/unpublish/delete with validation.
-- Main image and gallery upload/removal.
-- Global site and SEO defaults.
-- Per-category SEO overrides.
-- Quote-request list and status update.
-- Basic contact/settings fields only when needed.
+- Sign-in protected by Laravel authentication.
+- Category create/edit/publish/unpublish/delete, main and gallery images.
+- Global SEO defaults and company contact fields.
+- Category SEO overrides.
+- Quote and contact inboxes with status updates.
 
-Do not build roles/permissions complexity for a single trusted administrator unless multiple staff roles become a real requirement.
+The first admin is created interactively with php artisan admin:create. No public registration or default admin password exists.
+
+## Performance and accuracy
+
+Prefer Blade SSR, native forms, cached static CSS and optimized company-approved images. The CSS hero illustration is a design placeholder, not a real farm photo. Do not present generic images as ENCAP-owned facilities. Lighthouse goals are targets and must be measured separately.

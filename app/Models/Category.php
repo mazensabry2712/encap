@@ -27,11 +27,4 @@ class Category extends Model
     {
         return $this->hasMany(QuoteRequest::class);
     }
-
-    public function getLocalizedAttribute(string $field): mixed
-    {
-        $locale = app()->getLocale();
-        return $this->{$field . '_' . ($locale === 'ar' ? 'ar' : 'en')}
-            ?: $this->{$field . '_en'};
-    }
 }

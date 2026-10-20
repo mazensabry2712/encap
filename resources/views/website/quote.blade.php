@@ -2,10 +2,11 @@
 @php($locale = request()->route('locale', 'en'))
 @section('title', __('Request a Quote | ENCAP'))
 @section('meta_description', __('Send ENCAP your agricultural sourcing and export requirements.'))
+@section('robots', 'noindex,follow')
 @section('content')
-<section class="page-head"><div class="container"><div class="eyebrow">{{ __('Business enquiries') }}</div><h1 style="font-size:clamp(36px,5vw,58px);line-height:1.1;margin:8px 0">{{ __('Request an export quote') }}</h1><p class="muted">{{ __('Share your requirements and our team can follow up with availability and next steps.') }}</p></div></section>
+<section class="page-head"><div class="container"><div class="eyebrow">{{ __('Business enquiries') }}</div><h1>{{ __('Request an export quote') }}</h1><p class="muted">{{ __('Share your requirements and our team can follow up with availability and next steps.') }}</p></div></section>
 <section class="section"><div class="container" style="max-width:820px">@if(session('success'))<div class="notice" role="status">{{ session('success') }}</div>@endif
-@if($errors->any())<div class="notice" style="background:#fff0ed;border-color:#e8b6ad" role="alert">{{ __('Please review the highlighted fields and try again.') }}<ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+@if($errors->any())<div class="notice error" role="alert">{{ __('Please review the highlighted fields and try again.') }}<ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 <form method="post" action="{{ route('quote.store',['locale'=>$locale]) }}">@csrf<div class="form-grid">
 <div class="field"><label for="contact_name">{{ __('Contact name') }} *</label><input id="contact_name" name="contact_name" value="{{ old('contact_name') }}" required maxlength="120" autocomplete="name"></div>
 <div class="field"><label for="company_name">{{ __('Company name') }}</label><input id="company_name" name="company_name" value="{{ old('company_name') }}" maxlength="160" autocomplete="organization"></div>

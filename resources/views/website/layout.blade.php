@@ -1,43 +1,54 @@
 <!doctype html>
 <html lang="{{ $locale ?? app()->getLocale() }}" dir="{{ ($locale ?? app()->getLocale()) === 'ar' ? 'rtl' : 'ltr' }}">
 @php($seoDefaults = \App\Models\SeoSetting::current())
+@php($requestPath = request()->path())
+@php($pathAfterLocale = preg_replace('/^(en|ar)(?=\/|$)/', '', $requestPath))
+@php($localizedSuffix = $pathAfterLocale ? '/' . ltrim($pathAfterLocale, '/') : '')
+@php($canonicalBase = rtrim(config('app.url'), '/'))
+@php($canonicalUrl = $canonicalBase . '/' . ($locale ?? 'en') . $localizedSuffix)
+@php($alternateEnglishUrl = $canonicalBase . '/en' . $localizedSuffix)
+@php($alternateArabicUrl = $canonicalBase . '/ar' . $localizedSuffix)
 @php($defaultTitle = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_title_ar : $seoDefaults->site_title_en)
 @php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : $seoDefaults->site_description_en)
+@php($ogImageUrl = $seoDefaults->default_og_image ? \Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image) : null)
+@php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', $defaultTitle)</title>
     <meta name="description" content="@yield('meta_description', $defaultDescription)">
-    <meta name="robots" content="@yield('robots', 'index,follow')">
-    <link rel="canonical" href="@yield('canonical', url()->current())">
-    <link rel="alternate" hreflang="en" href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => 'en'])) }}">
-    <link rel="alternate" hreflang="ar" href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => 'ar'])) }}">
-    <link rel="alternate" hreflang="x-default" href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => 'en'])) }}">
+    <meta name="robots" content="@yield('robots', $seoDefaults->default_robots)">
+    <link rel="canonical" href="@yield('canonical', $canonicalUrl)">
+    @if(!isset($category) || ($category->name_ar && $category->description_ar))
+        <link rel="alternate" hreflang="en" href="{{ $alternateEnglishUrl }}">
+        <link rel="alternate" hreflang="ar" href="{{ $alternateArabicUrl }}">
+        <link rel="alternate" hreflang="x-default" href="{{ $alternateEnglishUrl }}">
+    @endif
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ $seoDefaults->organization_name }}">
     <meta property="og:title" content="@yield('title', $defaultTitle)">
     <meta property="og:description" content="@yield('meta_description', $defaultDescription)">
-    <meta property="og:url" content="{{ url()->current() }}">
-    @if($seoDefaults->default_og_image)<meta property="og:image" content="{{ \Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image) }}">@endif
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    @if($ogImageUrl)<meta property="og:image" content="{{ $ogImageUrl }}">@endif
+    <meta name="twitter:card" content="{{ $ogImageUrl ? 'summary_large_image' : 'summary' }}">
     <meta name="theme-color" content="#153d2b">
-    <style>
-      :root{color-scheme:light;--green:#153d2b;--green2:#2e6847;--lime:#d5e7a4;--cream:#f7f7f0;--ink:#17241b;--muted:#647067;--line:#e2e7df}
-      *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}.container{width:min(1160px,calc(100% - 40px));margin-inline:auto}.topbar{background:var(--green);color:#eaf2e9;font-size:13px;padding:8px 0}.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 0}.brand{font-weight:900;letter-spacing:.16em;font-size:24px;color:var(--green)}.links{display:flex;align-items:center;gap:26px;font-size:14px;font-weight:650}.button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:4px;background:var(--green);color:#fff;padding:12px 19px;font-weight:700;cursor:pointer}.button.light{background:var(--lime);color:var(--green)}.hero{background:var(--green);color:#fff;padding:90px 0 86px;overflow:hidden}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800;color:#8cae84}.hero h1{font-size:clamp(40px,5.8vw,72px);line-height:1.04;letter-spacing:-.045em;margin:20px 0}.hero p{color:#d5e0d5;max-width:570px;font-size:18px}.hero-art{min-height:350px;border-radius:48% 48% 8px 8px;background:linear-gradient(145deg,#b4cc85,#436f43 48%,#244a34);position:relative;display:flex;align-items:end;padding:24px}.hero-art:after{content:"";position:absolute;inset:20px;border:1px solid #ffffff60;border-radius:48% 48% 4px 4px}.art-label{position:relative;z-index:1;background:#fff;color:var(--green);padding:16px 18px;border-radius:4px;font-weight:750}.section{padding:76px 0}.section.soft{background:var(--cream)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:30px}.section h2{font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.035em;margin:10px 0}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.category{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;transition:transform .2s,border-color .2s}.category:hover{transform:translateY(-3px);border-color:#a5b9a4}.category-image{height:210px;background:linear-gradient(135deg,#e8eddd,#a5bd8d);display:flex;align-items:end;padding:18px;color:var(--green);font-weight:800}.category-body{padding:20px}.category h3{margin:0 0 8px;font-size:21px}.arrow{color:var(--green2);font-weight:800}.split{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}.feature-panel{background:var(--lime);padding:38px;border-radius:6px}.feature-panel strong{font-size:24px;display:block;line-height:1.25}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}.stat{border-top:1px solid #c6d8b6;padding-top:12px}.stat b{display:block;font-size:20px}.cta{background:var(--lime);padding:38px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:24px}.footer{background:#102f22;color:#e8eee7;padding:48px 0}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}.footer a{color:#d3e1d1}.page-head{background:var(--cream);padding:54px 0}.breadcrumbs{font-size:13px;color:var(--muted);margin-bottom:12px}.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:54px 0}.product-visual{min-height:350px;border-radius:6px;background:linear-gradient(145deg,#e2ebd5,#6e9b65,#275438)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:14px;font-weight:700}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #cbd4ca;border-radius:4px;font:inherit;background:#fff}.field textarea{min-height:130px}.notice{padding:14px 16px;background:#e6f4e7;border:1px solid #b8d8bc;border-radius:4px;margin-bottom:20px}.pagination{display:flex;gap:10px;justify-content:center;padding:25px}.pagination a,.pagination span{padding:8px 12px;border:1px solid var(--line);border-radius:4px}@media(max-width:760px){.container{width:min(100% - 28px,1160px)}.nav{flex-wrap:wrap;padding:14px 0}.links{order:3;width:100%;overflow:auto;gap:18px;padding-bottom:4px}.hero{padding:55px 0}.hero-grid,.split,.product-detail{grid-template-columns:1fr}.hero-art{min-height:240px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.category-image{height:150px}.category-body{padding:14px}.section{padding:52px 0}.section-head,.cta{align-items:flex-start;flex-direction:column}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}}@media(max-width:460px){.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.hero h1{font-size:43px}.footer-grid{grid-template-columns:1fr}.footer-grid>div:first-child{grid-column:auto}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/website.css') }}">
+    <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>
     @stack('head')
 </head>
 <body>
-<div class="topbar"><div class="container">{{ __('Agricultural production · Sourcing · Processing · Export') }} <span style="float:inline-end"><a href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => ($locale ?? 'en') === 'en' ? 'ar' : 'en'])) }}">{{ ($locale ?? 'en') === 'en' ? 'العربية' : 'English' }}</a></span></div></div>
+<div class="topbar"><div class="container">{{ __('Agricultural production · Sourcing · Processing · Export') }} <span style="float:inline-end"><a href="{{ ($locale ?? 'en') === 'en' ? $alternateArabicUrl : $alternateEnglishUrl }}">{{ ($locale ?? 'en') === 'en' ? 'العربية' : 'English' }}</a></span></div></div>
 <header class="container nav">
     <a class="brand" href="{{ route('home', ['locale' => $locale ?? 'en']) }}">ENCAP<span style="color:#9bbd73">.</span></a>
-    <nav class="links" aria-label="Main navigation">
+    <nav class="links" aria-label="{{ __('Main navigation') }}">
         <a href="{{ route('home', ['locale' => $locale ?? 'en']) }}">{{ __('Home') }}</a>
+        <a href="{{ route('about', ['locale' => $locale ?? 'en']) }}">{{ __('About') }}</a>
         <a href="{{ route('products.index', ['locale' => $locale ?? 'en']) }}">{{ __('Products') }}</a>
-        <a href="{{ route('quote.create', ['locale' => $locale ?? 'en']) }}">{{ __('Request a Quote') }}</a>
+        <a href="{{ route('contact', ['locale' => $locale ?? 'en']) }}">{{ __('Contact') }}</a>
     </nav>
     <a class="button" href="{{ route('quote.create', ['locale' => $locale ?? 'en']) }}">{{ __('Talk to our team') }} ↗</a>
 </header>
 <main>@yield('content')</main>
-<footer class="footer"><div class="container footer-grid"><div><a class="brand" style="color:white" href="{{ route('home',['locale'=>$locale ?? 'en']) }}">ENCAP.</a><p style="max-width:400px;color:#c6d7c7">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p></div><div><b>{{ __('Explore') }}</b><p><a href="{{ route('products.index',['locale'=>$locale ?? 'en']) }}">{{ __('Our Products') }}</a></p><p><a href="{{ route('quote.create',['locale'=>$locale ?? 'en']) }}">{{ __('Request a Quote') }}</a></p></div><div><b>{{ __('Our approach') }}</b><p>{{ __('Production') }}</p><p>{{ __('Sourcing') }}</p><p>{{ __('Processing & Export') }}</p><p><a href="{{ route('admin.login') }}">Admin</a></p></div></div><div class="container" style="border-top:1px solid #ffffff25;margin-top:30px;padding-top:18px;font-size:13px;color:#b9cbbb">© {{ date('Y') }} ENCAP. {{ __('All rights reserved.') }}</div></footer>
+<footer class="footer"><div class="container footer-grid"><div><a class="brand" style="color:white" href="{{ route('home',['locale'=>$locale ?? 'en']) }}">ENCAP.</a><p style="max-width:400px;color:#c6d7c7">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p></div><div><b>{{ __('Explore') }}</b><div class="footer-links"><a href="{{ route('about',['locale'=>$locale ?? 'en']) }}">{{ __('About') }}</a><a href="{{ route('farms',['locale'=>$locale ?? 'en']) }}">{{ __('Farms & Production') }}</a><a href="{{ route('quality',['locale'=>$locale ?? 'en']) }}">{{ __('Quality & Processing') }}</a><a href="{{ route('export',['locale'=>$locale ?? 'en']) }}">{{ __('Export') }}</a></div></div><div><b>{{ __('Products & contact') }}</b><div class="footer-links"><a href="{{ route('products.index',['locale'=>$locale ?? 'en']) }}">{{ __('Our Products') }}</a><a href="{{ route('gallery',['locale'=>$locale ?? 'en']) }}">{{ __('Gallery') }}</a><a href="{{ route('contact',['locale'=>$locale ?? 'en']) }}">{{ __('Contact') }}</a><a href="{{ route('quote.create',['locale'=>$locale ?? 'en']) }}">{{ __('Request a Quote') }}</a><a href="{{ route('admin.login') }}">Admin</a></div></div></div><div class="container" style="border-top:1px solid #ffffff25;margin-top:30px;padding-top:18px;font-size:13px;color:#b9cbbb">© {{ date('Y') }} ENCAP. {{ __('All rights reserved.') }}</div></footer>
 </body>
 </html>

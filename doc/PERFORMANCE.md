@@ -1,66 +1,58 @@
 # Performance and Smoothness
 
-Speed is a core requirement, not a late polishing task. Use the simplest implementation that meets the targets below. Measure real output instead of assuming a page is fast because it has little JavaScript.
+Speed is a core requirement, not a final polish task. These are implementation choices and measurement targets; a score is not considered achieved until it has been measured.
 
-## Main principles
+## Current implementation choices
 
-1. **Server-render with Blade.** Avoid SPA frameworks and large JavaScript dependencies.
-2. **Keep JavaScript minimal.** Use native links/forms and CSS for most interactions. Add small JavaScript only where it materially improves the experience (for example, a category image gallery).
-3. **Optimize images first.** Use appropriately sized WebP/AVIF where supported, preserve useful quality, define width/height or aspect ratio, and never load full-resolution originals for small cards.
-4. **Lazy-load below-the-fold images.** Do not lazy-load the main above-the-fold/LCP image; prioritize it appropriately.
-5. **Avoid layout shifts.** Reserve image dimensions, keep card heights consistent, and avoid injecting content above visible content after page load.
-6. **Keep requests low.** Bundle/minify CSS and JS for production, avoid duplicate libraries, and use local assets where practical.
-7. **Use caching sensibly.** Cache static assets with versioned filenames and long-lived browser cache headers. Add Laravel caching only where it helps and can be invalidated safely.
-8. **Keep database work lean.** Paginate growing lists, select only needed fields, avoid N+1 queries, and index real lookup/filter columns when justified.
-9. **Avoid third-party scripts by default.** Add analytics, maps, chat widgets, or remote fonts only when approved and necessary.
-10. **Protect perceived smoothness.** Clear hover/focus states, responsive navigation, no oversized animations, no forced scroll effects, and respect reduced-motion preferences.
+- Blade server-side rendering for the website; no SPA framework or client-side router.
+- Native links and forms for navigation and submissions.
+- Shared CSS in public/css/website.css, allowing the browser to cache styling independently of page HTML.
+- No third-party font, analytics, chat or map scripts by default.
+- Homepage and product listing query only published categories and cap the homepage list at ten items. Product listings paginate.
+- Admin lists paginate; quote requests eager-load their category relationship.
+- Category and gallery images reserve dimensions and lazy-load below-the-fold images. The primary category image is not lazy-loaded.
+- Reduced-motion preference and visible keyboard focus states are supported.
+- Metadata defaults are cached briefly and explicitly invalidated after admin changes.
+- No image-processing dependency or thumbnail pipeline has been added yet; administrators should upload optimized, appropriately sized source images.
+
+## Principles
+
+1. Prefer simple server-rendered HTML over JavaScript-heavy interactions.
+2. Use appropriately sized WebP/AVIF/JPEG images; never upload unnecessarily huge originals for small cards.
+3. Keep image width/height or aspect ratio stable to reduce layout shift.
+4. Avoid loading all gallery images on the initial category page.
+5. Keep database queries predictable and paginate growing lists.
+6. Add long-lived cache headers for versioned/static files at the web server/CDN level where supported.
+7. Avoid speculative abstractions and dependencies that do not materially improve measured behavior.
+8. Test on mobile widths and respect reduced-motion settings.
 
 ## Practical targets
 
-Targets are goals to measure on production-like builds, not guarantees for every device/network:
+These are targets rather than current verified results:
 - Lighthouse Performance: aim for 90+ on key public pages in a consistent test environment.
-- Core Web Vitals field goals: LCP <= 2.5s, INP <= 200ms, CLS <= 0.1 at the 75th percentile when sufficient real-user data exists.
-- Avoid shipping unnecessary frontend JavaScript; establish and review the actual production bundle size.
-- Main category page should not download every full-size gallery image at once.
+- Core Web Vitals field goals when sufficient real-user data exists: LCP <= 2.5s, INP <= 200ms and CLS <= 0.1 at the 75th percentile.
+- No avoidable blocking JavaScript for core content/navigation.
 - No horizontal overflow at common mobile widths.
-- Main content should remain readable and usable if non-essential JavaScript fails.
+- No major layout shift during initial render.
+- No N+1 query on the public category listing/detail routes.
 
 ## Image delivery
 
-- Store uploads using Laravel's supported filesystem configuration.
-- Validate file type and size on the server; do not trust the filename or browser MIME type alone.
-- Create appropriately sized variants/thumbnails if the hosting environment supports reliable image processing. Do not add a complicated image-processing pipeline unless the volume justifies it.
-- Add alt text; use empty alt text only for purely decorative images.
-- Avoid remote image hotlinking for production content.
-- Use real ENCAP images when available. Clearly treat placeholder/reference images as placeholders until replaced.
+- Upload only company-approved imagery or label temporary illustrations clearly.
+- Validate image type and size on the server.
+- Configure Laravel's public disk/storage link before expecting uploaded images to be visible.
+- Use meaningful alt text. Keep actual ENCAP farm/packing/export photography separate from generic placeholders.
+- A responsive image/thumbnail pipeline may be added later if image volume or field measurements justify it.
 
-## Laravel production checks
+## Production checks
 
-When the host is configured for production, confirm:
-- `APP_DEBUG=false`
-- production environment variables are not committed
-- Composer dependencies are installed for production
-- built frontend assets exist and are referenced correctly
-- `php artisan config:cache`, `route:cache`, and `view:cache` work with the actual routes/config (run only as part of an approved deployment process)
-- `storage` and cache directories have appropriate permissions
-- logs are checked after smoke tests
+Only during an approved deployment:
+- Confirm production environment settings and APP_DEBUG=false.
+- Install production Composer dependencies, build frontend assets if required, and review route/config/view cache behavior.
+- Confirm storage permissions and check logs after smoke tests.
+- Use the configured trusted APP_URL for canonical links and sitemap output.
+- Do not run destructive commands or unreviewed migrations on production.
 
-Do not run destructive commands or change production settings blindly. Test first and use a rollback plan.
+## Measurement checklist
 
-## How to measure
-
-- Test Home, Products, a Category Detail, and Contact/Quote pages at mobile and desktop sizes.
-- Run Lighthouse in a consistent environment and record the date, URL, device mode, and scores.
-- Inspect the Network panel: image payload, number of requests, blocking resources, and JS/CSS transfer sizes.
-- Check browser console and Laravel logs.
-- Measure before/after significant performance changes; avoid optimizations with no measurable benefit.
-
-## Performance acceptance
-
-- No avoidable blocking JavaScript for core navigation/content.
-- Correct image dimensions and responsive image sizes.
-- Below-the-fold images lazy-load.
-- No major layout shift during initial render.
-- Core routes remain functional without JavaScript except explicitly progressive-enhancement features.
-- No known N+1 query on public category listing/detail routes.
-- Mobile navigation, category links, and quote submission feel immediate under normal conditions.
+Test Home, Products, a Category Detail and Contact/Quote pages on desktop and mobile. Record test date, URL, device mode and scores. Inspect network payloads, image transfers, CSS/JS size and browser console. Measure before/after substantial optimizations instead of assuming they improved performance.

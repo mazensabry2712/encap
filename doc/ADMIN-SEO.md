@@ -1,64 +1,61 @@
 # Admin Panel and Central SEO
 
-## Keep the admin small
+## Admin route map
 
-Use Laravel + Blade and the project's existing authentication/build setup. Do not introduce a large admin framework unless the existing project cannot meet the requirements simply.
+| Route | Purpose |
+|---|---|
+| /admin/login | Sign in |
+| /admin/categories | Category list and publication status |
+| /admin/categories/create | Create a category |
+| /admin/seo | Central SEO and company contact settings |
+| /admin/quote-requests | Export quote inbox |
+| /admin/contact-messages | General contact inbox |
 
-### Minimum admin features
-- Authentication-protected dashboard.
-- Category management: create, edit, publish/unpublish, delete, reorder.
-- Image management: main image and optional gallery.
-- Global SEO/site defaults.
-- Category-specific SEO overrides.
-- Quote-request inbox and status changes.
+All mutation forms use CSRF protection. Admin routes are behind Laravel authentication; guest requests are redirected to the admin sign-in page. Public account registration is not provided.
 
-Validate all writes server-side. Protect routes with authentication and authorization. Use CSRF protection and safe image validation. Escape rendered content by default in Blade; do not render user-supplied HTML unescaped.
+### Creating the first admin
+
+After environment setup and migrations, run this in an interactive terminal:
+
+    php artisan admin:create --name="ENCAP Admin" --email="your-real-admin-email"
+
+The command asks for a password twice, requires at least 12 characters, rejects a mismatch, and refuses to overwrite an existing account. Never put the password in Git, a command-line option, or documentation. No production user should be created by automatically seeding a default password.
+
+## Category management
+
+Categories have English/Arabic names and descriptions, a unique slug, an optional main image and image gallery, formats and packaging fields, publication status and display order, plus English/Arabic SEO overrides. Uploaded files are validated by type and size and stored on Laravel's public disk. Configure the public storage link before using uploaded imagery.
+
+The catalogue is intentionally category-led for now. Do not add inventory, pricing, variants, stock or order management until the real company workflow requires it.
+
+## Enquiry handling
+
+Export quote requests and general contact messages are stored separately. Public form fields are server-validated, public POST routes have a rate limit, and the general contact form includes a honeypot. Admin inboxes provide status updates. No claim of email notification should be made until SMTP credentials and delivery are configured and tested.
 
 ## Central SEO behavior
 
-Central SEO means one shared Blade component/layout path that renders metadata consistently, with global defaults and optional per-page overrides. It does not mean creating a complex SEO subsystem.
+A single shared Blade layout renders global metadata consistently. Global settings include:
+- Default site title and meta description in English and Arabic.
+- Default robots directive.
+- Organization name and official URL.
+- Default social-sharing image.
+- Contact email, phone, WhatsApp number and address in both languages.
 
-### Global defaults
-- Site name
-- Default title
-- Default meta description
-- Default social-sharing image
-- Default robots directive
-- Canonical base URL from trusted app configuration
+Category pages support their own title and description overrides. Blank category metadata falls back to sensible category-specific or site defaults. Store the official production URL in APP_URL; canonical and sitemap URLs use that configured base rather than untrusted request host headers.
 
-### Page/category overrides
-- SEO title
-- Meta description
-- Optional social image
-- Optional robots override only where justified
+### Technical behavior
 
-If an override is empty, use the global default or a sensible title derived from the page. Prevent duplicate title/description tags by rendering them in one shared layout/component.
+- Canonical, Open Graph and Twitter-card metadata are emitted in server-rendered HTML.
+- Organization and WebSite JSON-LD use configured organization data; category detail pages emit breadcrumb JSON-LD. No fake Product pricing, availability, reviews or certifications are generated.
+- /sitemap.xml includes public indexable routes and published categories, with category alternates only when the Arabic category content exists.
+- /robots.txt is served by Laravel and points to the sitemap. The old static starter public/robots.txt is removed so it cannot shadow the dynamic route on common web servers.
+- Quote form paths are marked noindex,follow and disallowed in robots.txt; admin endpoints are never listed in the sitemap.
+- Arabic pages use RTL direction and localized content where available; language alternatives use stable locale-prefixed URLs.
+- All Blade content is escaped by default.
 
-### Technical SEO checklist
-- Unique, meaningful title and description for Home, About, Products, and each published category.
-- Canonical URLs use the configured canonical domain and correct language path.
-- XML sitemap includes only published, indexable public pages/categories.
-- `robots.txt` points to the sitemap and does not expose admin or private paths as indexable content.
-- Open Graph and Twitter-compatible metadata for sharing.
-- Breadcrumbs on category detail pages.
-- Organization/WebSite/BreadcrumbList structured data only with accurate values.
-- Product schema only if page content and business model genuinely qualify; do not invent prices, availability, or product offers.
-- Arabic/English pages use correct language attributes, RTL/LTR direction, and reciprocal `hreflang` links when both translations exist.
-- Uploaded images have descriptive alt text.
-- 404 pages return an actual HTTP 404 status.
+## Security and release notes
 
-Do not add fake reviews, fake ratings, unsupported certifications, or unverified claims to structured data.
-
-## Admin safety
-- Never expose admin routes in navigation or sitemap.
-- Require authentication for all admin mutations.
-- Rate-limit sign-in and public enquiry forms appropriately.
-- Keep credentials and API keys in environment/config, not in source control.
-- Do not show debug details or stack traces to visitors in production.
-
-## SEO acceptance
-- Metadata appears in server-rendered HTML, not only after JavaScript runs.
-- No duplicate canonical/title/description tags.
-- Each published category has a stable URL and its own metadata.
-- Unpublished categories are not publicly reachable as indexable content and are excluded from the sitemap.
-- Sitemap output is valid XML and includes only canonical public URLs.
+- Keep APP_DEBUG=false in production and never commit a populated .env.
+- Review migrations and back up the target database before production schema changes.
+- Run tests and the production asset build before deploying.
+- Confirm uploaded-image permissions, logs, canonical URLs and sitemap on the actual domain after deployment.
+- Admin currently uses a single trusted-user model. Add roles/policies only if staff-level permissions become a requirement.

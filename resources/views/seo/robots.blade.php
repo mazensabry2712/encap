@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 Disallow: /admin
-Disallow: /login
-Disallow: /register
+Disallow: /en/request-a-quote
+Disallow: /ar/request-a-quote
 
-Sitemap: {{ url('/sitemap.xml') }}
+Sitemap: {{ rtrim(config('app.url'), '/') }}/sitemap.xml

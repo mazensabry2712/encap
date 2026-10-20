@@ -27,6 +27,7 @@ class CategoryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validated($request);
+        unset($data['remove_gallery']);
         $data['image'] = $request->file('image')?->store('categories', 'public');
         $data['gallery'] = collect($request->file('gallery', []))
             ->map(fn ($file) => $file->store('categories/gallery', 'public'))->all();
@@ -49,23 +50,27 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category): RedirectResponse
     {
         $data = $this->validated($request, $category);
-        if ($request->hasFile('image')) {
-            if ($category->image) {
-                Storage::disk('public')->delete($category->image);
-            }
-            $data['image'] = $request->file('image')->store('categories', 'public');
+        unset($data['remove_gallery']);
+
+        $oldImage = $category->image;
+        $newImage = $request->file('image')?->store('categories', 'public');
+        if ($newImage) {
+            $data['image'] = $newImage;
         }
 
         $gallery = $category->gallery ?? [];
+        $removedPaths = [];
         foreach ($request->input('remove_gallery', []) as $remove) {
-            if (isset($gallery[$remove])) {
-                Storage::disk('public')->delete($gallery[$remove]);
+            if (array_key_exists($remove, $gallery)) {
+                $removedPaths[] = $gallery[$remove];
                 unset($gallery[$remove]);
             }
         }
+
         foreach ($request->file('gallery', []) as $file) {
             $gallery[] = $file->store('categories/gallery', 'public');
         }
+
         $data['gallery'] = array_values($gallery);
         $data['is_published'] = $request->boolean('is_published');
         $data['available_forms'] = array_values(array_intersect(
@@ -75,18 +80,20 @@ class CategoryController extends Controller
 
         $category->update($data);
 
+        $pathsToDelete = $removedPaths;
+        if ($newImage && $oldImage) {
+            $pathsToDelete[] = $oldImage;
+        }
+        Storage::disk('public')->delete($pathsToDelete);
+
         return redirect()->route('admin.categories.index')->with('success', __('Category updated.'));
     }
 
     public function destroy(Category $category): RedirectResponse
     {
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
-        }
-        foreach ($category->gallery ?? [] as $image) {
-            Storage::disk('public')->delete($image);
-        }
+        $pathsToDelete = array_filter(array_merge([$category->image], $category->gallery ?? []));
         $category->delete();
+        Storage::disk('public')->delete($pathsToDelete);
 
         return back()->with('success', __('Category deleted.'));
     }
@@ -111,6 +118,8 @@ class CategoryController extends Controller
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'gallery' => ['nullable', 'array', 'max:12'],
             'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            'remove_gallery' => ['nullable', 'array'],
+            'remove_gallery.*' => ['integer', 'min:0'],
             'available_forms' => ['nullable', 'array'],
             'available_forms.*' => ['in:Fresh,Frozen,Processed'],
         ]);

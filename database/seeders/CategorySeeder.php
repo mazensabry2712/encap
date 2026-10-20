@@ -32,7 +32,7 @@ class CategorySeeder extends Seeder
                     'short_description_ar' => 'تواصل مع ENCAP لمعرفة التوافر الحالي ومواصفات التصدير.',
                     'description_en' => 'Product availability, specifications, grades and packaging are confirmed for each buyer enquiry.',
                     'description_ar' => 'يتم تأكيد التوافر والمواصفات والدرجات والتعبئة وفقًا لكل طلب من المشترين.',
-                    'available_forms' => ['Fresh', 'Frozen', 'Processed'],
+                    'available_forms' => [],
                     'is_published' => true,
                     'sort_order' => $index + 1,
                 ]

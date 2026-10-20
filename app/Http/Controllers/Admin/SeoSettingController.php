@@ -7,6 +7,7 @@ use App\Models\SeoSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class SeoSettingController extends Controller
@@ -24,21 +25,32 @@ class SeoSettingController extends Controller
             'site_title_ar' => ['required', 'string', 'max:255'],
             'site_description_en' => ['nullable', 'string', 'max:500'],
             'site_description_ar' => ['nullable', 'string', 'max:500'],
+            'default_robots' => ['required', Rule::in([
+                'index,follow', 'noindex,follow', 'noindex,nofollow', 'index,nofollow',
+            ])],
             'organization_name' => ['required', 'string', 'max:190'],
             'organization_url' => ['nullable', 'url', 'max:255'],
+            'contact_email' => ['nullable', 'email:rfc', 'max:190'],
+            'contact_phone' => ['nullable', 'string', 'max:50'],
+            'whatsapp_number' => ['nullable', 'string', 'max:50'],
+            'address_en' => ['nullable', 'string', 'max:255'],
+            'address_ar' => ['nullable', 'string', 'max:255'],
             'default_og_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
         ]);
 
+        $oldImage = $settings->default_og_image;
         if ($request->hasFile('default_og_image')) {
-            if ($settings->default_og_image) {
-                Storage::disk('public')->delete($settings->default_og_image);
-            }
             $data['default_og_image'] = $request->file('default_og_image')->store('seo', 'public');
         } else {
             unset($data['default_og_image']);
         }
 
-        $settings->update($data);
+        $settings->fill($data)->save();
+
+        if ($request->hasFile('default_og_image') && $oldImage) {
+            Storage::disk('public')->delete($oldImage);
+        }
+
         SeoSetting::clearCache();
 
         return back()->with('success', __('Central SEO settings saved.'));

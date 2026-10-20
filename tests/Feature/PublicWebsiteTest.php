@@ -1,0 +1,112 @@
+<?php
+
+use App\Models\Category;
+use App\Models\ContactMessage;
+use App\Models\QuoteRequest;
+use App\Models\SeoSetting;
+
+test('the home page uses central defaults without writing settings during a public read', function () {
+    $this->get('/en')->assertOk()->assertSee('ENCAP');
+
+    expect(SeoSetting::query()->count())->toBe(0);
+});
+
+test('bilingual company pages render in the requested language', function () {
+    $this->get('/en/about')->assertOk()->assertSee('Agriculture with a clear route to market');
+    $this->get('/ar/about')->assertOk()->assertSee('dir="rtl"', false)->assertSee('عن ENCAP');
+});
+
+test('unpublished categories are not publicly accessible', function () {
+    $category = Category::query()->create([
+        'name_en' => 'Draft Mango',
+        'name_ar' => 'مانجو مسودة',
+        'slug' => 'draft-mango',
+        'is_published' => false,
+    ]);
+
+    $this->get(route('products.show', ['locale' => 'en', 'category' => $category->slug]))
+        ->assertNotFound();
+});
+
+test('a published category has a stable detail page and category title', function () {
+    $category = Category::query()->create([
+        'name_en' => 'Mango',
+        'name_ar' => 'مانجو',
+        'slug' => 'mango',
+        'short_description_en' => 'Egyptian mango sourcing enquiries.',
+        'short_description_ar' => 'طلبات توريد المانجو المصري.',
+        'description_en' => 'Confirm current availability with ENCAP.',
+        'description_ar' => 'تأكد من التوافر الحالي مع ENCAP.',
+        'is_published' => true,
+    ]);
+
+    $this->get(route('products.show', ['locale' => 'en', 'category' => 'mango']))
+        ->assertOk()
+        ->assertSee('<title>Mango | ENCAP</title>', false)
+        ->assertSee('Confirm current availability with ENCAP.');
+});
+
+test('sitemap only includes published categories and is xml', function () {
+    Category::query()->create(['name_en' => 'Visible Mango', 'slug' => 'visible-mango', 'is_published' => true]);
+    Category::query()->create(['name_en' => 'Hidden Mango', 'slug' => 'hidden-mango', 'is_published' => false]);
+
+    $this->get('/sitemap.xml')
+        ->assertOk()
+        ->assertHeader('content-type', 'application/xml; charset=UTF-8')
+        ->assertSee('/en/products/visible-mango')
+        ->assertDontSee('/en/products/hidden-mango');
+});
+
+test('quote enquiry is validated and saved for the admin inbox', function () {
+    $category = Category::query()->create([
+        'name_en' => 'Citrus',
+        'slug' => 'citrus',
+        'is_published' => true,
+    ]);
+
+    $response = $this->post('/en/request-a-quote', [
+        'category_id' => $category->id,
+        'contact_name' => 'Test Buyer',
+        'company_name' => 'Example Import GmbH',
+        'email' => 'buyer@example.test',
+        'country' => 'Germany',
+        'quantity' => '20',
+        'quantity_unit' => 'metric tons',
+        'product_form' => 'fresh',
+        'message' => 'Please share current availability and export terms.',
+    ]);
+
+    $response->assertRedirect()->assertSessionHas('success');
+    $this->assertDatabaseHas('quote_requests', [
+        'email' => 'buyer@example.test',
+        'category_id' => $category->id,
+        'status' => 'new',
+    ]);
+    expect(QuoteRequest::query()->count())->toBe(1);
+});
+
+test('contact message is saved and the honeypot blocks submissions', function () {
+    $this->post('/en/contact', [
+        'name' => 'Test Contact',
+        'email' => 'contact@example.test',
+        'subject' => 'Supply enquiry',
+        'message' => 'Please contact me about your product range.',
+        'website' => '',
+    ])->assertRedirect()->assertSessionHas('success');
+
+    $this->assertDatabaseHas('contact_messages', [
+        'email' => 'contact@example.test',
+        'status' => 'new',
+    ]);
+    expect(ContactMessage::query()->count())->toBe(1);
+
+    $this->post('/en/contact', [
+        'name' => 'Spam Bot',
+        'email' => 'spam@example.test',
+        'subject' => 'Spam',
+        'message' => 'Promotional text.',
+        'website' => 'filled-by-bot',
+    ])->assertSessionHasErrors('website');
+
+    expect(ContactMessage::query()->count())->toBe(1);
+});
