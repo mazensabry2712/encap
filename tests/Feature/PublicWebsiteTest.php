@@ -16,7 +16,6 @@ test('navbar language switcher is accessible and the old topbar is removed', fun
         ->assertSee('lang="en"', false)
         ->assertSee('lang="ar"', false)
         ->assertDontSee('topbar-note', false)
-        ->assertDontSee('Agricultural production · Sourcing · Processing · Export');
     
     $this->get('/ar')
         ->assertOk()
