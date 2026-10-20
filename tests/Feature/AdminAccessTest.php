@@ -55,9 +55,10 @@ test('admin can save shared seo defaults and configured contact details', functi
     ]);
 
     $this->get('/en')->assertOk()->assertSee('<title>ENCAP Export Company</title>', false);
-    $this->get('/en/about')->assertOk()
-        ->assertSee('<title>ENCAP | About &amp; Importers</title>', false)
-        ->assertSee('<meta name="description" content="Learn how ENCAP connects Egyptian agricultural production and buyers.">', false);
+    $aboutResponse = $this->get('/en/about')->assertOk();
+    preg_match('/<title>(.*?)<\\/title>/s', $aboutResponse->getContent(), $titleMatch);
+    expect($titleMatch[1] ?? null)->toBe('ENCAP | About &amp; Importers');
+    $aboutResponse->assertSee('<meta name="description" content="Learn how ENCAP connects Egyptian agricultural production and buyers.">', false);
 });
 
 test('admin can update contact message status', function () {
