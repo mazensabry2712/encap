@@ -1,17 +1,24 @@
 <!doctype html>
 <html lang="{{ $locale ?? app()->getLocale() }}" dir="{{ ($locale ?? app()->getLocale()) === 'ar' ? 'rtl' : 'ltr' }}">
+@php($seoDefaults = \App\Models\SeoSetting::current())
+@php($defaultTitle = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_title_ar : $seoDefaults->site_title_en)
+@php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : $seoDefaults->site_description_en)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', config('app.name', 'ENCAP'))</title>
-    <meta name="description" content="@yield('meta_description', 'ENCAP agricultural production, sourcing, processing and export from Egypt to global markets.')">
+    <title>@yield('title', $defaultTitle)</title>
+    <meta name="description" content="@yield('meta_description', $defaultDescription)">
     <meta name="robots" content="@yield('robots', 'index,follow')">
     <link rel="canonical" href="@yield('canonical', url()->current())">
+    <link rel="alternate" hreflang="en" href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => 'en'])) }}">
+    <link rel="alternate" hreflang="ar" href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => 'ar'])) }}">
+    <link rel="alternate" hreflang="x-default" href="{{ route(Route::currentRouteName(), array_merge(request()->route()->parameters(), ['locale' => 'en'])) }}">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="ENCAP">
-    <meta property="og:title" content="@yield('title', 'ENCAP | From Our Farms to Global Markets')">
-    <meta property="og:description" content="@yield('meta_description', 'Agricultural production, sourcing, processing and export from Egypt.')">
+    <meta property="og:site_name" content="{{ $seoDefaults->organization_name }}">
+    <meta property="og:title" content="@yield('title', $defaultTitle)">
+    <meta property="og:description" content="@yield('meta_description', $defaultDescription)">
     <meta property="og:url" content="{{ url()->current() }}">
+    @if($seoDefaults->default_og_image)<meta property="og:image" content="{{ \Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image) }}">@endif
     <meta name="theme-color" content="#153d2b">
     <style>
       :root{color-scheme:light;--green:#153d2b;--green2:#2e6847;--lime:#d5e7a4;--cream:#f7f7f0;--ink:#17241b;--muted:#647067;--line:#e2e7df}
@@ -31,6 +38,6 @@
     <a class="button" href="{{ route('quote.create', ['locale' => $locale ?? 'en']) }}">{{ __('Talk to our team') }} ↗</a>
 </header>
 <main>@yield('content')</main>
-<footer class="footer"><div class="container footer-grid"><div><a class="brand" style="color:white" href="{{ route('home',['locale'=>$locale ?? 'en']) }}">ENCAP.</a><p style="max-width:400px;color:#c6d7c7">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p></div><div><b>{{ __('Explore') }}</b><p><a href="{{ route('products.index',['locale'=>$locale ?? 'en']) }}">{{ __('Our Products') }}</a></p><p><a href="{{ route('quote.create',['locale'=>$locale ?? 'en']) }}">{{ __('Request a Quote') }}</a></p></div><div><b>{{ __('Our approach') }}</b><p>{{ __('Production') }}</p><p>{{ __('Sourcing') }}</p><p>{{ __('Processing & Export') }}</p></div></div><div class="container" style="border-top:1px solid #ffffff25;margin-top:30px;padding-top:18px;font-size:13px;color:#b9cbbb">© {{ date('Y') }} ENCAP. {{ __('All rights reserved.') }}</div></footer>
+<footer class="footer"><div class="container footer-grid"><div><a class="brand" style="color:white" href="{{ route('home',['locale'=>$locale ?? 'en']) }}">ENCAP.</a><p style="max-width:400px;color:#c6d7c7">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p></div><div><b>{{ __('Explore') }}</b><p><a href="{{ route('products.index',['locale'=>$locale ?? 'en']) }}">{{ __('Our Products') }}</a></p><p><a href="{{ route('quote.create',['locale'=>$locale ?? 'en']) }}">{{ __('Request a Quote') }}</a></p></div><div><b>{{ __('Our approach') }}</b><p>{{ __('Production') }}</p><p>{{ __('Sourcing') }}</p><p>{{ __('Processing & Export') }}</p><p><a href="{{ route('admin.login') }}">Admin</a></p></div></div><div class="container" style="border-top:1px solid #ffffff25;margin-top:30px;padding-top:18px;font-size:13px;color:#b9cbbb">© {{ date('Y') }} ENCAP. {{ __('All rights reserved.') }}</div></footer>
 </body>
 </html>
