@@ -15,7 +15,7 @@ test('navbar language switcher is accessible and the old topbar is removed', fun
         ->assertSee('js/language-switcher.js', false)
         ->assertSee('lang="en"', false)
         ->assertSee('lang="ar"', false)
-        ->assertDontSee('topbar-note', false)
+        ->assertDontSee('topbar-note', false);
     
     $this->get('/ar')
         ->assertOk()
