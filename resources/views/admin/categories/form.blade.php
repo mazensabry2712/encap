@@ -15,7 +15,7 @@
 <div class="admin-field"><label for="packaging_en">{{ __('Packaging (English)') }}</label><input id="packaging_en" name="packaging_en" maxlength="255" value="{{ old('packaging_en', $category->packaging_en) }}"></div><div class="admin-field"><label for="packaging_ar">{{ __('Packaging (Arabic)') }}</label><input id="packaging_ar" name="packaging_ar" maxlength="255" dir="auto" value="{{ old('packaging_ar', $category->packaging_ar) }}"></div>
 <div class="admin-field full"><label>{{ __('Available formats') }}</label><div class="admin-inline">@foreach(['Fresh', 'Frozen', 'Processed'] as $format)<label class="admin-check"><input type="checkbox" name="available_forms[]" value="{{ $format }}" @checked(in_array($format, old('available_forms', $category->available_forms ?? ['Fresh', 'Frozen', 'Processed'])))>{{ __($format) }}</label>@endforeach</div></div>
 <h2 class="admin-section-title">{{ __('Catalogue imagery') }}</h2>
-<div class="admin-field full admin-primary-image-field" data-main-image-manager>
+<div class="admin-field full admin-primary-image-field" data-main-image-manager data-text-no-replacement="{{ __('No replacement selected.') }}" data-text-replacement-selected="{{ __('New image selected: :filename') }}">
     <div class="admin-media-field-heading">
         <div><label for="image">{{ __('Main display image') }}</label><p>{{ __('This is the first image visitors see on the product page and catalogue.') }}</p></div>
         <span class="admin-media-tag">{{ __('Primary image') }}</span>
@@ -38,7 +38,7 @@
 </div>
 
 <div class="admin-field full">
-    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12">
+    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12" data-text-no-files="{{ __('No new images selected.') }}" data-text-selected="{{ __(':count images selected.') }}" data-text-available="{{ __(':count gallery slots available.') }}" data-text-too-many="{{ __('Too many images selected. Mark current images for removal or choose fewer files.') }}" data-text-full="{{ __('The gallery has reached the 12-image limit.') }}">
         <div class="admin-media-field-heading admin-gallery-heading">
             <div><label>{{ __('Additional product images') }}</label><p>{{ __('Add detail shots, packaging, harvest and product variations. These appear in a horizontal gallery on the public product page.') }}</p></div>
             <span class="admin-gallery-total" data-gallery-total>{{ count($category->gallery ?? []) }} / 12</span>
