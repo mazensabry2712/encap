@@ -27,3 +27,18 @@ Performance and accessibility improvements are goals, not measured results. Befo
 4. Check image loading, navigation, form validation/error messages and RTL layout.
 5. Run Lighthouse or equivalent checks on the deployed environment and record measured results.
 6. Recheck after adding real photography or changing fonts/assets.
+
+
+## Interface behavior added
+
+- One standalone public/js/encap-interactions.js file handles scroll reveals, a light sticky-header state, mobile menu close behavior, and product-gallery thumbnail selection.
+- Scroll effects remain disabled when prefers-reduced-motion: reduce is enabled, and gracefully degrade when IntersectionObserver is not supported.
+- Product catalog images use fixed dimensions and lazy loading. The home hero is the only high-priority image.
+- Product gallery and page layout work without JavaScript; JavaScript enhances selected images and motion, not navigation or enquiry submission.
+- Fonts load via preconnect and one Google Fonts stylesheet. If network delivery is unreliable in the production market, assess self-hosting only after measuring.
+
+## Verification
+
+- CI checks JavaScript syntax and runs npm run build after Laravel feature tests pass.
+- Test actual pages at 1440px, 1024px, 768px and 390px widths, in English/LTR and Arabic/RTL.
+- Measure Lighthouse/Core Web Vitals only on a deployed build; do not infer performance scores from successful asset compilation.

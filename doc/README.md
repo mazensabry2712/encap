@@ -67,6 +67,7 @@ Use server-rendered content, low request count, a separately cacheable CSS file,
 
 ## Documentation index
 
+- Visual design system: DESIGN-SYSTEM.md
 - Website scope and content: WEBSITE-SCOPE.md
 - Performance and smoothness: PERFORMANCE.md
 - Admin and central SEO: ADMIN-SEO.md

@@ -64,3 +64,15 @@ Use this for each meaningful change. Mark an item complete only after it has act
 ## Status convention
 
 Report checks as Passed, Failed, or Not run. Do not claim CI, Lighthouse, deployment, or email delivery succeeded without actual evidence.
+
+
+## Visual QA — current ENCAP redesign
+
+- [ ] Home hero and product-card imagery reviewed on desktop and mobile.
+- [ ] Category index numbers remain correct on paginated product pages.
+- [ ] Product gallery buttons update the main image and expose the selected state.
+- [ ] Gallery cards navigate to the correct published product category.
+- [ ] Arabic RTL layout verified for navigation, buttons, cards, product formats and forms.
+- [ ] Reduced-motion behavior verified with the operating-system preference enabled.
+- [ ] No horizontal scrolling at 390px mobile width.
+- [ ] Production deploy and real-world image loading verified separately from CI.
