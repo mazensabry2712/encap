@@ -24,7 +24,6 @@ Route::prefix('{locale}')->group(function () {
     Route::get('/packing-stations', [WebsiteController::class, 'contentPage'])->defaults('page', 'packing-stations')->name('packing-stations');
     Route::get('/quality', [WebsiteController::class, 'contentPage'])->defaults('page', 'quality')->name('quality');
     Route::get('/export', [WebsiteController::class, 'contentPage'])->defaults('page', 'export')->name('export');
-    Route::get('/gallery', [WebsiteController::class, 'contentPage'])->defaults('page', 'gallery')->name('gallery');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
     Route::post('/contact', [WebsiteController::class, 'storeContact'])
         ->middleware('throttle:5,1')->name('contact.store');
