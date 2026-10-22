@@ -10,7 +10,7 @@
             <p>{{ __('Manage the public catalogue, review export enquiries, and keep your website information current.') }}</p>
         </div>
         <div class="admin-dashboard-primary-actions">
-            <a class="admin-btn" href="{{ route('admin.categories.create') }}"><span aria-hidden="true">＋</span> Add product category</a>
+            <a class="admin-btn" href="{{ route('admin.categories.create') }}"><span aria-hidden="true">＋</span> {{ __('Add product category') }}</a>
             <a class="admin-btn secondary" href="{{ route('home', ['locale' => 'en']) }}" target="_blank" rel="noopener">{{ __('View website') }} <span aria-hidden="true">↗</span></a>
         </div>
     </section>
@@ -27,14 +27,14 @@
             <span class="admin-stat-icon" aria-hidden="true">↗</span>
             <span class="admin-stat-label">{{ __('Export quote requests') }}</span>
             <strong class="admin-stat-value">{{ number_format($quoteRequestCount) }}</strong>
-            <span class="admin-stat-note"><b>{{ number_format($newQuoteRequestCount) }}</b> new {{ $newQuoteRequestCount === 1 ? 'request' : 'requests' }} to review</span>
+            <span class="admin-stat-note"><b>{{ number_format($newQuoteRequestCount) }}</b> new {{ __($newQuoteRequestCount === 1 ? 'request' : 'requests') }} {{ __('to review') }}</span>
             <span class="admin-stat-link">{{ __('Open enquiries') }} <span aria-hidden="true">→</span></span>
         </a>
         <a class="admin-stat-card" href="{{ route('admin.contact-messages.index') }}">
             <span class="admin-stat-icon" aria-hidden="true">✉</span>
             <span class="admin-stat-label">{{ __('Contact messages') }}</span>
             <strong class="admin-stat-value">{{ number_format($contactMessageCount) }}</strong>
-            <span class="admin-stat-note"><b>{{ number_format($newContactMessageCount) }}</b> new {{ $newContactMessageCount === 1 ? 'message' : 'messages' }}</span>
+            <span class="admin-stat-note"><b>{{ number_format($newContactMessageCount) }}</b> new {{ __($newContactMessageCount === 1 ? 'message' : 'messages') }}</span>
             <span class="admin-stat-link">{{ __('View inbox') }} <span aria-hidden="true">→</span></span>
         </a>
     </section>
@@ -87,7 +87,7 @@
                                 <small>{{ $item->company_name ?: __('General enquiry') }}</small>
                             </div>
                             <div class="admin-record-meta">
-                                <span class="admin-badge {{ $item->status }}">{{ ucfirst($item->status) }}</span>
+                                <span class="admin-badge {{ $item->status }}">{{ __(ucfirst($item->status)) }}</span>
                                 <time datetime="{{ $item->created_at->toIso8601String() }}">{{ $item->created_at->format('M j, Y') }}</time>
                             </div>
                         </article>
