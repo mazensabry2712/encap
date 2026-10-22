@@ -94,6 +94,23 @@ test('product catalogue uses numbered cards and links to category details', func
         ->assertSee('/en/products/catalogue-mango', false);
 });
 
+test('product gallery cards link to interactive category detail pages', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+
+    Category::query()->create([
+        'name_en' => 'Gallery Mango',
+        'name_ar' => 'مانجو المعرض',
+        'slug' => 'gallery-mango',
+        'image' => 'categories/gallery-mango.webp',
+        'is_published' => true,
+    ]);
+
+    $this->get('/en/gallery')
+        ->assertOk()
+        ->assertSee('class="gallery-card" data-tilt', false)
+        ->assertSee('/en/products/gallery-mango', false);
+});
+
 test('unpublished categories are not publicly accessible', function () {
     $category = Category::query()->create([
         'name_en' => 'Draft Mango',

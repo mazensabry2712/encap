@@ -35,6 +35,14 @@ Typography uses DM Sans for English and IBM Plex Sans Arabic for Arabic UI. Arab
 - Keyboard focus must remain visible on links, buttons and gallery thumbnails.
 - Keep JavaScript dependency-free for these small interactions.
 
+## CSS 3D and icon interactions
+
+- The homepage hero uses a CSS-built globe, orbit rings and floating icon tiles to create a dimensional agriculture/export illustration without loading a WebGL renderer.
+- A shared inline SVG symbol sprite keeps the icon system crisp, consistent and dependency-free.
+- Fine-pointer devices support gentle hero parallax and product/gallery card tilt. Touch devices do not get cursor-dependent behavior.
+- Hover effects are progressive enhancements; navigation remains native, and reduced-motion preferences disable the animated globe and tilt transitions.
+- Do not replace this lightweight layer with a 3D library until an actual, tested 3D asset is necessary and its bundle/performance cost is justified.
+
 ## Responsive checkpoints
 
 Review both locales at 1440px, 1024px, 768px and 390px. Confirm the hero hierarchy, card grid, product gallery, menu, form layouts, image crops and long Arabic strings. No page should require horizontal scrolling at mobile widths.
