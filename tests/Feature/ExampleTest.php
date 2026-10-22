@@ -40,3 +40,14 @@ test('contact messages validate required fields', function () {
         ->assertSessionHasErrors(['name', 'email', 'subject', 'message']);
 });
 
+test('quote form rejects submissions that fill the hidden spam-check field', function () {
+    $this->post('/en/request-a-quote', [
+        'contact_name' => 'Automated submission',
+        'email' => 'bot@example.com',
+        'country' => 'Egypt',
+        'message' => 'Unwanted automated message.',
+        'website' => 'filled-by-bot',
+    ])->assertSessionHasErrors('website');
+});
+
+
