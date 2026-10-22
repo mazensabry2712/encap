@@ -6,7 +6,7 @@ use Illuminate\\Http\\UploadedFile;
 use Illuminate\\Support\\Facades\\Storage;
 
 test('category editor presents an organized gallery manager with live image previews', function () {
-    Category::query()->create([
+    $category = Category::query()->create([
         'name_en' => 'Gallery Mango',
         'name_ar' => 'مانجو المعرض',
         'slug' => 'gallery-mango',
@@ -20,13 +20,13 @@ test('category editor presents an organized gallery manager with live image prev
     ]);
 
     $this->actingAs(User::factory()->create())
-        ->get(route('admin.categories.edit', 'gallery-mango'))
+        ->get(route('admin.categories.edit', $category))
         ->assertOk()
         ->assertSee('data-main-image-manager', false)
         ->assertSee('data-gallery-manager', false)
         ->assertSee('data-gallery-upload', false)
         ->assertSee('data-gallery-selection', false)
-        ->assertSee('data-gallery-remove', false)
+        ->assertSee('js-gallery-remove', false)
         ->assertSee('admin-gallery-manager.js', false)
         ->assertSee('data-gallery-total', false)
         ->assertSee('صور المنتج الإضافية');
