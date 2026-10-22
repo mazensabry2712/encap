@@ -201,9 +201,58 @@ test('the home page uses central defaults without writing settings during a publ
     expect(SeoSetting::query()->count())->toBe(0);
 });
 
-test('bilingual company pages render in the requested language', function () {
-    $this->get('/en/about')->assertOk()->assertSee('Agriculture with a clear route to market')->assertSee('content-story-brand', false)->assertSee('assets/favicone.png', false)->assertSee('encap-principles-grid', false)->assertSee('Our mission, vision & values');
-    $this->get('/ar/about')->assertOk()->assertSee('dir="rtl"', false)->assertSee('عن ENCAP')->assertSee('encap-principles-grid', false)->assertSee('رسالتنا ورؤيتنا وقيمنا');
+test('bilingual company pages render the About supply story and principles', function () {
+    $this->get('/en/about')
+        ->assertOk()
+        ->assertSee('Agriculture with a clear route to market')
+        ->assertSee('encap-about-hero', false)
+        ->assertSee('encap-about-journey', false)
+        ->assertSee('One connected journey, from origin to market')
+        ->assertSee('encap-about-practice', false)
+        ->assertSee('encap-about-principles', false)
+        ->assertSee('encap-principles-grid', false)
+        ->assertSee('Our mission, vision & values')
+        ->assertSee('encap-about-final-cta', false)
+        ->assertSee('Illustrative stock photography.');
+
+    $this->get('/ar/about')
+        ->assertOk()
+        ->assertSee('dir="rtl"', false)
+        ->assertSee('عن ENCAP')
+        ->assertSee('encap-about-hero', false)
+        ->assertSee('encap-about-journey', false)
+        ->assertSee('رحلة واحدة مترابطة من المصدر إلى السوق')
+        ->assertSee('encap-principles-grid', false)
+        ->assertSee('رسالتنا ورؤيتنا وقيمنا')
+        ->assertSee('صور توضيحية من مصادر خارجية');
+});
+
+test('About previews only published product categories with main images', function () {
+    foreach (range(1, 5) as $number) {
+        Category::query()->create([
+            'name_en' => 'About Fruit ' . $number,
+            'name_ar' => 'فاكهة ' . $number,
+            'slug' => 'about-fruit-' . $number,
+            'image' => 'categories/about-fruit-' . $number . '.webp',
+            'is_published' => true,
+        ]);
+    }
+
+    Category::query()->create([
+        'name_en' => 'Hidden About Fruit',
+        'name_ar' => 'فاكهة مخفية',
+        'slug' => 'hidden-about-fruit',
+        'image' => 'categories/hidden-about-fruit.webp',
+        'is_published' => false,
+    ]);
+
+    $this->get('/en/about')
+        ->assertOk()
+        ->assertSee('encap-about-catalog-grid', false)
+        ->assertSee('about-fruit-1.webp')
+        ->assertSee('about-fruit-4.webp')
+        ->assertDontSee('hidden-about-fruit.webp')
+        ->assertDontSee('about-fruit-5.webp');
 });
 
 test('product catalogue uses numbered cards and links to category details', function () {

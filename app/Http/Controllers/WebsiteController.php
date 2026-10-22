@@ -77,8 +77,58 @@ class WebsiteController extends Controller
 
         $content = [
             'about' => [
-                'en' => ['eyebrow' => 'About ENCAP', 'title' => 'Agriculture with a clear route to market', 'intro' => 'ENCAP connects Egyptian agricultural production with the needs of wholesale buyers and international markets.', 'body' => 'Our approach combines production from our own farms with sourcing from trusted partner farms. Product availability, specifications and fulfilment details are confirmed for each enquiry.'],
-                'ar' => ['eyebrow' => 'عن ENCAP', 'title' => 'إنتاج زراعي بطريق واضح إلى الأسواق', 'intro' => 'تربط ENCAP الإنتاج الزراعي المصري باحتياجات تجار الجملة والأسواق الدولية.', 'body' => 'يجمع نهجنا بين الإنتاج في مزارعنا والتوريد من المزارع الشريكة الموثوقة. ويتم تأكيد توافر المنتجات ومواصفاتها وتفاصيل التوريد لكل طلب.'],
+                'en' => [
+                    'eyebrow' => 'About ENCAP',
+                    'title' => 'Agriculture with a clear route to market',
+                    'intro' => 'ENCAP connects Egyptian agricultural production with the needs of wholesale buyers and international markets.',
+                    'body' => 'Our approach combines production from our own farms with sourcing from trusted partner farms. Product availability, specifications and fulfilment details are confirmed for each enquiry.',
+                    'hero_badge' => 'A connected supply journey',
+                    'hero_caption' => 'Illustrative stock photography. The pictured location is not represented as an ENCAP-owned farm.',
+                    'hero_landscape_alt' => 'Agricultural fields in soft morning light, used as illustrative imagery.',
+                    'hero_produce_alt' => 'Fresh produce arranged for a wholesale market, used as illustrative imagery.',
+                    'approach_image_alt' => 'A grower working among agricultural crops, used as illustrative imagery.',
+                    'journey_heading' => 'One connected journey, from origin to market',
+                    'journey_intro' => 'Each enquiry starts with the product and destination. We coordinate the relevant steps, then confirm availability and scope before commitment.',
+                    'journey' => [
+                        ['icon' => 'sprout', 'eyebrow' => '01 / ORIGIN', 'title' => 'Production', 'description' => 'Start with the crop, its growing season and the supply available from company farms.'],
+                        ['icon' => 'network', 'eyebrow' => '02 / SOURCING', 'title' => 'Partner sourcing', 'description' => 'Where appropriate, review trusted partner-farm options against the requested product and volume.'],
+                        ['icon' => 'package', 'eyebrow' => '03 / PREPARATION', 'title' => 'Preparation', 'description' => 'Align sorting, grading and packing requirements to the crop and the buyer’s specification.'],
+                        ['icon' => 'globe', 'eyebrow' => '04 / DESTINATION', 'title' => 'Export coordination', 'description' => 'Clarify destination requirements and coordinate relevant next steps with the parties involved.'],
+                    ],
+                    'approach_heading' => 'Clarity before commitment. Coordination at every step.',
+                    'approach_intro' => 'Details vary by crop, season and destination, so we confirm the scope for each enquiry rather than promise a one-size-fits-all service.',
+                    'approach_points' => [
+                        ['title' => 'Start with the requirement', 'description' => 'Product, grade, estimated quantity, packaging and destination help define the right conversation.'],
+                        ['title' => 'Confirm what is available', 'description' => 'Seasonal availability and service scope are checked for each enquiry.'],
+                        ['title' => 'Agree on the details', 'description' => 'Specifications and next steps are discussed before supply arrangements are confirmed.'],
+                    ],
+                ],
+                'ar' => [
+                    'eyebrow' => 'عن ENCAP',
+                    'title' => 'إنتاج زراعي بطريق واضح إلى الأسواق',
+                    'intro' => 'تربط ENCAP الإنتاج الزراعي المصري باحتياجات تجار الجملة والأسواق الدولية.',
+                    'body' => 'يجمع نهجنا بين الإنتاج في مزارعنا والتوريد من المزارع الشريكة الموثوقة. ويتم تأكيد توافر المنتجات ومواصفاتها وتفاصيل التوريد لكل طلب.',
+                    'hero_badge' => 'رحلة توريد مترابطة',
+                    'hero_caption' => 'صور توضيحية من مصادر خارجية، ولا تمثل المزرعة الظاهرة باعتبارها مزرعة مملوكة لشركة ENCAP.',
+                    'hero_landscape_alt' => 'حقول زراعية في ضوء الصباح، ضمن صور توضيحية.',
+                    'hero_produce_alt' => 'منتجات زراعية طازجة مرتبة لسوق الجملة، ضمن صور توضيحية.',
+                    'approach_image_alt' => 'مزارع يعمل بين المحاصيل الزراعية، ضمن صور توضيحية.',
+                    'journey_heading' => 'رحلة واحدة مترابطة من المصدر إلى السوق',
+                    'journey_intro' => 'يبدأ كل طلب بالمنتج والوجهة المطلوبة. ننسق الخطوات المناسبة، ثم نؤكد التوافر ونطاق الخدمة قبل الالتزام.',
+                    'journey' => [
+                        ['icon' => 'sprout', 'eyebrow' => '01 / المصدر', 'title' => 'الإنتاج الزراعي', 'description' => 'نبدأ بنوع المحصول وموسم زراعته والكميات المتاحة من مزارع الشركة.'],
+                        ['icon' => 'network', 'eyebrow' => '02 / التوريد', 'title' => 'التوريد من الشركاء', 'description' => 'عند الحاجة، نراجع خيارات التوريد من المزارع الشريكة وفق المنتج والكمية المطلوبة.'],
+                        ['icon' => 'package', 'eyebrow' => '03 / التجهيز', 'title' => 'التجهيز والتعبئة', 'description' => 'ننسق متطلبات الفرز والتصنيف والتعبئة وفق طبيعة المحصول ومواصفات المشتري.'],
+                        ['icon' => 'globe', 'eyebrow' => '04 / الوجهة', 'title' => 'تنسيق التصدير', 'description' => 'نوضح متطلبات الوجهة وننسق الخطوات التالية مع الأطراف المعنية.'],
+                    ],
+                    'approach_heading' => 'وضوح قبل الالتزام، وتنسيق في كل خطوة.',
+                    'approach_intro' => 'تختلف التفاصيل حسب المحصول والموسم والوجهة؛ لذلك نؤكد نطاق الخدمة لكل طلب بدلًا من تقديم وعود عامة لا تناسب كل الحالات.',
+                    'approach_points' => [
+                        ['title' => 'نبدأ باحتياجات المشتري', 'description' => 'يساعد تحديد المنتج والدرجة والكمية التقديرية والتعبئة والوجهة على توضيح المطلوب.'],
+                        ['title' => 'نتحقق من المتاح', 'description' => 'يتم التحقق من التوافر الموسمي ونطاق الخدمة لكل طلب.'],
+                        ['title' => 'نتفق على التفاصيل', 'description' => 'تتم مناقشة المواصفات والخطوات التالية قبل تأكيد ترتيبات التوريد.'],
+                    ],
+                ],
             ],
             'farms' => [
                 'en' => [
@@ -350,9 +400,11 @@ class WebsiteController extends Controller
             $pageContent['intro']
         );
 
-        $categories = $page === 'gallery'
-            ? Category::query()->where('is_published', true)->whereNotNull('image')->orderBy('sort_order')->get()
-            : collect();
+        $categories = match ($page) {
+            'gallery' => Category::query()->where('is_published', true)->whereNotNull('image')->orderBy('sort_order')->get(),
+            'about' => Category::query()->where('is_published', true)->whereNotNull('image')->orderBy('sort_order')->orderBy('name_en')->limit(4)->get(),
+            default => collect(),
+        };
 
         return view('website.content-page', compact('locale', 'page', 'pageContent', 'categories', 'pageSeo'));
     }

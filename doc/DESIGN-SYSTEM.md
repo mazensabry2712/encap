@@ -22,7 +22,9 @@ Typography uses DM Sans for English and IBM Plex Sans Arabic for Arabic UI. Arab
 - A compact proof strip communicates four parts of the supply approach without inventing sales numbers or certifications.
 - Product cards prioritize imagery and category names; category details carry the fuller description and enquiry action.
 - Product detail pages distinguish the primary image, gallery thumbnails, overview, available formats, packaging and quote action.
-- Company pages share one consistent intro template, breadcrumbs, a story marker and a related enquiry panel.
+- Company service pages share one consistent intro template, breadcrumbs, and related enquiry actions.
+- About has a distinct editorial hero, a four-stage production-to-export story, an enquiry-practice section, mission/vision/values, a database-backed preview of published product categories, and a quote CTA.
+- About uses illustrative stock photography with a visible disclosure until company-approved photography is supplied.
 - Contact and quote forms use visible labels, clear errors, focus states and an explanatory next-steps panel.
 - The admin UI shares the green/gold identity but favors dense, legible operational data.
 

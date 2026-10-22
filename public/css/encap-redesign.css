@@ -267,3 +267,220 @@ html[dir=rtl] .encap-service-hub-card:hover .encap-service-hub-link b{transform:
 .footer-social-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border:1px solid #ffffff3d;color:#e4ecdf;font-size:11px;line-height:1.4;text-decoration:none;transition:background .2s,border-color .2s}
 .footer-social-links a:hover{background:#ffffff12;border-color:#e4edcf}
 .contact-map-link{display:inline-flex;align-items:center;gap:6px;margin-top:7px;color:var(--encap-green);font-size:12px;font-weight:750;text-decoration:underline;text-underline-offset:3px}
+
+
+/* About page: an editorial supply-chain story, not a repeat of the homepage. */
+.encap-about-hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(22px,3vw,38px) 0 25px;background:radial-gradient(ellipse at 9% 18%,rgba(213,226,191,.72),transparent 34%),linear-gradient(125deg,#f7f7ef,#fbfaf5 48%,#e9eee1);color:var(--encap-deep)}
+.encap-about-hero:after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.3;background-image:linear-gradient(rgba(36,75,55,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(36,75,55,.035) 1px,transparent 1px);background-size:68px 68px;mask-image:linear-gradient(90deg,#000,transparent 80%)}
+.encap-about-hero-orbit{position:absolute;z-index:-1;border:1px solid rgba(36,75,55,.13);border-radius:50%;pointer-events:none}
+.encap-about-hero-orbit--one{width:min(62vw,900px);aspect-ratio:1;inset-block-start:-45%;inset-inline-end:-24%;box-shadow:0 0 0 42px rgba(36,75,55,.025),0 0 0 90px rgba(36,75,55,.02)}
+.encap-about-hero-orbit--two{width:min(44vw,640px);aspect-ratio:1;inset-block-start:-26%;inset-inline-end:-11%;border-style:dashed;animation:encap-about-orbit-spin 38s linear infinite}
+.encap-about-breadcrumbs{display:flex;align-items:center;gap:10px;margin:0 auto 12px;color:#748173;font-size:11px;line-height:1.5}
+.encap-about-breadcrumbs a{color:var(--encap-green);text-decoration:none}
+.encap-about-hero-grid{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);align-items:center;gap:clamp(28px,5.2vw,82px);min-height:clamp(470px,47vw,650px);padding-block:10px 32px}
+.encap-about-hero-copy{position:relative;z-index:2;max-width:680px;animation:encap-about-copy-in .75s cubic-bezier(.2,.7,.2,1) both}
+.encap-about-kicker{display:flex;align-items:center;gap:11px;margin-bottom:21px;color:var(--encap-green);font-size:11px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+.encap-about-kicker>span{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#9fb57d;box-shadow:0 0 0 5px rgba(159,181,125,.18)}
+body.site-body .encap-about-hero h1{max-width:760px;margin:0;color:var(--encap-deep);font-family:"Cairo",Tahoma,sans-serif;font-size:clamp(43px,5.25vw,74px)!important;font-weight:750!important;line-height:1.18!important;letter-spacing:-.045em!important;text-wrap:balance}
+html[lang="ar"] body.site-body .encap-about-hero h1{font-size:clamp(37px,4.55vw,63px)!important;line-height:1.42!important;letter-spacing:0!important}
+.encap-about-hero-intro{max-width:610px;margin:23px 0 0;color:#57665a;font-size:clamp(15px,1.25vw,18px);line-height:2}
+.encap-about-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin-top:28px}
+.encap-about-hero-actions .encap-button{min-height:51px}
+.encap-about-hero-actions .encap-button-quiet{background:rgba(255,255,255,.55);border-color:#cad4c1;color:var(--encap-green)}
+.encap-about-hero-meta{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:31px;color:#687769;font-size:10px;font-weight:750;letter-spacing:.025em}
+.encap-about-hero-meta i{display:block;width:4px;height:4px;border-radius:50%;background:#a8bc8e}
+.encap-about-hero-art{position:relative;min-width:0;min-height:clamp(420px,43vw,575px);perspective:1150px;animation:encap-about-art-in .9s .08s cubic-bezier(.2,.7,.2,1) both}
+.encap-about-art-orbit{position:absolute;z-index:0;inset:4% 5% 6% 3%;border:1px solid rgba(36,75,55,.25);border-radius:50%;transform:rotate(-17deg) scaleY(.88)}
+.encap-about-art-orbit:before,.encap-about-art-orbit:after{content:"";position:absolute;inset:12%;border:1px dashed rgba(36,75,55,.18);border-radius:50%;transform:rotate(38deg)}
+.encap-about-art-orbit:after{inset:-8%;border-style:solid;opacity:.5;transform:rotate(-24deg)}
+.encap-about-landscape{position:absolute;z-index:1;inset-block:2% 8%;inset-inline:12% 2%;margin:0;overflow:hidden;background:#dce4d3;border-radius:3px 3px 78px 3px;box-shadow:0 32px 78px rgba(16,47,35,.18);transform:rotateY(-3deg) rotateX(1deg);transform-style:preserve-3d}
+html[dir="rtl"] .encap-about-landscape{border-radius:3px 3px 3px 78px}
+.encap-about-landscape:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(11,35,22,.04) 42%,rgba(11,35,22,.7) 100%)}
+.encap-about-landscape img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .8s}
+.encap-about-hero-art:hover .encap-about-landscape img{transform:scale(1.045);filter:saturate(1.08)}
+.encap-about-landscape figcaption{position:absolute;z-index:2;inset-inline:19px;bottom:17px;max-width:390px;color:#fff;font-size:9px;line-height:1.65;text-shadow:0 2px 7px rgba(0,0,0,.35)}
+.encap-about-produce{position:absolute;z-index:3;inset-inline-start:0;inset-block-end:3%;width:42%;margin:0;padding:7px;background:#fcfbf5;box-shadow:0 22px 48px rgba(12,36,23,.23);transform:rotate(-4deg) translateZ(34px);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.encap-about-produce img{display:block;width:100%;aspect-ratio:1.18;object-fit:cover}
+.encap-about-produce figcaption{padding:10px 7px 7px;color:var(--encap-green);font-size:9px;line-height:1.5;font-weight:800}
+.encap-about-produce figcaption span{color:#86927e;letter-spacing:.1em}
+.encap-about-hero-art:hover .encap-about-produce{transform:rotate(-1deg) translateY(-5px) translateZ(42px)}
+.encap-about-floating-mark{position:absolute;z-index:4;inset-block-start:7%;inset-inline-start:5%;display:flex;align-items:center;gap:7px;padding:10px 13px;border:1px solid rgba(255,255,255,.75);background:rgba(250,250,241,.92);box-shadow:0 14px 28px rgba(20,43,29,.12);backdrop-filter:blur(12px);color:var(--encap-green);font-size:9px;font-weight:850;letter-spacing:.1em}
+.encap-about-floating-mark img{width:27px;height:27px;object-fit:contain}
+.encap-about-hero-baseline{display:flex;align-items:center;gap:12px;padding-top:17px;border-top:1px solid rgba(36,75,55,.18);color:#758273;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.encap-about-hero-baseline span:last-child{margin-inline-start:auto;text-align:end}
+.encap-about-hero-baseline span:nth-child(2){color:#adbd91;font-size:14px}
+
+.encap-about-section-heading{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.7fr);align-items:end;gap:clamp(25px,6vw,85px);margin-bottom:39px}
+.encap-about-section-heading h2{max-width:780px;margin:10px 0 0;color:var(--encap-deep);font:400 clamp(35px,4.5vw,60px)/1.12 var(--encap-serif);letter-spacing:-.04em;text-wrap:balance}
+.encap-about-section-heading>p{max-width:490px;margin:0 0 4px;color:var(--encap-muted);font-size:13px;line-height:1.95}
+.encap-about-journey{position:relative;isolation:isolate;overflow:hidden;padding:clamp(70px,8.2vw,118px) 0;background:#eff1e7}
+.encap-about-journey:after{content:"ENCAP";position:absolute;z-index:-1;inset-block-start:9%;inset-inline-end:-2%;color:rgba(36,75,55,.035);font-size:clamp(90px,19vw,270px);font-weight:850;letter-spacing:-.08em;line-height:1;pointer-events:none}
+.encap-about-journey-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.encap-about-journey-grid:before{content:"";position:absolute;z-index:-1;inset-block-start:34px;inset-inline:8%;height:1px;background:linear-gradient(90deg,rgba(36,75,55,.03),rgba(36,75,55,.25),rgba(36,75,55,.03))}
+.encap-about-journey-card{position:relative;min-width:0;padding:20px 20px 22px;border:1px solid #dbe1d2;background:rgba(255,255,251,.84);box-shadow:0 9px 24px rgba(31,57,39,.025);transition:background .35s,border-color .35s,box-shadow .35s}
+.encap-about-journey-card:hover{background:#fff;border-color:#a7bc96;box-shadow:0 20px 42px rgba(31,57,39,.10)}
+.encap-about-journey-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:28px}
+.encap-about-journey-icon{display:grid;place-items:center;width:49px;height:49px;border:1px solid #d6dfcb;border-radius:50%;background:#f5f7ef;color:var(--encap-green);transition:background .3s,color .3s,rotate .45s,scale .35s}
+.encap-about-journey-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.encap-about-journey-card:hover .encap-about-journey-icon{background:var(--encap-green);color:#fff;rotate:-9deg;scale:1.05}
+.encap-about-journey-number{color:#a6b39b;font-size:11px;font-weight:800;letter-spacing:.12em}
+.encap-about-journey-eyebrow{display:block;margin-bottom:10px;color:#788975;font-size:9px;font-weight:850;letter-spacing:.1em}
+.encap-about-journey-card h3{margin:0 0 10px;color:var(--encap-deep);font-size:19px;line-height:1.4;font-weight:750}
+.encap-about-journey-card p{margin:0;color:var(--encap-muted);font-size:12px;line-height:1.85}
+
+.encap-about-practice{padding:clamp(68px,8.6vw,124px) 0;background:#fbfaf5}
+.encap-about-practice-grid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1fr);align-items:center;gap:clamp(38px,7.5vw,110px)}
+.encap-about-practice-visual{position:relative;min-width:0;margin:0;padding:0 26px 29px 0}
+html[dir="rtl"] .encap-about-practice-visual{padding:0 0 29px 26px}
+.encap-about-practice-visual:before{content:"";position:absolute;z-index:0;inset:24px 0 0 25px;border:1px solid #cad7b8;pointer-events:none}
+html[dir="rtl"] .encap-about-practice-visual:before{inset:24px 25px 0 0}
+.encap-about-practice-visual img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:.91;object-fit:cover;box-shadow:0 24px 56px rgba(20,43,29,.12)}
+.encap-about-practice-visual figcaption{position:absolute;z-index:2;inset-inline:13px;bottom:38px;color:#fff;font-size:9px;line-height:1.6;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.encap-about-practice-stamp{position:absolute;z-index:3;inset-block-start:11%;inset-inline-start:-5%;display:flex;align-items:center;gap:9px;padding:13px 16px;border:1px solid #e1e8d8;background:#fbfaf4;box-shadow:0 15px 35px rgba(20,43,29,.14);color:var(--encap-green)}
+html[dir="rtl"] .encap-about-practice-stamp{inset-inline-start:auto;inset-inline-end:-5%}
+.encap-about-practice-stamp img{width:35px;aspect-ratio:1;object-fit:contain;box-shadow:none}
+.encap-about-practice-stamp span{font-size:8px;font-weight:850;letter-spacing:.11em;line-height:1.55}
+.encap-about-practice-copy .encap-section-index{margin-bottom:16px}
+.encap-about-practice-copy h2{margin:0 0 21px;color:var(--encap-deep);font:400 clamp(36px,4.2vw,58px)/1.11 var(--encap-serif);letter-spacing:-.04em;text-wrap:balance}
+.encap-about-practice-copy>p{max-width:640px;color:var(--encap-muted);font-size:13px;line-height:1.95}
+.encap-about-practice-copy .encap-about-practice-body{color:#435448;font-size:14px}
+.encap-about-practice-points{margin-top:25px;border-top:1px solid var(--encap-line)}
+.encap-about-practice-point{display:grid;grid-template-columns:37px minmax(0,1fr);gap:13px;padding:17px 0;border-bottom:1px solid var(--encap-line)}
+.encap-about-practice-point>span{display:grid;place-items:center;width:31px;height:31px;border:1px solid #d3ddc7;border-radius:50%;color:var(--encap-green);font-size:10px;font-weight:850}
+.encap-about-practice-point h3{margin:0 0 5px;color:var(--encap-deep);font-size:14px;font-weight:800}
+.encap-about-practice-point p{margin:0;color:var(--encap-muted);font-size:12px;line-height:1.8}
+
+.encap-about-principles{position:relative;isolation:isolate;overflow:hidden;margin:0;padding:clamp(70px,8vw,112px) 0;background:var(--encap-green);color:#fff;border:0}
+.encap-about-principles-orbit{position:absolute;z-index:-1;width:min(60vw,780px);aspect-ratio:1;border:1px solid rgba(255,255,255,.13);border-radius:50%;pointer-events:none}
+.encap-about-principles-orbit--one{inset-block-start:-54%;inset-inline-end:-16%;box-shadow:0 0 0 38px rgba(255,255,255,.025),0 0 0 80px rgba(255,255,255,.02)}
+.encap-about-principles-orbit--two{inset-block-end:-66%;inset-inline-start:-19%;border-style:dashed;animation:encap-about-orbit-spin 48s linear infinite}
+.encap-about-principles .encap-section-index{color:#c8d9b2}
+.encap-about-principles-heading{position:relative;z-index:1;max-width:730px;margin-bottom:35px}
+.encap-about-principles-heading h2{margin:10px 0 13px;color:#fff;font:400 clamp(35px,4.4vw,58px)/1.12 var(--encap-serif);letter-spacing:-.035em}
+.encap-about-principles-heading p{max-width:620px;color:rgba(255,255,255,.72);font-size:13px;line-height:1.9;margin:0}
+.encap-principles-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.encap-about-principles .encap-principle-card{min-width:0;padding:26px 24px 29px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.055);color:#fff;box-shadow:none;transition:background .35s,border-color .35s,box-shadow .35s}
+.encap-about-principles .encap-principle-card:hover{background:rgba(255,255,255,.095);border-color:rgba(228,237,207,.65);box-shadow:0 20px 44px rgba(4,20,12,.12)}
+.encap-principle-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.encap-about-principles .encap-principle-index{background:#e4edcf;color:var(--encap-green)}
+.encap-principle-card-top svg{width:26px;height:26px;fill:none;stroke:#d1dfbd;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.encap-about-principles .encap-principle-card h3{margin:0 0 10px;color:#fff;font-size:18px}
+.encap-about-principles .encap-principle-card p{color:rgba(255,255,255,.75);font-size:12px;line-height:1.9}
+
+.encap-about-catalog{padding:clamp(68px,8.2vw,116px) 0;background:#f4f4ed}
+.encap-about-catalog-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
+.encap-about-category-card{display:block;min-width:0;color:inherit;text-decoration:none}
+.encap-about-category-media{position:relative;overflow:hidden;background:#e0e7d6}
+.encap-about-category-media:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(180deg,transparent,rgba(9,28,19,.38));pointer-events:none}
+.encap-about-category-media img{display:block;width:100%;aspect-ratio:.83;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .65s}
+.encap-about-category-card:hover .encap-about-category-media img{transform:scale(1.055);filter:saturate(1.08)}
+.encap-about-category-media>span{position:absolute;z-index:1;inset-inline-end:12px;inset-block-end:12px;display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#fbfaf5;color:var(--encap-green);font-size:18px;transition:rotate .3s,background .3s}
+.encap-about-category-card:hover .encap-about-category-media>span{rotate:45deg;background:#e4edcf}
+.encap-about-category-copy{display:flex;align-items:baseline;gap:12px;padding:14px 0;border-bottom:1px solid #d6dccf;transition:border-color .3s}
+.encap-about-category-copy>span{color:#8c9a85;font-size:9px;font-weight:850;letter-spacing:.1em}
+.encap-about-category-copy h3{margin:0;color:var(--encap-deep);font-size:15px;font-weight:750}
+.encap-about-category-card:hover .encap-about-category-copy{border-color:var(--encap-green)}
+.encap-about-catalog-empty{display:flex;align-items:center;justify-content:space-between;gap:25px;padding:25px;background:#e9eee1;border:1px solid #d9e1d0}
+.encap-about-catalog-empty p{margin:0;color:var(--encap-muted);font-size:13px;line-height:1.8}
+.encap-about-catalog-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:24px;color:var(--encap-muted);font-size:10px;line-height:1.7}
+.encap-about-catalog-footer a{display:inline-flex;align-items:center;gap:12px;color:var(--encap-green);font-size:11px;font-weight:850;text-decoration:none}
+.encap-about-catalog-footer a span{font-size:17px;transition:translate .25s}
+.encap-about-catalog-footer a:hover span{translate:3px -2px}
+
+.encap-about-final-cta{padding:0 0 clamp(68px,8vw,112px);background:#f4f4ed}
+.encap-about-final-panel{position:relative;isolation:isolate;overflow:hidden;min-height:360px;display:flex;align-items:center;padding:clamp(30px,7vw,86px);background:#102f23;color:#fff}
+.encap-about-final-panel:before{content:"";position:absolute;z-index:-1;inset:-38% -12% auto auto;width:min(62vw,620px);aspect-ratio:1;border:1px solid rgba(255,255,255,.16);border-radius:50%;box-shadow:0 0 0 40px rgba(255,255,255,.03),0 0 0 85px rgba(255,255,255,.02)}
+.encap-about-final-orbit{position:absolute;inset-block-start:50%;inset-inline-end:9%;display:grid;place-items:center;width:150px;aspect-ratio:1;border:1px solid rgba(228,237,207,.45);border-radius:50%;transform:translateY(-50%);animation:encap-about-orbit-spin 34s linear infinite}
+.encap-about-final-orbit:before,.encap-about-final-orbit:after{content:"";position:absolute;inset:13px;border:1px dashed rgba(228,237,207,.32);border-radius:50%}
+.encap-about-final-orbit:after{inset:-15px;border-style:solid;opacity:.7}
+.encap-about-final-orbit img{width:50px;height:50px;object-fit:contain;filter:brightness(0) invert(1)}
+.encap-about-final-orbit span{position:absolute;inset:0;border-radius:50%;border-top:1px solid #e4edcf;transform:rotate(35deg) scaleX(1.05)}
+.encap-about-final-copy{position:relative;z-index:1;max-width:700px}
+.encap-about-final-copy .encap-section-index{color:#d0dfb9}
+.encap-about-final-copy h2{max-width:760px;margin:12px 0 16px;color:#fff;font:400 clamp(36px,5vw,65px)/1.1 var(--encap-serif);letter-spacing:-.04em;text-wrap:balance}
+.encap-about-final-copy p{max-width:580px;margin:0 0 24px;color:rgba(255,255,255,.76);font-size:13px;line-height:1.9}
+.encap-about-final-copy .encap-button{position:relative;z-index:2}
+.encap-about-final-index{position:absolute;inset-inline-end:27px;inset-block-end:22px;color:rgba(255,255,255,.45);font-size:9px;font-weight:850;letter-spacing:.14em}
+.encap-about-final-index i{font-style:normal;color:#d0dfb9}
+@keyframes encap-about-orbit-spin{to{rotate:360deg}}
+@keyframes encap-about-copy-in{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
+@keyframes encap-about-art-in{from{opacity:0;translate:0 14px;scale:.985}to{opacity:1;translate:0 0;scale:1}}
+@media(max-width:1050px){
+    .encap-about-hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:28px}
+    .encap-about-hero-art{min-height:440px}
+    .encap-about-journey-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .encap-about-journey-grid:before{display:none}
+    .encap-about-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+    .encap-about-category-media img{aspect-ratio:1.02}
+    .encap-about-final-orbit{inset-inline-end:5%;width:120px;opacity:.72}
+}
+@media(max-width:760px){
+    .encap-about-hero{padding-top:20px}
+    .encap-about-hero-grid{grid-template-columns:minmax(0,1fr);gap:15px;min-height:0;padding-block:15px 25px}
+    .encap-about-hero-copy{max-width:none}
+    body.site-body .encap-about-hero h1{font-size:clamp(38px,9.5vw,58px)!important}
+    html[lang="ar"] body.site-body .encap-about-hero h1{font-size:clamp(32px,8vw,47px)!important;line-height:1.42!important}
+    .encap-about-hero-intro{margin-top:16px;font-size:14px;line-height:1.9}
+    .encap-about-hero-actions{margin-top:21px}
+    .encap-about-hero-actions .encap-button{flex:1 1 auto;gap:12px;padding-inline:14px;font-size:12px}
+    .encap-about-hero-meta{margin-top:20px;font-size:9px;gap:7px}
+    .encap-about-hero-art{width:100%;min-height:clamp(320px,94vw,440px)}
+    .encap-about-landscape{inset:2% 6% 8% 12%;border-radius:3px 3px 48px 3px}
+    html[dir="rtl"] .encap-about-landscape{border-radius:3px 3px 3px 48px}
+    .encap-about-produce{width:43%;inset-inline-start:0;inset-block-end:2%}
+    .encap-about-floating-mark{inset-block-start:6%;inset-inline-start:3%;padding:8px 10px}
+    .encap-about-hero-baseline{font-size:8px;letter-spacing:.04em;gap:8px}
+    .encap-about-section-heading{grid-template-columns:minmax(0,1fr);gap:14px;margin-bottom:27px}
+    .encap-about-section-heading h2{font-size:clamp(32px,8vw,44px)}
+    .encap-about-journey{padding:60px 0}
+    .encap-about-journey-grid{gap:10px}
+    .encap-about-journey-card{padding:17px 15px 19px}
+    .encap-about-journey-card-top{margin-bottom:19px}
+    .encap-about-journey-icon{width:42px;height:42px}
+    .encap-about-journey-card h3{font-size:16px}
+    .encap-about-journey-card p{font-size:11px}
+    .encap-about-practice{padding:59px 0}
+    .encap-about-practice-grid{grid-template-columns:minmax(0,1fr);gap:33px}
+    .encap-about-practice-visual{padding-inline-end:17px;padding-block-end:21px}
+    html[dir="rtl"] .encap-about-practice-visual{padding-inline:0 17px}
+    .encap-about-practice-visual:before{inset:16px 0 0 17px}
+    html[dir="rtl"] .encap-about-practice-visual:before{inset:16px 17px 0 0}
+    .encap-about-practice-visual img{aspect-ratio:1.06}
+    .encap-about-practice-visual figcaption{bottom:28px}
+    .encap-about-practice-stamp{inset-block-start:8%;inset-inline-start:-2%;padding:10px}
+    html[dir="rtl"] .encap-about-practice-stamp{inset-inline-start:auto;inset-inline-end:-2%}
+    .encap-about-practice-copy h2{font-size:clamp(34px,8vw,47px)}
+    .encap-about-principles{padding:60px 0}
+    .encap-principles-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+    .encap-about-principles .encap-principle-card{padding:21px}
+    .encap-about-catalog{padding:60px 0}
+    .encap-about-catalog-grid{gap:21px 12px}
+    .encap-about-category-media img{aspect-ratio:.9}
+    .encap-about-category-copy{gap:8px;align-items:flex-start}
+    .encap-about-category-copy h3{font-size:13px}
+    .encap-about-catalog-empty{align-items:flex-start;flex-direction:column;padding:20px}
+    .encap-about-catalog-empty .encap-button{width:100%}
+    .encap-about-catalog-footer{align-items:flex-start;flex-direction:column;gap:9px}
+    .encap-about-final-cta{padding-bottom:60px}
+    .encap-about-final-panel{min-height:390px;padding:30px 23px 70px}
+    .encap-about-final-copy h2{font-size:clamp(34px,8.6vw,48px)}
+    .encap-about-final-copy p{font-size:12px}
+    .encap-about-final-orbit{inset-inline-end:20px;inset-block-start:auto;inset-block-end:20px;width:78px;transform:none;opacity:.65}
+    .encap-about-final-orbit img{width:31px;height:31px}
+    .encap-about-final-orbit:before{inset:7px}
+    .encap-about-final-orbit:after{inset:-7px}
+    .encap-about-final-index{inset-inline-end:22px;inset-block-start:17px;inset-block-end:auto}
+}
+@media(max-width:430px){
+    .encap-about-journey-grid{grid-template-columns:minmax(0,1fr)}
+    .encap-about-journey-card{padding:18px}
+    .encap-about-journey-card-top{margin-bottom:14px}
+    .encap-about-catalog-grid{gap:19px 10px}
+    .encap-about-category-media img{aspect-ratio:.84}
+}
+@media(prefers-reduced-motion:reduce){
+    .encap-about-hero-orbit--two,.encap-about-principles-orbit--two,.encap-about-final-orbit{animation:none!important}
+    .encap-about-hero-copy,.encap-about-hero-art{animation:none!important}
+    .encap-about-landscape img,.encap-about-produce,.encap-about-journey-card,.encap-about-journey-icon,.encap-about-principle-card,.encap-about-category-media img,.encap-about-category-media>span,.encap-about-catalog-footer a span{transition:none!important}
+    .encap-about-hero-art:hover .encap-about-landscape img,.encap-about-hero-art:hover .encap-about-produce,.encap-about-journey-card:hover .encap-about-journey-icon,.encap-about-category-card:hover .encap-about-category-media img{transform:none!important;rotate:0deg!important;scale:1!important}
+}
