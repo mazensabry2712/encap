@@ -162,3 +162,12 @@ html[dir=rtl] .site-header .brand-logo{object-position:right center}
 .footer-bottom .footer-copyright-brand{display:inline-flex;align-items:center;gap:5px}
 .footer-bottom .footer-copyright-symbol{width:18px;height:18px;flex:0 0 auto}
 @media(max-width:560px){.encap-heading-brand{width:34px;height:34px}.encap-story-caption>.encap-story-brand{width:30px;height:30px}}
+
+
+/* Replace the last text-only E / ENCAP marks with the supplied favicon asset. */
+.encap-signature-mark{background:#fff;border:1px solid var(--encap-line)}
+.encap-signature-logo{display:block;width:32px;height:32px;object-fit:contain}
+.encap-process-decoration-logo{display:block;width:90px;height:90px;object-fit:contain;position:relative;z-index:1}
+.encap-process-decoration .encap-process-decoration-logo+span{z-index:2}
+.encap-product-image .encap-product-placeholder-logo{display:block;width:84px;height:84px;max-width:100%;object-fit:contain;position:relative;z-index:1}
+@media(max-width:760px){.encap-process-decoration-logo{width:70px;height:70px}.encap-product-image .encap-product-placeholder-logo{width:68px;height:68px}}
