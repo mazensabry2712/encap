@@ -16,7 +16,7 @@ test('homepage includes the updated editorial direction and accessible skip link
 });
 
 test('product detail gallery renders accessible thumbnail controls', function () {
-    \\Illuminate\\Support\\Facades\\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('public');
 
     $category = Category::query()->create([
         'name_en' => 'Gallery Citrus',
