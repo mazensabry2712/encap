@@ -17,6 +17,8 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
     $this->get('/en')
         ->assertOk()
         ->assertSee('class="skip-link"', false)
+        ->assertSee('assets/logo.png', false)
+        ->assertSee('assets/favicone.png', false)
         ->assertSee('encap-hero', false)
         ->assertSee('encap-hero-image', false)
         ->assertSee('encap-floating-note', false)
@@ -26,6 +28,13 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-final-cta', false)
         ->assertSee('id="icon-sprout"', false)
         ->assertSee('js/encap-interactions.js', false);
+});
+
+test('admin sign-in uses the ENCAP logo and favicon assets', function () {
+    $this->get('/admin/login')
+        ->assertOk()
+        ->assertSee('assets/logo.png', false)
+        ->assertSee('assets/favicone.png', false);
 });
 
 test('product detail gallery renders accessible thumbnail controls', function () {
