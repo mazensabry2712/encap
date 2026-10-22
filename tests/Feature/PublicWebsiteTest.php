@@ -5,6 +5,36 @@ use App\Models\ContactMessage;
 use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
 
+
+test('homepage includes the updated editorial direction and accessible skip link', function () {
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('class="skip-link"', false)
+        ->assertSee('editorial-intro', false)
+        ->assertSee('hero-float-card', false)
+        ->assertSee('js/encap-interactions.js', false);
+});
+
+test('product detail gallery renders accessible thumbnail controls', function () {
+    \\Illuminate\\Support\\Facades\\Storage::fake('public');
+
+    $category = Category::query()->create([
+        'name_en' => 'Gallery Citrus',
+        'name_ar' => 'موالح',
+        'slug' => 'gallery-citrus',
+        'image' => 'categories/main.webp',
+        'gallery' => ['categories/gallery/one.webp', 'categories/gallery/two.webp'],
+        'is_published' => true,
+    ]);
+
+    $this->get(route('products.show', ['locale' => 'en', 'category' => $category->slug]))
+        ->assertOk()
+        ->assertSee('data-gallery-main', false)
+        ->assertSee('data-gallery-thumb', false)
+        ->assertSee('aria-pressed="false"', false)
+        ->assertSee('data-image-src', false);
+});
+
 test('navbar language switcher is accessible and the old topbar is removed', function () {
     $this->get('/en')
         ->assertOk()

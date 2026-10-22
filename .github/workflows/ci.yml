@@ -46,5 +46,8 @@ jobs:
       - name: Install JavaScript dependencies
         run: npm ci
 
+      - name: Check standalone browser scripts
+        run: node --check public/js/encap-interactions.js && node --check public/js/language-switcher.js
+
       - name: Build production assets
         run: npm run build

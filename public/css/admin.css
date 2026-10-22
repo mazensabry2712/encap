@@ -16,3 +16,43 @@
 .admin-btn.secondary:hover{background:var(--ays);border-color:#e6d18a}
 .admin-panel-head{border-top:2px solid var(--ay)}
 .admin-badge.new,.admin-badge.draft{background:var(--ays);color:#6f5416}
+
+
+/* ENCAP admin refinement — clearer hierarchy, calmer surfaces, polished operational UI. */
+:root { --af:#103526; --af2:#24563d; --al:#f0ca58; --ap:#f6f6ef; --aline:#e0e5da; }
+.admin-sidebar { background: linear-gradient(165deg,#123b2a 0%,#0a291e 100%); }
+.admin-brand { padding-bottom: 27px; }
+.admin-nav { gap: 7px; }
+.admin-nav a { min-height: 43px; border-radius: 3px; transition: background .18s,border-color .18s,color .18s; }
+.admin-nav a.active { background: rgba(240,202,88,.12); border-color: rgba(240,202,88,.25); color: #fff7d9; }
+.admin-nav a.active:before { box-shadow: 0 0 0 3px rgba(240,202,88,.13); }
+.admin-topbar { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.94); backdrop-filter: blur(12px); }
+.admin-topbar h1 { font-size: clamp(27px,2.7vw,36px); }
+.admin-content { max-width: 1580px; }
+.admin-panel { border-color: #e2e7dc; box-shadow: 0 12px 34px rgba(21,53,36,.035); border-radius: 4px; overflow: hidden; }
+.admin-panel-head { padding: 21px 23px; border-top: 2px solid var(--al); }
+.admin-table th { background: #f6f7f1; }
+.admin-table tbody tr { transition: background .15s; }
+.admin-table tbody tr:hover { background: #fcfcf7; }
+.admin-table td { line-height: 1.7; }
+.admin-table td strong { font-weight: 800; }
+.admin-badge { border-radius: 2px; letter-spacing: .025em; }
+.admin-btn, .admin-content button[type=submit] { border-radius: 3px; transition: background .17s,border-color .17s,transform .17s; }
+.admin-btn:not(.secondary):not(.danger):hover, .admin-content button[type=submit]:not(.danger):hover { transform: translateY(-1px); }
+.admin-form-panel { border-radius: 4px; }
+.admin-field input, .admin-field textarea, .admin-field select, .admin-control { background: #fdfdf9; border-color: #dce3d8; border-radius: 3px; }
+.admin-field input:focus, .admin-field textarea:focus, .admin-field select:focus, .admin-control:focus { outline: none; border-color: #82996d; box-shadow: 0 0 0 3px rgba(120,148,91,.15); }
+.admin-section-title { padding-top: 4px; color: #254d37; }
+.admin-seo-group { border-radius: 3px; overflow: hidden; }
+.admin-seo-group summary { padding: 15px 17px; background: #fcfcf8; }
+.admin-seo-group[open] summary { border-bottom: 1px solid var(--aline); background: #f6f7ef; }
+.admin-notice { border-radius: 3px; }
+@media (max-width:760px) {
+  .admin-topbar { position: relative; }
+  .admin-sidebar { background: #103526; }
+  .admin-nav a { min-height: 40px; }
+  .admin-table-wrap { border-top: 0; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .admin-nav a, .admin-table tbody tr, .admin-btn, .admin-content button[type=submit] { transition: none !important; }
+}
