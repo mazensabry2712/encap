@@ -6,6 +6,43 @@
         return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
     };
 
+    // Browsers replace a file input's FileList every time the picker is opened.
+    // Keep prior selections so repeated "add images" actions append instead of replacing.
+    const appendSelectedFiles = (input, selectedFiles) => {
+        const incoming = Array.from(input.files || []);
+        if (incoming.length === 0) return;
+
+        const identity = (file) => [
+            file.name,
+            file.size,
+            file.lastModified,
+            file.type,
+            file.webkitRelativePath || '',
+        ].join('|');
+        const merged = [...selectedFiles];
+        const seen = new Set(merged.map(identity));
+
+        incoming.forEach((file) => {
+            const key = identity(file);
+            if (!seen.has(key)) {
+                merged.push(file);
+                seen.add(key);
+            }
+        });
+
+        // DataTransfer lets us put the combined selection back on the real input,
+        // so the browser submits every selected file to Laravel.
+        try {
+            const transfer = new DataTransfer();
+            merged.forEach((file) => transfer.items.add(file));
+            input.files = transfer.files;
+            selectedFiles.splice(0, selectedFiles.length, ...merged);
+        } catch (error) {
+            // Keep normal file-input behavior if the browser does not support FileList assignment.
+            selectedFiles.splice(0, selectedFiles.length, ...incoming);
+        }
+    };
+
     document.querySelectorAll('[data-gallery-manager]').forEach((manager) => {
         const upload = manager.querySelector('[data-gallery-upload]');
         const selection = manager.querySelector('[data-gallery-selection]');
@@ -15,6 +52,7 @@
         const existingCount = Number(manager.dataset.existingCount) || 0;
         const maxImages = Number(manager.dataset.maxGallery) || 12;
         const previewUrls = [];
+        const selectedFiles = [];
 
         if (!upload || !selection || !status || !total) return;
 
@@ -104,6 +142,7 @@
         };
 
         upload.addEventListener('change', () => {
+            appendSelectedFiles(upload, selectedFiles);
             renderSelectedFiles();
             refresh();
         });
@@ -137,6 +176,7 @@
         const removals = Array.from(galleryManager?.querySelectorAll('.js-gallery-remove') || []);
         const initialPreviewMarkup = preview?.innerHTML || '';
         const previewUrls = [];
+        const selectedFiles = [];
         let primaryPreviewUrl = null;
 
         if (!upload || !preview || !selection || !status) return;
@@ -240,7 +280,10 @@
             form?.dispatchEvent(new Event('encap:category-gallery-change'));
         };
 
-        upload.addEventListener('change', refresh);
+        upload.addEventListener('change', () => {
+            appendSelectedFiles(upload, selectedFiles);
+            refresh();
+        });
         galleryUpload?.addEventListener('change', refresh);
         removals.forEach((input) => input.addEventListener('change', refresh));
         form?.addEventListener('submit', (event) => {
