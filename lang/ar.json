@@ -542,5 +542,18 @@
     "private enquiries from potential importers and distributors. Review product needs and update the request status during follow-up.": "استفسارات خاصة من المستوردين والموزعين المحتملين. راجع احتياجات المنتج وحدّث حالة الطلب أثناء المتابعة.",
     "Set search defaults and verified contact details. Page-level fields can override a page title and description.": "اضبط إعدادات البحث العامة وبيانات التواصل المؤكدة. يمكن تخصيص عنوان ووصف كل صفحة بشكل مستقل.",
     "Maintain public product information, category imagery and search metadata. Publish only confirmed details.": "حدّث بيانات المنتجات والصور ومعلومات الظهور في البحث. لا تنشر إلا المعلومات المؤكدة.",
-    "Product not specified": "المنتج غير محدد"
+    "Product not specified": "المنتج غير محدد",
+    "new quote requests need review": "طلبات عروض أسعار جديدة تحتاج إلى مراجعة",
+    "new contact messages": "رسائل تواصل جديدة",
+    "Website overview": "نظرة عامة على الموقع",
+    "Request status": "حالة الطلب",
+    "Message status": "حالة الرسالة",
+    "Enter confirmed business hours": "أدخل مواعيد العمل المعتمدة",
+    "View": "عرض",
+    "To review": "تحتاج إلى مراجعة",
+    "request": "طلب",
+    "message": "رسالة",
+    "Requests": "الطلبات",
+    "Messages": "الرسائل",
+    "Farms": "المزارع"
 }
