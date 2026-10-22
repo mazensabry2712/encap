@@ -38,7 +38,7 @@
 </div>
 
 <div class="admin-field full">
-    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12" data-text-no-files="{{ __('No new images selected.') }}" data-text-selected="{{ __(':count images selected.') }}" data-text-available="{{ __(':count gallery slots available.') }}" data-text-too-many="{{ __('Too many images selected. Mark current images for removal or choose fewer files.') }}" data-text-full="{{ __('The gallery has reached the 12-image limit.') }}">
+    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12" data-text-no-files="{{ __('No new images selected.') }}" data-text-selected="{{ __(':count images selected.') }}" data-text-available="{{ __(':count gallery slots available.') }}" data-text-too-many="{{ __('Too many images selected. Mark current images for removal or choose fewer files.') }}" data-text-full="{{ __('The gallery has reached the 12-image limit.') }}" data-text-mark-remove="{{ __('Mark for removal') }}" data-text-will-remove="{{ __('Will be removed') }}">
         <div class="admin-media-field-heading admin-gallery-heading">
             <div><label>{{ __('Additional product images') }}</label><p>{{ __('Add detail shots, packaging, harvest and product variations. These appear in a horizontal gallery on the public product page.') }}</p></div>
             <span class="admin-gallery-total" data-gallery-total>{{ count($category->gallery ?? []) }} / 12</span>
