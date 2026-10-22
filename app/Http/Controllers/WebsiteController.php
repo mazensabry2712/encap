@@ -223,6 +223,125 @@ class WebsiteController extends Controller
         abort_unless(isset($content[$page]), 404);
 
         $pageContent = $content[$page][$locale];
+
+        $serviceMedia = [
+            'farms' => [
+                'hero' => 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?auto=format&fit=crop&w=1400&q=78',
+                'hero_alt' => [
+                    'en' => 'A grower reaching into an orchard to harvest fruit.',
+                    'ar' => 'عامل يقطف ثمارًا من شجرة في بستان.',
+                ],
+                'heading' => [
+                    'en' => 'The right supply starts with the crop.',
+                    'ar' => 'التوريد الجيد يبدأ من المحصول.',
+                ],
+                'detail' => [
+                    'en' => 'We review season, quantity, grade, source and destination before confirming an available supply option.',
+                    'ar' => 'نراجع الموسم والكمية والدرجة والمصدر والوجهة قبل تأكيد خيار التوريد المتاح.',
+                ],
+                'services' => [
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1772638583263-a4f953c856cf?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Citrus fruit growing on a tree branch.', 'ar' => 'ثمار موالح تنمو على أغصان الشجرة.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'A cultivated field ready for crop care and harvest planning.', 'ar' => 'أرض زراعية مزروعة ضمن مراحل العناية بالمحصول والتخطيط للحصاد.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Rows of agricultural land extending across a broad landscape.', 'ar' => 'صفوف من الأراضي الزراعية تمتد عبر مساحة واسعة.'],
+                    ],
+                ],
+            ],
+            'packing-stations' => [
+                'hero' => 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78',
+                'hero_alt' => [
+                    'en' => 'Freshly harvested potatoes moving through a sorting conveyor.',
+                    'ar' => 'محصول بطاطس طازج يمر على سير للفرز.',
+                ],
+                'heading' => [
+                    'en' => 'Every packing plan starts with the product specification.',
+                    'ar' => 'كل خطة تعبئة تبدأ من مواصفات المنتج.',
+                ],
+                'detail' => [
+                    'en' => 'The crop, buyer requirements and selected facility determine which post-harvest steps are suitable and included in the quotation.',
+                    'ar' => 'يحدد المحصول ومتطلبات المشتري والمحطة المختارة خطوات ما بعد الحصاد المناسبة وما يدخل ضمن عرض السعر.',
+                ],
+                'services' => [
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Potatoes travelling along a sorting conveyor.', 'ar' => 'بطاطس تمر على سير لفرز المحصول.'],
+                    ],
+                    [
+                        'image' => 'https://images.pexels.com/photos/5085939/pexels-photo-5085939.jpeg?auto=compress&cs=tinysrgb&w=720',
+                        'alt' => ['en' => 'Fresh berries being sorted by workers at a packing line.', 'ar' => 'عمال يفرزون ثمارًا طازجة على خط تجهيز.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1755599604342-186a96a57570?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'People preparing and handling cartons in a warehouse.', 'ar' => 'عاملون يجهزون ويتعاملون مع الكراتين داخل مخزن.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Cardboard cartons prepared with produce labels.', 'ar' => 'كراتين مجهزة بملصقات خاصة بالمنتجات.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1775880306542-57d598d773a0?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Organized cartons arranged for storage and dispatch planning.', 'ar' => 'كراتين مرتبة للتخزين والتجهيز للإرسال.'],
+                    ],
+                ],
+            ],
+            'export' => [
+                'hero' => 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?auto=format&fit=crop&w=1400&q=78',
+                'hero_alt' => [
+                    'en' => 'Cargo containers stacked at an international port terminal.',
+                    'ar' => 'حاويات بضائع مكدسة في محطة ميناء دولي.',
+                ],
+                'heading' => [
+                    'en' => 'A clear route from buyer requirements to shipment planning.',
+                    'ar' => 'مسار واضح من متطلبات المشتري إلى التخطيط للشحن.',
+                ],
+                'detail' => [
+                    'en' => 'Product availability, packing, documents and transport arrangements are checked against the requested destination before the order is confirmed.',
+                    'ar' => 'تتم مراجعة توافر المنتج والتعبئة والمستندات وترتيبات النقل وفق الوجهة المطلوبة قبل تأكيد الطلب.',
+                ],
+                'services' => [
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1772638583263-a4f953c856cf?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Citrus fruit growing on a tree, representing farm-level sourcing.', 'ar' => 'ثمار موالح على الشجرة لتمثيل التوريد من مصدر المحصول.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Produce cartons with labels prepared for a supply order.', 'ar' => 'كراتين منتجات عليها ملصقات ومجهزة لطلب توريد.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1755599604342-186a96a57570?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Cartons handled and arranged in a warehouse before dispatch.', 'ar' => 'كراتين يجري تجهيزها وترتيبها في مخزن قبل الإرسال.'],
+                    ],
+                    [
+                        'image' => 'https://images.unsplash.com/photo-1775880306542-57d598d773a0?auto=format&fit=crop&w=720&q=76',
+                        'alt' => ['en' => 'Organized boxes illustrating shipment and supply-chain preparation.', 'ar' => 'صناديق مرتبة توضح تجهيز الشحنات وسلسلة التوريد.'],
+                    ],
+                ],
+            ],
+        ];
+
+        if (isset($serviceMedia[$page])) {
+            $visuals = $serviceMedia[$page];
+            $pageContent['hero_image'] = $visuals['hero'];
+            $pageContent['hero_image_alt'] = $visuals['hero_alt'][$locale];
+            $pageContent['visual_heading'] = $visuals['heading'][$locale];
+            $pageContent['visual_detail'] = $visuals['detail'][$locale];
+
+            foreach ($pageContent['services'] as $index => &$service) {
+                if (isset($visuals['services'][$index])) {
+                    $service['image'] = $visuals['services'][$index]['image'];
+                    $service['image_alt'] = $visuals['services'][$index]['alt'][$locale];
+                }
+            }
+            unset($service);
+        }
+
         $settings = SeoSetting::current();
         $pageSeo = $settings->metadataFor(
             $page,
