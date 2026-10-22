@@ -7,14 +7,20 @@
     const revealTargets = document.querySelectorAll(
         '.editorial-heading, .editorial-summary, .proof-item, .section-head, .category, ' +
         '.approach-item, .dark-feature, .cta, .page-intro-grid, .feature-panel, ' +
-        '.product-gallery-main, .product-detail-copy, .form-card, .contact-details, .gallery-grid figure'
+        '.product-gallery-main, .product-detail-copy, .form-card, .contact-details, .gallery-grid figure, ' +
+        '.encap-trust-item, .encap-service-hub-heading, .encap-service-hub-card, .encap-story-art, ' +
+        '.encap-story-copy, .encap-section-heading, .encap-product-card, .encap-process-heading, ' +
+        '.encap-process-row, .encap-quality-content, .encap-final-panel, .encap-about-principles-heading, .encap-principle-card'
     );
 
     if (!reduceMotion && 'IntersectionObserver' in window && revealTargets.length) {
         revealTargets.forEach((element, index) => {
             element.classList.add('reveal-on-scroll');
-            if (element.classList.contains('category') || element.classList.contains('approach-item')) {
-                element.style.setProperty('--reveal-delay', String((index % 4) * 65) + 'ms');
+            if ([
+                'category', 'approach-item', 'encap-service-hub-card', 'encap-product-card',
+                'encap-process-row', 'encap-trust-item', 'encap-principle-card'
+            ].some((className) => element.classList.contains(className))) {
+                element.style.setProperty('--reveal-delay', String((index % 4) * 75) + 'ms');
             }
         });
 

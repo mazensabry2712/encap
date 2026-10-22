@@ -20,6 +20,11 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('assets/logo.png', false)
         ->assertSee('assets/favicone.png', false)
         ->assertSee('encap-hero', false)
+        ->assertSee('encap-hero-experience', false)
+        ->assertSee('data-hero-tilt', false)
+        ->assertSee('data-hero-layer', false)
+        ->assertSee('css/hero-experience.css', false)
+        ->assertSee('js/hero-experience.js', false)
         ->assertSee('encap-hero-image', false)
         ->assertSee('encap-image-label-logo', false)
         ->assertSee('encap-story-brand', false)
@@ -136,6 +141,25 @@ test('public typography uses legible Latin and Arabic fonts with comfortable rea
         ->toContain('font-size: clamp(2rem, 4.6vw, 3.5rem) !important;')
         ->toContain('font-size: clamp(1.9rem, 7.8vw, 2.45rem) !important;')
         ->toContain('text-size-adjust: 100%');
+});
+
+test('homepage hero motion uses layered parallax and respects reduced motion', function () {
+    expect(file_exists(public_path('css/hero-experience.css')))->toBeTrue()
+        ->and(file_exists(public_path('js/hero-experience.js')))->toBeTrue();
+
+    $stylesheet = file_get_contents(public_path('css/hero-experience.css'));
+    $script = file_get_contents(public_path('js/hero-experience.js'));
+
+    expect($stylesheet)
+        ->toContain('perspective: 1100px')
+        ->toContain('@media (prefers-reduced-motion: reduce)')
+        ->toContain('encap-hero-photo-drift');
+
+    expect($script)
+        ->toContain('prefers-reduced-motion')
+        ->toContain('pointermove')
+        ->toContain('requestAnimationFrame')
+        ->toContain('data-hero-layer');
 });
 
 test('the home page uses central defaults without writing settings during a public read', function () {

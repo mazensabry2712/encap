@@ -1,22 +1,59 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
 @section('content')
-<section class="encap-hero">
- <div class="container encap-hero-grid">
-  <div class="encap-hero-copy">
-   <div class="encap-kicker"><span class="encap-kicker-dot"></span>{{ __('Egyptian agricultural production & export') }}</div>
-   <h1>{{ __('From Egyptian soil to the world’s table.') }}</h1>
-   <p class="encap-hero-lead">{{ __('We bring together our own farms, trusted growers and careful preparation to connect Egyptian produce with global markets.') }}</p>
-   <div class="encap-hero-actions"><a class="encap-button encap-button-primary" href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Discover our products') }} <span>↗</span></a><a class="encap-button encap-button-quiet" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Start a conversation') }} <span>→</span></a></div>
-   <div class="encap-hero-footnote"><span class="encap-footnote-icon">✳</span><span>{{ __('Production') }} <i>·</i> {{ __('Sourcing') }} <i>·</i> {{ __('Processing') }} <i>·</i> {{ __('Export') }}</span></div>
+<section class="encap-hero-experience encap-hero" data-encap-hero aria-labelledby="encap-hero-title">
+ <div class="encap-hero-background" aria-hidden="true">
+  <div class="encap-hero-image-plane" data-hero-layer data-hero-depth="7" data-hero-background>
+   <img class="encap-hero-image" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=2000&amp;q=82" alt="" width="2400" height="1600" fetchpriority="high" decoding="async">
   </div>
-  <div class="encap-hero-visual">
-   <div class="encap-hero-image-wrap"><img class="encap-hero-image" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1500&q=85" alt="{{ __('Agricultural landscape in Egypt') }}" width="1200" height="1450" fetchpriority="high" decoding="async"><div class="encap-image-shade"></div><div class="encap-image-label"><span class="encap-image-label-mark"><img class="encap-image-label-logo" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="28" height="28" decoding="async"></span><span><strong>{{ __('Rooted in Egypt') }}</strong><small>{{ __('Ready for global opportunity') }}</small></span></div></div>
-   <div class="encap-orbit-stamp" aria-hidden="true"><span>GROWN WITH CARE</span><b>✳</b><span>BUILT ON TRUST</span></div>
-   <div class="encap-floating-note"><span class="encap-floating-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-leaf"></use></svg></span><span><strong>{{ __('Closer to the source') }}</strong><small>{{ __('Own farms & trusted partners') }}</small></span><span class="encap-floating-arrow">↗</span></div>
+  <div class="encap-hero-vignette"></div>
+  <div class="encap-hero-backdrop-orbit encap-hero-backdrop-orbit--one"></div>
+  <div class="encap-hero-backdrop-orbit encap-hero-backdrop-orbit--two"></div>
+ </div>
+ <div class="container encap-hero-experience-grid">
+  <div class="encap-hero-copy">
+   <div class="encap-kicker encap-hero-kicker" data-hero-reveal style="--hero-delay:80ms"><span class="encap-kicker-dot"></span><span>{{ __('Egyptian agricultural production & export') }}</span></div>
+   <h1 id="encap-hero-title" data-hero-reveal style="--hero-delay:160ms">{{ __('From Egyptian soil to the world’s table.') }}</h1>
+   <p class="encap-hero-lead" data-hero-reveal style="--hero-delay:240ms">{{ __('We bring together our own farms, trusted growers and careful preparation to connect Egyptian produce with global markets.') }}</p>
+   <div class="encap-hero-actions" data-hero-reveal style="--hero-delay:320ms">
+    <a class="encap-button encap-button-primary" href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Discover our products') }} <span aria-hidden="true">↗</span></a>
+    <a class="encap-button encap-button-quiet" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Start a conversation') }} <span aria-hidden="true">→</span></a>
+   </div>
+   <div class="encap-hero-footnote" data-hero-reveal style="--hero-delay:400ms"><span class="encap-footnote-icon" aria-hidden="true">✳</span><span>{{ __('Production') }} <i>·</i> {{ __('Sourcing') }} <i>·</i> {{ __('Processing') }} <i>·</i> {{ __('Export') }}</span></div>
+  </div>
+  <div class="encap-hero-stage" data-hero-tilt aria-hidden="true">
+   <div class="encap-hero-stage-ring encap-hero-stage-ring--outer"></div>
+   <div class="encap-hero-stage-ring encap-hero-stage-ring--inner"></div>
+   <div class="encap-hero-photo-card" data-hero-layer data-hero-depth="24">
+    <div class="encap-hero-photo-card-content" data-hero-reveal style="--hero-delay:220ms">
+     <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=900&amp;q=82" alt="" width="900" height="1120" loading="eager" decoding="async">
+     <div class="encap-hero-photo-shade"></div>
+     <div class="encap-hero-photo-label">
+      <span class="encap-image-label-mark"><img class="encap-image-label-logo" src="{{ asset('assets/favicone.png') }}" alt="" width="28" height="28" decoding="async"></span>
+      <span><small>ENCAP / ORIGIN</small><strong>{{ __('Farm to market') }}</strong></span>
+     </div>
+    </div>
+   </div>
+   <div class="encap-hero-stamp-layer" data-hero-layer data-hero-depth="38">
+    <div class="encap-orbit-stamp encap-hero-motion-stamp"><span>{{ __('Rooted in Egypt') }}</span><b>✳</b><span>{{ __('Connected to opportunity.') }}</span></div>
+   </div>
+   <div class="encap-hero-floating-layer" data-hero-layer data-hero-depth="42">
+    <div class="encap-floating-note encap-hero-floating-note">
+     <span class="encap-floating-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-leaf"></use></svg></span>
+     <span><strong>{{ __('Farm to market') }}</strong><small>{{ __('Own farms & trusted partners') }}</small></span>
+     <span class="encap-floating-arrow">↗</span>
+    </div>
+   </div>
+   <div class="encap-hero-chip-layer" data-hero-layer data-hero-depth="16">
+    <div class="encap-hero-mini-chip"><span class="encap-hero-mini-chip-mark">01</span><span><strong>{{ __('One connected journey') }}</strong><small>{{ __('Production') }} · {{ __('Export') }}</small></span></div>
+   </div>
   </div>
  </div>
- <div class="encap-hero-bottom"><span class="encap-hero-index"><img src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="24" height="24" decoding="async"> / 01</span><span>{{ __('Growing with purpose. Supplying with care.') }}</span><a href="#our-approach" aria-label="{{ __('Explore our approach') }}">↓</a></div>
+ <div class="container encap-hero-bottom">
+  <span class="encap-hero-index"><img src="{{ asset('assets/favicone.png') }}" alt="" width="24" height="24" decoding="async"> / 01</span>
+  <span class="encap-hero-bottom-copy">{{ __('Growing with purpose. Supplying with care.') }}</span>
+  <a class="encap-hero-scroll-cue" href="#our-approach" aria-label="{{ __('Explore our approach') }}"><span>{{ __('Explore our approach') }}</span><i aria-hidden="true">↓</i></a>
+ </div>
 </section>
 <section class="encap-trust-band"><div class="container encap-trust-grid"><div class="encap-trust-intro"><span class="encap-mini-label">{{ __('One connected journey') }}</span><strong>{{ __('From the field, all the way forward.') }}</strong></div>
  <div class="encap-trust-item"><span class="encap-trust-number">01</span><span class="encap-trust-symbol">↗</span><strong>{{ __('Farm production') }}</strong><small>{{ __('Closer to origin') }}</small></div>

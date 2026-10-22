@@ -1,0 +1,465 @@
+/* ENCAP homepage — immersive field photography with restrained 3D movement. */
+.encap-hero-experience,
+.encap-hero-experience.encap-hero {
+    --hero-tilt-x: 0deg;
+    --hero-tilt-y: 0deg;
+    --hero-bg-x: 0px;
+    --hero-bg-y: 0px;
+    isolation: isolate;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: min(850px, calc(100svh - 88px));
+    padding: clamp(54px, 6.2vw, 88px) 0 24px;
+    overflow: hidden;
+    background: #102b20;
+    color: #fff;
+}
+.encap-hero-experience::before,
+.encap-hero-experience::after { content: none; }
+.encap-hero-background { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+.encap-hero-image-plane {
+    position: absolute;
+    inset: -3%;
+    transform: translate3d(var(--hero-bg-x), calc(var(--hero-bg-y) + var(--hero-scroll-y, 0px)), 0);
+    will-change: transform;
+}
+.encap-hero-experience .encap-hero-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center 47%;
+    position: relative;
+    transform: scale(1.07);
+    filter: saturate(.86) contrast(1.06);
+    animation: encap-hero-photo-drift 24s ease-in-out infinite alternate;
+}
+.encap-hero-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(0deg, rgba(6, 24, 17, .88) 0%, rgba(6, 24, 17, .13) 34%, rgba(6, 24, 17, .25) 100%),
+        linear-gradient(90deg, rgba(7, 27, 19, .9) 0%, rgba(8, 32, 22, .75) 36%, rgba(8, 32, 22, .36) 70%, rgba(8, 32, 22, .3) 100%);
+}
+html[dir="rtl"] .encap-hero-vignette { transform: scaleX(-1); }
+.encap-hero-backdrop-orbit {
+    position: absolute;
+    border: 1px solid rgba(225, 239, 210, .16);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.encap-hero-backdrop-orbit--one { width: min(56vw, 780px); aspect-ratio: 1; top: -30%; inset-inline-end: -15%; }
+.encap-hero-backdrop-orbit--two { width: min(42vw, 590px); aspect-ratio: 1; top: -19%; inset-inline-end: -8%; border-style: dashed; opacity: .48; animation: encap-hero-orbit-turn 48s linear infinite; }
+.encap-hero-experience-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr);
+    align-items: center;
+    gap: clamp(28px, 5.5vw, 82px);
+    width: min(1320px, calc(100% - 56px));
+}
+.encap-hero-experience .encap-hero-copy {
+    position: relative;
+    z-index: 3;
+    align-self: center;
+    max-width: 760px;
+    padding: 8px 0 20px;
+    margin: 0;
+}
+.encap-hero-experience .encap-hero-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 25px;
+    color: #e1ebcc;
+    font-size: 12px;
+    line-height: 1.6;
+    font-weight: 750;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+.encap-hero-experience .encap-kicker-dot {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    background: #e4edcf;
+    box-shadow: 0 0 0 6px rgba(228, 237, 207, .15);
+    animation: encap-hero-dot-pulse 3s ease-in-out infinite;
+}
+body.site-body .encap-hero-experience h1 {
+    max-width: 790px;
+    margin: 0;
+    color: #fff;
+    font-family: "Cairo", Tahoma, sans-serif;
+    font-size: clamp(2.65rem, 5.5vw, 5rem) !important;
+    font-weight: 750 !important;
+    line-height: 1.18 !important;
+    letter-spacing: -.045em !important;
+    text-wrap: balance;
+}
+html[lang="ar"] body.site-body .encap-hero-experience h1 {
+    font-size: clamp(2.3rem, 4.7vw, 4.25rem) !important;
+    line-height: 1.42 !important;
+    letter-spacing: 0 !important;
+}
+.encap-hero-experience .encap-hero-lead {
+    max-width: 650px;
+    margin: 23px 0 0;
+    color: rgba(248, 250, 242, .88);
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    line-height: 1.95;
+    font-weight: 450;
+}
+.encap-hero-experience .encap-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 13px;
+    margin: 30px 0 0;
+}
+.encap-hero-experience .encap-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    min-height: 51px;
+    padding: 0 22px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: transform .28s ease, background .28s ease, border-color .28s ease, box-shadow .28s ease;
+}
+.encap-hero-experience .encap-button span { font-size: 18px; transition: transform .28s ease; }
+.encap-hero-experience .encap-button:hover { transform: translateY(-3px); }
+.encap-hero-experience .encap-button:hover span { transform: translate(3px, -2px); }
+.encap-hero-experience .encap-button-primary {
+    color: #172e20;
+    background: #e4edcf;
+    border-color: #e4edcf;
+    box-shadow: 0 12px 28px rgba(3, 20, 12, .18);
+}
+.encap-hero-experience .encap-button-primary:hover { color: #102b20; background: #fff; border-color: #fff; box-shadow: 0 19px 42px rgba(3, 20, 12, .24); }
+.encap-hero-experience .encap-button-quiet { color: #fff; background: rgba(9, 36, 24, .12); border-color: rgba(255, 255, 255, .55); }
+.encap-hero-experience .encap-button-quiet:hover { color: #fff; background: rgba(255, 255, 255, .12); border-color: #fff; }
+.encap-hero-experience .encap-hero-footnote {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 29px 0 0;
+    color: rgba(242, 247, 235, .78);
+    font-size: 12px;
+    line-height: 1.7;
+    letter-spacing: .015em;
+    text-transform: none;
+}
+.encap-hero-experience .encap-footnote-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 31px;
+    width: 31px;
+    height: 31px;
+    border: 1px solid rgba(228, 237, 207, .6);
+    border-radius: 50%;
+    color: #e4edcf;
+    font-size: 16px;
+}
+.encap-hero-experience .encap-hero-footnote i { margin: 0 5px; color: #e4edcf; font-style: normal; }
+.encap-hero-stage {
+    position: relative;
+    width: min(100%, 540px);
+    height: clamp(390px, 44vw, 560px);
+    justify-self: center;
+    align-self: center;
+    perspective: 1100px;
+    transform-style: preserve-3d;
+    transform: perspective(1100px) rotateX(var(--hero-tilt-x)) rotateY(var(--hero-tilt-y)) translate3d(0, var(--hero-scroll-stage, 0px), 0);
+    transition: transform .55s cubic-bezier(.2, .7, .2, 1);
+    will-change: transform;
+}
+.encap-hero-stage-ring {
+    position: absolute;
+    z-index: 0;
+    top: 4%;
+    left: 3%;
+    width: 94%;
+    height: 92%;
+    border: 1px solid rgba(228, 237, 207, .36);
+    border-radius: 50%;
+    transform: rotate(-24deg);
+    pointer-events: none;
+}
+.encap-hero-stage-ring::after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 12%;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e4edcf;
+    box-shadow: 0 0 0 7px rgba(228, 237, 207, .13), 0 0 24px rgba(228, 237, 207, .55);
+}
+.encap-hero-stage-ring--outer { animation: encap-hero-orbit-turn 32s linear infinite; }
+.encap-hero-stage-ring--inner {
+    top: 10%;
+    left: 13%;
+    width: 74%;
+    height: 80%;
+    border-style: dashed;
+    border-color: rgba(228, 237, 207, .2);
+    transform: rotate(26deg);
+    animation: encap-hero-orbit-turn-reverse 44s linear infinite;
+}
+.encap-hero-stage-ring--inner::after { display: none; }
+.encap-hero-photo-card {
+    position: absolute;
+    z-index: 1;
+    top: 7%;
+    left: 10%;
+    width: 80%;
+    height: 78%;
+    padding: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .58);
+    border-radius: 7px 88px 7px 7px;
+    background: rgba(255, 255, 255, .16);
+    box-shadow: 0 35px 90px rgba(0, 0, 0, .34);
+    backdrop-filter: blur(8px);
+    transform: translate3d(var(--hero-layer-x, 0px), var(--hero-layer-y, 0px), 0) rotate(2deg);
+    transform-style: preserve-3d;
+    transition: transform .5s cubic-bezier(.2, .7, .2, 1), opacity .75s ease;
+    will-change: transform;
+}
+html[dir="rtl"] .encap-hero-photo-card { border-radius: 88px 7px 7px 7px; }
+.encap-hero-photo-card-content { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 3px 80px 3px 3px; }
+html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px; }
+.encap-hero-photo-card-content > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center;
+    filter: saturate(.87) contrast(1.03);
+    transform: scale(1.025);
+    transition: transform 1s cubic-bezier(.2, .75, .2, 1), filter 1s ease;
+}
+.encap-hero-photo-card:hover .encap-hero-photo-card-content > img { transform: scale(1.08); filter: saturate(1.06) contrast(1.04); }
+.encap-hero-photo-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8, 27, 19, .02) 25%, rgba(8, 27, 19, .12) 47%, rgba(8, 27, 19, .84) 100%); }
+.encap-hero-photo-label {
+    position: absolute;
+    inset-inline: 20px;
+    bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #fff;
+}
+.encap-hero-photo-label .encap-image-label-mark {
+    display: grid;
+    place-items: center;
+    flex: 0 0 41px;
+    width: 41px;
+    height: 41px;
+    background: rgba(244, 247, 236, .94);
+    border: 1px solid rgba(255, 255, 255, .6);
+    border-radius: 50%;
+}
+.encap-hero-photo-label .encap-image-label-logo { display: block; width: 27px; height: 27px; object-fit: contain; }
+.encap-hero-photo-label small { display: block; margin: 0 0 3px; font-size: 10px; font-weight: 750; letter-spacing: .14em; color: rgba(255, 255, 255, .76); }
+.encap-hero-photo-label strong { display: block; font-size: clamp(17px, 1.55vw, 23px); font-weight: 750; line-height: 1.35; }
+.encap-hero-stamp-layer {
+    position: absolute;
+    z-index: 4;
+    top: 3%;
+    inset-inline-end: -1%;
+    transform: translate3d(var(--hero-layer-x, 0px), var(--hero-layer-y, 0px), 0);
+    transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+.encap-hero-motion-stamp {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 112px;
+    height: 112px;
+    gap: 5px;
+    padding: 12px;
+    text-align: center;
+    color: #153b29;
+    background: #e4edcf;
+    box-shadow: 0 18px 38px rgba(5, 24, 16, .23);
+    transform: rotate(10deg);
+    animation: encap-hero-stamp-float 7s ease-in-out infinite;
+}
+.encap-hero-motion-stamp span { display: block; max-width: 92px; font-size: 8px !important; line-height: 1.45 !important; font-weight: 800; letter-spacing: .04em; }
+.encap-hero-motion-stamp b { display: block; font-size: 22px; font-weight: 500; line-height: 1; }
+.encap-hero-floating-layer {
+    position: absolute;
+    z-index: 5;
+    bottom: 8%;
+    inset-inline-start: -6%;
+    width: min(300px, 76%);
+    transform: translate3d(var(--hero-layer-x, 0px), var(--hero-layer-y, 0px), 0);
+    transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+.encap-hero-experience .encap-hero-floating-note {
+    position: relative;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    width: 100%;
+    padding: 14px 16px;
+    color: var(--encap-ink);
+    background: rgba(251, 250, 245, .96);
+    border: 1px solid rgba(255, 255, 255, .95);
+    box-shadow: 0 18px 46px rgba(2, 21, 13, .28);
+    backdrop-filter: blur(18px);
+    transform: none;
+    transition: border-color .25s, box-shadow .25s;
+}
+.encap-hero-experience .encap-floating-icon { flex: 0 0 40px; width: 40px; height: 40px; color: var(--encap-green); background: #e5edcf; }
+.encap-hero-floating-note strong { display: block; font-size: 13px; font-weight: 800; line-height: 1.45; }
+.encap-hero-floating-note small { display: block; margin-top: 3px; color: #657168; font-size: 11px; line-height: 1.5; }
+.encap-hero-floating-note .encap-floating-arrow { margin-inline-start: auto; color: var(--encap-green); font-size: 18px; }
+.encap-hero-chip-layer {
+    position: absolute;
+    z-index: 3;
+    bottom: 1%;
+    inset-inline-end: 2%;
+    transform: translate3d(var(--hero-layer-x, 0px), var(--hero-layer-y, 0px), 0);
+    transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+.encap-hero-mini-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 238px;
+    padding: 11px 13px;
+    color: #f8faef;
+    background: rgba(12, 42, 29, .76);
+    border: 1px solid rgba(228, 237, 207, .36);
+    border-radius: 3px;
+    box-shadow: 0 14px 34px rgba(4, 20, 13, .24);
+    backdrop-filter: blur(16px);
+}
+.encap-hero-mini-chip-mark { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; border: 1px solid rgba(228, 237, 207, .5); border-radius: 50%; color: #e4edcf; font-size: 10px; font-weight: 800; }
+.encap-hero-mini-chip strong { display: block; font-size: 11px; line-height: 1.45; font-weight: 800; }
+.encap-hero-mini-chip small { display: block; margin-top: 3px; font-size: 10px; line-height: 1.45; color: rgba(245, 249, 239, .72); }
+.encap-hero-bottom {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: min(1320px, calc(100% - 56px));
+    max-width: none;
+    margin: clamp(38px, 5.5vw, 72px) auto 0;
+    padding: 18px 0 0;
+    color: rgba(244, 248, 238, .78);
+    border-top: 1px solid rgba(244, 248, 238, .32);
+    font-size: 12px;
+    letter-spacing: .015em;
+    text-transform: none;
+}
+.encap-hero-index { display: inline-flex; align-items: center; gap: 9px; color: #f4f8ee !important; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.encap-hero-index img { display: block; width: 24px; height: 24px; padding: 3px; object-fit: contain; background: #e4edcf; border-radius: 50%; }
+.encap-hero-bottom-copy { text-align: center; }
+.encap-hero-scroll-cue { display: inline-flex; align-items: center; gap: 11px; color: #f4f8ee; text-decoration: none; font-size: 12px; font-weight: 700; }
+.encap-hero-scroll-cue i { display: grid; place-items: center; width: 30px; height: 30px; color: #183c29; background: #e4edcf; border-radius: 50%; font-size: 19px; font-style: normal; animation: encap-hero-scroll-pulse 2.1s ease-in-out infinite; }
+.encap-hero-scroll-cue:hover i { animation-play-state: paused; }
+.encap-hero-experience.is-motion-ready [data-hero-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition: opacity .78s ease, transform .88s cubic-bezier(.18, .68, .23, 1);
+    transition-delay: var(--hero-delay, 0ms);
+}
+.encap-hero-experience.is-motion-ready.is-entered [data-hero-reveal] { opacity: 1; transform: translate3d(0, 0, 0); }
+.encap-hero-experience.is-motion-ready:not(.is-entered) .encap-hero-photo-card { opacity: 0; }
+.encap-hero-experience.is-motion-ready.is-entered .encap-hero-photo-card { opacity: 1; }
+@keyframes encap-hero-photo-drift { from { transform: scale(1.07) translate3d(-.45%, -.25%, 0); } to { transform: scale(1.13) translate3d(.45%, .35%, 0); } }
+@keyframes encap-hero-orbit-turn { to { transform: rotate(336deg); } }
+@keyframes encap-hero-orbit-turn-reverse { to { transform: rotate(-334deg); } }
+@keyframes encap-hero-dot-pulse { 0%, 100% { box-shadow: 0 0 0 5px rgba(228, 237, 207, .12); } 50% { box-shadow: 0 0 0 9px rgba(228, 237, 207, .06); } }
+@keyframes encap-hero-stamp-float { 0%, 100% { transform: translateY(0) rotate(10deg); } 50% { transform: translateY(-11px) rotate(5deg); } }
+@keyframes encap-hero-scroll-pulse { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@media (max-width: 980px) {
+    .encap-hero-experience,
+    .encap-hero-experience.encap-hero { min-height: auto; padding-top: 58px; }
+    .encap-hero-experience-grid { grid-template-columns: minmax(0, 1fr) minmax(270px, .85fr); gap: 24px; }
+    body.site-body .encap-hero-experience h1 { font-size: clamp(2.6rem, 5.4vw, 4rem) !important; }
+    html[lang="ar"] body.site-body .encap-hero-experience h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem) !important; }
+    .encap-hero-stage { height: clamp(355px, 45vw, 450px); }
+    .encap-hero-motion-stamp { width: 94px; height: 94px; }
+    .encap-hero-motion-stamp span { font-size: 7px !important; }
+    .encap-hero-floating-layer { width: min(270px, 80%); inset-inline-start: -3%; }
+}
+@media (max-width: 760px) {
+    .encap-hero-experience,
+    .encap-hero-experience.encap-hero { padding: 46px 0 20px; }
+    .encap-hero-experience-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; width: calc(100% - 40px); }
+    .encap-hero-experience .encap-hero-copy { padding: 5px 0 0; }
+    .encap-hero-experience .encap-hero-kicker { margin-bottom: 17px; font-size: 10px; letter-spacing: .1em; }
+    body.site-body .encap-hero-experience h1 { font-size: clamp(2.35rem, 8vw, 3.35rem) !important; }
+    html[lang="ar"] body.site-body .encap-hero-experience h1 { font-size: clamp(2.1rem, 7.2vw, 2.9rem) !important; line-height: 1.45 !important; }
+    .encap-hero-experience .encap-hero-lead { margin-top: 17px; font-size: 15px; line-height: 1.85; }
+    .encap-hero-experience .encap-hero-actions { margin-top: 22px; gap: 9px; }
+    .encap-hero-experience .encap-button { min-height: 47px; gap: 13px; padding-inline: 16px; font-size: 13px; }
+    .encap-hero-experience .encap-hero-footnote { margin-top: 19px; font-size: 10px; gap: 8px; }
+    .encap-hero-experience .encap-footnote-icon { flex-basis: 27px; width: 27px; height: 27px; }
+    .encap-hero-stage { width: min(100%, 420px); height: 335px; margin-top: 3px; }
+    .encap-hero-photo-card { top: 6%; left: 14%; width: 74%; height: 82%; }
+    .encap-hero-photo-label { inset-inline: 13px; bottom: 15px; gap: 8px; }
+    .encap-hero-photo-label .encap-image-label-mark { flex-basis: 34px; width: 34px; height: 34px; }
+    .encap-hero-photo-label .encap-image-label-logo { width: 23px; height: 23px; }
+    .encap-hero-photo-label strong { font-size: 16px; }
+    .encap-hero-photo-label small { font-size: 8px; }
+    .encap-hero-motion-stamp { width: 83px; height: 83px; padding: 8px; }
+    .encap-hero-motion-stamp b { font-size: 18px; }
+    .encap-hero-motion-stamp span { font-size: 6px !important; }
+    .encap-hero-floating-layer { width: min(245px, 78%); bottom: 6%; inset-inline-start: -1%; }
+    .encap-hero-experience .encap-hero-floating-note { padding: 10px 11px; gap: 9px; }
+    .encap-hero-experience .encap-floating-icon { flex-basis: 32px; width: 32px; height: 32px; }
+    .encap-hero-floating-note strong { font-size: 11px; }
+    .encap-hero-floating-note small { font-size: 9px; }
+    .encap-hero-chip-layer { bottom: 0; inset-inline-end: 0; }
+    .encap-hero-mini-chip { max-width: 185px; padding: 8px 9px; gap: 7px; }
+    .encap-hero-mini-chip-mark { flex-basis: 24px; width: 24px; height: 24px; font-size: 8px; }
+    .encap-hero-mini-chip strong { font-size: 9px; }
+    .encap-hero-mini-chip small { font-size: 8px; }
+    .encap-hero-bottom { width: calc(100% - 40px); margin-top: 18px; padding-top: 13px; gap: 12px; }
+    .encap-hero-bottom-copy { display: none; }
+    .encap-hero-scroll-cue { gap: 7px; font-size: 10px; }
+    .encap-hero-scroll-cue i { width: 27px; height: 27px; }
+}
+@media (max-width: 390px) {
+    .encap-hero-experience .encap-hero-kicker { font-size: 9px; }
+    body.site-body .encap-hero-experience h1 { font-size: 2.1rem !important; }
+    html[lang="ar"] body.site-body .encap-hero-experience h1 { font-size: 1.95rem !important; }
+    .encap-hero-experience .encap-button { gap: 9px; padding-inline: 12px; font-size: 12px; }
+    .encap-hero-stage { height: 300px; }
+    .encap-hero-floating-layer { width: min(216px, 78%); }
+    .encap-hero-floating-note small { max-width: 140px; }
+    .encap-hero-mini-chip { max-width: 145px; }
+}
+html.has-reveal .encap-service-hub-card.reveal-on-scroll.is-visible:hover,
+html.has-reveal .encap-principle-card.reveal-on-scroll.is-visible:hover { transform: translateY(-4px); }
+@media (prefers-reduced-motion: reduce) {
+    .encap-hero-experience *, .encap-hero-experience *::before, .encap-hero-experience *::after { animation: none !important; transition: none !important; }
+    .encap-hero-experience .encap-hero-image-plane,
+    .encap-hero-experience .encap-hero-stage,
+    .encap-hero-experience .encap-hero-photo-card,
+    .encap-hero-experience .encap-hero-stamp-layer,
+    .encap-hero-experience .encap-hero-floating-layer,
+    .encap-hero-experience .encap-hero-chip-layer { transform: none !important; }
+    .encap-hero-experience.is-motion-ready [data-hero-reveal] { opacity: 1 !important; transform: none !important; }
+}
