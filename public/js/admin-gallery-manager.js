@@ -61,6 +61,18 @@
             const tooMany = selectedCount > slots;
             const projectedCount = currentImages() + selectedCount;
 
+            upload.disabled = slots === 0 && selectedCount === 0;
+            removals.forEach((input) => {
+                const label = input.closest('label');
+                const text = label && label.querySelector('span');
+                if (text) {
+                    text.textContent = input.checked
+                        ? (manager.dataset.textWillRemove || 'Will be removed')
+                        : (manager.dataset.textMarkRemove || 'Mark for removal');
+                }
+                if (label) label.classList.toggle('is-marked-for-removal', input.checked);
+            });
+
             total.textContent = `${projectedCount} / ${maxImages}`;
             total.classList.toggle('is-over-limit', projectedCount > maxImages);
 
