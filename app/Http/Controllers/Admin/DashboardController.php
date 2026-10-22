@@ -1,12 +1,12 @@
 <?php
 
-namespace App\\Http\\Controllers\\Admin;
+namespace App\Http\Controllers\Admin;
 
-use App\\Http\\Controllers\\Controller;
-use App\\Models\\Category;
-use App\\Models\\ContactMessage;
-use App\\Models\\QuoteRequest;
-use Illuminate\\View\\View;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\ContactMessage;
+use App\Models\QuoteRequest;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
