@@ -39,16 +39,16 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
     $this->actingAs(User::factory()->create())
         ->get('/admin')
         ->assertOk()
-        ->assertSee('Good work starts here.')
-        ->assertSee('Product categories')
-        ->assertSee('Export quote requests')
-        ->assertSee('Contact messages')
+        ->assertSee('كل إدارة ناجحة تبدأ من هنا.')
+        ->assertSee('تصنيفات المنتجات')
+        ->assertSee('طلبات عروض التصدير')
+        ->assertSee('رسائل التواصل')
         ->assertSee('Ahmed Buyer')
-        ->assertSee('Dashboard Mango')
+        ->assertSee('مانجو الداشبورد')
         ->assertSee('Mona Visitor')
         ->assertSee('Export question')
-        ->assertSee('Manage catalogue')
-        ->assertSee('Manage site metadata and contact details');
+        ->assertSee('إدارة الكتالوج')
+        ->assertSee('إدارة بيانات الموقع ووسائل التواصل');
 });
 
 
