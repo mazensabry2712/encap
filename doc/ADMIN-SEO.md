@@ -63,3 +63,10 @@ Static public pages can also have English/Arabic title and description overrides
 
 ## Additional public profile settings
 The Central SEO & Site Settings page can optionally store confirmed English/Arabic business hours and official Facebook, Instagram, LinkedIn and YouTube URLs. The Contact page displays hours and an Open in Maps link only when a public address is configured; the footer displays only social profiles with saved URLs. Blank values remain hidden. The admin may also save independent SEO overrides for the Packing Stations page.
+
+
+## Language defaults
+
+- The public root URL `/` redirects to Arabic (`/ar`). The explicit English routes under `/en` remain available.
+- The admin workspace and sign-in page default to Arabic with RTL layout for a new session. The `EN` / `العربية` control stores the administrator's chosen language for subsequent navigation.
+- `APP_LOCALE` defaults to `ar` in the application configuration and new `.env.example` files. Updating an existing checkout does not rewrite its ignored `.env`; set `APP_LOCALE=ar` there as well when aligning the environment default.
