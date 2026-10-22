@@ -137,6 +137,7 @@
         const removals = Array.from(galleryManager?.querySelectorAll('.js-gallery-remove') || []);
         const initialPreviewMarkup = preview?.innerHTML || '';
         const previewUrls = [];
+        let primaryPreviewUrl = null;
 
         if (!upload || !preview || !selection || !status) return;
 
@@ -208,9 +209,9 @@
                     preview.append(primary);
                 }
 
-                const primaryUrl = URL.createObjectURL(files[0]);
-                previewUrls.push(primaryUrl);
-                primary.src = primaryUrl;
+                if (primaryPreviewUrl) URL.revokeObjectURL(primaryPreviewUrl);
+                primaryPreviewUrl = URL.createObjectURL(files[0]);
+                primary.src = primaryPreviewUrl;
                 primary.classList.add('admin-primary-image-live-preview');
                 status.textContent = (manager.dataset.textBatchSelected || ':count product photos selected.')
                     .replace(':count', String(files.length));
@@ -220,6 +221,10 @@
                     status.textContent += ' ' + note;
                 }
             } else {
+                if (primaryPreviewUrl) {
+                    URL.revokeObjectURL(primaryPreviewUrl);
+                    primaryPreviewUrl = null;
+                }
                 preview.innerHTML = initialPreviewMarkup;
                 status.textContent = manager.dataset.textNoReplacement || 'No product photos selected.';
             }
