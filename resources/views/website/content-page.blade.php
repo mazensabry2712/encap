@@ -73,7 +73,7 @@
                         </div>
                     @endif
                     <div class="encap-service-card-content">
-                        @unless(in_array($page, ['farms', 'packing-stations'], true))
+                        @unless(in_array($page, ['farms', 'packing-stations', 'export'], true))
                             <span class="encap-service-number">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                         @endunless
                         <h3>{{ $service['title'] }}</h3>
@@ -87,7 +87,7 @@
                 <div class="encap-service-workflow-heading"><span class="encap-section-index">{{ __('How we work') }}</span><h2>{{ $pageContent['workflow_heading'] }}</h2></div>
                 <ol class="encap-service-steps">
                     @foreach($pageContent['workflow'] as $step)
-                        <li>@unless(in_array($page, ['farms', 'packing-stations'], true))<span class="encap-service-step-number">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>@endunless<div><h3>{{ $step['title'] }}</h3><p>{{ $step['description'] }}</p></div></li>
+                        <li>@unless(in_array($page, ['farms', 'packing-stations', 'export'], true))<span class="encap-service-step-number">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>@endunless<div><h3>{{ $step['title'] }}</h3><p>{{ $step['description'] }}</p></div></li>
                     @endforeach
                 </ol>
             </div>
