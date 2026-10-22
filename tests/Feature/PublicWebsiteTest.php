@@ -115,6 +115,11 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertOk()
         ->assertSee('data-gallery-main', false)
         ->assertSee('data-gallery-thumb', false)
+        ->assertSee('data-gallery-counter', false)
+        ->assertSee('data-total-images="3"', false)
+        ->assertSee('data-gallery-index="1"', false)
+        ->assertSee('data-gallery-index="3"', false)
+        ->assertSee('aria-pressed="true"', false)
         ->assertSee('aria-pressed="false"', false)
         ->assertSee('data-image-src', false);
 
