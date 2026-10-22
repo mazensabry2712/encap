@@ -7,6 +7,13 @@ use App\Models\SeoSetting;
 
 
 test('homepage includes the ENCAP signature design and accessible navigation', function () {
+    Category::query()->create([
+        'name_en' => 'Homepage Citrus',
+        'name_ar' => 'موالح الرئيسية',
+        'slug' => 'homepage-citrus',
+        'is_published' => true,
+    ]);
+
     $this->get('/en')
         ->assertOk()
         ->assertSee('class="skip-link"', false)
