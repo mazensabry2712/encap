@@ -189,15 +189,10 @@ class WebsiteController extends Controller
             'product_form' => ['nullable', 'in:fresh,frozen,processed'],
             'packaging_requirements' => ['nullable', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
+            'website' => ['nullable', 'size:0'],
         ]);
 
-        if (!empty($validated['category_id'])) {
-            abort_unless(
-                Category::query()->whereKey($validated['category_id'])->where('is_published', true)->exists(),
-                422
-            );
-        }
-
+        unset($validated['website']);
         QuoteRequest::create($validated);
 
         return back()->with('success', __('Your request has been received. Our team will contact you soon.'));
