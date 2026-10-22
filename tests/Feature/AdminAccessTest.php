@@ -17,10 +17,10 @@ test('authenticated administrators can access the admin inboxes', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $this->get('/admin/categories')->assertOk()->assertSee('Product categories');
-    $this->get('/admin/seo')->assertOk()->assertSee('Central SEO');
-    $this->get('/admin/quote-requests')->assertOk()->assertSee('Quote requests');
-    $this->get('/admin/contact-messages')->assertOk()->assertSee('Contact messages');
+    $this->get('/admin/categories')->assertOk()->assertSee('تصنيفات المنتجات');
+    $this->get('/admin/seo')->assertOk()->assertSee('إعدادات SEO والموقع');
+    $this->get('/admin/quote-requests')->assertOk()->assertSee('طلبات عروض الأسعار');
+    $this->get('/admin/contact-messages')->assertOk()->assertSee('رسائل التواصل');
 });
 
 test('seo settings cache stores attributes and discards legacy model cache entries', function () {
