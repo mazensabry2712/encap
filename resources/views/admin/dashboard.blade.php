@@ -11,7 +11,7 @@
         </div>
         <div class="admin-dashboard-primary-actions">
             <a class="admin-btn" href="{{ route('admin.categories.create') }}"><span aria-hidden="true">＋</span> {{ __('Add product category') }}</a>
-            <a class="admin-btn secondary" href="{{ route('home', ['locale' => 'en']) }}" target="_blank" rel="noopener">{{ __('View website') }} <span aria-hidden="true">↗</span></a>
+            <a class="admin-btn secondary" href="{{ route('home', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener">{{ __('View website') }} <span aria-hidden="true">↗</span></a>
         </div>
     </section>
 
