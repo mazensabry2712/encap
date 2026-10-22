@@ -29,6 +29,7 @@
         '.encap-service-cta', '.encap-service-related', '.encap-catalog-footer',
         '.encap-about-journey-heading', '.encap-about-journey-card', '.encap-about-practice-visual',
         '.encap-about-practice-copy', '.encap-about-catalog-heading', '.encap-about-category-card',
+        '.encap-catalog-heading', '.encap-catalog-card', '.encap-catalog-cta',
         '.encap-about-final-panel', '.encap-contact-hero-copy', '.encap-contact-hero-visual',
         '.encap-contact-form-panel', '.encap-contact-details', '.encap-contact-next-heading',
         '.encap-contact-next-card', '.footer-top > div', '.footer-bottom'
@@ -71,7 +72,7 @@
     if (!reducedMotion && finePointer) {
         const tiltSelector = [
             '.category', '.encap-product-card', '.encap-service-hub-card', '.encap-service-card',
-            '.encap-principle-card', '.encap-about-journey-card', '.encap-about-category-card',
+            '.encap-principle-card', '.encap-about-journey-card', '.encap-about-category-card', '.encap-catalog-card',
             '.encap-contact-channel', '.encap-contact-next-card',
             '.gallery-card', '.encap-service-visual-figure',
             '.product-gallery-main', '.form-card', '.contact-details', '.feature-panel',
@@ -150,7 +151,7 @@
 
     const photoSelector = [
         '.category-image img', '.encap-product-image img', '.encap-service-card-media img',
-        '.encap-service-visual-figure img', '.encap-story-art > img', '.product-gallery-main img',
+        '.encap-service-visual-figure img', '.encap-story-art > img', '.encap-catalog-card-media img', '.encap-catalog-hero-image img', '.product-gallery-main img',
         '.gallery-card-link img'
     ].join(', ');
     const photos = Array.from(document.querySelectorAll(photoSelector));

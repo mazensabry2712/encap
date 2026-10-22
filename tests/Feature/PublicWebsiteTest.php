@@ -255,22 +255,30 @@ test('About previews only published product categories with main images', functi
         ->assertDontSee('about-fruit-5.webp');
 });
 
-test('product catalogue uses numbered cards and links to category details', function () {
+test('product catalogue uses the redesigned hero and data-backed numbered category cards', function () {
     Category::query()->create([
         'name_en' => 'Catalogue Mango',
         'name_ar' => 'مانجو الكتالوج',
         'slug' => 'catalogue-mango',
         'short_description_en' => 'Fresh and prepared produce enquiries.',
+        'short_description_ar' => 'استفسارات عن المنتجات الطازجة والمجهزة.',
         'is_published' => true,
     ]);
 
     $this->get('/en/products')
         ->assertOk()
-        ->assertSee('product-catalog-grid', false)
-        ->assertSee('category-index', false)
-        ->assertSee('category-image-open', false)
+        ->assertSee('encap-catalog-hero', false)
+        ->assertSee('encap-catalog-grid', false)
+        ->assertSee('encap-catalog-card-index', false)
         ->assertSee('data-tilt', false)
-        ->assertSee('/en/products/catalogue-mango', false);
+        ->assertSee('/en/products/catalogue-mango', false)
+        ->assertSee('Published categories');
+
+    $this->get('/ar/products')
+        ->assertOk()
+        ->assertSee('منتجات للأسواق العالمية')
+        ->assertSee('مانجو الكتالوج')
+        ->assertSee('encap-catalog-hero', false);
 });
 
 test('product gallery cards link to interactive category detail pages', function () {
