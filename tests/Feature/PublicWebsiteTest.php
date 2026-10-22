@@ -193,6 +193,8 @@ test('sitemap only includes published categories and is xml', function () {
     $this->get('/sitemap.xml')
         ->assertOk()
         ->assertHeader('content-type', 'application/xml; charset=UTF-8')
+        ->assertSee('/en/packing-stations')
+        ->assertSee('/ar/packing-stations')
         ->assertSee('/en/products/visible-mango')
         ->assertDontSee('/en/products/hidden-mango');
 });
