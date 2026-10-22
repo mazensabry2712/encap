@@ -1,0 +1,118 @@
+/* ENCAP accessible typography system: legibility before decoration. */
+:root {
+    --encap-font-latin: "Noto Sans", "Noto Sans Arabic", Arial, sans-serif;
+    --encap-font-arabic: "Noto Sans Arabic", "Noto Sans", Tahoma, sans-serif;
+    --encap-muted: #526157;
+    --muted: #526157;
+}
+html {
+    font-size: 100%;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+body.site-body,
+body.site-body * {
+    font-family: var(--encap-font-latin) !important;
+}
+html[lang="ar"] body.site-body,
+html[lang="ar"] body.site-body * {
+    font-family: var(--encap-font-arabic) !important;
+}
+body.site-body {
+    font-size: 17px !important;
+    line-height: 1.75 !important;
+    font-weight: 400;
+    letter-spacing: normal;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
+
+/* Comfortable reading sizes for running copy; retain responsive heading scales. */
+body.site-body :is(p, li, dd, dt, blockquote, .content-copy, .muted, .lead) {
+    font-size: 17px !important;
+    line-height: 1.8 !important;
+}
+body.site-body :is(small, .hero-caption span, .hero-float-copy small, .gallery-card figcaption small, .language-option-text small) {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+}
+body.site-body :is(label, .field label, .form-card label) {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+}
+body.site-body :is(input, select, textarea) {
+    min-height: 46px;
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+}
+body.site-body textarea { min-height: 132px; }
+body.site-body :is(button, .button, .encap-button) {
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+}
+
+/* One typographic voice across headlines, cards and long-form pages. */
+body.site-body :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 650 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    text-wrap: pretty;
+}
+html[lang="ar"] body.site-body :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.5 !important;
+    letter-spacing: 0 !important;
+}
+body.site-body :is(.eyebrow, .encap-kicker, .encap-section-index, .editorial-side-label,
+    .hero-index, .hero-caption span, .encap-hero-footnote, .encap-hero-bottom,
+    .content-story-marker, .proof-number, .product-count, .format-pill,
+    .encap-service-hub-number, .encap-service-number, .encap-service-step-number,
+    .footer-bottom, .language-menu-label) {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    letter-spacing: 0.045em !important;
+}
+html[lang="ar"] body.site-body :is(.eyebrow, .encap-kicker, .encap-section-index,
+    .editorial-side-label, .hero-index, .encap-hero-footnote, .encap-hero-bottom,
+    .content-story-marker, .proof-number, .product-count, .format-pill,
+    .encap-service-hub-number, .encap-service-number, .encap-service-step-number,
+    .footer-bottom, .language-menu-label) {
+    letter-spacing: 0 !important;
+}
+body.site-body :is(.proof-copy strong, .hero-float-copy strong, .encap-service-card h3,
+    .encap-service-steps h3, .detail-block h3, .footer-links a, .footer-intro,
+    .language-option-text strong) {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+}
+body.site-body :is(.primary-links > a, .primary-dropdown > summary,
+    .primary-dropdown-panel a, .primary-mobile-panel a) {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+body.site-body .primary-quote.button,
+body.site-body .primary-mobile-quote {
+    font-size: 14px !important;
+}
+body.site-body .language-option-text small { color: #526157; }
+body.site-body .editorial-side-label,
+body.site-body .content-story-marker,
+body.site-body .encap-section-index,
+body.site-body .encap-service-hub-number,
+body.site-body .encap-service-step-number {
+    color: #526157;
+}
+body.site-body :is(a, button, input, select, textarea, summary):focus-visible {
+    outline-offset: 3px;
+}
+@media (max-width: 760px) {
+    body.site-body { font-size: 16px !important; }
+    body.site-body :is(p, li, dd, dt, blockquote, .content-copy, .muted, .lead) {
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+    }
+    body.site-body :is(h1, h2, h3, h4, h5, h6) { line-height: 1.25 !important; }
+    html[lang="ar"] body.site-body :is(h1, h2, h3, h4, h5, h6) { line-height: 1.55 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}

@@ -114,6 +114,29 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('الرئيسية');
 });
 
+
+test('public typography uses legible Latin and Arabic fonts with comfortable reading sizes', function () {
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('family=Noto+Sans', false)
+        ->assertSee('family=Noto+Sans+Arabic', false)
+        ->assertSee('css/typography.css', false);
+
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee('lang="ar"', false)
+        ->assertSee('css/typography.css', false);
+
+    expect(file_exists(public_path('css/typography.css')))->toBeTrue();
+
+    $stylesheet = file_get_contents(public_path('css/typography.css'));
+
+    expect($stylesheet)
+        ->toContain('font-size: 17px !important')
+        ->toContain('Noto Sans Arabic')
+        ->toContain('text-size-adjust: 100%');
+});
+
 test('the home page uses central defaults without writing settings during a public read', function () {
     $this->get('/en')->assertOk()->assertSee('ENCAP');
 
