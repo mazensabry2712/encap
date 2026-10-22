@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->name('admin.')->middleware(SetAdminLocale::class)->group(function () {
     Route::post('/language', function (Request $request) {
         $validated = $request->validate(['locale' => ['required', 'in:en,ar']]);
-        $request->session()->put('admin_locale', $validated['locale']);
+        $request->session()->put('admin_language', $validated['locale']);
 
         return back();
     })->name('language');
