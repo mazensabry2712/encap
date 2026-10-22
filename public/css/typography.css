@@ -1,7 +1,7 @@
 /* ENCAP accessible typography system: legibility before decoration. */
 :root {
-    --encap-font-latin: "Noto Sans", "Noto Sans Arabic", Arial, sans-serif;
-    --encap-font-arabic: "Noto Sans Arabic", "Noto Sans", Tahoma, sans-serif;
+    --encap-font-latin: "Cairo", Arial, sans-serif;
+    --encap-font-arabic: "Cairo", Tahoma, sans-serif;
     --encap-muted: #526157;
     --muted: #526157;
 }

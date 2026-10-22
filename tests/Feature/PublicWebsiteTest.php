@@ -118,8 +118,7 @@ test('primary navigation is centered, bilingual, and responsive', function () {
 test('public typography uses legible Latin and Arabic fonts with comfortable reading sizes', function () {
     $this->get('/en')
         ->assertOk()
-        ->assertSee('family=Noto+Sans', false)
-        ->assertSee('family=Noto+Sans+Arabic', false)
+        ->assertSee('family=Cairo', false)
         ->assertSee('css/typography.css', false);
 
     $this->get('/ar')
@@ -133,7 +132,7 @@ test('public typography uses legible Latin and Arabic fonts with comfortable rea
 
     expect($stylesheet)
         ->toContain('font-size: 17px !important')
-        ->toContain('Noto Sans Arabic')
+        ->toContain('Cairo')
         ->toContain('text-size-adjust: 100%');
 });
 
