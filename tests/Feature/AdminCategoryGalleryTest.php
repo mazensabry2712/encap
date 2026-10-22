@@ -1,9 +1,9 @@
 <?php
 
-use App\\Models\\Category;
-use App\\Models\\User;
-use Illuminate\\Http\\UploadedFile;
-use Illuminate\\Support\\Facades\\Storage;
+use App\Models\Category;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 test('category editor presents an organized gallery manager with live image previews', function () {
     $category = Category::query()->create([
