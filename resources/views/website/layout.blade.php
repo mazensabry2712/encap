@@ -57,6 +57,7 @@
         </a>
         @php($operationsActive = request()->routeIs('farms', 'packing-stations', 'export', 'quality', 'gallery'))
         <nav class="primary-links" aria-label="{{ __('Main navigation') }}">
+            <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
             <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
             <details class="primary-dropdown">
                 <summary @if($operationsActive) class="is-active" @endif><span>{{ $currentLocale === 'ar' ? 'عملياتنا' : 'Operations' }}</span><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg></summary>
