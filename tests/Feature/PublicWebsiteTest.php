@@ -468,6 +468,8 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('encap-service-steps', false)
         ->assertSee('encap-service-visual-figure', false)
         ->assertSee('encap-service-card-media', false)
+        ->assertDontSee('encap-service-number', false)
+        ->assertDontSee('encap-service-step-number', false)
         ->assertSee('images.unsplash.com/photo-1761839259494', false);
 
     $this->get('/ar/farms')
@@ -475,6 +477,8 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('الإنتاج الزراعي وإدارة المزرعة')
         ->assertSee('encap-service-grid', false)
         ->assertSee('encap-service-visual-copy', false)
+        ->assertDontSee('encap-service-number', false)
+        ->assertDontSee('encap-service-step-number', false)
         ->assertSee('images.unsplash.com/photo-1761839259494', false);
 
     $this->get('/en/packing-stations')
