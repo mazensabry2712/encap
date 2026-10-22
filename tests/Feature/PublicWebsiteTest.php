@@ -24,6 +24,7 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         'slug' => 'gallery-citrus',
         'image' => 'categories/main.webp',
         'gallery' => ['categories/gallery/one.webp', 'categories/gallery/two.webp'],
+        'available_forms' => ['fresh', 'frozen'],
         'is_published' => true,
     ]);
 
@@ -33,6 +34,12 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertSee('data-gallery-thumb', false)
         ->assertSee('aria-pressed="false"', false)
         ->assertSee('data-image-src', false);
+
+    $this->get(route('products.show', ['locale' => 'ar', 'category' => $category->slug]))
+        ->assertOk()
+        ->assertSee('القائمة')
+        ->assertSee('طازج')
+        ->assertSee('مجمّد');
 });
 
 test('navbar language switcher is accessible and the old topbar is removed', function () {
