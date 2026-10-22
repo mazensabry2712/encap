@@ -21,6 +21,7 @@ Route::prefix('{locale}')->group(function () {
     Route::get('/', [WebsiteController::class, 'home'])->name('home');
     Route::get('/about', [WebsiteController::class, 'contentPage'])->defaults('page', 'about')->name('about');
     Route::get('/farms', [WebsiteController::class, 'contentPage'])->defaults('page', 'farms')->name('farms');
+    Route::get('/packing-stations', [WebsiteController::class, 'contentPage'])->defaults('page', 'packing-stations')->name('packing-stations');
     Route::get('/quality', [WebsiteController::class, 'contentPage'])->defaults('page', 'quality')->name('quality');
     Route::get('/export', [WebsiteController::class, 'contentPage'])->defaults('page', 'export')->name('export');
     Route::get('/gallery', [WebsiteController::class, 'contentPage'])->defaults('page', 'gallery')->name('gallery');

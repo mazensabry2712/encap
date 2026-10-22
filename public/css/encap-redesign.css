@@ -171,3 +171,51 @@ html[dir=rtl] .site-header .brand-logo{object-position:right center}
 .encap-process-decoration .encap-process-decoration-logo+span{z-index:2}
 .encap-product-image .encap-product-placeholder-logo{display:block;width:84px;height:84px;max-width:100%;object-fit:contain;position:relative;z-index:1}
 @media(max-width:760px){.encap-process-decoration-logo{width:70px;height:70px}.encap-product-image .encap-product-placeholder-logo{width:68px;height:68px}}
+
+
+/* Service architecture: agriculture, packing stations and export logistics. */
+.encap-service-hub{padding:clamp(58px,7vw,94px) 0;background:#f1f0e6;border-block:1px solid rgba(36,75,55,.10)}
+.encap-service-hub-heading{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(260px,.55fr);gap:48px;align-items:end;margin-bottom:32px}
+.encap-service-hub-heading .encap-section-index{margin-bottom:13px}
+.encap-service-hub-heading h2{max-width:760px;margin:0;font:400 clamp(34px,4.4vw,58px)/1.05 var(--encap-serif);letter-spacing:-.045em;color:var(--encap-deep)}
+.encap-service-hub-heading>p{max-width:430px;margin:0 0 5px;color:var(--encap-muted);font-size:13px;line-height:1.9}
+.encap-service-hub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.encap-service-hub-card{position:relative;display:flex;flex-direction:column;min-height:275px;padding:clamp(22px,3vw,34px);border:1px solid #d8dfd0;background:rgba(255,255,255,.72);text-decoration:none;color:var(--encap-ink);transition:transform .3s,border-color .3s,box-shadow .3s,background .3s}
+.encap-service-hub-card:hover{transform:translateY(-5px);border-color:#9fb28d;background:#fff;box-shadow:0 20px 44px rgba(19,51,31,.09)}
+.encap-service-hub-icon{display:grid;place-items:center;width:48px;height:48px;background:var(--encap-lime);color:var(--encap-green);border-radius:50%;margin-bottom:24px}
+.encap-service-hub-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.encap-service-hub-number{color:#7c8d77;font-size:9px;font-weight:800;letter-spacing:.15em}
+.encap-service-hub-card h3{margin:10px 0 8px;font:400 clamp(22px,2.4vw,30px)/1.15 var(--encap-serif);letter-spacing:-.025em}
+.encap-service-hub-card p{margin:0;color:var(--encap-muted);font-size:12px;line-height:1.8;max-width:310px}
+.encap-service-hub-link{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:24px;color:var(--encap-green);font-size:11px;font-weight:800}
+.encap-service-hub-link b{display:grid;place-items:center;width:29px;height:29px;border:1px solid #cbd5c1;border-radius:50%;font-size:15px;font-weight:400;transition:transform .25s,background .25s}
+.encap-service-hub-card:hover .encap-service-hub-link b{transform:translate(2px,-2px);background:var(--encap-lime)}
+.encap-service-detail{margin-bottom:54px}
+.encap-service-detail-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.55fr);gap:40px;align-items:end;margin:0 0 28px}
+.encap-service-detail-heading .encap-section-index{margin-bottom:14px}
+.encap-service-detail-heading h2,.encap-service-workflow-heading h2{margin:0;color:var(--encap-deep);font:400 clamp(31px,3.8vw,48px)/1.08 var(--encap-serif);letter-spacing:-.04em}
+.encap-service-detail-heading>p{margin:0 0 4px;color:var(--encap-muted);font-size:13px;line-height:1.9}
+.encap-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.encap-service-card{min-width:0;position:relative;padding:25px 24px 26px;border:1px solid var(--encap-line);background:#fff;transition:transform .28s,border-color .28s,box-shadow .28s}
+.encap-service-card:hover{transform:translateY(-4px);border-color:#a9ba98;box-shadow:0 18px 38px rgba(23,39,31,.07)}
+.encap-service-number{display:grid;place-items:center;width:35px;height:35px;margin-bottom:21px;border-radius:50%;background:var(--encap-lime);color:var(--encap-green);font-size:10px;font-weight:800}
+.encap-service-card h3{margin:0 0 11px;font-size:15px;line-height:1.45;font-weight:750;color:var(--encap-ink)}
+.encap-service-card p{margin:0;color:var(--encap-muted);font-size:12px;line-height:1.9}
+.encap-service-workflow{display:grid;grid-template-columns:minmax(210px,.75fr) minmax(0,1.25fr);gap:36px;margin-top:62px;padding:35px 0;border-block:1px solid var(--encap-line)}
+.encap-service-workflow-heading .encap-section-index{margin-bottom:13px}
+.encap-service-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:23px 28px;list-style:none;margin:0;padding:0}
+.encap-service-steps li{display:flex;align-items:flex-start;gap:13px}
+.encap-service-step-number{display:grid;place-items:center;flex:0 0 34px;height:34px;border:1px solid #cad5bd;border-radius:50%;color:var(--encap-green);font-size:9px;font-weight:800}
+.encap-service-steps h3{margin:1px 0 6px;font-size:12px;font-weight:800}
+.encap-service-steps p{margin:0;color:var(--encap-muted);font-size:11px;line-height:1.8}
+.encap-service-cta{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:28px;padding:25px 28px;background:var(--encap-cream);border:1px solid var(--encap-line)}
+.encap-service-cta strong{display:block;font:400 23px/1.2 var(--encap-serif);color:var(--encap-deep)}
+.encap-service-cta p{max-width:650px;margin:7px 0 0;color:var(--encap-muted);font-size:12px;line-height:1.8}
+.encap-service-related{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:21px}
+.encap-service-related a{display:inline-flex;align-items:center;gap:12px;padding:9px 12px;border:1px solid var(--encap-line);color:var(--encap-green);font-size:11px;font-weight:750;text-decoration:none;transition:background .25s,border-color .25s}
+.encap-service-related a:hover{background:var(--encap-lime);border-color:#afc09f}
+.encap-service-related a span{font-size:14px}
+html[dir=rtl] .encap-service-hub-card:hover .encap-service-hub-link b{transform:translate(-2px,-2px)}
+@media(max-width:950px){.encap-service-hub-heading,.encap-service-detail-heading{grid-template-columns:1fr;gap:15px}.encap-service-hub-grid{gap:12px}.encap-service-hub-card{padding:22px;min-height:280px}.encap-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.encap-service-workflow{grid-template-columns:1fr;gap:26px}}
+@media(max-width:650px){.encap-service-hub{padding:52px 0}.encap-service-hub-grid{grid-template-columns:1fr}.encap-service-hub-card{min-height:0;padding:23px}.encap-service-hub-icon{margin-bottom:15px}.encap-service-hub-card h3{font-size:27px}.encap-service-hub-link{padding-top:17px}.encap-service-detail-heading h2,.encap-service-workflow-heading h2{font-size:34px}.encap-service-grid{grid-template-columns:1fr}.encap-service-card{padding:22px}.encap-service-number{margin-bottom:15px}.encap-service-workflow{margin-top:42px;padding:26px 0}.encap-service-steps{grid-template-columns:1fr;gap:19px}.encap-service-cta{align-items:flex-start;flex-direction:column;padding:22px}.encap-service-cta .encap-button{width:100%}.encap-service-related{align-items:stretch;flex-direction:column}.encap-service-related a{justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){.encap-service-hub-card,.encap-service-hub-link b,.encap-service-card,.encap-service-related a{transition:none!important}.encap-service-hub-card:hover,.encap-service-card:hover{transform:none}}

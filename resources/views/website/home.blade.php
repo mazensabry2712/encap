@@ -24,6 +24,28 @@
  <div class="encap-trust-item"><span class="encap-trust-number">03</span><span class="encap-trust-symbol">◇</span><strong>{{ __('Product preparation') }}</strong><small>{{ __('Requirements discussed clearly') }}</small></div>
  <div class="encap-trust-item"><span class="encap-trust-number">04</span><span class="encap-trust-symbol">◎</span><strong>{{ __('Export enquiries') }}</strong><small>{{ __('A direct line to our team') }}</small></div>
 </div></section>
+<section class="encap-service-hub" aria-labelledby="encap-service-hub-title">
+ <div class="container">
+  <div class="encap-service-hub-heading">
+   <div><span class="encap-section-index">{{ __('Three connected capabilities') }}</span><h2 id="encap-service-hub-title">{{ __('From farm management to prepared shipment.') }}</h2></div>
+   <p>{{ __('Explore how we connect crop sourcing, post-harvest preparation and export coordination around your requirements.') }}</p>
+  </div>
+  <div class="encap-service-hub-grid">
+   <a class="encap-service-hub-card" href="{{ route('farms', ['locale' => $locale]) }}">
+    <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sprout"></use></svg></span>
+    <span class="encap-service-hub-number">01 / ORIGIN</span><h3>{{ __('Agriculture & Farms') }}</h3><p>{{ __('Crop sourcing and seasonal planning.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
+   </a>
+   <a class="encap-service-hub-card" href="{{ route('packing-stations', ['locale' => $locale]) }}">
+    <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-package"></use></svg></span>
+    <span class="encap-service-hub-number">02 / PREPARATION</span><h3>{{ __('Packing Stations') }}</h3><p>{{ __('Sorting, grading, packing and preparation.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
+   </a>
+   <a class="encap-service-hub-card" href="{{ route('export', ['locale' => $locale]) }}">
+    <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-truck"></use></svg></span>
+    <span class="encap-service-hub-number">03 / MARKETS</span><h3>{{ __('Export & Logistics') }}</h3><p>{{ __('Requirements, compliance coordination and shipping partners.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
+   </a>
+  </div>
+ </div>
+</section>
 <section class="section encap-story" id="our-approach"><div class="container encap-story-grid">
  <div class="encap-story-art"><img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=900&q=80" alt="{{ __('Sunlight across agricultural land') }}" loading="lazy" width="900" height="1100"><div class="encap-story-sideword">ORIGIN / QUALITY / GROWTH</div><div class="encap-story-caption"><img class="encap-story-brand" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="36" height="36" loading="lazy" decoding="async"><strong>{{ __('A stronger link between growers and global buyers.') }}</strong></div></div>
  <div class="encap-story-copy"><span class="encap-section-index">{{ __('01 / Who we are') }}</span><div class="encap-kicker">{{ __('Agriculture with a wider view') }}</div><h2>{{ __('Good produce starts with good decisions.') }}</h2><p>{{ __('We work across agricultural production, partner sourcing, processing and export. Our approach starts with understanding the crop, the buyer’s needs and the journey ahead.') }}</p><p>{{ __('Every enquiry is a chance to align product details, availability, preparation and destination before moving forward.') }}</p><a class="encap-text-link" href="{{ route('about', ['locale' => $locale]) }}">{{ __('Discover ENCAP') }} <span>↗</span></a><div class="encap-story-signature"><span class="encap-signature-mark"><img class="encap-signature-logo" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="32" height="32" loading="lazy" decoding="async"></span><span><strong>{{ __('Rooted in Egypt.') }}</strong><small>{{ __('Connected to opportunity.') }}</small></span></div></div>

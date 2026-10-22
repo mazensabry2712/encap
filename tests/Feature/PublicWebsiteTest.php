@@ -31,6 +31,8 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-process-row', false)
         ->assertSee('encap-quality-band', false)
         ->assertSee('encap-final-cta', false)
+        ->assertSee('encap-service-hub', false)
+        ->assertSee('/en/packing-stations', false)
         ->assertSee('encap-signature-logo', false)
         ->assertSee('encap-process-decoration-logo', false)
         ->assertSee('encap-product-placeholder-logo', false)
@@ -247,4 +249,41 @@ test('contact message is saved and the honeypot blocks submissions', function ()
     ])->assertSessionHasErrors('website');
 
     expect(ContactMessage::query()->count())->toBe(1);
+});
+
+
+test('farm, packing station and export service pages render in English and Arabic', function () {
+    $this->get('/en/farms')
+        ->assertOk()
+        ->assertSee('Crop production & farm operations')
+        ->assertSee('encap-service-grid', false)
+        ->assertSee('encap-service-steps', false);
+
+    $this->get('/ar/farms')
+        ->assertOk()
+        ->assertSee('الإنتاج الزراعي وإدارة المزرعة')
+        ->assertSee('encap-service-grid', false);
+
+    $this->get('/en/packing-stations')
+        ->assertOk()
+        ->assertSee('Packing Stations')
+        ->assertSee('Sorting & grading')
+        ->assertSee('Pre-cooling & cold-chain coordination')
+        ->assertSee('assets/favicone.png', false);
+
+    $this->get('/ar/packing-stations')
+        ->assertOk()
+        ->assertSee('محطات التعبئة والتجهيز')
+        ->assertSee('الفرز والتصنيف')
+        ->assertSee('التبريد المسبق وتنسيق سلسلة التبريد');
+
+    $this->get('/en/export')
+        ->assertOk()
+        ->assertSee('Export & Logistics')
+        ->assertSee('Documentation & compliance coordination');
+
+    $this->get('/ar/export')
+        ->assertOk()
+        ->assertSee('التصدير والخدمات اللوجستية')
+        ->assertSee('تنسيق المستندات والامتثال');
 });
