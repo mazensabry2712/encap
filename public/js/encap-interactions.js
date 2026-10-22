@@ -54,6 +54,54 @@
         });
     });
 
+
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!reduceMotion && finePointer) {
+        const heroMedia = document.querySelector('.hero-media');
+        const parallaxScene = document.querySelector('[data-parallax-scene]');
+
+        if (heroMedia && parallaxScene) {
+            let parallaxFrame = 0;
+            heroMedia.addEventListener('pointermove', (event) => {
+                if (parallaxFrame) return;
+                parallaxFrame = window.requestAnimationFrame(() => {
+                    const rect = heroMedia.getBoundingClientRect();
+                    const x = (event.clientX - rect.left) / rect.width - 0.5;
+                    const y = (event.clientY - rect.top) / rect.height - 0.5;
+                    parallaxScene.style.setProperty('--scene-x', (x * -12).toFixed(2) + 'px');
+                    parallaxScene.style.setProperty('--scene-y', (y * -10).toFixed(2) + 'px');
+                    parallaxFrame = 0;
+                });
+            }, { passive: true });
+
+            heroMedia.addEventListener('pointerleave', () => {
+                if (parallaxFrame) window.cancelAnimationFrame(parallaxFrame);
+                parallaxFrame = 0;
+                parallaxScene.style.setProperty('--scene-x', '0px');
+                parallaxScene.style.setProperty('--scene-y', '0px');
+            });
+        }
+
+        document.querySelectorAll('[data-tilt]').forEach((card) => {
+            card.addEventListener('pointermove', (event) => {
+                const rect = card.getBoundingClientRect();
+                const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+                const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+                card.style.setProperty('--tilt-x', ((0.5 - y) * 5).toFixed(2) + 'deg');
+                card.style.setProperty('--tilt-y', ((x - 0.5) * 7).toFixed(2) + 'deg');
+                card.style.setProperty('--pointer-x', (x * 100).toFixed(1) + '%');
+                card.style.setProperty('--pointer-y', (y * 100).toFixed(1) + '%');
+            }, { passive: true });
+
+            card.addEventListener('pointerleave', () => {
+                card.style.setProperty('--tilt-x', '0deg');
+                card.style.setProperty('--tilt-y', '0deg');
+                card.style.setProperty('--pointer-x', '50%');
+                card.style.setProperty('--pointer-y', '50%');
+            });
+        });
+    }
+
     const gallery = document.querySelector('.product-gallery-main');
     const galleryButtons = document.querySelectorAll('[data-gallery-thumb]');
     if (gallery && galleryButtons.length) {
