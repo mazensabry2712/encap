@@ -48,5 +48,5 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
         ->assertSee('Mona Visitor')
         ->assertSee('Export question')
         ->assertSee('Manage catalogue')
-        ->assertSee('SEO & site settings');
+        ->assertSee('Manage site metadata and contact details');
 });
