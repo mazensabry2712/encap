@@ -323,3 +323,9 @@ html[dir="rtl"] .login-story:after{right:auto;left:-150px}
  .admin-gallery-item,.admin-primary-image-preview>.admin-primary-image-live-preview{animation:none!important;transition:none!important}
  .admin-gallery-item:hover{transform:none}
 }
+
+
+.admin-category-image-count{display:block;width:max-content;max-width:100%;margin-top:5px;padding:3px 7px;border:1px solid #dfe6d8;background:#f5f7ef;color:#48634b;border-radius:2px;font-size:9px;font-weight:850}
+.admin-gallery-remove.is-marked-for-removal{background:#fff2ef;color:#8a291d}
+.admin-gallery-remove.is-marked-for-removal span{font-weight:900}
+.admin-gallery-upload input[type=file]:disabled{opacity:.55;cursor:not-allowed;background:#f1f2ed}
