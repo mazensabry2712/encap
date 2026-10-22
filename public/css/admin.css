@@ -103,3 +103,8 @@
 .admin-brand{flex-wrap:wrap;gap:9px}
 @media(max-width:1020px){.admin-brand-logo-wrap{width:146px}.admin-brand-logo{width:132px;height:39px}}
 @media(max-width:760px){.admin-brand{align-items:center;flex-wrap:nowrap}.admin-brand-logo-wrap{width:139px;min-height:44px}.admin-brand-logo{width:126px;height:36px}.admin-brand-caption small{white-space:normal}}
+
+
+.login-brand-logo-wrap{display:flex;align-items:center;justify-content:center;padding:7px 10px;background:#fff;border-radius:3px}
+.login-brand-logo{display:block;width:164px;max-width:min(100%,190px);height:47px;object-fit:contain}
+@media(max-width:800px){.login-brand-logo{width:155px;height:44px}}
