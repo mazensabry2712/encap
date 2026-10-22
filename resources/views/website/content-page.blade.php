@@ -30,7 +30,7 @@
                     <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=800&amp;q=82" alt="{{ $pageContent['hero_produce_alt'] }}" width="700" height="520" loading="lazy" decoding="async">
                     <figcaption><span>ENCAP /</span> {{ $pageContent['hero_badge'] }}</figcaption>
                 </figure>
-                <div class="encap-about-floating-mark" aria-hidden="true"><img src="{{ asset('assets/favicone.png') }}" alt="" width="32" height="32" decoding="async"><span>01—04</span></div>
+                <div class="encap-about-floating-mark" aria-hidden="true"><img src="{{ asset('assets/favicone.png') }}" alt="" width="32" height="32" decoding="async"></div>
             </div>
         </div>
         <div class="encap-about-hero-baseline"><span>{{ __('From origin to market') }}</span><span aria-hidden="true">✳</span><span>{{ __('Growing with purpose. Supplying with care.') }}</span></div>
