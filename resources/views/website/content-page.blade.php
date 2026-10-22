@@ -103,12 +103,9 @@
         </nav>
     </div>
 @endif
-@if($page === 'gallery')
-    @if($categories->isNotEmpty())<div class="gallery-grid">@foreach($categories as $category)<figure class="gallery-card" data-tilt><a class="gallery-card-link" href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}"><img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}" loading="lazy" width="600" height="480"><span class="gallery-card-action" aria-hidden="true">↗</span></a><figcaption><span>{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}<small>{{ __('Explore product') }}</small></span></figcaption></figure>@endforeach</div>
-    @else<div class="empty-state"><strong>{{ __('Our product range') }}</strong><p>{{ __('Approved farm and product photography will be added to the gallery as it becomes available.') }}</p><a class="button ghost" href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Browse products') }} <span class="button-arrow">↗</span></a></div>@endif
-@endif
+
 @if(empty($pageContent['services']))
-<div class="content-story-marker"><span class="content-story-brand"><img src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="24" height="24" decoding="async"></span><span>{{ __('From origin to market') }}</span></div><div class="content-layout" style="margin-top:{{ $page === 'gallery' && $categories->isNotEmpty() ? '55px' : '0' }}"><div class="content-copy"><p>{{ $pageContent['body'] }}</p></div><aside class="feature-panel"><div class="eyebrow">{{ __('Let us talk supply') }}</div><strong>{{ __('Looking for a reliable agricultural supply partner?') }}</strong><p>{{ __('Share your product, quantity and destination requirements with our team.') }}</p><a class="text-link" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request a Quote') }} <span>↗</span></a></aside></div>
+<div class="content-story-marker"><span class="content-story-brand"><img src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="24" height="24" decoding="async"></span><span>{{ __('From origin to market') }}</span></div><div class="content-layout"><div class="content-copy"><p>{{ $pageContent['body'] }}</p></div><aside class="feature-panel"><div class="eyebrow">{{ __('Let us talk supply') }}</div><strong>{{ __('Looking for a reliable agricultural supply partner?') }}</strong><p>{{ __('Share your product, quantity and destination requirements with our team.') }}</p><a class="text-link" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request a Quote') }} <span>↗</span></a></aside></div>
 @endif
 </div></section>
 @endif
