@@ -135,3 +135,5 @@ html[dir=rtl] .site-header .desktop-links a:after{transform-origin:right center}
  .category:hover,.feature-panel:hover,.gallery-card:hover,.product-gallery-thumb:hover{transform:none}
  .category:hover .category-image img,.product-gallery-main:hover img,.product-gallery-thumb:hover img,.gallery-card:hover .gallery-card-link img{transform:none}
 }
+
+.visually-hidden-field{position:absolute!important;inset-inline-start:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important;opacity:0!important;pointer-events:none!important}
