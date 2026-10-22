@@ -910,3 +910,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
     .encap-catalog-button,.encap-catalog-card,.encap-catalog-card-media>img,.encap-catalog-card-open,.encap-catalog-card-mark,.encap-catalog-summary-icon,.encap-catalog-text-link{transition:none!important}
     .encap-catalog-button:hover,.encap-catalog-card:hover{transform:none!important;translate:0!important}
 }
+
+.encap-catalog-hero-image-placeholder{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 65% 35%,#b9cba1,#789273 58%,#244b37);color:#eff4e4}
+.encap-catalog-hero-image-placeholder:before{position:absolute;content:"";inset:12%;border:1px solid #ffffff48;border-radius:50%;box-shadow:0 0 0 18px #ffffff0a,0 0 0 38px #ffffff08}
+.encap-catalog-hero-image-placeholder svg{position:relative;width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}

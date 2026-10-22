@@ -1,12 +1,7 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
 @php($categoryOffset = $categories->firstItem() ?? 1)
-@php
-    $heroCategories = $categories->getCollection()
-        ->filter(fn ($item) => filled($item->image))
-        ->take(3)
-        ->values();
-@endphp
+@php($heroCategories = $categories->getCollection()->take(3)->values())
 @section('content')
 <section class="encap-catalog-hero" aria-labelledby="encap-catalog-title">
     <div class="container">
@@ -55,7 +50,11 @@
                     @php($heroImageClasses = ['primary', 'secondary', 'tertiary'])
                     @foreach($heroCategories as $heroIndex => $heroCategory)
                         <figure class="encap-catalog-hero-image encap-catalog-hero-image--{{ $heroImageClasses[$heroIndex] }}">
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url($heroCategory->image) }}" alt="" width="640" height="760" @if($heroIndex === 0) fetchpriority="high" @else loading="lazy" @endif decoding="async">
+                            @if($heroCategory->image)
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($heroCategory->image) }}" alt="" width="640" height="760" @if($heroIndex === 0) fetchpriority="high" @else loading="lazy" @endif decoding="async">
+                            @else
+                                <span class="encap-catalog-hero-image-placeholder"><svg viewBox="0 0 24 24"><use href="#icon-sprout"></use></svg></span>
+                            @endif
                             <figcaption>{{ $locale === 'ar' && $heroCategory->name_ar ? $heroCategory->name_ar : $heroCategory->name_en }}</figcaption>
                         </figure>
                     @endforeach
