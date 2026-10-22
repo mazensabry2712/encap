@@ -1,9 +1,9 @@
 <?php
 
-use App\\Models\\Category;
-use App\\Models\\ContactMessage;
-use App\\Models\\QuoteRequest;
-use App\\Models\\User;
+use App\Models\Category;
+use App\Models\ContactMessage;
+use App\Models\QuoteRequest;
+use App\Models\User;
 
 test('guests are redirected from the admin dashboard to sign in', function () {
     $this->get('/admin')->assertRedirect(route('admin.login'));
