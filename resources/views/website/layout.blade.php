@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{ asset('css/navigation.css') }}">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
+    <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
     <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>
     @stack('head')
 </head>
@@ -128,4 +129,5 @@
 <script src="{{ asset('js/encap-interactions.js') }}" defer></script>
 @if(request()->routeIs('home'))<script src="{{ asset('js/hero-experience.js') }}" defer></script>@endif
 <script src="{{ asset('js/language-switcher.js') }}" defer></script>
+<script src="{{ asset('js/site-motion.js') }}" defer></script>
 </body></html>

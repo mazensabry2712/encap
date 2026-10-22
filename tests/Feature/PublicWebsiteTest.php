@@ -44,7 +44,38 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-process-decoration-logo', false)
         ->assertSee('encap-product-placeholder-logo', false)
         ->assertSee('id="icon-sprout"', false)
-        ->assertSee('js/encap-interactions.js', false);
+        ->assertSee('js/encap-interactions.js', false)
+        ->assertSee('css/site-motion.css', false)
+        ->assertSee('js/site-motion.js', false);
+});
+
+
+test('site-wide motion assets are loaded on public English and Arabic page templates', function () {
+    Category::query()->create([
+        'name_en' => 'Motion Mango',
+        'name_ar' => 'مانجو الحركة',
+        'slug' => 'motion-mango',
+        'short_description_en' => 'Seasonal Egyptian mango sourcing.',
+        'short_description_ar' => 'توريد المانجو المصري حسب الموسم.',
+        'description_en' => 'Contact ENCAP to confirm availability.',
+        'description_ar' => 'تواصل مع ENCAP لتأكيد التوافر.',
+        'image' => 'categories/motion-mango.webp',
+        'is_published' => true,
+    ]);
+
+    $paths = [
+        '/en', '/ar', '/en/about', '/ar/farms', '/en/packing-stations',
+        '/ar/quality', '/en/export', '/ar/gallery', '/en/products', '/ar/products',
+        '/en/products/motion-mango', '/ar/products/motion-mango',
+        '/en/contact', '/ar/request-a-quote',
+    ];
+
+    foreach ($paths as $path) {
+        $this->get($path)
+            ->assertOk()
+            ->assertSee('css/site-motion.css', false)
+            ->assertSee('js/site-motion.js', false);
+    }
 });
 
 test('admin sign-in uses the ENCAP logo and favicon assets', function () {
