@@ -1,7 +1,7 @@
 <?php
 
-test('the root redirects to the default English locale', function () {
-    $this->get('/')->assertRedirect('/en');
+test('the root redirects to the default Arabic locale', function () {
+    $this->get('/')->assertRedirect('/ar');
 });
 
 test('the public home page renders in English', function () {
