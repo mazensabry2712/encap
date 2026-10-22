@@ -6,17 +6,18 @@ use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
 
 
-test('homepage includes the updated editorial direction and accessible skip link', function () {
+test('homepage includes the ENCAP signature design and accessible navigation', function () {
     $this->get('/en')
         ->assertOk()
         ->assertSee('class="skip-link"', false)
-        ->assertSee('editorial-intro', false)
-        ->assertSee('hero-float-card', false)
+        ->assertSee('encap-hero', false)
+        ->assertSee('encap-hero-image', false)
+        ->assertSee('encap-floating-note', false)
+        ->assertSee('encap-product-grid', false)
+        ->assertSee('encap-process-row', false)
+        ->assertSee('encap-quality-band', false)
+        ->assertSee('encap-final-cta', false)
         ->assertSee('id="icon-sprout"', false)
-        ->assertSee('data-parallax-scene', false)
-        ->assertSee('hero-3d-globe', false)
-        ->assertSee('proof-icon', false)
-        ->assertSee('approach-icon', false)
         ->assertSee('js/encap-interactions.js', false);
 });
 
