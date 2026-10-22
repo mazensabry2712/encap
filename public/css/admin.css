@@ -92,3 +92,14 @@
  .admin-gallery-item,.admin-table tbody tr{transition:none!important}
  .admin-gallery-item:hover{transform:none}
 }
+
+
+/* Official ENCAP logo assets for the control workspace */
+.admin-brand-logo-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:166px;min-height:53px;padding:5px 8px;background:#fff;border-radius:3px}
+.admin-brand-logo{display:block;width:150px;max-width:100%;height:43px;object-fit:contain}
+.admin-brand-caption{display:block;margin-inline-start:1px}
+.admin-brand-caption strong{display:block;font-size:12px;letter-spacing:.13em;color:#fff}
+.admin-brand-caption small{display:block;margin-top:3px;color:#bdcbbd;font-size:8px;letter-spacing:.13em;white-space:nowrap}
+.admin-brand{flex-wrap:wrap;gap:9px}
+@media(max-width:1020px){.admin-brand-logo-wrap{width:146px}.admin-brand-logo{width:132px;height:39px}}
+@media(max-width:760px){.admin-brand{align-items:center;flex-wrap:nowrap}.admin-brand-logo-wrap{width:139px;min-height:44px}.admin-brand-logo{width:126px;height:36px}.admin-brand-caption small{white-space:normal}}
