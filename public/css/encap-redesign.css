@@ -748,8 +748,8 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 .encap-catalog-section-heading h2{max-width:770px;margin:12px 0 15px;color:#183c29;font:400 clamp(37px,4.5vw,63px)/1.08 var(--encap-serif);letter-spacing:-.045em;text-wrap:balance}
 .encap-catalog-section-heading p{max-width:680px;margin:0;color:#738071;font-size:12px;line-height:1.9}
 .encap-catalog-heading-aside{max-width:270px;margin-inline-start:auto;padding-inline-start:22px;border-inline-start:1px solid #d3dccb}
-.encap-catalog-heading-number{display:block;margin-bottom:9px;color:#244b35;font-size:10px;font-weight:850;letter-spacing:.14em}
-.encap-catalog-heading-number i{padding-inline:4px;color:#a1b292;font-style:normal}
+
+
 .encap-catalog-heading-aside p{font-size:10px;line-height:1.8}
 .encap-catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 19px;align-items:stretch}
 .encap-catalog-card{position:relative;display:flex;flex-direction:column;min-width:0;overflow:hidden;color:inherit;text-decoration:none;border:1px solid #e0e4da;background:#fff;box-shadow:0 8px 24px #173d2905;transition:border-color .35s,box-shadow .35s,transform .35s}
@@ -759,7 +759,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 .encap-catalog-card-media:after{position:absolute;z-index:1;inset:38% 0 0;content:"";background:linear-gradient(180deg,transparent,#0b251b35);pointer-events:none}
 .encap-catalog-card-media>img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .85s cubic-bezier(.2,.7,.2,1),filter .6s;filter:saturate(.88)}
 .encap-catalog-card:hover .encap-catalog-card-media>img{transform:scale(1.065);filter:saturate(1.07)}
-.encap-catalog-card-index{position:absolute;z-index:3;inset-block-start:15px;inset-inline-start:15px;display:grid;place-items:center;width:35px;height:35px;border:1px solid #ffffff79;border-radius:50%;background:#102e2280;color:#fff;font-size:9px;font-weight:850;letter-spacing:.08em;backdrop-filter:blur(8px)}
+
 .encap-catalog-card-open{position:absolute;z-index:3;inset-block-end:15px;inset-inline-end:15px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#f5f5eb;color:#163b28;transform:translateY(7px) rotate(-18deg);opacity:.9;transition:transform .35s,opacity .35s,background .35s}
 .encap-catalog-card-open svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .encap-catalog-card:hover .encap-catalog-card-open{transform:translateY(0) rotate(0);opacity:1;background:#e0edc7}
@@ -812,7 +812,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 .encap-catalog-cta-orbit>span:nth-child(2){position:absolute;inset-block-end:23px;inset-inline-start:9px;width:6px;height:6px;border-radius:50%;background:#92b376}
 .encap-catalog-cta-orbit>div{position:absolute;inset:0;display:grid;place-items:center;animation:none}
 .encap-catalog-cta-orbit .encap-shared-brand-core{width:104px}
-.encap-catalog-cta-index{position:absolute;inset-inline-end:24px;inset-block-end:20px;color:#ffffff53;font-size:9px;font-weight:850;letter-spacing:.18em}
+
 @keyframes encap-catalog-orbit-spin{to{transform:translate(-50%,-50%) rotate(340deg)}}
 @keyframes encap-catalog-orbit-spin-reverse{to{rotate:-360deg}}
 @keyframes encap-catalog-image-float{0%,100%{translate:0 0}50%{translate:0 -8px}}
@@ -851,7 +851,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
     .encap-catalog-summary-item>span:last-child{font-size:9px}
     .encap-catalog-section-heading{grid-template-columns:minmax(0,1fr);gap:15px}
     .encap-catalog-heading-aside{display:flex;align-items:center;gap:15px;max-width:none;margin-inline-start:0;padding-inline-start:0;border-inline-start:0}
-    .encap-catalog-heading-number{flex:0 0 auto;margin:0}
+    
     .encap-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .encap-catalog-cta{min-height:300px}
     .encap-catalog-cta-orbit{inset-inline-end:3%;width:170px;height:170px;opacity:.65}
@@ -910,7 +910,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
     .encap-catalog-cta p{font-size:11px}
     .encap-catalog-cta-image{width:100%;opacity:.2;mask-image:linear-gradient(90deg,transparent,#000 85%)}
     .encap-catalog-cta-orbit{inset-inline-end:-58px;top:auto;inset-block-start:12px;transform:none;width:130px;height:130px;opacity:.32}.encap-catalog-cta-orbit .encap-shared-brand-core{width:76px;padding:5px;gap:3px}.encap-catalog-cta-orbit .encap-shared-brand-core img{width:24px;height:24px}.encap-catalog-cta-orbit .encap-shared-brand-core>span{font-size:7px}.encap-catalog-cta-orbit .encap-shared-brand-core small{display:none}
-    .encap-catalog-cta-index{inset-inline-end:16px;inset-block-end:13px;font-size:8px}
+    
 }
 @media(prefers-reduced-motion:reduce){
     .encap-catalog-copy-in,.encap-catalog-art-in,.encap-catalog-cta-image,.encap-catalog-orbit--outer,.encap-catalog-orbit--middle,.encap-catalog-emblem-halo,.encap-catalog-hero-image--primary,.encap-catalog-hero-image--secondary,.encap-catalog-hero-image--tertiary,.encap-catalog-cta-orbit:before{animation:none!important}

@@ -257,7 +257,7 @@ test('About previews only published product categories with main images', functi
         ->assertDontSee('about-fruit-5.webp');
 });
 
-test('product catalogue uses the redesigned hero and data-backed numbered category cards', function () {
+test('product catalogue uses the redesigned hero and data-backed category cards', function () {
     Category::query()->create([
         'name_en' => 'Catalogue Mango',
         'name_ar' => 'مانجو الكتالوج',
@@ -276,7 +276,9 @@ test('product catalogue uses the redesigned hero and data-backed numbered catego
         ->assertSee('encap-shared-brand-core', false)
         ->assertSee('assets/favicone.png')
         ->assertSee('encap-catalog-grid', false)
-        ->assertSee('encap-catalog-card-index', false)
+        ->assertDontSee('encap-catalog-heading-number', false)
+        ->assertDontSee('encap-catalog-card-index', false)
+        ->assertDontSee('encap-catalog-cta-index', false)
         ->assertSee('data-tilt', false)
         ->assertSee('/en/products/catalogue-mango', false)
         ->assertSee('Published categories');

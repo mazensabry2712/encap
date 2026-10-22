@@ -99,7 +99,6 @@
                 <p>{{ __('Explore our product categories, then share your required form, quantity and destination so availability can be confirmed for your enquiry.') }}</p>
             </div>
             <div class="encap-catalog-heading-aside">
-                <span class="encap-catalog-heading-number">01 <i>/</i> {{ str_pad((string) max(1, (int) ceil($categories->total() / 12)), 2, '0', STR_PAD_LEFT) }}</span>
                 <p>{{ __('Product formats vary by category and are confirmed for each enquiry.') }}</p>
             </div>
         </div>
@@ -128,7 +127,6 @@
                     @php($categoryForms = $category->available_forms ?? [])
                     <a class="encap-catalog-card" data-tilt href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
                         <div class="encap-catalog-card-media">
-                            <span class="encap-catalog-card-index">{{ str_pad($categoryOffset + $loop->index, 2, '0', STR_PAD_LEFT) }}</span>
                             @if($category->image)
                                 <img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $categoryName }}" width="720" height="520" @if($loop->first) fetchpriority="high" @else loading="lazy" @endif decoding="async">
                             @else
@@ -197,7 +195,6 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg>
                 </a>
             </div>
-            <span class="encap-catalog-cta-index" aria-hidden="true">ENCAP / 01</span>
         </div>
     </div>
 </section>
