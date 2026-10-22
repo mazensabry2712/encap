@@ -50,7 +50,7 @@ test('category gallery cannot exceed twelve additional images across repeated ed
         'sort_order' => 0,
     ]);
 
-    $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lYkAAAAASUVORK5CYII=', true);
+    $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGNUjjJiYGBgYmBgYGBgAAAITwCzmz5grAAAAABJRU5ErkJggg==', true);
     $extraImage = UploadedFile::fake()->createWithContent('extra.png', $png);
 
     $this->actingAs(User::factory()->create())
@@ -90,7 +90,7 @@ test('category gallery rejects a thirteenth image when no existing image is remo
         'sort_order' => 0,
     ]);
 
-    $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lYkAAAAASUVORK5CYII=', true);
+    $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGNUjjJiYGBgYmBgYGBgAAAITwCzmz5grAAAAABJRU5ErkJggg==', true);
     $extraImage = UploadedFile::fake()->createWithContent('extra.png', $png);
 
     $this->actingAs(User::factory()->create())
