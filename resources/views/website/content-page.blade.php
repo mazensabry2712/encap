@@ -44,7 +44,7 @@
     <div class="container encap-service-visual">
         <figure class="encap-service-visual-figure">
             <img src="{{ $pageContent['hero_image'] }}" alt="{{ $pageContent['hero_image_alt'] }}" width="1400" height="1050" fetchpriority="high" decoding="async">
-            <figcaption>{{ __('Illustrative stock photography. Actual facilities and service scope are confirmed per enquiry.') }}</figcaption>
+            
         </figure>
         <div class="encap-service-visual-copy">
             <span class="encap-section-index">{{ __('From origin to market') }}</span>
