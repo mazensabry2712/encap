@@ -15,7 +15,7 @@
         </div>
     </section>
 
-    <section class="admin-stat-grid" aria-label="Website overview">
+    <section class="admin-stat-grid" aria-label="{{ __('Website overview') }}">
         <a class="admin-stat-card" href="{{ route('admin.categories.index') }}">
             <span class="admin-stat-icon" aria-hidden="true">▦</span>
             <span class="admin-stat-label">{{ __('Product categories') }}</span>
@@ -27,14 +27,14 @@
             <span class="admin-stat-icon" aria-hidden="true">↗</span>
             <span class="admin-stat-label">{{ __('Export quote requests') }}</span>
             <strong class="admin-stat-value">{{ number_format($quoteRequestCount) }}</strong>
-            <span class="admin-stat-note"><b>{{ number_format($newQuoteRequestCount) }}</b> new {{ __($newQuoteRequestCount === 1 ? 'request' : 'requests') }} {{ __('to review') }}</span>
+            <span class="admin-stat-note"><b>{{ number_format($newQuoteRequestCount) }}</b> {{ __('new quote requests need review') }}</span>
             <span class="admin-stat-link">{{ __('Open enquiries') }} <span aria-hidden="true">→</span></span>
         </a>
         <a class="admin-stat-card" href="{{ route('admin.contact-messages.index') }}">
             <span class="admin-stat-icon" aria-hidden="true">✉</span>
             <span class="admin-stat-label">{{ __('Contact messages') }}</span>
             <strong class="admin-stat-value">{{ number_format($contactMessageCount) }}</strong>
-            <span class="admin-stat-note"><b>{{ number_format($newContactMessageCount) }}</b> new {{ __($newContactMessageCount === 1 ? 'message' : 'messages') }}</span>
+            <span class="admin-stat-note"><b>{{ number_format($newContactMessageCount) }}</b> {{ __('new contact messages') }}</span>
             <span class="admin-stat-link">{{ __('View inbox') }} <span aria-hidden="true">→</span></span>
         </a>
     </section>
@@ -74,7 +74,7 @@
         <section class="admin-panel admin-dashboard-panel">
             <div class="admin-panel-head">
                 <div><h2>{{ __('Latest contact messages') }}</h2><p>{{ __('Messages received through the public website.') }}</p></div>
-                <a class="admin-panel-link" href="{{ route('admin.contact-messages.index') }}">View all <span aria-hidden="true">→</span></a>
+                <a class="admin-panel-link" href="{{ route('admin.contact-messages.index') }}">{{ __('View all') }} <span aria-hidden="true">→</span></a>
             </div>
             @if($recentContactMessages->isNotEmpty())
                 <div class="admin-dashboard-records">
