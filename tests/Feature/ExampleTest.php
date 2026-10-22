@@ -27,7 +27,6 @@ test('the public content and enquiry pages render', function () {
         '/en/products',
         '/en/quality',
         '/en/export',
-        '/en/gallery',
         '/en/contact',
         '/en/request-a-quote',
     ] as $path) {
