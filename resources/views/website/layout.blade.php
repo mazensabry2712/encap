@@ -16,7 +16,7 @@
 @php($ogImageUrl = $seoDefaults->default_og_image ? url(\Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image)) : null)
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
-    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ asset('assets/favicone.png') }}"><link rel="apple-touch-icon" href="{{ asset('assets/favicone.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>{{ $pageTitle }}</title><meta name="description" content="{{ $pageDescription }}"><meta name="robots" content="{{ $robotsDirective }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
     @if(!isset($category) || ($category->name_ar && $category->description_ar))
@@ -50,7 +50,7 @@
 <a class="skip-link" href="#main-content">{{ __('Skip to content') }}</a>
 @php($currentLocale = $locale ?? 'en')
 <header class="site-header"><div class="container nav">
-    <a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><span class="brand-mark" aria-hidden="true">E</span><span class="brand-word"><strong>ENCAP</strong><small>AGRICULTURE · EXPORT</small></span></a>
+    <a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ asset('assets/logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" fetchpriority="high"></a>
     <nav class="links desktop-links" aria-label="{{ __('Main navigation') }}">
         <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
         <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
@@ -90,7 +90,7 @@
 </div></header>
 <main id="main-content">@yield('content')</main>
 <footer class="footer"><div class="container"><div class="footer-top">
-    <div><a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}"><span class="brand-mark" aria-hidden="true">E</span><span class="brand-word"><strong>ENCAP</strong><small>AGRICULTURE · EXPORT</small></span></a><p class="footer-intro">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p></div>
+    <div><a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ asset('assets/logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" loading="lazy" decoding="async"></a><p class="footer-intro">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p></div>
     <div><h2 class="footer-heading">{{ __('Explore') }}</h2><div class="footer-links"><a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a><a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Farms & Production') }}</a><a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality & Processing') }}</a><a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export') }}</a></div></div>
     <div><h2 class="footer-heading">{{ __('Products & contact') }}</h2><div class="footer-links"><a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Our Products') }}</a><a href="{{ route('gallery', ['locale' => $currentLocale]) }}">{{ __('Gallery') }}</a><a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a><a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a></div></div>
 </div><div class="footer-bottom"><span>© {{ date('Y') }} ENCAP. {{ __('All rights reserved.') }}</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
