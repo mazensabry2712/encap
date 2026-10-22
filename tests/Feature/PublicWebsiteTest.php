@@ -488,13 +488,17 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Pre-cooling & cold-chain coordination')
         ->assertSee('encap-service-visual-figure', false)
         ->assertSee('images.unsplash.com/photo-1767982619694', false)
-        ->assertSee('assets/favicone.png', false);
+        ->assertSee('assets/favicone.png', false)
+        ->assertDontSee('encap-service-number', false)
+        ->assertDontSee('encap-service-step-number', false);
 
     $this->get('/ar/packing-stations')
         ->assertOk()
         ->assertSee('محطات التعبئة والتجهيز')
         ->assertSee('الفرز والتصنيف')
-        ->assertSee('التبريد المسبق وتنسيق سلسلة التبريد');
+        ->assertSee('التبريد المسبق وتنسيق سلسلة التبريد')
+        ->assertDontSee('encap-service-number', false)
+        ->assertDontSee('encap-service-step-number', false);
 
     $this->get('/en/export')
         ->assertOk()
