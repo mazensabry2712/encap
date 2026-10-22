@@ -14,8 +14,70 @@
 <div class="admin-field"><label for="specifications_en">{{ __('Specifications, size or grade (English)') }}</label><textarea id="specifications_en" name="specifications_en" maxlength="2000">{{ old('specifications_en', $category->specifications_en) }}</textarea></div><div class="admin-field"><label for="specifications_ar">{{ __('Specifications, size or grade (Arabic)') }}</label><textarea id="specifications_ar" name="specifications_ar" maxlength="2000" dir="auto">{{ old('specifications_ar', $category->specifications_ar) }}</textarea></div>
 <div class="admin-field"><label for="packaging_en">{{ __('Packaging (English)') }}</label><input id="packaging_en" name="packaging_en" maxlength="255" value="{{ old('packaging_en', $category->packaging_en) }}"></div><div class="admin-field"><label for="packaging_ar">{{ __('Packaging (Arabic)') }}</label><input id="packaging_ar" name="packaging_ar" maxlength="255" dir="auto" value="{{ old('packaging_ar', $category->packaging_ar) }}"></div>
 <div class="admin-field full"><label>{{ __('Available formats') }}</label><div class="admin-inline">@foreach(['Fresh', 'Frozen', 'Processed'] as $format)<label class="admin-check"><input type="checkbox" name="available_forms[]" value="{{ $format }}" @checked(in_array($format, old('available_forms', $category->available_forms ?? ['Fresh', 'Frozen', 'Processed'])))>{{ __($format) }}</label>@endforeach</div></div>
-<h2 class="admin-section-title">{{ __('Catalogue imagery') }}</h2><div class="admin-field"><label for="image">{{ __('Main image (max 5 MB)') }}</label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp,image/avif">@if($category->image)<div class="admin-current-image"><img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $category->name_en }}" loading="lazy" width="160" height="120"><div><strong>{{ __('Current image') }}</strong><small>{{ $category->image }}</small></div></div>@endif</div><div class="admin-field"><label for="gallery">{{ __('Add gallery images (up to 12)') }}</label><input id="gallery" type="file" name="gallery[]" multiple accept="image/jpeg,image/png,image/webp,image/avif"></div>
-@if($category->gallery)<div class="admin-field full"><label>{{ __('Current gallery (select images to remove)') }}</label><div class="admin-gallery-manager">@foreach($category->gallery as $index => $image)<label class="admin-gallery-item"><img src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" alt="" loading="lazy" width="240" height="180"><span><input type="checkbox" name="remove_gallery[]" value="{{ $index }}">{{ __('Remove image :number', ['number' => $loop->iteration]) }}</span><small>{{ basename($image) }}</small></label>@endforeach</div></div>@endif
+<h2 class="admin-section-title">{{ __('Catalogue imagery') }}</h2>
+<div class="admin-field full admin-primary-image-field" data-main-image-manager>
+    <div class="admin-media-field-heading">
+        <div><label for="image">{{ __('Main display image') }}</label><p>{{ __('This is the first image visitors see on the product page and catalogue.') }}</p></div>
+        <span class="admin-media-tag">{{ __('Primary image') }}</span>
+    </div>
+    <div class="admin-primary-image-layout">
+        <div class="admin-primary-image-preview" data-main-image-preview>
+            @if($category->image)
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $category->name_en }}" data-main-image-current loading="lazy" width="360" height="270">
+            @else
+                <div class="admin-primary-image-empty" data-main-image-empty><span aria-hidden="true">＋</span><strong>{{ __('No main image yet') }}</strong></div>
+            @endif
+        </div>
+        <div class="admin-primary-image-controls">
+            <label class="admin-upload-label" for="image">{{ __('Choose main image') }}</label>
+            <input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp,image/avif" data-main-image-upload>
+            <small>{{ __('JPG, PNG, WebP or AVIF · maximum 5 MB. Your current image stays until you save a replacement.') }}</small>
+            <span class="admin-upload-status" data-main-image-status aria-live="polite">{{ __('No replacement selected.') }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="admin-field full">
+    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12">
+        <div class="admin-media-field-heading admin-gallery-heading">
+            <div><label>{{ __('Additional product images') }}</label><p>{{ __('Add detail shots, packaging, harvest and product variations. These appear in a horizontal gallery on the public product page.') }}</p></div>
+            <span class="admin-gallery-total" data-gallery-total>{{ count($category->gallery ?? []) }} / 12</span>
+        </div>
+
+        @if(count($category->gallery ?? []))
+            <div class="admin-gallery-manager" data-gallery-current>
+                @foreach($category->gallery as $index => $image)
+                    <article class="admin-gallery-item">
+                        <div class="admin-gallery-image">
+                            <img src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" alt="{{ __('Gallery image :number', ['number' => $loop->iteration]) }}" loading="lazy" width="320" height="240">
+                            <span class="admin-gallery-index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                        </div>
+                        <div class="admin-gallery-item-details">
+                            <strong>{{ __('Gallery image :number', ['number' => $loop->iteration]) }}</strong>
+                            <small title="{{ basename($image) }}">{{ basename($image) }}</small>
+                            <label class="admin-gallery-remove"><input type="checkbox" class="js-gallery-remove" name="remove_gallery[]" value="{{ $index }}"><span>{{ __('Mark for removal') }}</span></label>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        @else
+            <div class="admin-gallery-empty" data-gallery-empty>
+                <span aria-hidden="true">▧</span>
+                <strong>{{ __('No additional images yet') }}</strong>
+                <p>{{ __('The main image is separate. Add extra photos here to build the product gallery.') }}</p>
+            </div>
+        @endif
+
+        <div class="admin-gallery-upload">
+            <div class="admin-gallery-upload-heading">
+                <div><strong>{{ __('Add more images') }}</strong><p>{{ __('Select multiple files at once. You can add up to 12 gallery images in total.') }}</p></div>
+            </div>
+            <input id="gallery" type="file" name="gallery[]" multiple accept="image/jpeg,image/png,image/webp,image/avif" data-gallery-upload>
+            <div class="admin-gallery-selection" data-gallery-selection hidden></div>
+            <div class="admin-gallery-upload-status" data-gallery-status role="status" aria-live="polite">{{ __('No new images selected.') }}</div>
+        </div>
+    </div>
+</div>
 <h2 class="admin-section-title">{{ __('Public product detail page') }}</h2>
 <div class="admin-field full"><small>{{ __('Control the copy and visibility of sections on this category\'s public page. Leave custom headings or messages blank to use the site\'s default text.') }}</small></div>
 <div class="admin-field"><label for="overview_heading_en">{{ __('Product overview heading (English)') }}</label><input id="overview_heading_en" name="overview_heading_en" maxlength="255" value="{{ old('overview_heading_en', $category->overview_heading_en) }}"></div><div class="admin-field"><label for="overview_heading_ar">{{ __('Product overview heading (Arabic)') }}</label><input id="overview_heading_ar" name="overview_heading_ar" maxlength="255" dir="auto" value="{{ old('overview_heading_ar', $category->overview_heading_ar) }}"></div>
