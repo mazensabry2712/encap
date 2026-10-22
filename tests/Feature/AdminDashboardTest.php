@@ -52,7 +52,13 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
 });
 
 
-test('admin language preference switches between English and Arabic with correct document direction', function () {
+test('admin language preference defaults to Arabic and switches between Arabic and English with correct document direction', function () {
+    $this->get('/admin/login')
+        ->assertOk()
+        ->assertSee('lang="ar" dir="rtl"', false)
+        ->assertSee('تسجيل الدخول')
+        ->assertSee('البريد الإلكتروني');
+
     $this->from('/admin/login')
         ->post('/admin/language', ['locale' => 'ar'])
         ->assertRedirect('/admin/login');
