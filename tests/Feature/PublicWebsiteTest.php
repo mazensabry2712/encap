@@ -74,26 +74,28 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertSee('مجمّد');
 });
 
-test('navbar language switcher is accessible and the old topbar is removed', function () {
+test('primary navigation is simple, bilingual, and responsive', function () {
     $this->get('/en')
         ->assertOk()
-        ->assertSee('data-language-switcher', false)
-        ->assertSee('data-language-trigger', false)
-        ->assertSee('data-language-menu', false)
-        ->assertSee('desktop-links', false)
-        ->assertSee('mobile-nav-panel', false)
+        ->assertSee('primary-nav', false)
+        ->assertSee('primary-links', false)
+        ->assertSee('primary-dropdown-panel', false)
+        ->assertSee('data-primary-language', false)
+        ->assertSee('data-primary-mobile-nav', false)
         ->assertSee('/en/packing-stations', false)
         ->assertSee('/en/export', false)
-        ->assertSee('aria-expanded="false"', false)
-        ->assertSee('js/language-switcher.js', false)
-        ->assertSee('lang="en"', false)
-        ->assertSee('lang="ar"', false)
+        ->assertSee('/en/quality', false)
+        ->assertSee('/en/gallery', false)
+        ->assertSee('Switch to Arabic', false)
+        ->assertDontSee('data-language-switcher', false)
         ->assertDontSee('topbar-note', false);
-    
+
     $this->get('/ar')
         ->assertOk()
+        ->assertSee('dir="rtl"', false)
+        ->assertSee('التبديل إلى الإنجليزية', false)
         ->assertSee('aria-current="page"', false)
-        ->assertSee('اختيار اللغة');
+        ->assertSee('عملياتنا');
 });
 
 test('the home page uses central defaults without writing settings during a public read', function () {

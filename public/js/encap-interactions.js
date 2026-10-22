@@ -47,7 +47,7 @@
         updateHeader();
     }
 
-    document.querySelectorAll('.mobile-nav-panel a').forEach((link) => {
+    document.querySelectorAll('.primary-mobile-panel a').forEach((link) => {
         link.addEventListener('click', () => {
             const menu = link.closest('details');
             if (menu) menu.open = false;
