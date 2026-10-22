@@ -264,10 +264,6 @@ class WebsiteController extends Controller
                     ],
                 ],
             ],
-            'gallery' => [
-                'en' => ['eyebrow' => 'Gallery', 'title' => 'A look at our product range', 'intro' => 'Browse product images currently available in our catalogue.', 'body' => 'We will add verified farm, harvest and processing photography as company-approved images become available.'],
-                'ar' => ['eyebrow' => 'معرض الصور', 'title' => 'نظرة على مجموعة منتجاتنا', 'intro' => 'تصفح صور المنتجات المتاحة حاليًا في كتالوجنا.', 'body' => 'سنضيف صور المزارع والحصاد والتجهيز المعتمدة من الشركة عند توفرها.'],
-            ],
         ];
 
         abort_unless(isset($content[$page]), 404);
@@ -401,7 +397,6 @@ class WebsiteController extends Controller
         );
 
         $categories = match ($page) {
-            'gallery' => Category::query()->where('is_published', true)->whereNotNull('image')->orderBy('sort_order')->get(),
             'about' => Category::query()->where('is_published', true)->whereNotNull('image')->orderBy('sort_order')->orderBy('name_en')->limit(4)->get(),
             default => collect(),
         };
