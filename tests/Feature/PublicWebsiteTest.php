@@ -74,26 +74,28 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertSee('مجمّد');
 });
 
-test('primary navigation is simple, bilingual, and responsive', function () {
+test('primary navigation is centered, bilingual, and responsive', function () {
     $this->get('/en')
         ->assertOk()
         ->assertSee('primary-nav', false)
         ->assertSee('primary-links', false)
         ->assertSee('primary-dropdown-panel', false)
-        ->assertSee('data-primary-language', false)
+        ->assertSee('data-language-switcher', false)
+        ->assertSee('data-language-trigger', false)
+        ->assertSee('data-language-menu', false)
         ->assertSee('data-primary-mobile-nav', false)
         ->assertSee('/en/packing-stations', false)
         ->assertSee('/en/export', false)
         ->assertSee('/en/quality', false)
         ->assertSee('/en/gallery', false)
-        ->assertSee('Switch to Arabic', false)
-        ->assertDontSee('data-language-switcher', false)
+        ->assertSee('aria-expanded="false"', false)
+        ->assertDontSee('data-primary-language', false)
         ->assertDontSee('topbar-note', false);
 
     $this->get('/ar')
         ->assertOk()
         ->assertSee('dir="rtl"', false)
-        ->assertSee('التبديل إلى الإنجليزية', false)
+        ->assertSee('اختيار اللغة')
         ->assertSee('aria-current="page"', false)
         ->assertSee('عملياتنا');
 });
