@@ -505,10 +505,14 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Export & Logistics')
         ->assertSee('Documentation & compliance coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee('images.unsplash.com/photo-1774929104515', false);
+        ->assertSee('images.unsplash.com/photo-1774929104515', false)
+        ->assertDontSee('encap-service-number', false)
+        ->assertDontSee('encap-service-step-number', false);
 
     $this->get('/ar/export')
         ->assertOk()
         ->assertSee('التصدير والخدمات اللوجستية')
-        ->assertSee('تنسيق المستندات والامتثال');
+        ->assertSee('تنسيق المستندات والامتثال')
+        ->assertDontSee('encap-service-number', false)
+        ->assertDontSee('encap-service-step-number', false);
 });
