@@ -75,11 +75,12 @@ test('product detail gallery renders accessible thumbnail controls', function ()
 });
 
 test('primary navigation is centered, bilingual, and responsive', function () {
-    $this->get('/en')
+    $englishResponse = $this->get('/en');
+
+    $englishResponse
         ->assertOk()
         ->assertSee('primary-nav', false)
         ->assertSee('primary-links', false)
-        ->assertSee('href="' . route('home', ['locale' => 'en']) . '" aria-current="page">Home</a>', false)
         ->assertSee('primary-dropdown-panel', false)
         ->assertSee('data-language-switcher', false)
         ->assertSee('data-language-trigger', false)
@@ -93,12 +94,24 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertDontSee('data-primary-language', false)
         ->assertDontSee('topbar-note', false);
 
+    $html = $englishResponse->getContent();
+    $navStart = strpos($html, '<nav class="primary-links"');
+    expect($navStart)->not->toBeFalse();
+
+    $navEnd = strpos($html, '</nav>', $navStart);
+    $desktopNavigation = substr($html, $navStart, $navEnd - $navStart);
+
+    expect($desktopNavigation)->toMatch(
+        '/<a href="' . preg_quote(route('home', ['locale' => 'en']), '/') . '"\s+aria-current="page"\s*>Home<\/a>/'
+    );
+
     $this->get('/ar')
         ->assertOk()
         ->assertSee('dir="rtl"', false)
         ->assertSee('اختيار اللغة')
         ->assertSee('aria-current="page"', false)
-        ->assertSee('عملياتنا');
+        ->assertSee('عملياتنا')
+        ->assertSee('الرئيسية');
 });
 
 test('the home page uses central defaults without writing settings during a public read', function () {
