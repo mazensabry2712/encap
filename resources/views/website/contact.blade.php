@@ -1,5 +1,7 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
+@php($contactAddress = $locale === 'ar' ? ($settings->address_ar ?: $settings->address_en) : ($settings->address_en ?: $settings->address_ar))
+@php($businessHours = $locale === 'ar' ? ($settings->business_hours_ar ?: $settings->business_hours_en) : ($settings->business_hours_en ?: $settings->business_hours_ar))
 @section('content')
 <section class="page-head"><div class="container"><div class="breadcrumbs"><a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a> &nbsp; / &nbsp; {{ __('Contact') }}</div><div class="page-intro-grid"><div><div class="eyebrow">{{ __('Get in touch') }}</div><h1>{{ __('Contact') }} <img class="encap-heading-brand" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="42" height="42" decoding="async"></h1><p class="lead">{{ __('Tell us what you are looking for and we will follow up with you.') }}</p></div><aside class="page-aside-note"><strong>{{ __('For business enquiries') }}</strong>{{ __('Use this form for general questions. For detailed product requirements, our quote form captures the specifications we need.') }}</aside></div></div></section>
 <section class="section"><div class="container form-layout"><div class="form-card"><h2>{{ __('Send us a message') }}</h2><p>{{ __('Share a little context and our team can direct your enquiry to the right place.') }}</p>
@@ -11,7 +13,8 @@
 @if($settings->contact_email)<p><strong>{{ __('Email') }}</strong><br><a href="mailto:{{ $settings->contact_email }}">{{ $settings->contact_email }}</a></p>@endif
 @if($settings->contact_phone)<p><strong>{{ __('Phone') }}</strong><br><a href="tel:{{ $settings->contact_phone }}">{{ $settings->contact_phone }}</a></p>@endif
 @if($settings->whatsapp_number)<p><strong>WhatsApp</strong><br><a href="https://wa.me/{{ preg_replace('/\D+/', '', $settings->whatsapp_number) }}" rel="nofollow noopener" target="_blank">{{ $settings->whatsapp_number }}</a></p>@endif
-@if(($locale === 'ar' && $settings->address_ar) || $settings->address_en)<p><strong>{{ __('Address') }}</strong><br>{{ $locale === 'ar' && $settings->address_ar ? $settings->address_ar : $settings->address_en }}</p>@endif
+@if(filled($contactAddress))<p><strong>{{ __('Address') }}</strong><br>{{ $contactAddress }}<br><a class="contact-map-link" href="https://www.google.com/maps/search/?api=1&amp;query={{ urlencode($contactAddress) }}" target="_blank" rel="noopener noreferrer">{{ __('Open in Maps') }} ↗</a></p>@endif
+@if(filled($businessHours))<p><strong>{{ __('Business hours') }}</strong><br>{{ $businessHours }}</p>@endif
 <div class="next-steps"><h3>{{ __('Need an export quote?') }}</h3><div class="next-step"><span>01</span><div><strong>{{ __('Tell us what you need') }}</strong><p>{{ __('Product, volume and destination.') }}</p></div></div><div class="next-step"><span>02</span><div><strong>{{ __('Share your requirements') }}</strong><p>{{ __('Include form and packaging preferences.') }}</p></div></div></div>
 <a class="button" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request an export quote') }} <span class="button-arrow">↗</span></a></aside></div></section>
 @endsection

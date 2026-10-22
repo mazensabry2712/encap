@@ -260,3 +260,10 @@ html[dir=rtl] .encap-service-hub-card:hover .encap-service-hub-link b{transform:
 .product-spec-grid dd{margin:0;color:var(--encap-ink);font-size:13px;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
 @media(max-width:800px){.encap-principles-grid{grid-template-columns:1fr}.encap-principle-card{padding:20px}.product-spec-grid>div{grid-template-columns:1fr;gap:5px}}
 @media(prefers-reduced-motion:reduce){.encap-principle-card{transition:none}.encap-principle-card:hover{transform:none}}
+
+
+/* Configurable contact options: never render empty or unverified profile details. */
+.footer-social-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.footer-social-links a{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border:1px solid #ffffff3d;color:#e4ecdf;font-size:11px;line-height:1.4;text-decoration:none;transition:background .2s,border-color .2s}
+.footer-social-links a:hover{background:#ffffff12;border-color:#e4edcf}
+.contact-map-link{display:inline-flex;align-items:center;gap:6px;margin-top:7px;color:var(--encap-green);font-size:12px;font-weight:750;text-decoration:underline;text-underline-offset:3px}
