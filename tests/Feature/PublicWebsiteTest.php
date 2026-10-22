@@ -64,6 +64,23 @@ test('bilingual company pages render in the requested language', function () {
     $this->get('/ar/about')->assertOk()->assertSee('dir="rtl"', false)->assertSee('عن ENCAP');
 });
 
+test('product catalogue uses numbered cards and links to category details', function () {
+    Category::query()->create([
+        'name_en' => 'Catalogue Mango',
+        'name_ar' => 'مانجو الكتالوج',
+        'slug' => 'catalogue-mango',
+        'short_description_en' => 'Fresh and prepared produce enquiries.',
+        'is_published' => true,
+    ]);
+
+    $this->get('/en/products')
+        ->assertOk()
+        ->assertSee('product-catalog-grid', false)
+        ->assertSee('category-index', false)
+        ->assertSee('category-image-open', false)
+        ->assertSee('/en/products/catalogue-mango', false);
+});
+
 test('unpublished categories are not publicly accessible', function () {
     $category = Category::query()->create([
         'name_en' => 'Draft Mango',

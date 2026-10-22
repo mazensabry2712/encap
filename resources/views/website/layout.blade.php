@@ -70,7 +70,7 @@
             </nav>
         </div>
         <a class="button header-cta" href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} <span class="button-arrow">↗</span></a>
-        <details class="mobile-menu"><summary aria-label="{{ __('Open navigation') }}"><span>Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary><nav class="mobile-nav-panel" aria-label="{{ __('Mobile navigation') }}">
+        <details class="mobile-menu"><summary aria-label="{{ __('Open navigation') }}"><span>{{ __('Menu') }}</span><span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span></summary><nav class="mobile-nav-panel" aria-label="{{ __('Mobile navigation') }}">
             <a href="{{ route('home', ['locale' => $currentLocale]) }}">{{ __('Home') }}</a><a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a><a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Farms & Production') }}</a><a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Products') }}</a><a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality') }}</a><a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export') }}</a><a href="{{ route('gallery', ['locale' => $currentLocale]) }}">{{ __('Gallery') }}</a><a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a><a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} ↗</a>
         </nav></details>
     </div>
