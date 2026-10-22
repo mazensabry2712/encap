@@ -11,7 +11,7 @@ class SetAdminLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->session()->get('admin_locale', 'en');
+        $locale = $request->session()->get('admin_language', 'ar');
 
         App::setLocale(in_array($locale, ['en', 'ar'], true) ? $locale : 'en');
 
