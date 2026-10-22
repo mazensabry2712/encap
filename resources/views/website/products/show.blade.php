@@ -2,6 +2,9 @@
 @php($locale = request()->route('locale', 'en'))
 @php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
 @php($description = $locale === 'ar' && $category->description_ar ? $category->description_ar : $category->description_en)
+@php($varieties = $locale === 'ar' && filled($category->varieties_ar) ? $category->varieties_ar : $category->varieties_en)
+@php($harvestWindow = $locale === 'ar' && filled($category->harvest_window_ar) ? $category->harvest_window_ar : $category->harvest_window_en)
+@php($specifications = $locale === 'ar' && filled($category->specifications_ar) ? $category->specifications_ar : $category->specifications_en)
 @php($siteBase = rtrim(config('app.url'), '/'))
 @php($breadcrumbSchema = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => $siteBase . '/' . $locale], ['@type' => 'ListItem', 'position' => 2, 'name' => __('Products'), 'item' => $siteBase . '/' . $locale . '/products'], ['@type' => 'ListItem', 'position' => 3, 'name' => $name, 'item' => $siteBase . '/' . $locale . '/products/' . $category->slug]]])
 @push('head')<script type="application/ld+json">{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>@endpush
@@ -11,6 +14,13 @@
 @if($category->gallery)<div class="product-gallery-thumbs" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : 'Product gallery' }}">@foreach($category->gallery as $image)<button class="product-gallery-thumb" type="button" data-gallery-thumb data-image-src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="false"><img src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" alt="" loading="lazy" width="300" height="220"></button>@endforeach</div>@endif</div>
 <div class="product-detail-copy"><div class="eyebrow">{{ __('Product overview') }}</div><h2>{{ __('Quality supply, tailored to your needs') }}</h2><p>{{ $description ?: ($locale === 'ar' ? 'تواصل معنا لمعرفة التوافر الحالي والمواصفات والتعبئة المناسبة لاحتياجاتك.' : 'Contact our team to confirm current availability, specifications and packaging for your requirements.') }}</p><div class="detail-block"><h3 class="detail-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-leaf"></use></svg>{{ __('Available formats') }}</h3>@if($category->available_forms)<div class="format-pills">@foreach($category->available_forms as $form)<span class="format-pill">{{ __($form) }}</span>@endforeach</div>@else<p>{{ __('Available formats are confirmed for each enquiry.') }}</p>@endif</div>
 @if($category->packaging_en || $category->packaging_ar)<div class="detail-block"><h3 class="detail-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-package"></use></svg>{{ __('Packaging') }}</h3><p>{{ $locale === 'ar' && $category->packaging_ar ? $category->packaging_ar : $category->packaging_en }}</p></div>@endif
+@if(filled($varieties) || filled($harvestWindow) || filled($specifications))
+<div class="detail-block product-specifications"><h3 class="detail-heading">{{ __('Product specifications') }}</h3><dl class="product-spec-grid">
+@if(filled($varieties))<div><dt>{{ __('Varieties') }}</dt><dd>{{ $varieties }}</dd></div>@endif
+@if(filled($harvestWindow))<div><dt>{{ __('Harvest window') }}</dt><dd>{{ $harvestWindow }}</dd></div>@endif
+@if(filled($specifications))<div><dt>{{ __('Specifications') }}</dt><dd>{{ $specifications }}</dd></div>@endif
+</dl></div>
+@endif
 <a class="button" href="{{ route('quote.create', ['locale' => $locale, 'category' => $category->id]) }}">{{ __('Request a Quote for this product') }} <span class="button-arrow">↗</span></a></div></div></section>
 <section class="section soft"><div class="container"><div class="cta"><div><div class="eyebrow">{{ __('For importers & distributors') }}</div><h2>{{ __('Let’s confirm the details that matter.') }}</h2><p>{{ __('Tell us the product form, quantity, packaging and destination you need.') }}</p></div><a class="button" href="{{ route('quote.create', ['locale' => $locale, 'category' => $category->id]) }}">{{ __('Request a Quote') }} <span class="button-arrow">↗</span></a></div></div></section>
 @endsection

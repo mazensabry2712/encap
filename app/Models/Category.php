@@ -10,7 +10,8 @@ class Category extends Model
     protected $fillable = [
         'name_en', 'name_ar', 'slug', 'short_description_en', 'short_description_ar',
         'description_en', 'description_ar', 'image', 'gallery', 'available_forms',
-        'packaging_en', 'packaging_ar', 'is_published', 'sort_order',
+        'varieties_en', 'varieties_ar', 'harvest_window_en', 'harvest_window_ar',
+        'specifications_en', 'specifications_ar', 'packaging_en', 'packaging_ar', 'is_published', 'sort_order',
         'seo_title_en', 'seo_title_ar', 'seo_description_en', 'seo_description_ar',
     ];
 
