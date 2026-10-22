@@ -64,11 +64,23 @@ test('admin can save shared seo defaults and configured contact details', functi
         'whatsapp_number' => '+201000000000',
         'address_en' => 'Egypt',
         'address_ar' => 'مصر',
+        'business_hours_en' => 'Sunday–Thursday, 09:00–17:00',
+        'business_hours_ar' => 'الأحد–الخميس، 09:00–17:00',
+        'facebook_url' => 'https://www.facebook.com/encap-example',
+        'instagram_url' => 'https://www.instagram.com/encap-example',
+        'linkedin_url' => 'https://www.linkedin.com/company/encap-example',
+        'youtube_url' => 'https://www.youtube.com/@encap-example',
         'page_metadata' => [
             'about' => [
                 'en' => [
                     'title' => 'ENCAP | About & Importers',
                     'description' => 'Learn how ENCAP connects Egyptian agricultural production and buyers.',
+                ],
+            ],
+            'packing-stations' => [
+                'en' => [
+                    'title' => 'ENCAP Packing Operations',
+                    'description' => 'Information for crop preparation, packing and export enquiries.',
                 ],
             ],
         ],
@@ -84,6 +96,15 @@ test('admin can save shared seo defaults and configured contact details', functi
     $this->get('/en/about')->assertOk()
         ->assertSee('<title>ENCAP | About &amp; Importers</title>', false)
         ->assertSee('<meta name="description" content="Learn how ENCAP connects Egyptian agricultural production and buyers.">', false);
+
+    $this->get('/en/packing-stations')->assertOk()
+        ->assertSee('<title>ENCAP Packing Operations</title>', false)
+        ->assertSee('<meta name="description" content="Information for crop preparation, packing and export enquiries.">', false);
+
+    $this->get('/en/contact')->assertOk()
+        ->assertSee('Sunday–Thursday, 09:00–17:00')
+        ->assertSee('https://www.facebook.com/encap-example', false)
+        ->assertSee('Open in Maps');
 });
 
 test('admin can update contact message status', function () {
@@ -115,6 +136,9 @@ test('admin can create a published category', function () {
         'name_ar' => 'مانجو',
         'slug' => 'mango',
         'short_description_en' => 'Export mango enquiries.',
+        'varieties_en' => 'Kensington Pride; Kent',
+        'harvest_window_en' => 'Season confirmed per enquiry',
+        'specifications_en' => 'Grade and size agreed with buyer',
         'sort_order' => 1,
         'is_published' => '1',
         'available_forms' => [],
@@ -124,6 +148,9 @@ test('admin can create a published category', function () {
     $this->assertDatabaseHas('categories', [
         'slug' => 'mango',
         'is_published' => true,
+        'varieties_en' => 'Kensington Pride; Kent',
+        'harvest_window_en' => 'Season confirmed per enquiry',
+        'specifications_en' => 'Grade and size agreed with buyer',
     ]);
     expect(Category::query()->count())->toBe(1);
 });

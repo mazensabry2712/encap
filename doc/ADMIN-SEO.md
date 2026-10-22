@@ -59,3 +59,7 @@ Static public pages can also have English/Arabic title and description overrides
 - Run tests and the production asset build before deploying.
 - Confirm uploaded-image permissions, logs, canonical URLs and sitemap on the actual domain after deployment.
 - Admin currently uses a single trusted-user model. Add roles/policies only if staff-level permissions become a requirement.
+
+
+## Additional public profile settings
+The Central SEO & Site Settings page can optionally store confirmed English/Arabic business hours and official Facebook, Instagram, LinkedIn and YouTube URLs. The Contact page displays hours and an Open in Maps link only when a public address is configured; the footer displays only social profiles with saved URLs. Blank values remain hidden. The admin may also save independent SEO overrides for the Packing Stations page.

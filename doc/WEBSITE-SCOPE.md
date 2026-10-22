@@ -45,6 +45,7 @@ Run php artisan db:seed --class=CategorySeeder on a new/approved database to ins
 - Main image and optional gallery.
 - Published/draft state and sort order.
 - Available forms and packaging details, only when known.
+- Optional English/Arabic varieties, harvest window, and product specifications (size/grade) fields; leave blank until confirmed for the product.
 - English/Arabic SEO title and description overrides.
 
 Do not fill fields with fabricated sizes, grades, packaging, certifications or seasonal availability. Keep these blank until the company confirms them.
@@ -76,3 +77,18 @@ The first admin is created interactively with php artisan admin:create. No publi
 ## Performance and accuracy
 
 Prefer Blade SSR, native forms, cached static CSS and optimized company-approved images. The CSS hero illustration is a design placeholder, not a real farm photo. Do not present generic images as ENCAP-owned facilities. Lighthouse goals are targets and must be measured separately.
+
+
+## Competitive review — QAC Group (22 October 2026)
+Compared against the public pages at https://qac-group.com/, including About Us, Product Catalog, a product detail page, the packing-house page and Contact Us.
+
+ENCAP already covers bilingual page routes, product categories/detail pages, farm sourcing, packing-station workflows, quality, export/logistics, gallery, contact and quote submission, category administration, centralized SEO defaults, page metadata and XML sitemap.
+
+Changes added from the comparison:
+- A bilingual mission, vision and values section on About.
+- Optional English/Arabic varieties, harvest window, and product specifications (size/grade) per category, displayed only when an administrator supplies values.
+- Configurable business hours and official social profile URLs in central site settings.
+- An Open in Maps link when an address is configured.
+- Packing Stations included in the SEO page-override validation list (it was already visible in the SEO editor but was being omitted during validation).
+
+No customer testimonials, export totals, organic claims, certification badges or accreditation PDFs were fabricated or copied. ENCAP should publish those only after the company provides approved, verifiable material. Product-specific attributes must be verified before publishing.

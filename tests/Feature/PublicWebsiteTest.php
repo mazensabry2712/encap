@@ -145,8 +145,8 @@ test('the home page uses central defaults without writing settings during a publ
 });
 
 test('bilingual company pages render in the requested language', function () {
-    $this->get('/en/about')->assertOk()->assertSee('Agriculture with a clear route to market')->assertSee('content-story-brand', false)->assertSee('assets/favicone.png', false);
-    $this->get('/ar/about')->assertOk()->assertSee('dir="rtl"', false)->assertSee('عن ENCAP');
+    $this->get('/en/about')->assertOk()->assertSee('Agriculture with a clear route to market')->assertSee('content-story-brand', false)->assertSee('assets/favicone.png', false)->assertSee('encap-principles-grid', false)->assertSee('Our mission, vision & values');
+    $this->get('/ar/about')->assertOk()->assertSee('dir="rtl"', false)->assertSee('عن ENCAP')->assertSee('encap-principles-grid', false)->assertSee('رسالتنا ورؤيتنا وقيمنا');
 });
 
 test('product catalogue uses numbered cards and links to category details', function () {
@@ -205,13 +205,28 @@ test('a published category has a stable detail page and category title', functio
         'short_description_ar' => 'طلبات توريد المانجو المصري.',
         'description_en' => 'Confirm current availability with ENCAP.',
         'description_ar' => 'تأكد من التوافر الحالي مع ENCAP.',
+        'varieties_en' => 'Valencia and Navel',
+        'varieties_ar' => 'فالنسيا ونافيل',
+        'harvest_window_en' => 'Confirmed seasonally',
+        'harvest_window_ar' => 'يتم التأكيد حسب الموسم',
+        'specifications_en' => 'Grade and size confirmed per enquiry.',
+        'specifications_ar' => 'يتم تأكيد الدرجة والحجم لكل طلب.',
         'is_published' => true,
     ]);
 
     $this->get(route('products.show', ['locale' => 'en', 'category' => 'mango']))
         ->assertOk()
         ->assertSee('<title>Mango | ENCAP</title>', false)
-        ->assertSee('Confirm current availability with ENCAP.');
+        ->assertSee('Confirm current availability with ENCAP.')
+        ->assertSee('Product specifications')
+        ->assertSee('Valencia and Navel')
+        ->assertSee('Confirmed seasonally');
+
+    $this->get(route('products.show', ['locale' => 'ar', 'category' => 'mango']))
+        ->assertOk()
+        ->assertSee('مواصفات المنتج')
+        ->assertSee('فالنسيا ونافيل')
+        ->assertSee('يتم التأكيد حسب الموسم');
 });
 
 test('robots.txt is served by Laravel and points to the sitemap', function () {
