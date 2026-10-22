@@ -64,7 +64,6 @@
                     <span class="encap-catalog-scene-note-arrow">↗</span>
                     <span>{{ __('Processing & Export') }}</span>
                 </div>
-                <span class="encap-catalog-scene-index">E / 01</span>
             </div>
         </div>
     </div>
