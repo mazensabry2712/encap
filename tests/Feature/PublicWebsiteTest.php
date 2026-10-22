@@ -31,6 +31,9 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-process-row', false)
         ->assertSee('encap-quality-band', false)
         ->assertSee('encap-final-cta', false)
+        ->assertSee('encap-signature-logo', false)
+        ->assertSee('encap-process-decoration-logo', false)
+        ->assertSee('encap-product-placeholder-logo', false)
         ->assertSee('id="icon-sprout"', false)
         ->assertSee('js/encap-interactions.js', false);
 });
