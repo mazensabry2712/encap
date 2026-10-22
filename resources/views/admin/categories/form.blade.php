@@ -1,7 +1,7 @@
 @extends('admin.layout')
 @section('page-title', $category->exists ? 'Edit category' : 'Create category')
 @section('content')
-<div class="admin-page-intro"><div><p>Maintain public product information, category imagery and search metadata. Publish only details confirmed by ENCAP.</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.categories.index') }}">← All categories</a></div></div>
+<div class="admin-page-intro"><div><p>Maintain public product information, category imagery and search metadata. Publish only details confirmed by <img class="admin-inline-brand" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="20" height="20" decoding="async">.</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.categories.index') }}">← All categories</a></div></div>
 <form class="admin-panel admin-form-panel" method="post" enctype="multipart/form-data" action="{{ $category->exists ? route('admin.categories.update', $category) : route('admin.categories.store') }}">@csrf @if($category->exists)@method('PUT')@endif<div class="admin-form-grid">
 <h2 class="admin-section-title">Basic information</h2>
 <div class="admin-field"><label for="name_en">Name (English) *</label><input id="name_en" name="name_en" required maxlength="160" value="{{ old('name_en', $category->name_en) }}"></div><div class="admin-field"><label for="name_ar">Name (Arabic)</label><input id="name_ar" name="name_ar" maxlength="160" dir="auto" value="{{ old('name_ar', $category->name_ar) }}"></div>
