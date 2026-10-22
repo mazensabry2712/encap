@@ -14,7 +14,7 @@
         revealTargets.forEach((element, index) => {
             element.classList.add('reveal-on-scroll');
             if (element.classList.contains('category') || element.classList.contains('approach-item')) {
-                element.style.setProperty('--reveal-delay', \`\${(index % 4) * 65}ms\`);
+                element.style.setProperty('--reveal-delay', String((index % 4) * 65) + 'ms');
             }
         });
 
