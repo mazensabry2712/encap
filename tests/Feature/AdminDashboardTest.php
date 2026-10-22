@@ -50,3 +50,35 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
         ->assertSee('Manage catalogue')
         ->assertSee('Manage site metadata and contact details');
 });
+
+
+test('admin language preference switches between English and Arabic with correct document direction', function () {
+    $this->from('/admin/login')
+        ->post('/admin/language', ['locale' => 'ar'])
+        ->assertRedirect('/admin/login');
+
+    $this->get('/admin/login')
+        ->assertOk()
+        ->assertSee('lang="ar" dir="rtl"', false)
+        ->assertSee('تسجيل الدخول')
+        ->assertSee('البريد الإلكتروني');
+
+    $this->actingAs(User::factory()->create())
+        ->get('/admin')
+        ->assertOk()
+        ->assertSee('lang="ar" dir="rtl"', false)
+        ->assertSee('نظرة عامة على لوحة الإدارة')
+        ->assertSee('تصنيفات المنتجات');
+
+    $this->get('/admin/seo')
+        ->assertOk()
+        ->assertSee('إعدادات SEO والموقع')
+        ->assertDontSee('Gallery');
+
+    $this->post('/admin/language', ['locale' => 'en'])->assertRedirect();
+
+    $this->get('/admin')
+        ->assertOk()
+        ->assertSee('lang="en" dir="ltr"', false)
+        ->assertSee('Good work starts here.');
+});
