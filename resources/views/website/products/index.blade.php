@@ -1,7 +1,6 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
 @php($categoryOffset = $categories->firstItem() ?? 1)
-@php($heroCategories = $categories->getCollection()->take(3)->values())
 @section('content')
 <section class="encap-catalog-hero" aria-labelledby="encap-catalog-title">
     <div class="container">
@@ -46,27 +45,20 @@
                 <div class="encap-catalog-orbit encap-catalog-orbit--middle"></div>
                 <div class="encap-catalog-orbit encap-catalog-orbit--inner"></div>
 
-                @if($heroCategories->isNotEmpty())
-                    @php($heroImageClasses = ['primary', 'secondary', 'tertiary'])
-                    @foreach($heroCategories as $heroIndex => $heroCategory)
-                        <figure class="encap-catalog-hero-image encap-catalog-hero-image--{{ $heroImageClasses[$heroIndex] }}">
-                            @if($heroCategory->image)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::url($heroCategory->image) }}" alt="" width="640" height="760" @if($heroIndex === 0) fetchpriority="high" @else loading="lazy" @endif decoding="async">
-                            @else
-                                <span class="encap-catalog-hero-image-placeholder"><svg viewBox="0 0 24 24"><use href="#icon-sprout"></use></svg></span>
-                            @endif
-                            <figcaption>{{ $locale === 'ar' && $heroCategory->name_ar ? $heroCategory->name_ar : $heroCategory->name_en }}</figcaption>
-                        </figure>
-                    @endforeach
-                @else
-                    <div class="encap-catalog-hero-emblem">
-                        <span class="encap-catalog-emblem-halo"></span>
-                        <svg viewBox="0 0 24 24"><use href="#icon-sprout"></use></svg>
-                        <span class="encap-catalog-emblem-word">ENCAP</span>
-                    </div>
-                @endif
+                <figure class="encap-catalog-hero-image encap-catalog-hero-image--primary">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
+                    <figcaption>{{ __('Agricultural production') }}</figcaption>
+                </figure>
+                <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=800&amp;q=82" alt="" width="800" height="900" loading="lazy" decoding="async">
+                    <figcaption>{{ __('Fresh produce') }}</figcaption>
+                </figure>
+                <figure class="encap-catalog-hero-image encap-catalog-hero-image--tertiary">
+                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&amp;fit=crop&amp;w=650&amp;q=82" alt="" width="650" height="520" loading="lazy" decoding="async">
+                    <figcaption>{{ __('From origin to market') }}</figcaption>
+                </figure>
 
-                <div class="encap-catalog-scene-note">
+
                     <span class="encap-catalog-scene-note-dot"></span>
                     <span>{{ __('Agricultural production') }}</span>
                     <span class="encap-catalog-scene-note-arrow">↗</span>
@@ -192,6 +184,7 @@
 <section class="encap-catalog-cta-section">
     <div class="container">
         <div class="encap-catalog-cta">
+            <img class="encap-catalog-cta-image" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="" width="1200" height="900" loading="lazy" decoding="async" aria-hidden="true">
             <div class="encap-catalog-cta-orbit" aria-hidden="true">
                 <span></span><span></span>
                 <div><svg viewBox="0 0 24 24"><use href="#icon-globe"></use></svg></div>

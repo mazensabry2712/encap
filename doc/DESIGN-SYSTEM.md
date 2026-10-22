@@ -20,7 +20,7 @@ Typography uses DM Sans for English and IBM Plex Sans Arabic for Arabic UI. Arab
 
 - The homepage opens with a two-column editorial hero on desktop and a vertically stacked hero on mobile.
 - A compact proof strip communicates four parts of the supply approach without inventing sales numbers or certifications.
-- The products index has a distinct forest-green catalogue hero, CSS orbit scene and image collage built only from published category images already in the catalogue; it uses a designed no-image fallback when uploads are unavailable.
+- The products index has a distinct forest-green catalogue hero with fixed editorial agricultural photos for areas that are not dashboard-managed, a CSS orbit scene, and a photo-led quote CTA. Product category cards remain entirely database-backed and use dashboard-managed images; missing category images use a designed fallback.
 - The catalogue grid is database-backed, numbered across pagination, responsive in both locales, shows only stored category names/descriptions/formats, and links directly to each category detail and quote enquiry. The empty state remains useful when no categories are published.
 - Product detail pages distinguish the primary image, gallery thumbnails, overview, available formats, packaging and quote action.
 - Company service pages share one consistent intro template, breadcrumbs, and related enquiry actions.
