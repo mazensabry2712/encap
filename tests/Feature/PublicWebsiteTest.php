@@ -78,6 +78,19 @@ test('site-wide motion assets are loaded on public English and Arabic page templ
     }
 });
 
+test('quality pages do not show decorative page numbering', function () {
+    $this->get('/en/quality')
+        ->assertOk()
+        ->assertSee('content-story-brand', false)
+        ->assertDontSee('decoding="async"> / 04', false);
+
+    $this->get('/ar/quality')
+        ->assertOk()
+        ->assertSee('content-story-brand', false)
+        ->assertDontSee('decoding="async"> / 04', false);
+});
+
+
 test('admin sign-in uses the ENCAP logo and favicon assets', function () {
     $this->get('/admin/login')
         ->assertOk()
