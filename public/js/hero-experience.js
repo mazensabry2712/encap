@@ -46,19 +46,19 @@
                 const x = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width)) - 0.5;
                 const y = Math.max(0, Math.min(1, (event.clientY - bounds.top) / bounds.height)) - 0.5;
 
-                stage.style.setProperty('--hero-tilt-x', (y * -5).toFixed(2) + 'deg');
-                stage.style.setProperty('--hero-tilt-y', (x * 6).toFixed(2) + 'deg');
+                stage.style.setProperty('--hero-tilt-x', (y * -10).toFixed(2) + 'deg');
+                stage.style.setProperty('--hero-tilt-y', (x * 11).toFixed(2) + 'deg');
 
                 layers.forEach((layer) => {
                     const depth = Number(layer.dataset.heroDepth || 12);
                     const ratio = Math.min(1.5, Math.max(0.2, depth / 28));
-                    layer.style.setProperty('--hero-layer-x', (x * -30 * ratio).toFixed(2) + 'px');
-                    layer.style.setProperty('--hero-layer-y', (y * -24 * ratio).toFixed(2) + 'px');
+                    layer.style.setProperty('--hero-layer-x', (x * -48 * ratio).toFixed(2) + 'px');
+                    layer.style.setProperty('--hero-layer-y', (y * -38 * ratio).toFixed(2) + 'px');
                 });
 
                 if (background) {
-                    background.style.setProperty('--hero-bg-x', (x * -10).toFixed(2) + 'px');
-                    background.style.setProperty('--hero-bg-y', (y * -8).toFixed(2) + 'px');
+                    background.style.setProperty('--hero-bg-x', (x * -18).toFixed(2) + 'px');
+                    background.style.setProperty('--hero-bg-y', (y * -14).toFixed(2) + 'px');
                 }
 
                 pointerFrame = 0;
@@ -79,8 +79,8 @@
             ? Math.min(1, Math.max(0, -bounds.top / Math.max(1, bounds.height)))
             : 0;
 
-        if (background) background.style.setProperty('--hero-scroll-y', (progress * 24).toFixed(2) + 'px');
-        if (stage) stage.style.setProperty('--hero-scroll-stage', (progress * -12).toFixed(2) + 'px');
+        if (background) background.style.setProperty('--hero-scroll-y', (progress * 78).toFixed(2) + 'px');
+        if (stage) stage.style.setProperty('--hero-scroll-stage', (progress * -38).toFixed(2) + 'px');
         scrollFrame = 0;
     };
     const requestScrollDepth = () => {

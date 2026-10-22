@@ -35,7 +35,7 @@
     position: relative;
     transform: scale(1.07);
     filter: saturate(.86) contrast(1.06);
-    animation: encap-hero-photo-drift 24s ease-in-out infinite alternate;
+    animation: encap-hero-photo-drift 15s ease-in-out infinite alternate;
 }
 .encap-hero-vignette {
     position: absolute;
@@ -52,7 +52,7 @@ html[dir="rtl"] .encap-hero-vignette { transform: scaleX(-1); }
     pointer-events: none;
 }
 .encap-hero-backdrop-orbit--one { width: min(56vw, 780px); aspect-ratio: 1; top: -30%; inset-inline-end: -15%; }
-.encap-hero-backdrop-orbit--two { width: min(42vw, 590px); aspect-ratio: 1; top: -19%; inset-inline-end: -8%; border-style: dashed; opacity: .48; animation: encap-hero-orbit-turn 48s linear infinite; }
+.encap-hero-backdrop-orbit--two { width: min(42vw, 590px); aspect-ratio: 1; top: -19%; inset-inline-end: -8%; border-style: dashed; opacity: .48; animation: encap-hero-orbit-turn 22s linear infinite; }
 .encap-hero-experience-grid {
     position: relative;
     z-index: 2;
@@ -206,7 +206,7 @@ html[lang="ar"] body.site-body .encap-hero-experience h1 {
     background: #e4edcf;
     box-shadow: 0 0 0 7px rgba(228, 237, 207, .13), 0 0 24px rgba(228, 237, 207, .55);
 }
-.encap-hero-stage-ring--outer { animation: encap-hero-orbit-turn 32s linear infinite; }
+.encap-hero-stage-ring--outer { animation: encap-hero-orbit-turn 17s linear infinite; }
 .encap-hero-stage-ring--inner {
     top: 10%;
     left: 13%;
@@ -215,7 +215,7 @@ html[lang="ar"] body.site-body .encap-hero-experience h1 {
     border-style: dashed;
     border-color: rgba(228, 237, 207, .2);
     transform: rotate(26deg);
-    animation: encap-hero-orbit-turn-reverse 44s linear infinite;
+    animation: encap-hero-orbit-turn-reverse 23s linear infinite;
 }
 .encap-hero-stage-ring--inner::after { display: none; }
 .encap-hero-photo-card {
@@ -296,7 +296,7 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
     background: #e4edcf;
     box-shadow: 0 18px 38px rgba(5, 24, 16, .23);
     transform: rotate(10deg);
-    animation: encap-hero-stamp-float 7s ease-in-out infinite;
+    animation: encap-hero-stamp-float 4.6s ease-in-out infinite;
 }
 .encap-hero-motion-stamp span { display: block; max-width: 92px; font-size: 8px !important; line-height: 1.45 !important; font-weight: 800; letter-spacing: .04em; }
 .encap-hero-motion-stamp b { display: block; font-size: 22px; font-weight: 500; line-height: 1; }
@@ -325,6 +325,8 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
     backdrop-filter: blur(18px);
     transform: none;
     transition: border-color .25s, box-shadow .25s;
+    translate: 0 0;
+    animation: encap-hero-note-float 5.4s ease-in-out infinite;
 }
 .encap-hero-experience .encap-floating-icon { flex: 0 0 40px; width: 40px; height: 40px; color: var(--encap-green); background: #e5edcf; }
 .encap-hero-floating-note strong { display: block; font-size: 13px; font-weight: 800; line-height: 1.45; }
@@ -350,6 +352,8 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
     border-radius: 3px;
     box-shadow: 0 14px 34px rgba(4, 20, 13, .24);
     backdrop-filter: blur(16px);
+    translate: 0 0;
+    animation: encap-hero-chip-float 6.2s ease-in-out infinite;
 }
 .encap-hero-mini-chip-mark { display: grid; place-items: center; flex: 0 0 30px; width: 30px; height: 30px; border: 1px solid rgba(228, 237, 207, .5); border-radius: 50%; color: #e4edcf; font-size: 10px; font-weight: 800; }
 .encap-hero-mini-chip strong { display: block; font-size: 11px; line-height: 1.45; font-weight: 800; }
@@ -390,8 +394,115 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
 @keyframes encap-hero-orbit-turn { to { transform: rotate(336deg); } }
 @keyframes encap-hero-orbit-turn-reverse { to { transform: rotate(-334deg); } }
 @keyframes encap-hero-dot-pulse { 0%, 100% { box-shadow: 0 0 0 5px rgba(228, 237, 207, .12); } 50% { box-shadow: 0 0 0 9px rgba(228, 237, 207, .06); } }
-@keyframes encap-hero-stamp-float { 0%, 100% { transform: translateY(0) rotate(10deg); } 50% { transform: translateY(-11px) rotate(5deg); } }
+@keyframes encap-hero-stamp-float { 0%, 100% { transform: translateY(0) rotate(12deg); } 50% { transform: translateY(-16px) rotate(3deg); } }
 @keyframes encap-hero-scroll-pulse { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+/* Visible orbiting satellites: this is the hero's motion signature, not just a rotating outline. */
+.encap-hero-orbit-system {
+    position: absolute;
+    z-index: 2;
+    inset: -4%;
+    pointer-events: none;
+    transform: translate3d(var(--hero-layer-x, 0px), var(--hero-layer-y, 0px), 0);
+    transform-style: preserve-3d;
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+}
+.encap-hero-orbit-track {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 106%;
+    height: 96%;
+    border: 1px solid rgba(228, 237, 207, .66);
+    border-radius: 50%;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+.encap-hero-orbit-track--outer {
+    border-color: rgba(228, 237, 207, .72);
+    border-right-color: rgba(228, 237, 207, .18);
+    border-bottom-color: rgba(228, 237, 207, .36);
+    animation: encap-hero-orbit-path 14s linear infinite;
+}
+.encap-hero-orbit-track--inner {
+    width: 84%;
+    height: 74%;
+    border-style: dashed;
+    border-color: rgba(245, 249, 239, .4);
+    animation: encap-hero-orbit-path-reverse 19s linear infinite;
+}
+.encap-hero-orbit-anchor {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: block;
+    transform: translate(-50%, -50%) translateZ(28px);
+    transform-style: preserve-3d;
+}
+.encap-hero-orbit-token {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 6px 14px 6px 6px;
+    border: 1px solid rgba(255, 255, 255, .78);
+    border-radius: 999px;
+    color: #153b29;
+    background: rgba(247, 250, 237, .97);
+    box-shadow: 0 14px 34px rgba(3, 19, 12, .3), 0 0 0 5px rgba(228, 237, 207, .11);
+    white-space: nowrap;
+    animation: encap-hero-orbit-counter 14s linear infinite;
+    will-change: transform;
+}
+.encap-hero-orbit-track--inner .encap-hero-orbit-token {
+    min-height: 43px;
+    padding-inline: 6px 13px;
+    color: #f8faef;
+    background: rgba(16, 53, 36, .96);
+    border-color: rgba(228, 237, 207, .68);
+    box-shadow: 0 14px 34px rgba(3, 19, 12, .34), 0 0 0 5px rgba(9, 42, 28, .17);
+    animation-duration: 19s;
+    animation-direction: reverse;
+}
+.encap-hero-orbit-token-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: #f8faef;
+    background: #244f36;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+}
+.encap-hero-orbit-token-icon svg { display: block; width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.encap-hero-orbit-track--inner .encap-hero-orbit-token-icon { color: #183d2b; background: #e4edcf; }
+.encap-hero-orbit-token-label { font-size: 11px; font-weight: 800; letter-spacing: .02em; }
+.encap-hero-experience .encap-hero-floating-note { animation-duration: 5.4s; }
+.encap-hero-experience .encap-hero-mini-chip { animation-duration: 6.2s; }
+@keyframes encap-hero-orbit-path {
+    from { transform: translate(-50%, -50%) rotateX(61deg) rotateZ(-18deg); }
+    to { transform: translate(-50%, -50%) rotateX(61deg) rotateZ(342deg); }
+}
+@keyframes encap-hero-orbit-path-reverse {
+    from { transform: translate(-50%, -50%) rotateX(58deg) rotateZ(28deg); }
+    to { transform: translate(-50%, -50%) rotateX(58deg) rotateZ(-332deg); }
+}
+@keyframes encap-hero-orbit-counter {
+    from { rotate: 0deg; }
+    to { rotate: -360deg; }
+}
+@keyframes encap-hero-note-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -12px; }
+}
+@keyframes encap-hero-chip-float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 9px; }
+}
+
 @media (max-width: 980px) {
     .encap-hero-experience,
     .encap-hero-experience.encap-hero { min-height: auto; padding-top: 58px; }
@@ -402,6 +513,9 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
     .encap-hero-motion-stamp { width: 94px; height: 94px; }
     .encap-hero-motion-stamp span { font-size: 7px !important; }
     .encap-hero-floating-layer { width: min(270px, 80%); inset-inline-start: -3%; }
+    .encap-hero-orbit-system { inset: -2%; }
+    .encap-hero-orbit-token { min-height: 43px; gap: 6px; padding: 5px 10px 5px 5px; }
+    .encap-hero-orbit-token-icon { flex-basis: 30px; width: 30px; height: 30px; }
 }
 @media (max-width: 760px) {
     .encap-hero-experience,
@@ -432,6 +546,13 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
     .encap-hero-floating-note strong { font-size: 11px; }
     .encap-hero-floating-note small { font-size: 9px; }
     .encap-hero-chip-layer { bottom: 0; inset-inline-end: 0; }
+    .encap-hero-orbit-system { inset: 0 -3%; }
+    .encap-hero-orbit-track--outer { width: 108%; height: 98%; }
+    .encap-hero-orbit-track--inner { width: 83%; height: 78%; }
+    .encap-hero-orbit-token { min-height: 37px; gap: 5px; padding: 4px 8px 4px 4px; }
+    .encap-hero-orbit-token-icon { flex-basis: 27px; width: 27px; height: 27px; font-size: 18px; }
+    .encap-hero-orbit-token-icon svg { width: 16px; height: 16px; }
+    .encap-hero-orbit-token-label { font-size: 9px; }
     .encap-hero-mini-chip { max-width: 185px; padding: 8px 9px; gap: 7px; }
     .encap-hero-mini-chip-mark { flex-basis: 24px; width: 24px; height: 24px; font-size: 8px; }
     .encap-hero-mini-chip strong { font-size: 9px; }
@@ -460,6 +581,7 @@ html.has-reveal .encap-principle-card.reveal-on-scroll.is-visible:hover { transf
     .encap-hero-experience .encap-hero-photo-card,
     .encap-hero-experience .encap-hero-stamp-layer,
     .encap-hero-experience .encap-hero-floating-layer,
-    .encap-hero-experience .encap-hero-chip-layer { transform: none !important; }
+    .encap-hero-experience .encap-hero-chip-layer,
+    .encap-hero-experience .encap-hero-orbit-system { transform: none !important; }
     .encap-hero-experience.is-motion-ready [data-hero-reveal] { opacity: 1 !important; transform: none !important; }
 }
