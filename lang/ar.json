@@ -1,7 +1,7 @@
 {
     "Home": "الرئيسية",
     "Products": "المنتجات",
-    "Request a Quote": "طلب عرض سعر",
+    "Request a Quote": "اطلب عرض سعر",
     "Talk to our team": "تواصل مع فريقنا",
     "Agricultural production · Sourcing · Processing · Export": "إنتاج زراعي · توريد · تجهيز · تصدير",
     "From Egyptian agricultural production and trusted partner farms to global markets.": "من الإنتاج الزراعي المصري والمزارع الشريكة الموثوقة إلى الأسواق العالمية.",
@@ -75,8 +75,8 @@
     "Explore ENCAP agricultural product categories for international wholesale and export enquiries.": "استكشف تصنيفات ENCAP الزراعية لاستفسارات الجملة والتصدير الدولية.",
     "Send ENCAP your agricultural sourcing and export requirements.": "أرسل إلى ENCAP متطلبات التوريد والتصدير الزراعي.",
     "product gallery": "معرض صور المنتج",
-    "About": "عن الشركة",
-    "Contact": "التواصل",
+    "About": "من نحن",
+    "Contact": "اتصل بنا",
     "Main navigation": "القائمة الرئيسية",
     "Farms & Production": "المزارع والإنتاج",
     "Quality & Processing": "الجودة والتجهيز",
@@ -184,7 +184,7 @@
     "Our product range": "مجموعة منتجاتنا",
     "Browse products": "تصفح المنتجات",
     "URL slug": "الرابط المختصر",
-    "Search engine metadata": "بيانات الظهور في محركات البحث",
+    "Search engine metadata": "بيانات تحسين الظهور في محركات البحث",
     "Explore": "استكشف",
     "Mobile navigation": "قائمة التنقل على الهاتف",
     "Open navigation": "فتح قائمة التنقل",
@@ -555,5 +555,7 @@
     "message": "رسالة",
     "Requests": "الطلبات",
     "Messages": "الرسائل",
-    "Farms": "المزارع"
+    "Farms": "المزارع",
+    "ENCAP Control": "لوحة تحكم ENCAP",
+    "ENCAP — home": "ENCAP — الرئيسية"
 }
