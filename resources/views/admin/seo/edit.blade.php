@@ -1,7 +1,7 @@
 @extends('admin.layout')
 @section('page-title', 'Central SEO & site settings')
 @section('content')
-<div class="admin-page-intro"><div><p>Set shared search defaults and verified ENCAP contact details. A blank page override uses its built-in default; avoid adding unverified company claims.</p></div></div>
+<div class="admin-page-intro"><div><p>Set shared search defaults and verified contact details for <img class="admin-inline-brand" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="20" height="20" decoding="async">. A blank page override uses its built-in default; avoid adding unverified company claims.</p></div></div>
 <form class="admin-panel admin-form-panel" method="post" enctype="multipart/form-data" action="{{ route('admin.seo.update') }}">@csrf @method('PUT')
 <div class="admin-form-grid">
 <h2 class="admin-section-title">Search engine defaults</h2><div class="admin-field"><label for="site_title_en">Default site title (English)</label><input id="site_title_en" name="site_title_en" maxlength="255" required value="{{ old('site_title_en', $settings->site_title_en) }}"></div><div class="admin-field"><label for="site_title_ar">Default site title (Arabic)</label><input id="site_title_ar" name="site_title_ar" maxlength="255" required dir="auto" value="{{ old('site_title_ar', $settings->site_title_ar) }}"></div>
