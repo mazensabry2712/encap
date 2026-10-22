@@ -35,8 +35,15 @@ class CategoryController extends Controller
             $data[$flag] = $request->boolean($flag);
         }
         unset($data['remove_gallery']);
-        $data['image'] = $request->file('image')?->store('categories', 'public');
-        $data['gallery'] = collect($request->file('gallery', []))
+        $selectedImages = array_values(array_filter((array) $request->file('images', [])));
+        $primaryImage = $selectedImages[0] ?? $request->file('image');
+        $data['image'] = $primaryImage?->store('categories', 'public');
+
+        $galleryUploads = array_merge(
+            array_slice($selectedImages, 1),
+            (array) $request->file('gallery', [])
+        );
+        $data['gallery'] = collect($galleryUploads)
             ->map(fn ($file) => $file->store('categories/gallery', 'public'))->all();
         $data['is_published'] = $request->boolean('is_published');
         $data['available_forms'] = array_values(array_intersect(
@@ -63,7 +70,9 @@ class CategoryController extends Controller
         unset($data['remove_gallery']);
 
         $oldImage = $category->image;
-        $newImage = $request->file('image')?->store('categories', 'public');
+        $selectedImages = array_values(array_filter((array) $request->file('images', [])));
+        $primaryImage = $selectedImages[0] ?? $request->file('image');
+        $newImage = $primaryImage?->store('categories', 'public');
         if ($newImage) {
             $data['image'] = $newImage;
         }
@@ -77,7 +86,11 @@ class CategoryController extends Controller
             }
         }
 
-        foreach ($request->file('gallery', []) as $file) {
+        $galleryUploads = array_merge(
+            array_slice($selectedImages, 1),
+            (array) $request->file('gallery', [])
+        );
+        foreach ($galleryUploads as $file) {
             $gallery[] = $file->store('categories/gallery', 'public');
         }
 
@@ -118,7 +131,11 @@ class CategoryController extends Controller
             ->map(fn ($index) => (int) $index)
             ->unique()
             ->count();
-        $gallerySlotsAvailable = max(0, 12 - (count($currentGallery) - $requestedRemovals));
+        $remainingGalleryCount = max(0, count($currentGallery) - $requestedRemovals);
+        $selectedImages = array_values(array_filter((array) $request->file('images', [])));
+        $batchGalleryCount = max(0, count($selectedImages) - 1);
+        $gallerySlotsAvailable = max(0, 12 - $remainingGalleryCount - $batchGalleryCount);
+        $productImageBatchLimit = 1 + max(0, 12 - $remainingGalleryCount);
 
         return $request->validate([
             'name_en' => ['required', 'string', 'max:160'],
@@ -158,6 +175,10 @@ class CategoryController extends Controller
             'seo_title_ar' => ['nullable', 'string', 'max:255'],
             'seo_description_en' => ['nullable', 'string', 'max:500'],
             'seo_description_ar' => ['nullable', 'string', 'max:500'],
+            // The batch's first image is the primary image; the rest join the gallery.
+            'images' => ['nullable', 'array', 'max:' . $productImageBatchLimit],
+            'images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            // Keep accepting the legacy single-image field for existing integrations.
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'gallery' => ['nullable', 'array', 'max:' . $gallerySlotsAvailable],
             'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],

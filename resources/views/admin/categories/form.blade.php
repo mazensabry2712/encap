@@ -15,9 +15,9 @@
 <div class="admin-field"><label for="packaging_en">{{ __('Packaging (English)') }}</label><input id="packaging_en" name="packaging_en" maxlength="255" value="{{ old('packaging_en', $category->packaging_en) }}"></div><div class="admin-field"><label for="packaging_ar">{{ __('Packaging (Arabic)') }}</label><input id="packaging_ar" name="packaging_ar" maxlength="255" dir="auto" value="{{ old('packaging_ar', $category->packaging_ar) }}"></div>
 <div class="admin-field full"><label>{{ __('Available formats') }}</label><div class="admin-inline">@foreach(['Fresh', 'Frozen', 'Processed'] as $format)<label class="admin-check"><input type="checkbox" name="available_forms[]" value="{{ $format }}" @checked(in_array($format, old('available_forms', $category->available_forms ?? ['Fresh', 'Frozen', 'Processed'])))>{{ __($format) }}</label>@endforeach</div></div>
 <h2 class="admin-section-title">{{ __('Catalogue imagery') }}</h2>
-<div class="admin-field full admin-primary-image-field" data-main-image-manager data-text-no-replacement="{{ __('No replacement selected.') }}" data-text-replacement-selected="{{ __('New image selected: :filename') }}">
+<div class="admin-field full admin-primary-image-field" data-main-image-manager data-current-gallery-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12" data-text-no-replacement="{{ __('No product photos selected.') }}" data-text-batch-selected="{{ __(':count product photos selected.') }}" data-text-gallery-count="{{ __(':count will be added to the gallery.') }}" data-text-main-image-label="{{ __('Main image') }}" data-text-gallery-image-label="{{ __('Gallery image :number') }}" data-text-too-many="{{ __('Too many product photos selected. Mark current gallery images for removal or choose fewer files.') }}">
     <div class="admin-media-field-heading">
-        <div><label for="image">{{ __('Main display image') }}</label><p>{{ __('This is the first image visitors see on the product page and catalogue.') }}</p></div>
+        <div><label for="image">{{ __('Product photos') }}</label><p>{{ __('Select multiple product photos at once. The first becomes the main image; the rest are added to the gallery automatically.') }}</p></div>
         <span class="admin-media-tag">{{ __('Primary image') }}</span>
     </div>
     <div class="admin-primary-image-layout">
@@ -29,10 +29,11 @@
             @endif
         </div>
         <div class="admin-primary-image-controls">
-            <label class="admin-upload-label" for="image">{{ __('Choose main image') }}</label>
-            <input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp,image/avif" data-main-image-upload>
-            <small>{{ __('JPG, PNG, WebP or AVIF · maximum 5 MB. Your current image stays until you save a replacement.') }}</small>
-            <span class="admin-upload-status" data-main-image-status aria-live="polite">{{ __('No replacement selected.') }}</span>
+            <label class="admin-upload-label" for="image">{{ __('Choose product photos') }}</label>
+            <input id="image" type="file" name="images[]" multiple accept="image/jpeg,image/png,image/webp,image/avif" data-main-image-upload>
+            <small>{{ __('JPG, PNG, WebP or AVIF · maximum 5 MB per image. The first selected photo replaces the main image on save; all remaining selected photos join the gallery.') }}</small>
+            <span class="admin-upload-status" data-main-image-status aria-live="polite">{{ __('No product photos selected.') }}</span>
+            <div class="admin-gallery-selection admin-main-image-selection" data-main-image-selection hidden></div>
         </div>
     </div>
 </div>

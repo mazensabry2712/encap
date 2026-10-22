@@ -583,5 +583,14 @@
     "Explore the product gallery": "استعرض صور المنتج",
     "images": "صور",
     "Select an image to view it larger.": "اختر صورة لعرضها بالحجم الأكبر.",
-    "Will be removed": "سيتم حذفها عند الحفظ"
+    "Will be removed": "سيتم حذفها عند الحفظ",
+    "Product photos": "صور المنتج",
+    "Select multiple product photos at once. The first becomes the main image; the rest are added to the gallery automatically.": "اختار صور المنتج كلها مرة واحدة. أول صورة هتبقى الرئيسية وباقي الصور هتتضاف تلقائيًا للمعرض.",
+    "Choose product photos": "اختيار صور المنتج",
+    "JPG, PNG, WebP or AVIF · maximum 5 MB per image. The first selected photo replaces the main image on save; all remaining selected photos join the gallery.": "JPG أو PNG أو WebP أو AVIF · بحد أقصى 5 ميجابايت للصورة. أول صورة مختارة هتستبدل الرئيسية عند الحفظ، وباقي الصور هتتضاف للمعرض.",
+    "No product photos selected.": "لم يتم اختيار صور للمنتج.",
+    ":count product photos selected.": "تم اختيار :count صورة للمنتج.",
+    ":count will be added to the gallery.": "سيتم إضافة :count صورة إلى المعرض.",
+    "Main image": "الصورة الرئيسية",
+    "Too many product photos selected. Mark current gallery images for removal or choose fewer files.": "عدد صور المنتج المختارة أكبر من المتاح. حدّد صورًا حالية للحذف أو اختر ملفات أقل."
 }

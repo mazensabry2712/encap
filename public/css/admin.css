@@ -329,3 +329,9 @@ html[dir="rtl"] .login-story:after{right:auto;left:-150px}
 .admin-gallery-remove.is-marked-for-removal{background:#fff2ef;color:#8a291d}
 .admin-gallery-remove.is-marked-for-removal span{font-weight:900}
 .admin-gallery-upload input[type=file]:disabled{opacity:.55;cursor:not-allowed;background:#f1f2ed}
+
+
+.admin-main-image-selection{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));margin-top:14px}
+.admin-main-image-selection .admin-gallery-selected-item{align-items:flex-start}
+.admin-main-image-selection .admin-gallery-selected-item img{width:54px;height:54px;object-fit:cover}
+.admin-primary-image-controls .admin-upload-status.is-error{padding:9px 11px;border:1px solid #e2b2a9;background:#fff2ef;color:#8a291d}

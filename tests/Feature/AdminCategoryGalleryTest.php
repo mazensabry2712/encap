@@ -32,6 +32,51 @@ test('category editor presents an organized gallery manager with live image prev
         ->assertSee('صور المنتج الإضافية');
 });
 
+test('selecting multiple product photos saves the first as primary and all remaining photos to the gallery', function () {
+    Storage::fake('public');
+    $oldMain = 'categories/existing-main.png';
+    Storage::disk('public')->put($oldMain, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGNUjjJiYGBgYmBgYGBgAAAITwCzmz5grAAAAABJRU5ErkJggg=='));
+
+    $category = Category::query()->create([
+        'name_en' => 'Batch Upload Mango',
+        'name_ar' => 'مانجو الرفع المتعدد',
+        'slug' => 'batch-upload-mango',
+        'image' => $oldMain,
+        'gallery' => [],
+        'is_published' => true,
+        'sort_order' => 1,
+    ]);
+
+    $png = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGNUjjJiYGBgYmBgYGBgAAAITwCzmz5grAAAAABJRU5ErkJggg==');
+    $photos = [
+        UploadedFile::fake()->createWithContent('main-photo.png', $png),
+        UploadedFile::fake()->createWithContent('gallery-photo-1.png', $png),
+        UploadedFile::fake()->createWithContent('gallery-photo-2.png', $png),
+    ];
+
+    $this->actingAs(User::factory()->create())
+        ->put(route('admin.categories.update', $category), [
+            'name_en' => 'Batch Upload Mango',
+            'name_ar' => 'مانجو الرفع المتعدد',
+            'slug' => 'batch-upload-mango',
+            'sort_order' => 1,
+            'images' => $photos,
+        ])
+        ->assertRedirect(route('admin.categories.index'))
+        ->assertSessionHasNoErrors();
+
+    $category->refresh();
+
+    expect($category->image)->not->toBe($oldMain)
+        ->and($category->gallery)->toHaveCount(2);
+
+    Storage::disk('public')->assertMissing($oldMain);
+    Storage::disk('public')->assertExists($category->image);
+    foreach ($category->gallery as $path) {
+        Storage::disk('public')->assertExists($path);
+    }
+});
+
 test('category gallery cannot exceed twelve additional images across repeated edits', function () {
     Storage::fake('public');
     $gallery = ['categories/gallery/remove-me.png'];
