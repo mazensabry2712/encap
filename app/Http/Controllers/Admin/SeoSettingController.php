@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class SeoSettingController extends Controller
 {
     private const SEO_PAGES = [
-        'home', 'about', 'farms', 'packing-stations', 'products', 'quality', 'export', 'gallery', 'contact', 'quote',
+        'home', 'about', 'farms', 'packing-stations', 'products', 'quality', 'export', 'contact', 'quote',
     ];
 
     private const SEO_LOCALES = ['en', 'ar'];
