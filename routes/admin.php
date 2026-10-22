@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QuoteRequestController;
 use App\Http\Controllers\Admin\SeoSettingController;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
-        Route::get('/', fn () => redirect()->route('admin.categories.index'))->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::get('/seo', [SeoSettingController::class, 'edit'])->name('seo.edit');
         Route::put('/seo', [SeoSettingController::class, 'update'])->name('seo.update');
