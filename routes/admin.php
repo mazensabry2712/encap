@@ -6,9 +6,18 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\QuoteRequestController;
 use App\Http\Controllers\Admin\SeoSettingController;
+use App\Http\Middleware\SetAdminLocale;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(SetAdminLocale::class)->group(function () {
+    Route::post('/language', function (Request $request) {
+        $validated = $request->validate(['locale' => ['required', 'in:en,ar']]);
+        $request->session()->put('admin_locale', $validated['locale']);
+
+        return back();
+    })->name('language');
+
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'create'])->name('login');
         Route::post('/login', [AuthController::class, 'store'])->middleware('throttle:5,1')->name('login.store');
