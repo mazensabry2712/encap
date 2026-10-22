@@ -29,12 +29,15 @@ Performance and accessibility improvements are goals, not measured results. Befo
 6. Recheck after adding real photography or changing fonts/assets.
 
 
-## Interface behavior added
+## Interface behavior
 
-- One standalone public/js/encap-interactions.js file handles scroll reveals, a light sticky-header state, mobile menu close behavior, and product-gallery thumbnail selection.
-- Scroll effects remain disabled when prefers-reduced-motion: reduce is enabled, and gracefully degrade when IntersectionObserver is not supported.
-- Product catalog images use fixed dimensions and lazy loading. The home hero is the only high-priority image.
-- Product gallery and page layout work without JavaScript; JavaScript enhances selected images and motion, not navigation or enquiry submission.
+- public/js/site-motion.js is the single owner of public-page scroll reveals, pointer-based 3D card tilt, magnetic actions, image depth and the scroll-progress line.
+- public/js/hero-experience.js adds the homepage's dedicated layered parallax and orbit effects; the site-wide controller deliberately skips that hero to avoid competing transforms.
+- public/js/encap-interactions.js handles only functional interactions: the sticky-header state, mobile-menu close behavior and product-gallery thumbnail selection.
+- Components receive at most one reveal wrapper, preventing nested reveal/transform effects that can obscure content or make elements feel like they collide.
+- Motion respects prefers-reduced-motion. Reveals gracefully degrade when IntersectionObserver is not supported.
+- Product catalogue images use fixed dimensions and lazy loading. The home hero is the only high-priority image.
+- Navigation, forms, product pages and the gallery remain usable without JavaScript; scripts enhance the experience rather than control page access or enquiry submission.
 - Fonts load via preconnect and one Google Fonts stylesheet. If network delivery is unreliable in the production market, assess self-hosting only after measuring.
 
 ## Verification

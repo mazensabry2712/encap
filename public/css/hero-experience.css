@@ -452,8 +452,6 @@ html[dir="rtl"] .encap-hero-photo-card-content { border-radius: 80px 3px 3px 3px
     .encap-hero-floating-layer { width: min(216px, 78%); }
     .encap-hero-floating-note small { max-width: 140px; }
 }
-html.has-reveal .encap-service-hub-card.reveal-on-scroll.is-visible:hover,
-html.has-reveal .encap-principle-card.reveal-on-scroll.is-visible:hover { transform: translateY(-4px); }
 @media (prefers-reduced-motion: reduce) {
     .encap-hero-experience *, .encap-hero-experience *::before, .encap-hero-experience *::after { animation: none !important; transition: none !important; }
     .encap-hero-experience .encap-hero-image-plane,
