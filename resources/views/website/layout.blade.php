@@ -30,6 +30,7 @@
         <link rel="preload" as="image" href="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=1200&amp;q=78">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}">
     <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>
     @stack('head')
 </head>
