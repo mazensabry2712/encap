@@ -131,8 +131,10 @@ test('public typography uses legible Latin and Arabic fonts with comfortable rea
     $stylesheet = file_get_contents(public_path('css/typography.css'));
 
     expect($stylesheet)
-        ->toContain('font-size: 17px !important')
+        ->toContain('font-size: 16px !important')
         ->toContain('Cairo')
+        ->toContain('font-size: clamp(2rem, 4.6vw, 3.5rem) !important;')
+        ->toContain('font-size: clamp(1.9rem, 7.8vw, 2.45rem) !important;')
         ->toContain('text-size-adjust: 100%');
 });
 

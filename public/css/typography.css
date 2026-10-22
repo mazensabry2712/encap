@@ -19,8 +19,8 @@ html[lang="ar"] body.site-body * {
     font-family: var(--encap-font-arabic) !important;
 }
 body.site-body {
-    font-size: 17px !important;
-    line-height: 1.75 !important;
+    font-size: 16px !important;
+    line-height: 1.7 !important;
     font-weight: 400;
     letter-spacing: normal;
     -webkit-font-smoothing: auto;
@@ -29,32 +29,52 @@ body.site-body {
 
 /* Comfortable reading sizes for running copy; retain responsive heading scales. */
 body.site-body :is(p, li, dd, dt, blockquote, .content-copy, .muted, .lead) {
-    font-size: 17px !important;
-    line-height: 1.8 !important;
+    font-size: 16px !important;
+    line-height: 1.75 !important;
 }
 body.site-body :is(small, .hero-caption span, .hero-float-copy small, .gallery-card figcaption small, .language-option-text small) {
-    font-size: 13px !important;
-    line-height: 1.6 !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
 }
 body.site-body :is(label, .field label, .form-card label) {
-    font-size: 16px !important;
-    line-height: 1.55 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
 }
 body.site-body :is(input, select, textarea) {
-    min-height: 46px;
-    font-size: 16px !important;
-    line-height: 1.55 !important;
-}
-body.site-body textarea { min-height: 132px; }
-body.site-body :is(button, .button, .encap-button) {
+    min-height: 42px;
     font-size: 15px !important;
+    line-height: 1.5 !important;
+}
+body.site-body textarea { min-height: 120px; }
+body.site-body :is(button, .button, .encap-button) {
+    font-size: 14px !important;
     line-height: 1.45 !important;
 }
 
 /* One typographic voice across headlines, cards and long-form pages. */
 body.site-body :is(h1, h2, h3, h4, h5, h6) {
     font-weight: 650 !important;
-    line-height: 1.2 !important;
+}
+body.site-body h1 {
+    font-size: clamp(2rem, 4.6vw, 3.5rem) !important;
+}
+body.site-body h2 {
+    font-size: clamp(1.7rem, 3.2vw, 2.65rem) !important;
+}
+body.site-body h3 {
+    font-size: clamp(1.15rem, 1.7vw, 1.45rem) !important;
+}
+body.site-body h4 {
+    font-size: clamp(1.05rem, 1.1vw, 1.25rem) !important;
+}
+body.site-body h5 {
+    font-size: 1rem !important;
+}
+body.site-body h6 {
+    font-size: 0.95rem !important;
+}
+body.site-body :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.25 !important;
     letter-spacing: -0.02em !important;
     text-wrap: pretty;
 }
@@ -67,7 +87,7 @@ body.site-body :is(.eyebrow, .encap-kicker, .encap-section-index, .editorial-sid
     .content-story-marker, .proof-number, .product-count, .format-pill,
     .encap-service-hub-number, .encap-service-number, .encap-service-step-number,
     .footer-bottom, .language-menu-label) {
-    font-size: 13px !important;
+    font-size: 12px !important;
     line-height: 1.55 !important;
     letter-spacing: 0.045em !important;
 }
@@ -81,17 +101,17 @@ html[lang="ar"] body.site-body :is(.eyebrow, .encap-kicker, .encap-section-index
 body.site-body :is(.proof-copy strong, .hero-float-copy strong, .encap-service-card h3,
     .encap-service-steps h3, .detail-block h3, .footer-links a, .footer-intro,
     .language-option-text strong) {
-    font-size: 15px !important;
-    line-height: 1.65 !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
 }
 body.site-body :is(.primary-links > a, .primary-dropdown > summary,
     .primary-dropdown-panel a, .primary-mobile-panel a) {
-    font-size: 14px !important;
+    font-size: 13px !important;
     line-height: 1.5 !important;
 }
 body.site-body .primary-quote.button,
 body.site-body .primary-mobile-quote {
-    font-size: 14px !important;
+    font-size: 13px !important;
 }
 body.site-body .language-option-text small { color: #526157; }
 body.site-body .editorial-side-label,
@@ -105,13 +125,22 @@ body.site-body :is(a, button, input, select, textarea, summary):focus-visible {
     outline-offset: 3px;
 }
 @media (max-width: 760px) {
-    body.site-body { font-size: 16px !important; }
+    body.site-body { font-size: 15px !important; }
     body.site-body :is(p, li, dd, dt, blockquote, .content-copy, .muted, .lead) {
-        font-size: 16px !important;
-        line-height: 1.8 !important;
+        font-size: 15px !important;
+        line-height: 1.75 !important;
     }
+    body.site-body h1 { font-size: clamp(1.9rem, 7.8vw, 2.45rem) !important; }
+    body.site-body h2 { font-size: clamp(1.55rem, 6.2vw, 2rem) !important; }
+    body.site-body h3 { font-size: clamp(1.1rem, 4.7vw, 1.3rem) !important; }
+    body.site-body h4 { font-size: 1.05rem !important; }
+    body.site-body h5 { font-size: 0.98rem !important; }
+    body.site-body h6 { font-size: 0.92rem !important; }
     body.site-body :is(h1, h2, h3, h4, h5, h6) { line-height: 1.25 !important; }
-    html[lang="ar"] body.site-body :is(h1, h2, h3, h4, h5, h6) { line-height: 1.55 !important; }
+    html[lang="ar"] body.site-body :is(h1, h2, h3, h4, h5, h6) { line-height: 1.45 !important; }
+    body.site-body :is(label, .field label, .form-card label) { font-size: 13px !important; }
+    body.site-body :is(input, select, textarea) { font-size: 15px !important; }
+    body.site-body :is(button, .button, .encap-button) { font-size: 13px !important; }
 }
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
