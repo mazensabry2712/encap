@@ -110,6 +110,16 @@ class CategoryController extends Controller
 
     private function validated(Request $request, ?Category $category = null): array
     {
+        $currentGallery = $category?->gallery ?? [];
+        $requestedRemovals = collect($request->input('remove_gallery', []))
+            ->filter(fn ($index) => is_scalar($index)
+                && filter_var($index, FILTER_VALIDATE_INT) !== false
+                && array_key_exists((int) $index, $currentGallery))
+            ->map(fn ($index) => (int) $index)
+            ->unique()
+            ->count();
+        $gallerySlotsAvailable = max(0, 12 - (count($currentGallery) - $requestedRemovals));
+
         return $request->validate([
             'name_en' => ['required', 'string', 'max:160'],
             'name_ar' => ['nullable', 'string', 'max:160'],
@@ -149,7 +159,7 @@ class CategoryController extends Controller
             'seo_description_en' => ['nullable', 'string', 'max:500'],
             'seo_description_ar' => ['nullable', 'string', 'max:500'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'gallery' => ['nullable', 'array', 'max:12'],
+            'gallery' => ['nullable', 'array', 'max:' . $gallerySlotsAvailable],
             'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'remove_gallery' => ['nullable', 'array'],
             'remove_gallery.*' => ['integer', 'min:0'],
