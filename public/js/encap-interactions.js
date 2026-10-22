@@ -102,6 +102,26 @@
         });
     }
 
+
+    // Add a gentle magnetic pull to primary actions on precise pointers.
+    if (!reduceMotion && finePointer) {
+        document.querySelectorAll('.hero-actions .button, .cta .button, .site-header .button').forEach((button) => {
+            button.addEventListener('pointermove', (event) => {
+                const rect = button.getBoundingClientRect();
+                const x = event.clientX - rect.left - rect.width / 2;
+                const y = event.clientY - rect.top - rect.height / 2;
+                button.style.setProperty('--magnet-x', (x * 0.08).toFixed(2) + 'px');
+                button.style.setProperty('--magnet-y', (y * 0.08).toFixed(2) + 'px');
+                button.style.transform = 'translate3d(var(--magnet-x), var(--magnet-y), 0) translateY(-2px)';
+            }, { passive: true });
+            button.addEventListener('pointerleave', () => {
+                button.style.removeProperty('--magnet-x');
+                button.style.removeProperty('--magnet-y');
+                button.style.removeProperty('transform');
+            });
+        });
+    }
+
     const gallery = document.querySelector('.product-gallery-main');
     const galleryButtons = document.querySelectorAll('[data-gallery-thumb]');
     if (gallery && galleryButtons.length) {
