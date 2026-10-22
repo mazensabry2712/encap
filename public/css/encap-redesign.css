@@ -241,3 +241,22 @@ html[dir=rtl] .encap-service-hub-card:hover .encap-service-hub-link b{transform:
 @media(prefers-reduced-motion:reduce){.encap-service-visual-figure img,.encap-service-card-media img{transition:none!important}.encap-service-visual-figure:hover img,.encap-service-card:hover .encap-service-card-media img{transform:none}}
 
 
+
+
+/* Competitive-review additions: principles and optional buyer-facing product data. */
+.encap-about-principles{margin-top:clamp(48px,7vw,88px);padding-top:clamp(30px,4vw,48px);border-top:1px solid var(--encap-line)}
+.encap-about-principles-heading{max-width:670px;margin-bottom:28px}
+.encap-about-principles-heading h2{margin:10px 0 12px;font:400 clamp(30px,3.8vw,48px)/1.12 var(--encap-serif);letter-spacing:-.035em;color:var(--encap-deep)}
+.encap-about-principles-heading p{max-width:580px;color:var(--encap-muted);font-size:14px;line-height:1.8;margin:0}
+.encap-principles-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.encap-principle-card{min-width:0;padding:24px 22px 25px;border:1px solid var(--encap-line);background:#fff;transition:transform .25s,border-color .25s,box-shadow .25s}
+.encap-principle-card:hover{transform:translateY(-3px);border-color:#b8c8a8;box-shadow:0 14px 30px #173c2810}
+.encap-principle-index{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--encap-lime);color:var(--encap-green);font-size:11px;font-weight:800}
+.encap-principle-card h3{margin:18px 0 9px;font-size:18px;line-height:1.3;font-weight:700;color:var(--encap-deep)}
+.encap-principle-card p{margin:0;color:var(--encap-muted);font-size:13px;line-height:1.8}
+.product-spec-grid{display:grid;gap:0;margin:8px 0 0}
+.product-spec-grid>div{display:grid;grid-template-columns:minmax(105px,.45fr) minmax(0,1fr);gap:16px;padding:12px 0;border-top:1px solid var(--encap-line)}
+.product-spec-grid dt{color:var(--encap-muted);font-size:12px;font-weight:700}
+.product-spec-grid dd{margin:0;color:var(--encap-ink);font-size:13px;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
+@media(max-width:800px){.encap-principles-grid{grid-template-columns:1fr}.encap-principle-card{padding:20px}.product-spec-grid>div{grid-template-columns:1fr;gap:5px}}
+@media(prefers-reduced-motion:reduce){.encap-principle-card{transition:none}.encap-principle-card:hover{transform:none}}

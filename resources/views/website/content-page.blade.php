@@ -70,5 +70,15 @@
 @if(empty($pageContent['services']))
 <div class="content-story-marker"><span class="content-story-brand"><img src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="24" height="24" decoding="async"> / {{ str_pad((array_search($page, ['about', 'farms', 'packing-stations', 'quality', 'export', 'gallery'], true) ?: 0) + 1, 2, '0', STR_PAD_LEFT) }}</span><span>{{ __('From origin to market') }}</span></div><div class="content-layout" style="margin-top:{{ $page === 'gallery' && $categories->isNotEmpty() ? '55px' : '0' }}"><div class="content-copy"><p>{{ $pageContent['body'] }}</p></div><aside class="feature-panel"><div class="eyebrow">{{ __('Let us talk supply') }}</div><strong>{{ __('Looking for a reliable agricultural supply partner?') }}</strong><p>{{ __('Share your product, quantity and destination requirements with our team.') }}</p><a class="text-link" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request a Quote') }} <span>↗</span></a></aside></div>
 @endif
+@if($page === 'about')
+<div class="encap-about-principles" role="region" aria-labelledby="encap-about-principles-heading">
+    <div class="encap-about-principles-heading"><span class="encap-section-index">{{ __('Company direction') }}</span><h2 id="encap-about-principles-heading">{{ __('Our mission, vision & values') }}</h2><p>{{ __('A practical approach to connecting Egyptian agricultural production with global buyers.') }}</p></div>
+    <div class="encap-principles-grid">
+        <article class="encap-principle-card"><span class="encap-principle-index">01</span><h3>{{ __('Our mission') }}</h3><p>{{ __('Connect Egyptian agricultural production with buyers through clear supply planning and export coordination.') }}</p></article>
+        <article class="encap-principle-card"><span class="encap-principle-index">02</span><h3>{{ __('Our vision') }}</h3><p>{{ __('Build long-term supply partnerships that help Egyptian produce reach suitable global markets.') }}</p></article>
+        <article class="encap-principle-card"><span class="encap-principle-index">03</span><h3>{{ __('Our values') }}</h3><p>{{ __('Clear communication, responsible sourcing and product specifications agreed before commitment guide our approach.') }}</p></article>
+    </div>
+</div>
+@endif
 </div></section>
 @endsection
