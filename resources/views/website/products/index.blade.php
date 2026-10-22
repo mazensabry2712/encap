@@ -187,7 +187,7 @@
             <img class="encap-catalog-cta-image" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="" width="1200" height="900" loading="lazy" decoding="async" aria-hidden="true">
             <div class="encap-catalog-cta-orbit" aria-hidden="true">
                 <span></span><span></span>
-                <div><svg viewBox="0 0 24 24"><use href="#icon-globe"></use></svg></div>
+                <div class="encap-shared-brand-core"><img src="{{ asset('assets/favicone.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div>
             </div>
             <div class="encap-catalog-cta-copy">
                 <span class="encap-catalog-kicker">{{ __('Have a specific requirement?') }}</span>

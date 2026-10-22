@@ -213,6 +213,8 @@ test('bilingual company pages render the About supply story and principles', fun
         ->assertSee('encap-principles-grid', false)
         ->assertSee('Our mission, vision & values')
         ->assertSee('encap-about-final-cta', false)
+        ->assertSee('encap-shared-brand-core', false)
+        ->assertSee('assets/favicone.png')
         ->assertSee('Illustrative stock photography.');
 
     $this->get('/ar/about')
@@ -271,6 +273,8 @@ test('product catalogue uses the redesigned hero and data-backed numbered catego
         ->assertSee('photo-1500382017468-9049fed747ef')
         ->assertSee('photo-1542838132-92c53300491e')
         ->assertSee('encap-catalog-cta-image', false)
+        ->assertSee('encap-shared-brand-core', false)
+        ->assertSee('assets/favicone.png')
         ->assertSee('encap-catalog-grid', false)
         ->assertSee('encap-catalog-card-index', false)
         ->assertSee('data-tilt', false)

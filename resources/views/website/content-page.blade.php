@@ -178,7 +178,7 @@
 
 <section class="encap-about-final-cta" aria-labelledby="encap-about-final-title"><div class="container">
     <div class="encap-about-final-panel encap-final-panel">
-        <div class="encap-about-final-orbit" aria-hidden="true"><img src="{{ asset('assets/favicone.png') }}" alt="" width="50" height="50" loading="lazy" decoding="async"><span></span></div>
+        <div class="encap-about-final-orbit" aria-hidden="true"><div class="encap-shared-brand-core"><img src="{{ asset('assets/favicone.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div><span class="encap-about-final-orbit-sweep"></span></div>
         <div class="encap-about-final-copy"><span class="encap-section-index">{{ __('For importers, distributors and partners') }}</span><h2 id="encap-about-final-title">{{ __('Let’s talk about what your market needs.') }}</h2><p>{{ __('Share the product, quantity and destination you have in mind. We will start by reviewing the details that matter to your enquiry.') }}</p><a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Start an export enquiry') }} <span aria-hidden="true">↗</span></a></div>
         <span class="encap-about-final-index" aria-hidden="true">ENCAP <i>/ 04</i></span>
     </div>

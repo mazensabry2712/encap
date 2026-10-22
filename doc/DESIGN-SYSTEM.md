@@ -58,3 +58,5 @@ Review both locales at 1440px, 1024px, 768px and 390px. Confirm the hero hierarc
 - Until approved company photography is uploaded, treat any generic hero photo as representative imagery—not proof of ENCAP-owned farms.
 - Never invent export markets, facilities, certifications, customer logos, production volume or availability.
 - Keep contact details and SEO defaults editable through the existing administration area.
+
+- The ENCAP brand mark used inside the contact hero and in the closing orbit accents on About and Products shares the same favicon asset, white treatment and ENCAP wordmark; its core stays upright while the surrounding rings move.
