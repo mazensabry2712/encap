@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class SeoSettingController extends Controller
 {
     private const SEO_PAGES = [
-        'home', 'about', 'farms', 'products', 'quality', 'export', 'gallery', 'contact', 'quote',
+        'home', 'about', 'farms', 'packing-stations', 'products', 'quality', 'export', 'gallery', 'contact', 'quote',
     ];
 
     private const SEO_LOCALES = ['en', 'ar'];
@@ -44,6 +44,12 @@ class SeoSettingController extends Controller
             'whatsapp_number' => ['nullable', 'string', 'max:50'],
             'address_en' => ['nullable', 'string', 'max:255'],
             'address_ar' => ['nullable', 'string', 'max:255'],
+            'business_hours_en' => ['nullable', 'string', 'max:255'],
+            'business_hours_ar' => ['nullable', 'string', 'max:255'],
+            'facebook_url' => ['nullable', 'url', 'max:255'],
+            'instagram_url' => ['nullable', 'url', 'max:255'],
+            'linkedin_url' => ['nullable', 'url', 'max:255'],
+            'youtube_url' => ['nullable', 'url', 'max:255'],
             'default_og_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
         ];
 
