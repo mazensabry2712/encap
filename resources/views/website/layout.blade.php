@@ -50,7 +50,7 @@
 <a class="skip-link" href="#main-content">{{ __('Skip to content') }}</a>
 @php($currentLocale = $locale ?? 'en')
 <header class="site-header"><div class="container nav">
-    <a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ asset('assets/logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" fetchpriority="high"></a>
+    <a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ asset('assets/logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" decoding="async"></a>
     <nav class="links desktop-links" aria-label="{{ __('Main navigation') }}">
         <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
         <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
