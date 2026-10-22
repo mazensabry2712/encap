@@ -65,7 +65,7 @@ test('site-wide motion assets are loaded on public English and Arabic page templ
 
     $paths = [
         '/en', '/ar', '/en/about', '/ar/farms', '/en/packing-stations',
-        '/ar/quality', '/en/export', '/ar/gallery', '/en/products', '/ar/products',
+        '/ar/quality', '/en/export', '/en/products', '/ar/products',
         '/en/products/motion-mango', '/ar/products/motion-mango',
         '/en/contact', '/ar/request-a-quote',
     ];
@@ -140,7 +140,7 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('/en/packing-stations', false)
         ->assertSee('/en/export', false)
         ->assertSee('/en/quality', false)
-        ->assertSee('/en/gallery', false)
+        ->assertDontSee('/en/gallery', false)
         ->assertSee('aria-expanded="false"', false)
         ->assertDontSee('data-primary-language', false)
         ->assertDontSee('topbar-note', false);
@@ -303,21 +303,9 @@ test('product catalogue uses the redesigned hero and data-backed category cards'
         ->assertSee('encap-catalog-hero', false);
 });
 
-test('product gallery cards link to interactive category detail pages', function () {
-    \Illuminate\Support\Facades\Storage::fake('public');
-
-    Category::query()->create([
-        'name_en' => 'Gallery Mango',
-        'name_ar' => 'مانجو المعرض',
-        'slug' => 'gallery-mango',
-        'image' => 'categories/gallery-mango.webp',
-        'is_published' => true,
-    ]);
-
-    $this->get('/en/gallery')
-        ->assertOk()
-        ->assertSee('class="gallery-card" data-tilt', false)
-        ->assertSee('/en/products/gallery-mango', false);
+test('standalone gallery page is removed in favour of the product catalogue', function () {
+    $this->get('/en/gallery')->assertNotFound();
+    $this->get('/ar/gallery')->assertNotFound();
 });
 
 test('unpublished categories are not publicly accessible', function () {
