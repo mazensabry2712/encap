@@ -2,7 +2,7 @@
 @php($baseUrl = rtrim(config('app.url'), '/'))
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 @foreach(['en', 'ar'] as $locale)
-    @foreach(['' => ['priority' => '1.0', 'changefreq' => 'weekly'], '/products' => ['priority' => '0.8', 'changefreq' => 'weekly'], '/about' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/farms' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/packing-stations' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/quality' => ['priority' => '0.5', 'changefreq' => 'monthly'], '/export' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/gallery' => ['priority' => '0.5', 'changefreq' => 'monthly'], '/contact' => ['priority' => '0.5', 'changefreq' => 'monthly']] as $path => $metadata)
+    @foreach(['' => ['priority' => '1.0', 'changefreq' => 'weekly'], '/products' => ['priority' => '0.8', 'changefreq' => 'weekly'], '/about' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/farms' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/packing-stations' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/quality' => ['priority' => '0.5', 'changefreq' => 'monthly'], '/export' => ['priority' => '0.6', 'changefreq' => 'monthly'], '/contact' => ['priority' => '0.5', 'changefreq' => 'monthly']] as $path => $metadata)
     <url>
         <loc>{{ $baseUrl . '/' . $locale . $path }}</loc>
         <xhtml:link rel="alternate" hreflang="en" href="{{ $baseUrl . '/en' . $path }}"/>
