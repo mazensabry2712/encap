@@ -113,3 +113,6 @@
 /* Official ENCAP favicon replaces letter-only branding placeholders. */
 .admin-category-placeholder{object-fit:contain;padding:7px}
 .admin-inline-brand{display:inline-block;width:20px;height:20px;max-width:none;object-fit:contain;vertical-align:middle;margin-inline:3px}
+
+/* Category editor: product-page visibility controls. */
+.admin-product-page-toggles{display:flex;flex-wrap:wrap;gap:10px 18px}.admin-product-page-toggles .admin-check{min-width:220px;padding:5px 0}

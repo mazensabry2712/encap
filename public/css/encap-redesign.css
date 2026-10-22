@@ -925,4 +925,3 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 /* Product detail sections are configurable per category in the admin editor. */
 .product-detail-no-images{grid-template-columns:minmax(0,1fr)}
 .product-detail-no-images .product-detail-copy{width:100%;max-width:920px}
-.admin-product-page-toggles{display:flex;flex-wrap:wrap;gap:10px 18px}
