@@ -140,10 +140,10 @@ html[dir=rtl] .site-header .desktop-links a:after{transform-origin:right center}
 
 
 /* Official ENCAP logo asset */
-.site-header .brand-logo{display:block;width:clamp(132px,13vw,172px);height:49px;object-fit:contain;object-position:left center}
+.site-header .brand-logo{display:block;width:clamp(190px,17vw,228px);height:66px;max-width:100%;object-fit:contain;object-position:left center}
 html[dir=rtl] .site-header .brand-logo{object-position:right center}
 .site-header .brand{gap:0;min-width:0}
 .footer .brand{display:inline-flex;align-items:center;justify-content:center;max-width:100%;padding:6px 9px;background:#fff;border-radius:4px}
-.footer .brand-logo{display:block;width:164px;max-width:100%;height:47px;object-fit:contain;object-position:center}
-@media(max-width:800px){.site-header .brand-logo{width:151px;height:44px}}
-@media(max-width:420px){.site-header .brand-logo{width:137px;height:40px}.footer .brand-logo{width:150px;height:43px}}
+.footer .brand-logo{display:block;width:200px;max-width:100%;height:58px;object-fit:contain;object-position:center}
+@media(max-width:800px){.site-header .brand-logo{width:184px;height:54px}.footer .brand-logo{width:184px;height:53px}}
+@media(max-width:420px){.site-header .brand-logo{width:166px;height:48px}.footer .brand-logo{width:170px;height:49px}}
