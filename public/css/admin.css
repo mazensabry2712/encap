@@ -221,3 +221,34 @@
   .admin-stat-card,.admin-stat-link span,.admin-quick-links > a { transition: none !important; }
   .admin-stat-card:hover,.admin-quick-links > a:hover { transform: none; }
 }
+
+
+/* Admin language switcher and Arabic/RTL support. */
+.admin-topbar-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.admin-language-switch,.login-language-switch{display:inline-flex;align-items:center;gap:3px;padding:3px;border:1px solid var(--aline);background:#f8f9f4;border-radius:4px}
+.admin-language-switch button,.login-language-switch button{min-height:30px;padding:5px 10px;border:1px solid transparent;border-radius:3px;background:transparent;color:#506251;font-size:10px;font-weight:850;cursor:pointer}
+.admin-language-switch button:hover,.login-language-switch button:hover{background:#eef2e7}
+.admin-language-switch button.active,.login-language-switch button.active{background:var(--af);color:#fff}
+.admin-topbar-actions .admin-view-site{white-space:nowrap}
+html[dir="rtl"] .admin-shell{direction:rtl}
+html[dir="rtl"] .admin-brand{flex-direction:row}
+html[dir="rtl"] .admin-stat-card:after{right:auto;left:-35px}
+html[dir="rtl"] .admin-quick-links>a:hover{transform:translateX(-2px)}
+html[dir="rtl"] .admin-stat-link span{margin-left:0;margin-right:auto}
+html[dir="rtl"] .admin-stat-link{border-left:0}
+html[dir="rtl"] .admin-record-meta{align-items:flex-start}
+html[dir="rtl"] .admin-stat-link{padding-left:0}
+html[dir="rtl"] .admin-stat-link span{margin-inline-start:auto}
+html[dir="rtl"] .admin-table th{text-align:start}
+html[dir="rtl"] .admin-dashboard-primary-actions{justify-content:flex-start}
+html[dir="rtl"] .admin-inline-brand{margin-inline:3px}
+html[dir="rtl"] .login-story:after{right:auto;left:-150px}
+.login-language-switch{margin-bottom:20px}
+@media(max-width:760px){
+ .admin-topbar-actions{width:100%;justify-content:space-between}
+ .admin-topbar-actions .admin-view-site{font-size:10px;padding:9px}
+}
+@media(max-width:520px){
+ .admin-topbar-actions{align-items:flex-start;flex-direction:column}
+ .admin-language-switch button{min-height:28px}
+}
