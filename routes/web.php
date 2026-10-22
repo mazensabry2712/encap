@@ -4,7 +4,7 @@ use App\Http\Controllers\WebsiteController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/en', 302);
+Route::redirect('/', '/ar', 302);
 Route::pattern('locale', 'en|ar');
 
 Route::get('/robots.txt', fn () => response()->view('seo.robots')->header('Content-Type', 'text/plain; charset=UTF-8'))
