@@ -12,6 +12,11 @@ test('homepage includes the updated editorial direction and accessible skip link
         ->assertSee('class="skip-link"', false)
         ->assertSee('editorial-intro', false)
         ->assertSee('hero-float-card', false)
+        ->assertSee('id="icon-sprout"', false)
+        ->assertSee('data-parallax-scene', false)
+        ->assertSee('hero-3d-globe', false)
+        ->assertSee('proof-icon', false)
+        ->assertSee('approach-icon', false)
         ->assertSee('js/encap-interactions.js', false);
 });
 
@@ -85,6 +90,7 @@ test('product catalogue uses numbered cards and links to category details', func
         ->assertSee('product-catalog-grid', false)
         ->assertSee('category-index', false)
         ->assertSee('category-image-open', false)
+        ->assertSee('data-tilt', false)
         ->assertSee('/en/products/catalogue-mango', false);
 });
 
