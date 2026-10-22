@@ -1,6 +1,7 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
 @php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
+@php($productImages = array_values(array_filter(array_merge($category->image ? [$category->image] : [], $category->gallery ?? []))))
 @php($shortDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en)
 @php($description = $locale === 'ar' && $category->description_ar ? $category->description_ar : $category->description_en)
 @php($varieties = $locale === 'ar' && filled($category->varieties_ar) ? $category->varieties_ar : $category->varieties_en)
@@ -35,21 +36,31 @@
     <div class="container product-detail{{ $category->show_product_images ? '' : ' product-detail-no-images' }}">
         @if($category->show_product_images)
             <div class="product-detail-media">
-                <div class="product-gallery-main">
-                    @if($category->image)
-                        <img data-gallery-main src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $name }}" width="900" height="760" fetchpriority="high" decoding="async">
+                <div class="product-gallery-main" data-gallery-viewer>
+                    @if(count($productImages))
+                        <img data-gallery-main src="{{ \Illuminate\Support\Facades\Storage::url($productImages[0]) }}" alt="{{ $name }}" width="900" height="760" fetchpriority="high" decoding="async">
+                        @if(count($productImages) > 1)
+                            <span class="product-gallery-counter" data-gallery-counter data-total-images="{{ count($productImages) }}">1 / {{ count($productImages) }}</span>
+                        @endif
                     @else
                         <div class="product-visual" role="img" aria-label="{{ $name }}"></div>
                     @endif
                 </div>
-                @if($category->gallery)
-                    <div class="product-gallery-thumbs" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : 'Product gallery' }}">
-                        @foreach($category->gallery as $image)
-                            <button class="product-gallery-thumb" type="button" data-gallery-thumb data-image-src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="false">
-                                <img src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" alt="" loading="lazy" width="300" height="220">
+
+                @if(count($productImages) > 1)
+                    <div class="product-gallery-meta">
+                        <div><span>{{ __('Product photography') }}</span><strong>{{ __('Explore the product gallery') }}</strong></div>
+                        <span class="product-gallery-total">{{ count($productImages) }} {{ __('images') }}</span>
+                    </div>
+                    <div class="product-gallery-thumbs" role="group" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : 'Product gallery' }}">
+                        @foreach($productImages as $image)
+                            <button class="product-gallery-thumb" type="button" data-gallery-thumb data-gallery-index="{{ $loop->iteration }}" data-image-src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة المنتج' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">
+                                <img src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" alt="" loading="lazy" width="240" height="190" decoding="async">
+                                <span class="product-gallery-thumb-index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                             </button>
                         @endforeach
                     </div>
+                    <p class="product-gallery-hint">{{ __('Select an image to view it larger.') }}</p>
                 @endif
             </div>
         @endif
