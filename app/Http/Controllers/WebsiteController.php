@@ -9,6 +9,7 @@ use App\Models\SeoSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class WebsiteController extends Controller
@@ -178,7 +179,7 @@ class WebsiteController extends Controller
         $this->useLocale($locale);
 
         $validated = $request->validate([
-            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'category_id' => ['nullable', 'integer', Rule::exists('categories', 'id')->where('is_published', true)],
             'contact_name' => ['required', 'string', 'max:120'],
             'company_name' => ['nullable', 'string', 'max:160'],
             'email' => ['required', 'email:rfc', 'max:190'],
