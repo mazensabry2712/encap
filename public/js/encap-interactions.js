@@ -55,6 +55,19 @@
                 galleryButtons.forEach((item) => {
                     item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
                 });
+
+                const counter = gallery.querySelector('[data-gallery-counter]');
+                if (counter) {
+                    const currentIndex = Number(button.dataset.galleryIndex) || Array.from(galleryButtons).indexOf(button) + 1;
+                    const totalImages = Number(counter.dataset.totalImages) || galleryButtons.length;
+                    counter.textContent = `${currentIndex} / ${totalImages}`;
+                }
+
+                const media = gallery.querySelector('img');
+                if (media) {
+                    media.classList.remove('is-gallery-changing');
+                    window.requestAnimationFrame(() => media.classList.add('is-gallery-changing'));
+                }
             });
         });
     }
