@@ -320,6 +320,41 @@ test('unpublished categories are not publicly accessible', function () {
         ->assertNotFound();
 });
 
+test('product detail pages use category-specific copy and visibility settings', function () {
+    $category = Category::query()->create([
+        'name_en' => 'Configured Mango',
+        'name_ar' => 'مانجو مخصصة',
+        'slug' => 'configured-mango',
+        'short_description_ar' => 'وصف مخصص للمانجو.',
+        'overview_heading_ar' => 'تفاصيل توريد مخصصة',
+        'enquiry_note_heading_ar' => 'ملاحظة للمستورد',
+        'enquiry_note_text_ar' => 'اكتب الكمية والوجهة المطلوبة.',
+        'bottom_cta_heading_ar' => 'ابدأ طلب التوريد',
+        'bottom_cta_text_ar' => 'حدد احتياجات السوق.',
+        'show_product_images' => false,
+        'show_enquiry_note' => true,
+        'show_description' => true,
+        'show_available_forms' => false,
+        'show_packaging' => false,
+        'show_specifications' => false,
+        'show_bottom_cta' => true,
+        'is_published' => true,
+    ]);
+
+    $this->get(route('products.show', ['locale' => 'ar', 'category' => $category->slug]))
+        ->assertOk()
+        ->assertSee('وصف مخصص للمانجو.')
+        ->assertSee('تفاصيل توريد مخصصة')
+        ->assertSee('ملاحظة للمستورد')
+        ->assertSee('اكتب الكمية والوجهة المطلوبة.')
+        ->assertSee('ابدأ طلب التوريد')
+        ->assertSee('حدد احتياجات السوق.')
+        ->assertDontSee('data-gallery-main', false)
+        ->assertDontSee('Available formats')
+        ->assertDontSee('product-specifications', false);
+});
+
+
 test('a published category has a stable detail page and category title', function () {
     $category = Category::query()->create([
         'name_en' => 'Mango',

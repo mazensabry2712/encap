@@ -107,6 +107,69 @@ test('admin can save shared seo defaults and configured contact details', functi
         ->assertSee('Open in Maps');
 });
 
+test('admin can configure product detail copy and control visible sections', function () {
+    \\Illuminate\\Support\\Facades\\Storage::fake('public');
+    $category = Category::query()->create([
+        'name_en' => 'Managed Mango',
+        'name_ar' => 'مانجو بإدارة لوحة التحكم',
+        'slug' => 'managed-mango',
+        'packaging_en' => 'Export carton',
+        'packaging_ar' => 'كرتونة تصدير',
+        'is_published' => true,
+    ]);
+
+    $this->actingAs(User::factory()->create())
+        ->get(route('admin.categories.edit', $category))
+        ->assertOk()
+        ->assertSee('overview_heading_en', false)
+        ->assertSee('show_product_images', false)
+        ->assertSee('bottom_cta_text_ar', false);
+
+    $this->put(route('admin.categories.update', $category), [
+        'name_en' => 'Managed Mango',
+        'name_ar' => 'مانجو بإدارة لوحة التحكم',
+        'slug' => 'managed-mango',
+        'short_description_ar' => 'وصف مختصر يتحكم فيه المدير.',
+        'overview_heading_en' => 'Mango supply details',
+        'overview_heading_ar' => 'تفاصيل توريد المانجو',
+        'enquiry_note_heading_en' => 'Talk to our export team',
+        'enquiry_note_heading_ar' => 'تواصل مع فريق التصدير',
+        'enquiry_note_text_en' => 'Tell us your target market.',
+        'enquiry_note_text_ar' => 'حدد السوق المطلوب للتوريد.',
+        'bottom_cta_heading_en' => 'Plan a mango shipment',
+        'bottom_cta_heading_ar' => 'خطط لشحنة المانجو',
+        'bottom_cta_text_en' => 'Share quantity and destination.',
+        'bottom_cta_text_ar' => 'شارك الكمية والوجهة.',
+        'sort_order' => 1,
+        'is_published' => '1',
+        'show_enquiry_note' => '1',
+        'show_description' => '1',
+        'show_available_forms' => '1',
+        'show_specifications' => '1',
+        'show_bottom_cta' => '1',
+    ])->assertRedirect(route('admin.categories.index'))->assertSessionHas('success');
+
+    $this->assertDatabaseHas('categories', [
+        'id' => $category->id,
+        'overview_heading_ar' => 'تفاصيل توريد المانجو',
+        'enquiry_note_heading_ar' => 'تواصل مع فريق التصدير',
+        'bottom_cta_text_ar' => 'شارك الكمية والوجهة.',
+        'show_product_images' => false,
+        'show_packaging' => false,
+    ]);
+
+    $this->get('/ar/products/managed-mango')
+        ->assertOk()
+        ->assertSee('تفاصيل توريد المانجو')
+        ->assertSee('تواصل مع فريق التصدير')
+        ->assertSee('حدد السوق المطلوب للتوريد.')
+        ->assertSee('خطط لشحنة المانجو')
+        ->assertSee('شارك الكمية والوجهة.')
+        ->assertDontSee('data-gallery-main', false)
+        ->assertDontSee('كرتونة تصدير');
+});
+
+
 test('admin can update contact message status', function () {
     $message = ContactMessage::query()->create([
         'name' => 'Test User',

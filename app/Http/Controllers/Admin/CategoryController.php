@@ -12,6 +12,10 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
+    private const PRODUCT_PAGE_FLAGS = [
+        'show_product_images', 'show_enquiry_note', 'show_description',
+        'show_available_forms', 'show_packaging', 'show_specifications', 'show_bottom_cta',
+    ];
     public function index(): View
     {
         return view('admin.categories.index', [
@@ -27,6 +31,9 @@ class CategoryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $this->validated($request);
+        foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
+            $data[$flag] = $request->boolean($flag);
+        }
         unset($data['remove_gallery']);
         $data['image'] = $request->file('image')?->store('categories', 'public');
         $data['gallery'] = collect($request->file('gallery', []))
@@ -50,6 +57,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category): RedirectResponse
     {
         $data = $this->validated($request, $category);
+        foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
+            $data[$flag] = $request->boolean($flag);
+        }
         unset($data['remove_gallery']);
 
         $oldImage = $category->image;
@@ -116,6 +126,23 @@ class CategoryController extends Controller
             'specifications_ar' => ['nullable', 'string', 'max:2000'],
             'packaging_en' => ['nullable', 'string', 'max:255'],
             'packaging_ar' => ['nullable', 'string', 'max:255'],
+            'overview_heading_en' => ['nullable', 'string', 'max:255'],
+            'overview_heading_ar' => ['nullable', 'string', 'max:255'],
+            'enquiry_note_heading_en' => ['nullable', 'string', 'max:160'],
+            'enquiry_note_heading_ar' => ['nullable', 'string', 'max:160'],
+            'enquiry_note_text_en' => ['nullable', 'string', 'max:1000'],
+            'enquiry_note_text_ar' => ['nullable', 'string', 'max:1000'],
+            'bottom_cta_heading_en' => ['nullable', 'string', 'max:255'],
+            'bottom_cta_heading_ar' => ['nullable', 'string', 'max:255'],
+            'bottom_cta_text_en' => ['nullable', 'string', 'max:2000'],
+            'bottom_cta_text_ar' => ['nullable', 'string', 'max:2000'],
+            'show_product_images' => ['sometimes', 'boolean'],
+            'show_enquiry_note' => ['sometimes', 'boolean'],
+            'show_description' => ['sometimes', 'boolean'],
+            'show_available_forms' => ['sometimes', 'boolean'],
+            'show_packaging' => ['sometimes', 'boolean'],
+            'show_specifications' => ['sometimes', 'boolean'],
+            'show_bottom_cta' => ['sometimes', 'boolean'],
             'sort_order' => ['required', 'integer', 'min:0', 'max:100000'],
             'seo_title_en' => ['nullable', 'string', 'max:255'],
             'seo_title_ar' => ['nullable', 'string', 'max:255'],
