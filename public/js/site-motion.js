@@ -29,7 +29,9 @@
         '.encap-service-cta', '.encap-service-related', '.encap-catalog-footer',
         '.encap-about-journey-heading', '.encap-about-journey-card', '.encap-about-practice-visual',
         '.encap-about-practice-copy', '.encap-about-catalog-heading', '.encap-about-category-card',
-        '.encap-about-final-panel', '.footer-top > div', '.footer-bottom'
+        '.encap-about-final-panel', '.encap-contact-hero-copy', '.encap-contact-hero-visual',
+        '.encap-contact-form-panel', '.encap-contact-details', '.encap-contact-next-heading',
+        '.encap-contact-next-card', '.footer-top > div', '.footer-bottom'
     ].join(', ');
 
     // Only animate the outermost matching component; nested reveal wrappers made motion stack and obscure content.
@@ -70,6 +72,7 @@
         const tiltSelector = [
             '.category', '.encap-product-card', '.encap-service-hub-card', '.encap-service-card',
             '.encap-principle-card', '.encap-about-journey-card', '.encap-about-category-card',
+            '.encap-contact-channel', '.encap-contact-next-card',
             '.gallery-card', '.encap-service-visual-figure',
             '.product-gallery-main', '.form-card', '.contact-details', '.feature-panel',
             '.dark-feature', '.proof-item', '.approach-item', '.encap-trust-item'

@@ -25,6 +25,8 @@ Typography uses DM Sans for English and IBM Plex Sans Arabic for Arabic UI. Arab
 - Company service pages share one consistent intro template, breadcrumbs, and related enquiry actions.
 - About has a distinct editorial hero, a four-stage production-to-export story, an enquiry-practice section, mission/vision/values, a database-backed preview of published product categories, and a quote CTA.
 - About uses illustrative stock photography with a visible disclosure until company-approved photography is supplied.
+- Contact has a distinct dark orbital hero, an accessible enquiry form with inline validation states, configurable direct-contact channels, an export-quote route and a three-step next-actions section.
+- Contact details are rendered only from values configured in site settings; missing channels are disclosed rather than invented.
 - Contact and quote forms use visible labels, clear errors, focus states and an explanatory next-steps panel.
 - The admin UI shares the green/gold identity but favors dense, legible operational data.
 

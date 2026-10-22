@@ -394,6 +394,28 @@ test('quote enquiry is validated and saved for the admin inbox', function () {
     expect(QuoteRequest::query()->count())->toBe(1);
 });
 
+test('contact page shows the full bilingual enquiry experience', function () {
+    $this->get('/en/contact')
+        ->assertOk()
+        ->assertSee('encap-contact-hero', false)
+        ->assertSee('Let’s make the next step clear.')
+        ->assertSee('encap-contact-form', false)
+        ->assertSee('encap-contact-details', false)
+        ->assertSee('encap-contact-next', false)
+        ->assertSee('name="name"', false)
+        ->assertSee('name="email"', false)
+        ->assertSee('name="subject"', false)
+        ->assertSee('name="message"', false);
+
+    $this->get('/ar/contact')
+        ->assertOk()
+        ->assertSee('dir="rtl"', false)
+        ->assertSee('encap-contact-hero', false)
+        ->assertSee('خلّينا نوضّح الخطوة الجاية.')
+        ->assertSee('encap-contact-next', false)
+        ->assertSee('استفسارات عامة');
+});
+
 test('contact message is saved and the honeypot blocks submissions', function () {
     $this->post('/en/contact', [
         'name' => 'Test Contact',
