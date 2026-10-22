@@ -79,6 +79,7 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertOk()
         ->assertSee('primary-nav', false)
         ->assertSee('primary-links', false)
+        ->assertSee('href="' . route('home', ['locale' => 'en']) . '" aria-current="page">Home</a>', false)
         ->assertSee('primary-dropdown-panel', false)
         ->assertSee('data-language-switcher', false)
         ->assertSee('data-language-trigger', false)
