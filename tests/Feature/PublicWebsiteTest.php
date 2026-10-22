@@ -21,6 +21,11 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('assets/favicone.png', false)
         ->assertSee('encap-hero', false)
         ->assertSee('encap-hero-image', false)
+        ->assertSee('encap-image-label-logo', false)
+        ->assertSee('encap-story-brand', false)
+        ->assertSee('encap-orbit-brand', false)
+        ->assertSee('encap-hero-index', false)
+        ->assertSee('footer-copyright-brand', false)
         ->assertSee('encap-floating-note', false)
         ->assertSee('encap-product-grid', false)
         ->assertSee('encap-process-row', false)
@@ -89,7 +94,7 @@ test('the home page uses central defaults without writing settings during a publ
 });
 
 test('bilingual company pages render in the requested language', function () {
-    $this->get('/en/about')->assertOk()->assertSee('Agriculture with a clear route to market');
+    $this->get('/en/about')->assertOk()->assertSee('Agriculture with a clear route to market')->assertSee('content-story-brand', false)->assertSee('assets/favicone.png', false);
     $this->get('/ar/about')->assertOk()->assertSee('dir="rtl"', false)->assertSee('عن ENCAP');
 });
 
