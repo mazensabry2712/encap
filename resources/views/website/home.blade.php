@@ -24,14 +24,6 @@
   <div class="encap-hero-stage" data-hero-tilt aria-hidden="true">
    <div class="encap-hero-stage-ring encap-hero-stage-ring--outer"></div>
    <div class="encap-hero-stage-ring encap-hero-stage-ring--inner"></div>
-   <div class="encap-hero-orbit-system" data-hero-layer data-hero-depth="44">
-    <div class="encap-hero-orbit-track encap-hero-orbit-track--outer">
-     <span class="encap-hero-orbit-anchor"><span class="encap-hero-orbit-token encap-hero-orbit-token--production"><span class="encap-hero-orbit-token-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sprout"></use></svg></span><span class="encap-hero-orbit-token-label">{{ __('Production') }}</span></span></span>
-    </div>
-    <div class="encap-hero-orbit-track encap-hero-orbit-track--inner">
-     <span class="encap-hero-orbit-anchor"><span class="encap-hero-orbit-token encap-hero-orbit-token--export"><span class="encap-hero-orbit-token-icon">↗</span><span class="encap-hero-orbit-token-label">{{ __('Export') }}</span></span></span>
-    </div>
-   </div>
    <div class="encap-hero-photo-card" data-hero-layer data-hero-depth="24">
     <div class="encap-hero-photo-card-content" data-hero-reveal style="--hero-delay:220ms">
      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=900&amp;q=82" alt="" width="900" height="1120" loading="eager" decoding="async">
@@ -51,9 +43,6 @@
      <span><strong>{{ __('Farm to market') }}</strong><small>{{ __('Own farms & trusted partners') }}</small></span>
      <span class="encap-floating-arrow">↗</span>
     </div>
-   </div>
-   <div class="encap-hero-chip-layer" data-hero-layer data-hero-depth="16">
-    <div class="encap-hero-mini-chip"><span class="encap-hero-mini-chip-mark">01</span><span><strong>{{ __('One connected journey') }}</strong><small>{{ __('Production') }} · {{ __('Export') }}</small></span></div>
    </div>
   </div>
  </div>
