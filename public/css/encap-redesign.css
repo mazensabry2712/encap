@@ -796,7 +796,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 .encap-catalog-text-link:hover{gap:20px}
 .encap-catalog-cta-section{padding:0 0 clamp(70px,9vw,115px);background:#fafaf5}
 .encap-catalog-cta{position:relative;isolation:isolate;display:flex;align-items:center;min-height:350px;overflow:hidden;padding:clamp(32px,6.5vw,80px);background:#163b29;color:#fff}
-.encap-catalog-cta-image{position:absolute;z-index:-2;inset-block:0;inset-inline-end:0;width:49%;height:100%;object-fit:cover;object-position:center 48%;opacity:.38;filter:saturate(.76);mask-image:linear-gradient(90deg,transparent 0%,#000 48%);transition:opacity .5s,filter .5s,transform 1s cubic-bezier(.2,.7,.2,1)}
+.encap-catalog-cta-image{position:absolute;z-index:-2;inset-block:0;inset-inline-end:0;width:49%;height:100%;object-fit:cover;object-position:50% 50%;opacity:.38;filter:saturate(.76);mask-image:linear-gradient(90deg,transparent 0%,#000 48%);transition:opacity .5s,filter .5s,transform 1s cubic-bezier(.2,.7,.2,1)}
 .encap-catalog-cta:hover .encap-catalog-cta-image{opacity:.5;filter:saturate(.95);transform:scale(1.035)}
 .encap-catalog-cta:before{position:absolute;z-index:-1;inset:0;content:"";background:radial-gradient(ellipse at 85% 50%,#90ae6a2a,transparent 38%),linear-gradient(110deg,#0b291c 0%,transparent 100%)}
 .encap-catalog-cta:after{position:absolute;z-index:-1;inset:0;content:"";opacity:.13;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:55px 55px;mask-image:linear-gradient(90deg,transparent,#000)}
@@ -812,6 +812,7 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 .encap-catalog-cta-orbit>span:nth-child(2){position:absolute;inset-block-end:23px;inset-inline-start:9px;width:6px;height:6px;border-radius:50%;background:#92b376}
 .encap-catalog-cta-orbit>div{position:absolute;inset:0;display:grid;place-items:center;animation:none}
 .encap-catalog-cta-orbit .encap-shared-brand-core{width:104px}
+.encap-catalog-cta-orbit>.encap-shared-brand-core{position:relative;inset:auto;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:auto;width:104px;aspect-ratio:1;}
 
 @keyframes encap-catalog-orbit-spin{to{transform:translate(-50%,-50%) rotate(340deg)}}
 @keyframes encap-catalog-orbit-spin-reverse{to{rotate:-360deg}}
