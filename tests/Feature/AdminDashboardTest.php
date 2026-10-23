@@ -111,7 +111,7 @@ test('authenticated administrators can prepare image storage from the dashboard 
         ->assertSessionHas('imageLibraryResult.copied', 1);
 
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('farm-landscape.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-berries-export.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-transport.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('categories/legacy-photo.jpg');
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists('categories/legacy-photo.jpg');
 });
