@@ -74,6 +74,7 @@
             '.category', '.encap-product-card', '.encap-service-hub-card', '.encap-service-card',
             '.encap-principle-card', '.encap-about-journey-card', '.encap-about-category-card', '.encap-catalog-card',
             '.encap-contact-channel', '.encap-contact-next-card',
+            '.encap-process-row', '.encap-contact-details', '.encap-story-art',
             '.gallery-card', '.encap-service-visual-figure',
             '.product-gallery-main', '.form-card', '.contact-details', '.feature-panel',
             '.dark-feature', '.proof-item', '.approach-item', '.encap-trust-item'
@@ -97,8 +98,8 @@
                     if (rect.width > 0 && rect.height > 0) {
                         const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)) - 0.5;
                         const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height)) - 0.5;
-                        const tiltX = (y * -5.5).toFixed(2) + 'deg';
-                        const tiltY = (x * 6.5).toFixed(2) + 'deg';
+                        const tiltX = (y * -6.5).toFixed(2) + 'deg';
+                        const tiltY = (x * 7.5).toFixed(2) + 'deg';
 
                         card.style.setProperty('--site-tilt-x', tiltX);
                         card.style.setProperty('--site-tilt-y', tiltY);
@@ -107,7 +108,7 @@
                         card.style.setProperty('--tilt-y', tiltY);
                         card.style.setProperty('--pointer-x', ((x + 0.5) * 100).toFixed(1) + '%');
                         card.style.setProperty('--pointer-y', ((y + 0.5) * 100).toFixed(1) + '%');
-                        card.style.setProperty('--site-lift', '-4px');
+                        card.style.setProperty('--site-lift', '-5px');
                     }
 
                     frame = 0;

@@ -47,7 +47,7 @@ jobs:
         run: npm ci
 
       - name: Check standalone browser scripts
-        run: node --check public/js/encap-interactions.js && node --check public/js/language-switcher.js && node --check public/js/admin-gallery-manager.js
+        run: node --check public/js/encap-interactions.js && node --check public/js/language-switcher.js && node --check public/js/admin-gallery-manager.js && node --check public/js/site-motion.js && node --check public/js/hero-experience.js
 
       - name: Build production assets
         run: npm run build
