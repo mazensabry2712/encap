@@ -10,6 +10,7 @@ use Throwable;
 final class EncapImageLibrary
 {
     private const STOCK_IMAGES = [
+        'orange-orchard-hero-2026.jpg' => 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000',
         'field-origin-2026.jpg' => 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=2000&q=85',
         'produce-mix-2026.jpg' => 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=1600&q=85',
         'farm-cultivation-2026.jpg' => 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=1400&q=85',
