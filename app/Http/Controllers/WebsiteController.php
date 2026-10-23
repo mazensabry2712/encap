@@ -19,6 +19,22 @@ class WebsiteController extends Controller
         App::setLocale($locale);
     }
 
+    /**
+     * Translate copy stored as English strings while preserving non-translatable values.
+     */
+    private function translateContentTree(array $content): array
+    {
+        foreach ($content as $key => $value) {
+            if (is_array($value)) {
+                $content[$key] = $this->translateContentTree($value);
+            } elseif (is_string($value)) {
+                $content[$key] = __($value);
+            }
+        }
+
+        return $content;
+    }
+
     public function home(string $locale): View
     {
         $this->useLocale($locale);
@@ -26,10 +42,10 @@ class WebsiteController extends Controller
             ->orderBy('sort_order')->orderBy('name_en')->limit(10)->get();
 
         $settings = SeoSetting::current();
-        $defaultTitle = $locale === 'ar' ? $settings->site_title_ar : $settings->site_title_en;
+        $defaultTitle = $locale === 'ar' ? $settings->site_title_ar : __($settings->site_title_en);
         $defaultDescription = $locale === 'ar'
             ? $settings->site_description_ar
-            : $settings->site_description_en;
+            : __($settings->site_description_en);
         $pageSeo = $settings->metadataFor('home', $locale, $defaultTitle, $defaultDescription);
 
         return view('website.home', compact('categories', 'locale', 'pageSeo'));
@@ -58,14 +74,14 @@ class WebsiteController extends Controller
         abort_unless($category->is_published, 404);
 
         $settings = SeoSetting::current();
-        $name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en;
+        $name = $locale === 'ar' && $category->name_ar ? $category->name_ar : __($category->name_en);
         $shortDescription = $locale === 'ar' && $category->short_description_ar
             ? $category->short_description_ar
-            : $category->short_description_en;
-        $seoTitle = ($locale === 'ar' ? $category->seo_title_ar : $category->seo_title_en)
+            : __($category->short_description_en ?? '');
+        $seoTitle = ($locale === 'ar' ? $category->seo_title_ar : __($category->seo_title_en ?? ''))
             ?: $name . ' | ENCAP';
-        $seoDescription = ($locale === 'ar' ? $category->seo_description_ar : $category->seo_description_en)
-            ?: ($shortDescription ?: ($locale === 'ar' ? $settings->site_description_ar : $settings->site_description_en));
+        $seoDescription = ($locale === 'ar' ? $category->seo_description_ar : __($category->seo_description_en ?? ''))
+            ?: ($shortDescription ?: ($locale === 'ar' ? $settings->site_description_ar : __($settings->site_description_en)));
         $pageSeo = ['title' => $seoTitle, 'description' => $seoDescription];
 
         return view('website.products.show', compact('category', 'locale', 'pageSeo'));
@@ -328,7 +344,8 @@ class WebsiteController extends Controller
 
         abort_unless(isset($content[$page]), 404);
 
-        $pageContent = $content[$page][$locale];
+        $contentLocale = $locale === 'ar' ? 'ar' : 'en';
+        $pageContent = $content[$page][$contentLocale];
 
         $serviceMedia = [
             'farms' => [
@@ -444,20 +461,26 @@ class WebsiteController extends Controller
             ],
         ];
 
+        $visualLocale = $locale === 'ar' ? 'ar' : 'en';
+
         if (isset($serviceMedia[$page])) {
             $visuals = $serviceMedia[$page];
             $pageContent['hero_image'] = $visuals['hero'];
-            $pageContent['hero_image_alt'] = $visuals['hero_alt'][$locale];
-            $pageContent['visual_heading'] = $visuals['heading'][$locale];
-            $pageContent['visual_detail'] = $visuals['detail'][$locale];
+            $pageContent['hero_image_alt'] = $visuals['hero_alt'][$visualLocale];
+            $pageContent['visual_heading'] = $visuals['heading'][$visualLocale];
+            $pageContent['visual_detail'] = $visuals['detail'][$visualLocale];
 
             foreach ($pageContent['services'] as $index => &$service) {
                 if (isset($visuals['services'][$index])) {
                     $service['image'] = $visuals['services'][$index]['image'];
-                    $service['image_alt'] = $visuals['services'][$index]['alt'][$locale];
+                    $service['image_alt'] = $visuals['services'][$index]['alt'][$visualLocale];
                 }
             }
             unset($service);
+        }
+
+        if (! in_array($locale, ['en', 'ar'], true)) {
+            $pageContent = $this->translateContentTree($pageContent);
         }
 
         $settings = SeoSetting::current();
