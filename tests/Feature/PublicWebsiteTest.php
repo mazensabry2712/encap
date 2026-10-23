@@ -583,7 +583,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Sorting & grading')
         ->assertSee('Pre-cooling & cold-chain coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee(\App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'))
+        ->assertSee(\App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.pexels.com/photos/10899606-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'))
         ->assertSee('encap-img/favicon.png', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
@@ -693,11 +693,11 @@ test('catalogue and product details show real crop-specific photos when no admin
 
     $this->get('/en/products')
         ->assertOk()
-        ->assertSee('images.pexels.com/photos/5767159', false)
+        ->assertSee('images.pexels.com/photos/5640033', false)
         ->assertSee('images.unsplash.com/photo-1772638583263', false)
         ->assertSee('images.pexels.com/photos/9192252', false)
-        ->assertSee('images.unsplash.com/photo-1767982619694', false)
-        ->assertSee('images.pexels.com/photos/10444827', false)
+        ->assertSee('images.pexels.com/photos/10899606', false)
+        ->assertSee('images.pexels.com/photos/6316541', false)
         ->assertSee('images.pexels.com/photos/4024739', false)
         ->assertSee('images.pexels.com/photos/29310033', false)
         ->assertSee('images.pexels.com/photos/35542734', false)
@@ -724,5 +724,29 @@ test('an uploaded category image remains preferred over a stock fallback', funct
         ->assertOk()
         ->assertSee($expectedImage, false)
         ->assertDontSee('images.pexels.com/photos/9192252', false);
+});
+
+test('legacy mango photography is replaced and product gallery thumbnails never double-prefix image URLs', function () {
+    Category::query()->create([
+        'name_en' => 'Mango',
+        'name_ar' => 'مانجو',
+        'slug' => 'mango',
+        'image' => 'categories/ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg',
+        'gallery' => ['categories/gallery/mango-detail.jpg'],
+        'is_published' => true,
+        'show_product_images' => true,
+        'sort_order' => 1,
+    ]);
+
+    $this->get('/ar/products/mango')
+        ->assertOk()
+        ->assertSee('images.pexels.com/photos/5640033', false)
+        ->assertDontSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false)
+        ->assertDontSee('/encap-img/https://', false);
+
+    $this->get('/ar/products')
+        ->assertOk()
+        ->assertSee('images.pexels.com/photos/5640033', false)
+        ->assertDontSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false);
 });
 
