@@ -25,6 +25,20 @@ test('encap image storage lives outside public and takes precedence over legacy 
     $this->get('/encap-img/categories/sample.svg')->assertNotFound();
 });
 
+test('legacy category uploads remain visible through the encap image route before migration', function () {
+    Storage::fake('public');
+    Storage::fake('encap_images');
+    Storage::disk('public')->put('categories/legacy-mango.jpg', 'legacy mango image');
+
+    expect(EncapImage::url('categories/legacy-mango.jpg'))
+        ->toBe(Storage::disk('encap_images')->url('categories/legacy-mango.jpg'));
+
+    $this->get('/encap-img/categories/legacy-mango.jpg')
+        ->assertOk()
+        ->assertHeader('Cache-Control', 'max-age=86400, public')
+        ->assertHeader('X-Content-Type-Options', 'nosniff');
+});
+
 test('image preparation downloads site photography and copies legacy uploads without deleting rollback copies', function () {
     Storage::fake('public');
     Storage::fake('encap_images');
