@@ -612,3 +612,19 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
 });
+
+test('homepage capability cards use photographic backgrounds with blur and contrast overlays', function () {
+    $response = $this->get('/en')
+        ->assertOk()
+        ->assertSee('--encap-service-card-image: url(', false);
+
+    expect(substr_count($response->getContent(), '--encap-service-card-image: url('))->toBe(3);
+
+    $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
+
+    expect($stylesheet)
+        ->toContain('background-image:var(--encap-service-card-image)')
+        ->toContain('filter:blur(3px)')
+        ->toContain('.encap-service-hub-card:after')
+        ->toContain('rgba(4,22,15,.92)');
+});
