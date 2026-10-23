@@ -37,6 +37,9 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-floating-note', false)
         ->assertSee('encap-product-grid', false)
         ->assertSee('encap-process-row', false)
+        ->assertSee('03 / How we work')
+        ->assertSee('04 / Quality in every detail')
+        ->assertSee('05 / LET’S TALK')
         ->assertSee('encap-quality-band', false)
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
@@ -486,9 +489,10 @@ test('contact page shows the full bilingual enquiry experience', function () {
         ->assertOk()
         ->assertSee('dir="rtl"', false)
         ->assertSee('encap-contact-hero', false)
-        ->assertSee('خلّينا نوضّح الخطوة الجاية.')
+        ->assertSee('دعنا نوضح الخطوة التالية.')
         ->assertSee('encap-contact-next', false)
-        ->assertSee('استفسارات عامة');
+        ->assertSee('استفسارات عامة')
+        ->assertSee('سواء كنت تستكشف منتجاتنا أو تخطط لطلب توريد، أخبرنا باحتياجاتك والوجهة المطلوبة.');
 });
 
 test('contact message is saved and the honeypot blocks submissions', function () {
