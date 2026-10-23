@@ -65,15 +65,15 @@
    <p>{{ __('Explore how we connect crop sourcing, post-harvest preparation and export coordination around your requirements.') }}</p>
   </div>
   <div class="encap-service-hub-grid">
-   <a class="encap-service-hub-card" href="{{ route('farms', ['locale' => $locale]) }}">
+   <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \\App\\Support\\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=82') }}')" href="{{ route('farms', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sprout"></use></svg></span>
     <span class="encap-service-hub-number">01 / ORIGIN</span><h3>{{ __('Agriculture & Farms') }}</h3><p>{{ __('Crop sourcing and seasonal planning.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
-   <a class="encap-service-hub-card" href="{{ route('packing-stations', ['locale' => $locale]) }}">
+   <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \\App\\Support\\EncapImage::url('packing-warehouse.jpg', 'https://images.unsplash.com/photo-1755599604342-186a96a57570?auto=format&fit=crop&w=1400&q=82') }}')" href="{{ route('packing-stations', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-package"></use></svg></span>
     <span class="encap-service-hub-number">02 / PREPARATION</span><h3>{{ __('Packing Stations') }}</h3><p>{{ __('Sorting, grading, packing and preparation.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
-   <a class="encap-service-hub-card" href="{{ route('export', ['locale' => $locale]) }}">
+   <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \\App\\Support\\EncapImage::url('cargo-port.jpg', 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?auto=format&fit=crop&w=1400&q=82') }}')" href="{{ route('export', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-truck"></use></svg></span>
     <span class="encap-service-hub-number">03 / MARKETS</span><h3>{{ __('Export & Logistics') }}</h3><p>{{ __('Requirements, compliance coordination and shipping partners.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
