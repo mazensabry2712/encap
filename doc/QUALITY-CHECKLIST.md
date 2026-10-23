@@ -27,7 +27,8 @@ Use this for each meaningful change. Mark an item complete only after it has act
 - [ ] Open Graph, Twitter card and valid structured data are present.
 - [ ] Sitemap is valid XML and contains only public, published/indexable categories.
 - [ ] robots.txt resolves through Laravel and links to sitemap.
-- [ ] Quote form is noindex; admin/private routes are excluded.
+- [ ] Quote form is `noindex,follow`, omitted from the sitemap, and not blocked in `robots.txt`; admin paths remain disallowed.
+- [ ] Open Graph and Twitter large-card metadata include a usable social image even when no image is configured in admin settings.
 - [ ] English/Arabic alternates are emitted only when appropriate.
 - [ ] Missing public routes return HTTP 404.
 

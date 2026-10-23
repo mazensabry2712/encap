@@ -23,7 +23,7 @@ The command asks for a password twice, requires at least 12 characters, rejects 
 
 ## Category management
 
-Categories have English/Arabic names and descriptions, a unique slug, an optional main image and image gallery, formats and packaging fields, publication status and display order, plus English/Arabic SEO overrides. Uploaded files are validated by type and size and stored on Laravel's public disk. Configure the public storage link before using uploaded imagery.
+Categories have English/Arabic names and descriptions, a unique slug, an optional main image and image gallery, formats and packaging fields, publication status and display order, plus English/Arabic SEO overrides. Uploaded files are validated and first saved under the project-root `encap-img/` folder, outside `public`. If that folder cannot be written, uploads fall back to `storage/app/public` and are still served through `/encap-img/{path}`. No public storage symlink is required for these routes. The admin dashboard’s **Prepare image library** action copies legacy uploads and downloads the curated site photography; original fallback copies are kept for verification and rollback.
 
 The catalogue is intentionally category-led for now. Do not add inventory, pricing, variants, stock or order management until the real company workflow requires it.
 
@@ -48,7 +48,7 @@ Static public pages can also have English/Arabic title and description overrides
 - Organization and WebSite JSON-LD use configured organization data; category detail pages emit breadcrumb JSON-LD. No fake Product pricing, availability, reviews or certifications are generated.
 - /sitemap.xml includes public indexable routes and published categories, with category alternates only when the Arabic category content exists.
 - /robots.txt is served by Laravel and points to the sitemap. The old static starter public/robots.txt is removed so it cannot shadow the dynamic route on common web servers.
-- Quote form paths are marked noindex,follow and disallowed in robots.txt; admin endpoints are never listed in the sitemap.
+- Quote form paths are marked `noindex,follow` and excluded from the sitemap. They are intentionally not disallowed in `robots.txt`, so crawlers can read the noindex directive; admin paths remain disallowed and are never listed in the sitemap.
 - Arabic pages use RTL direction and localized content where available; language alternatives use stable locale-prefixed URLs.
 - All Blade content is escaped by default.
 

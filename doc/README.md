@@ -57,7 +57,7 @@ Do not run migrations or seeders blindly against an existing production database
 
 ## Central SEO rules
 
-The shared Blade layout outputs title, description, robots, canonical, Open Graph/Twitter card fields and Organization/WebSite JSON-LD. Home uses central title/description defaults; category detail pages can override title and description. Sitemap is generated from configured APP_URL and published categories. Admin and quote form paths are excluded from the sitemap/crawl targets.
+The shared Blade layout outputs title, description, robots, canonical, Open Graph/Twitter card fields and Organization/WebSite JSON-LD. Home uses central title/description defaults; category detail pages can override title and description. A configured social image is used when present, otherwise the farm-landscape image is the fallback for Open Graph and large Twitter cards. Sitemap is generated from configured APP_URL and published categories. Quote pages are excluded from the sitemap and marked `noindex,follow`, but remain crawlable so search engines can read the directive; admin paths are disallowed in `robots.txt`.
 
 SMTP delivery is not yet part of the verified workflow. Both enquiry types are stored in the database and can be reviewed in the admin. Configure and test mail before promising email notifications.
 

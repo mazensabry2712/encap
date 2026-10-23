@@ -41,6 +41,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
         ->assertDontSee('encap-frozen-product', false)
+        ->assertDontSee('Profile photos can be added to these contact cards later.')
         ->assertSee('footer-business-contacts', false)
         ->assertSee('+966 56 830 9656', false)
         ->assertSee('+20 106 011 3074', false)
@@ -223,8 +224,12 @@ test('homepage hero motion uses layered parallax and respects reduced motion', f
         ->toContain('data-hero-layer');
 });
 
-test('the home page uses central defaults without writing settings during a public read', function () {
-    $this->get('/en')->assertOk()->assertSee('ENCAP');
+test('the home page uses central defaults and social preview metadata without writing settings during a public read', function () {
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('ENCAP')
+        ->assertSee('property="og:image"', false)
+        ->assertSee('name="twitter:card" content="summary_large_image"', false);
 
     expect(SeoSetting::query()->count())->toBe(0);
 });
@@ -408,6 +413,8 @@ test('robots.txt is served by Laravel and points to the sitemap', function () {
         ->assertOk()
         ->assertHeader('content-type', 'text/plain; charset=UTF-8')
         ->assertSee('Disallow: /admin')
+        ->assertDontSee('Disallow: /en/request-a-quote')
+        ->assertDontSee('Disallow: /ar/request-a-quote')
         ->assertSee('Sitemap: ' . rtrim(config('app.url'), '/') . '/sitemap.xml');
 });
 

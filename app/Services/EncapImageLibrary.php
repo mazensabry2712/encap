@@ -20,6 +20,7 @@ final class EncapImageLibrary
         'packing-warehouse.jpg' => 'https://images.unsplash.com/photo-1755599604342-186a96a57570?fit=crop&fm=jpg&w=1000&q=76',
         'carton-labels.jpg' => 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?fit=crop&fm=jpg&w=1000&q=76',
         'dispatch-cartons.jpg' => 'https://images.unsplash.com/photo-1775880306542-57d598d773a0?fit=crop&fm=jpg&w=1000&q=76',
+        'frozen-berries.jpg' => 'https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?fit=crop&fm=jpg&w=1600&q=78',
         'cargo-port.jpg' => 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?fit=crop&fm=jpg&w=1400&q=78',
     ];
 
