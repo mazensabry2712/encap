@@ -15,7 +15,7 @@ ENCAP remains a server-rendered Laravel Blade application. Keep the runtime simp
 
 ## Visual design assets
 
-Editorial agriculture, packing and logistics photography is downloaded once into the project-root `encap-img/` directory and served locally through `public/encap-img`, a symlink. The photographs are representative stock imagery, not evidence of ENCAP-owned farms or facilities; replace them with company-approved images when available. Product/category imagery should come from ENCAP-approved uploads.
+Editorial agriculture, packing and logistics photography is downloaded once into the project-root `encap-img/` directory and served from the root-level `encap-img/` directory through a cacheable Laravel image route (no symlink required). The photographs are representative stock imagery, not evidence of ENCAP-owned farms or facilities; replace them with company-approved images when available. Product/category imagery should come from ENCAP-approved uploads.
 
 ## Measure rather than assume
 
@@ -31,7 +31,7 @@ Performance and accessibility improvements are goals, not measured results. Befo
 
 ## Interface behavior
 
-- All public-facing photographs and uploaded product/SEO images resolve through the `encap_images` disk rooted at `base_path('encap-img')`. Run `php artisan encap:images:prepare` after deployment to copy current uploads and ensure the stock photo set is available locally.
+- All public-facing photographs and uploaded product/SEO images resolve through the `encap_images` disk rooted at `base_path('encap-img')`. After deployment, use **Prepare image library** on the authenticated admin dashboard to copy current uploads and ensure the stock photo set is available locally. CLI-capable hosts may instead run `php artisan encap:images:prepare`.
 
 `public/js/site-motion.js` is the single owner of public-page scroll reveals, pointer-based 3D card tilt, magnetic actions, image depth and the scroll-progress line.
 - public/js/hero-experience.js adds the homepage's dedicated layered parallax and orbit effects; the site-wide controller deliberately skips that hero to avoid competing transforms.

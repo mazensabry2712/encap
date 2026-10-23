@@ -38,7 +38,7 @@ Use this for each meaningful change. Mark an item complete only after it has act
 - [ ] Below-the-fold images lazy-load; the primary image is not unnecessarily delayed.
 - [ ] `php artisan encap:images:prepare` completes successfully and every curated stock image exists under `encap-img/`.
 - [ ] Existing category/gallery/SEO uploads are copied into `encap-img/`, and the original files remain intact until visual verification is complete.
-- [ ] `public/encap-img` resolves to the root-level `encap-img/` folder; product upload URLs use `/encap-img/...`.
+- [ ] The authenticated admin dashboard can prepare the image library without shell access; image URLs use the `/encap-img/...` Laravel route and return HTTP 200.
 - [ ] Images have dimensions and descriptive alt text.
 - [ ] Mobile widths have no horizontal overflow.
 - [ ] Keyboard focus is visible; controls have labels.

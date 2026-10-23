@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\EncapImageController;
 use App\Http\Controllers\WebsiteController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/encap-img/{path}', [EncapImageController::class, 'show'])
+    ->where('path', '.*')->name('encap-images.show');
 
 Route::redirect('/', '/ar', 302);
 Route::pattern('locale', 'en|ar');

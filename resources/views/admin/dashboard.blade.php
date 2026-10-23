@@ -103,6 +103,42 @@
         </section>
     </div>
 
+    @if(session('imageLibraryResult'))
+        @php($imageLibraryResult = session('imageLibraryResult'))
+        <section class="admin-panel" role="status" aria-labelledby="image-library-result-title">
+            <div class="admin-panel-head">
+                <div>
+                    <h2 id="image-library-result-title">{{ __('Image library setup results') }}</h2>
+                    <p>{{ __('Downloaded: :downloaded · Already present: :kept · Existing uploads copied: :copied', ['downloaded' => $imageLibraryResult['downloaded'], 'kept' => $imageLibraryResult['kept'], 'copied' => $imageLibraryResult['copied']]) }}</p>
+                </div>
+                <span class="admin-badge {{ $imageLibraryResult['complete'] ? '' : 'draft' }}">{{ $imageLibraryResult['complete'] ? __('Complete') : __('Needs retry') }}</span>
+            </div>
+            @if(count($imageLibraryResult['errors']))
+                <ul>
+                    @foreach($imageLibraryResult['errors'] as $imageLibraryError)
+                        <li>{{ $imageLibraryError }}</li>
+                    @endforeach
+                </ul>
+                <p>{{ __('You can run the setup again; completed downloads and copied uploads will be kept.') }}</p>
+            @else
+                <p>{{ __('The root-level image folder is ready. Existing uploads in the old location were kept as a backup.') }}</p>
+            @endif
+        </section>
+    @endif
+
+    <section class="admin-panel" aria-labelledby="image-library-title">
+        <div class="admin-panel-head">
+            <div>
+                <h2 id="image-library-title">{{ __('Image library') }}</h2>
+                <p>{{ __('Save site photography and move current product/SEO uploads into encap-img, outside public. Old copies are not deleted.') }}</p>
+            </div>
+            <form method="post" action="{{ route('admin.images.prepare') }}">
+                @csrf
+                <button class="admin-btn" type="submit">{{ __('Prepare image library') }} ↗</button>
+            </form>
+        </div>
+    </section>
+
     <section class="admin-quick-access">
         <div><span class="admin-eyebrow">{{ __('QUICK ACCESS') }}</span><h2>{{ __('What would you like to update?') }}</h2></div>
         <div class="admin-quick-links">

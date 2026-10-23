@@ -48,7 +48,8 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
         ->assertSee('Mona Visitor')
         ->assertSee('Export question')
         ->assertSee('إدارة الكتالوج')
-        ->assertSee('إدارة بيانات الموقع ووسائل التواصل');
+        ->assertSee('إدارة بيانات الموقع ووسائل التواصل')
+        ->assertSee(route('admin.images.prepare'), false);
 });
 
 
@@ -87,4 +88,29 @@ test('admin language preference defaults to Arabic and switches between Arabic a
         ->assertOk()
         ->assertSee('lang="en" dir="ltr"', false)
         ->assertSee('Good work starts here.');
+});
+
+
+test('authenticated administrators can prepare image storage from the dashboard without shell access', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
+    \Illuminate\Support\Facades\Storage::disk('public')->put('categories/legacy-photo.jpg', 'legacy upload');
+
+    $jpeg = "\xFF\xD8\xFF" . str_repeat('A', 6000);
+    \Illuminate\Support\Facades\Http::preventStrayRequests();
+    \Illuminate\Support\Facades\Http::fake([
+        'https://images.unsplash.com/*' => \Illuminate\Support\Facades\Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+        'https://images.pexels.com/*' => \Illuminate\Support\Facades\Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+    ]);
+
+    $this->actingAs(User::factory()->create())
+        ->post(route('admin.images.prepare'))
+        ->assertRedirect(route('admin.dashboard'))
+        ->assertSessionHas('imageLibraryResult.complete', true)
+        ->assertSessionHas('imageLibraryResult.downloaded', 11)
+        ->assertSessionHas('imageLibraryResult.copied', 1);
+
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('farm-landscape.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('categories/legacy-photo.jpg');
+    \Illuminate\Support\Facades\Storage::disk('public')->assertExists('categories/legacy-photo.jpg');
 });

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImageLibraryController;
 use App\Http\Controllers\Admin\QuoteRequestController;
 use App\Http\Controllers\Admin\SeoSettingController;
 use App\Http\Middleware\SetAdminLocale;
@@ -26,6 +27,7 @@ Route::prefix('admin')->name('admin.')->middleware(SetAdminLocale::class)->group
     Route::middleware('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/images/prepare', [ImageLibraryController::class, 'prepare'])->middleware('throttle:2,1')->name('images.prepare');
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::get('/seo', [SeoSettingController::class, 'edit'])->name('seo.edit');
         Route::put('/seo', [SeoSettingController::class, 'update'])->name('seo.update');

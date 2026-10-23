@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Storage;
 
 test('encap image storage lives outside public and takes precedence over legacy uploads', function () {
     expect(config('filesystems.disks.encap_images.root'))->toBe(base_path('encap-img'))
-        ->and(base_path('encap-img'))->not->toBe(base_path('public/encap-img'));
+        ->and(base_path('encap-img'))->not->toBe(base_path('public/encap-img'))
+        ->and(config('filesystems.links'))->not->toHaveKey(public_path('encap-img'));
 
     Storage::fake('public');
     Storage::fake('encap_images');
@@ -15,6 +16,13 @@ test('encap image storage lives outside public and takes precedence over legacy 
 
     expect(EncapImage::url('categories/sample.jpg'))
         ->toBe(Storage::disk('encap_images')->url('categories/sample.jpg'));
+
+    $this->get('/encap-img/categories/sample.jpg')
+        ->assertOk()
+        ->assertHeader('Cache-Control', 'public, max-age=86400')
+        ->assertHeader('X-Content-Type-Options', 'nosniff');
+
+    $this->get('/encap-img/categories/sample.svg')->assertNotFound();
 });
 
 test('image preparation downloads site photography and copies legacy uploads without deleting rollback copies', function () {
@@ -23,8 +31,10 @@ test('image preparation downloads site photography and copies legacy uploads wit
     Storage::disk('public')->put('categories/legacy.jpg', 'legacy image');
 
     $jpeg = "\xFF\xD8\xFF" . str_repeat('A', 6000);
+    Http::preventStrayRequests();
     Http::fake([
-        '*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+        'https://images.unsplash.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+        'https://images.pexels.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
     ]);
 
     $this->artisan('encap:images:prepare')->assertSuccessful();
