@@ -60,7 +60,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('/en/packing-stations', false)
         ->assertSee('encap-signature-logo', false)
         ->assertSee('encap-process-decoration-logo', false)
-        ->assertSee('encap-product-placeholder-logo', false)
+        ->assertDontSee('encap-product-placeholder-logo', false)
         ->assertSee('id="icon-sprout"', false)
         ->assertSee('js/encap-interactions.js', false)
         ->assertSee('css/site-motion.css', false)
@@ -672,3 +672,57 @@ test('site-wide heading treatments preserve contrast on dark photographic sectio
         ->toContain('.encap-frozen-feature .encap-frozen-copy h2')
         ->not->toContain('body.site-body main section :is(h1,h2){font-weight:800!important;background:');
 });
+
+test('catalogue and product details show real crop-specific photos when no admin image is uploaded', function () {
+    $slugs = [
+        'mango', 'citrus', 'grapes', 'potatoes', 'onions',
+        'garlic', 'pomegranates', 'peppers', 'strawberries',
+        'other-fruits-vegetables',
+    ];
+
+    foreach ($slugs as $index => $slug) {
+        Category::query()->create([
+            'name_en' => ucwords(str_replace('-', ' ', $slug)),
+            'name_ar' => 'منتج ' . ($index + 1),
+            'slug' => $slug,
+            'is_published' => true,
+            'show_product_images' => true,
+            'sort_order' => $index + 1,
+        ]);
+    }
+
+    $this->get('/en/products')
+        ->assertOk()
+        ->assertSee('images.pexels.com/photos/5767159', false)
+        ->assertSee('images.unsplash.com/photo-1772638583263', false)
+        ->assertSee('images.pexels.com/photos/9192252', false)
+        ->assertSee('images.unsplash.com/photo-1767982619694', false)
+        ->assertSee('images.pexels.com/photos/10444827', false)
+        ->assertSee('images.pexels.com/photos/4024739', false)
+        ->assertSee('images.pexels.com/photos/29310033', false)
+        ->assertSee('images.pexels.com/photos/35542734', false)
+        ->assertSee('images.pexels.com/photos/12095219', false);
+
+    $this->get('/ar/products/grapes')
+        ->assertOk()
+        ->assertSee('images.pexels.com/photos/9192252', false);
+});
+
+test('an uploaded category image remains preferred over a stock fallback', function () {
+    $category = Category::query()->create([
+        'name_en' => 'Uploaded Grapes',
+        'name_ar' => 'عنب بصور مرفوعة',
+        'slug' => 'grapes',
+        'image' => 'categories/uploaded-grapes.webp',
+        'is_published' => true,
+        'sort_order' => 1,
+    ]);
+
+    $expectedImage = \App\Support\EncapImage::url($category->image);
+
+    $this->get('/en/products')
+        ->assertOk()
+        ->assertSee($expectedImage, false)
+        ->assertDontSee('images.pexels.com/photos/9192252', false);
+});
+
