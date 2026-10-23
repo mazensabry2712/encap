@@ -16,7 +16,7 @@
 @php($robotsDirective = $pageSeo['robots'] ?? $seoDefaults->default_robots)
 @php($ogImageUrl = $seoDefaults->default_og_image
     ? \App\Support\EncapImage::url($seoDefaults->default_og_image)
-    : \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?fit=crop&fm=jpg&w=1200&q=82'))
+    : \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=1200&q=85'))
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="apple-touch-icon" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
     <meta property="og:image" content="{{ $ogImageUrl }}">
     <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#08291e">
     @if(request()->routeIs('home'))
-        <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=82') }}">
+        <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=2000&q=85') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
     <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261023-product-cta-centering-fix-1">
