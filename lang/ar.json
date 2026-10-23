@@ -201,7 +201,7 @@
     "processed": "مُصنّع",
     "01 / Who we are": "٠١ / من نحن",
     "02 / Our products": "٠٢ / منتجاتنا",
-    "03 / How we work": "٠٣ / كيف نعمل",
+    "03 / How we work": "٠٣ / آلية العمل",
     "04 / Quality in every detail": "٠٤ / الجودة في كل تفصيلة",
     "A connected network": "شبكة مترابطة",
     "A considered route from field to shipment.": "مسار مدروس من الحقل حتى الشحن.",
@@ -605,8 +605,6 @@
     "Ask us about frozen formats": "استفسر عن المنتجات المجمدة",
     "Availability and pack formats are confirmed per enquiry.": "يتم تأكيد التوافر وأشكال التعبئة لكل طلب.",
     "Frozen product categories": "أصناف المنتجات المجمدة",
-    "03 / How we work": "٠٣ / آلية العمل",
-    "04 / Quality in every detail": "٠٤ / الجودة في كل تفصيلة",
     "LET’S TALK": "لنتحدث",
     "International quality references": "مراجع الجودة الدولية",
     "Business Inquiries": "للاستفسارات التجارية",
@@ -625,5 +623,7 @@
     "Request a frozen-supply quote": "اطلب عرض سعر للمجمدات",
     "ENCAP / FROZEN SUPPLY": "ENCAP / توريد المجمدات",
     "Supply built around your specification.": "توريد يبدأ من مواصفاتك.",
-    "Refrigerated trucks prepared for temperature-controlled food transport.": "شاحنات مبردة مخصصة لنقل الأغذية المجمدة."
+    "Refrigerated trucks prepared for temperature-controlled food transport.": "شاحنات مبردة مخصصة لنقل الأغذية المجمدة.",
+    "e.g. metric tons": "مثال: طن متري",
+    "Product, volume, form, packaging and destination help us understand your requirement.": "يساعدنا تحديد المنتج والكمية وشكل المنتج والتعبئة والوجهة على فهم متطلباتك."
 }
