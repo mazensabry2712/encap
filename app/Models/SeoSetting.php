@@ -67,7 +67,7 @@ class SeoSetting extends Model
         string $fallbackTitle,
         string $fallbackDescription
     ): array {
-        $language = $locale;
+        $language = $locale === 'ar' ? 'ar' : 'en';
         $metadata = $this->page_metadata[$page][$language] ?? [];
 
         return [
