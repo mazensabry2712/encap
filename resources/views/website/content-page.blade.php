@@ -183,7 +183,7 @@
             <div class="encap-about-catalog-grid">
                 @foreach($categories as $category)
                     <a class="encap-about-category-card" href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}">
-                        <div class="encap-about-category-media"><img src="{{ \App\Support\EncapImage::url($category->image) }}" alt="{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}" width="640" height="720" loading="lazy" decoding="async"><span aria-hidden="true">↗</span></div>
+                        <div class="encap-about-category-media"><img src="{{ \App\Support\EncapProductImage::url($category) }}" alt="{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}" width="640" height="720" loading="lazy" decoding="async"><span aria-hidden="true">↗</span></div>
                         <div class="encap-about-category-copy"><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><h3>{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}</h3></div>
                     </a>
                 @endforeach
