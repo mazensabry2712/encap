@@ -125,10 +125,11 @@
                     @php($categoryName = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
                     @php($categoryDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en)
                     @php($categoryForms = $category->available_forms ?? [])
+                    @php($categoryImage = \App\Support\EncapProductImage::url($category))
                     <a class="encap-catalog-card" data-tilt href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
                         <div class="encap-catalog-card-media">
-                            @if($category->image)
-                                <img src="{{ \App\Support\EncapImage::url($category->image) }}" alt="{{ $categoryName }}" width="720" height="520" @if($loop->first) fetchpriority="high" @else loading="lazy" @endif decoding="async">
+                            @if($categoryImage)
+                                <img src="{{ $categoryImage }}" alt="{{ $categoryName }}" width="720" height="520" @if($loop->first) fetchpriority="high" @else loading="lazy" @endif decoding="async">
                             @else
                                 <span class="encap-catalog-card-placeholder" aria-hidden="true">
                                     <svg viewBox="0 0 24 24"><use href="#icon-sprout"></use></svg>
