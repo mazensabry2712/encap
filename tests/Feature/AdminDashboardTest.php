@@ -112,16 +112,16 @@ test('authenticated administrators can prepare image storage from the dashboard 
 
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('field-origin-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-berries-2026.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes-export.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions-export.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-potatoes-export.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-grapes.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-garlic.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-pomegranates.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-peppers.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-strawberries.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-potatoes-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-grapes-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-garlic-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-pomegranates-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-peppers-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-strawberries-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('categories/legacy-photo.jpg');
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists('categories/legacy-photo.jpg');
 });
