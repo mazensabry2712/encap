@@ -19,7 +19,7 @@ test('encap image storage lives outside public and takes precedence over legacy 
 
     $this->get('/encap-img/categories/sample.jpg')
         ->assertOk()
-        ->assertHeader('Cache-Control', 'public, max-age=86400')
+        ->assertHeader('Cache-Control', 'max-age=86400, public')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 
     $this->get('/encap-img/categories/sample.svg')->assertNotFound();
