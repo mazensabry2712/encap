@@ -122,8 +122,8 @@
         @else
             <div class="encap-catalog-grid">
                 @foreach($categories as $category)
-                    @php($categoryName = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
-                    @php($categoryDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en)
+                    @php($categoryName = $locale === 'ar' && $category->name_ar ? $category->name_ar : __($category->name_en))
+                    @php($categoryDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : __($category->short_description_en ?? ''))
                     @php($categoryForms = $category->available_forms ?? [])
                     @php($categoryImage = \App\Support\EncapProductImage::url($category))
                     <a class="encap-catalog-card" data-tilt href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
