@@ -54,8 +54,40 @@ final class EncapProductImage
         ],
     ];
 
+
+    /**
+     * Better curated photography for categories whose current live images need replacement.
+     * The known legacy mango upload is replaced; any newer admin upload remains preferred.
+     *
+     * @var array<string, array{0: string, 1: string}>
+     */
+    private const PREFERRED_PHOTOGRAPHY = [
+        'mango' => [
+            'product-mangoes-export.jpg',
+            'https://images.pexels.com/photos/5640033/pexels-photo-5640033.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        ],
+        'onions' => [
+            'product-onions-export.jpg',
+            'https://images.pexels.com/photos/6316541/pexels-photo-6316541.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        ],
+        'potatoes' => [
+            'product-potatoes-export.jpg',
+            'https://images.pexels.com/photos/10899606/pexels-photo-10899606.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        ],
+    ];
+
+    private const LEGACY_MANGO_IMAGE = 'categories/ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg';
+
     public static function url(Category $category): ?string
     {
+        $preferred = self::PREFERRED_PHOTOGRAPHY[$category->slug] ?? null;
+        $replaceLegacyMango = $category->slug === 'mango'
+            && $category->image === self::LEGACY_MANGO_IMAGE;
+
+        if ($preferred && (!filled($category->image) || $replaceLegacyMango)) {
+            return EncapImage::url($preferred[0], $preferred[1]);
+        }
+
         if (filled($category->image)) {
             return EncapImage::url($category->image);
         }
