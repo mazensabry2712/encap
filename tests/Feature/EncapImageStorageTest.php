@@ -89,7 +89,7 @@ test('image preparation copies uploaded category photos before slow stock image 
 
     expect($legacyCopiedBeforeDownload)->toBeTrue();
 
-    Storage::disk('encap_images')->assertExists('field-origin-2026.jpg');
+    Storage::disk('encap_images')->assertMissing('field-origin-2026.jpg');
     Storage::disk('encap_images')->assertExists('produce-mix-2026.jpg');
     Storage::disk('encap_images')->assertExists('farm-cultivation-2026.jpg');
     Storage::disk('encap_images')->assertExists('orchard-harvest-2026.jpg');
