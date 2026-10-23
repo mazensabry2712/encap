@@ -592,5 +592,7 @@
     ":count product photos selected.": "تم اختيار :count صورة للمنتج.",
     ":count will be added to the gallery.": "سيتم إضافة :count صورة إلى المعرض.",
     "Main image": "الصورة الرئيسية",
-    "Too many product photos selected. Mark current gallery images for removal or choose fewer files.": "عدد صور المنتج المختارة أكبر من المتاح. حدّد صورًا حالية للحذف أو اختر ملفات أقل."
+    "Too many product photos selected. Mark current gallery images for removal or choose fewer files.": "عدد صور المنتج المختارة أكبر من المتاح. حدّد صورًا حالية للحذف أو اختر ملفات أقل.",
+    "The image could not be saved. Please try a JPG, PNG, WebP or AVIF file up to 5 MB. If this continues, the hosting image-folder permissions need checking.": "تعذّر حفظ الصورة. استخدم صورة JPG أو PNG أو WebP أو AVIF بحجم لا يتجاوز 5 ميجابايت. إذا استمرت المشكلة، يلزم فحص صلاحيات مجلد الصور على الاستضافة.",
+    "The image was saved and remains visible, but the encap-img folder is not writable. Fix its permissions to keep new uploads in the main image folder.": "تم حفظ الصورة وستظل ظاهرة، لكن مجلد encap-img لا يسمح بالكتابة. افحص صلاحيات المجلد حتى تُحفظ الصور الجديدة فيه مباشرة."
 }

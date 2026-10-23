@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SeoSetting;
+use App\Services\EncapImageUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Throwable;
 
 class SeoSettingController extends Controller
 {
@@ -26,7 +28,7 @@ class SeoSettingController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, EncapImageUpload $imageUpload): RedirectResponse
     {
         $settings = SeoSetting::current();
         $rules = [
@@ -62,6 +64,7 @@ class SeoSettingController extends Controller
 
         $data = $request->validate($rules);
         $pageMetadata = [];
+
         foreach (self::SEO_PAGES as $page) {
             foreach (self::SEO_LOCALES as $locale) {
                 $title = data_get($data, "page_metadata.{$page}.{$locale}.title");
@@ -78,21 +81,38 @@ class SeoSettingController extends Controller
 
         $data['page_metadata'] = $pageMetadata;
         $oldImage = $settings->default_og_image;
+        $storedImage = null;
+
         if ($request->hasFile('default_og_image')) {
-            $data['default_og_image'] = $request->file('default_og_image')->store('seo', 'encap_images');
+            $storedImage = $imageUpload->store(
+                $request->file('default_og_image'),
+                'seo',
+                'default_og_image'
+            );
+            $data['default_og_image'] = $storedImage['path'];
         } else {
             unset($data['default_og_image']);
         }
 
-        $settings->fill($data)->save();
+        try {
+            $settings->fill($data)->save();
+        } catch (Throwable $exception) {
+            if ($storedImage) {
+                Storage::disk($storedImage['disk'])->delete($storedImage['path']);
+            }
 
-        if ($request->hasFile('default_og_image') && $oldImage) {
+            throw $exception;
+        }
+
+        if ($storedImage && $oldImage) {
             Storage::disk('encap_images')->delete($oldImage);
             Storage::disk('public')->delete($oldImage);
         }
 
         SeoSetting::clearCache();
 
-        return back()->with('success', __('Central SEO settings saved.'));
+        return back()
+            ->with('success', __('Central SEO settings saved.'))
+            ->with('image_storage_fallback', $storedImage !== null && $storedImage['disk'] === 'public');
     }
 }

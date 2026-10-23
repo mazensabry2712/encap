@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Services\EncapImageUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Throwable;
 
 class CategoryController extends Controller
 {
@@ -16,6 +18,7 @@ class CategoryController extends Controller
         'show_product_images', 'show_enquiry_note', 'show_description',
         'show_available_forms', 'show_packaging', 'show_specifications', 'show_bottom_cta',
     ];
+
     public function index(): View
     {
         return view('admin.categories.index', [
@@ -28,32 +31,61 @@ class CategoryController extends Controller
         return view('admin.categories.form', ['category' => new Category()]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, EncapImageUpload $imageUpload): RedirectResponse
     {
         $data = $this->validated($request);
+
         foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
             $data[$flag] = $request->boolean($flag);
         }
-        unset($data['remove_gallery']);
+
+        unset($data['remove_gallery'], $data['images'], $data['gallery']);
+
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
         $primaryImage = $selectedImages[0] ?? $request->file('image');
-        $data['image'] = $primaryImage?->store('categories', 'encap_images');
+        $storedUploads = [];
 
-        $galleryUploads = array_merge(
-            array_slice($selectedImages, 1),
-            (array) $request->file('gallery', [])
+        try {
+            $data['image'] = null;
+
+            if ($primaryImage) {
+                $savedImage = $imageUpload->store($primaryImage, 'categories', 'images');
+                $storedUploads[] = $savedImage;
+                $data['image'] = $savedImage['path'];
+            }
+
+            $galleryPaths = [];
+            $galleryUploads = array_merge(
+                array_slice($selectedImages, 1),
+                array_values(array_filter((array) $request->file('gallery', [])))
+            );
+
+            foreach ($galleryUploads as $file) {
+                $savedImage = $imageUpload->store($file, 'categories/gallery', 'gallery');
+                $storedUploads[] = $savedImage;
+                $galleryPaths[] = $savedImage['path'];
+            }
+
+            $data['gallery'] = $galleryPaths;
+            $data['is_published'] = $request->boolean('is_published');
+            $data['available_forms'] = array_values(array_intersect(
+                $request->input('available_forms', []),
+                ['Fresh', 'Frozen', 'Processed']
+            ));
+
+            Category::create($data);
+        } catch (Throwable $exception) {
+            $this->removeStoredUploads($storedUploads);
+            throw $exception;
+        }
+
+        $usedFallbackStorage = collect($storedUploads)->contains(
+            fn (array $upload): bool => $upload['disk'] === 'public'
         );
-        $data['gallery'] = collect($galleryUploads)
-            ->map(fn ($file) => $file->store('categories/gallery', 'encap_images'))->all();
-        $data['is_published'] = $request->boolean('is_published');
-        $data['available_forms'] = array_values(array_intersect(
-            $request->input('available_forms', []),
-            ['Fresh', 'Frozen', 'Processed']
-        ));
 
-        Category::create($data);
-
-        return redirect()->route('admin.categories.index')->with('success', __('Category created.'));
+        return redirect()->route('admin.categories.index')
+            ->with('success', __('Category created.'))
+            ->with('image_storage_fallback', $usedFallbackStorage);
     }
 
     public function edit(Category $category): View
@@ -61,65 +93,106 @@ class CategoryController extends Controller
         return view('admin.categories.form', compact('category'));
     }
 
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(Request $request, Category $category, EncapImageUpload $imageUpload): RedirectResponse
     {
         $data = $this->validated($request, $category);
+
         foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
             $data[$flag] = $request->boolean($flag);
         }
-        unset($data['remove_gallery']);
+
+        unset($data['remove_gallery'], $data['images'], $data['gallery'], $data['image']);
 
         $oldImage = $category->image;
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
         $primaryImage = $selectedImages[0] ?? $request->file('image');
-        $newImage = $primaryImage?->store('categories', 'encap_images');
-        if ($newImage) {
-            $data['image'] = $newImage;
-        }
-
-        $gallery = $category->gallery ?? [];
+        $newImage = null;
+        $storedUploads = [];
         $removedPaths = [];
-        foreach ($request->input('remove_gallery', []) as $remove) {
-            if (array_key_exists($remove, $gallery)) {
-                $removedPaths[] = $gallery[$remove];
-                unset($gallery[$remove]);
+
+        try {
+            if ($primaryImage) {
+                $savedImage = $imageUpload->store($primaryImage, 'categories', 'images');
+                $storedUploads[] = $savedImage;
+                $newImage = $savedImage['path'];
+                $data['image'] = $newImage;
             }
+
+            $gallery = $category->gallery ?? [];
+
+            foreach ($request->input('remove_gallery', []) as $remove) {
+                if (array_key_exists($remove, $gallery)) {
+                    $removedPaths[] = $gallery[$remove];
+                    unset($gallery[$remove]);
+                }
+            }
+
+            $galleryUploads = array_merge(
+                array_slice($selectedImages, 1),
+                array_values(array_filter((array) $request->file('gallery', [])))
+            );
+
+            foreach ($galleryUploads as $file) {
+                $savedImage = $imageUpload->store($file, 'categories/gallery', 'gallery');
+                $storedUploads[] = $savedImage;
+                $gallery[] = $savedImage['path'];
+            }
+
+            $data['gallery'] = array_values($gallery);
+            $data['is_published'] = $request->boolean('is_published');
+            $data['available_forms'] = array_values(array_intersect(
+                $request->input('available_forms', []),
+                ['Fresh', 'Frozen', 'Processed']
+            ));
+
+            $category->update($data);
+        } catch (Throwable $exception) {
+            $this->removeStoredUploads($storedUploads);
+            throw $exception;
         }
-
-        $galleryUploads = array_merge(
-            array_slice($selectedImages, 1),
-            (array) $request->file('gallery', [])
-        );
-        foreach ($galleryUploads as $file) {
-            $gallery[] = $file->store('categories/gallery', 'encap_images');
-        }
-
-        $data['gallery'] = array_values($gallery);
-        $data['is_published'] = $request->boolean('is_published');
-        $data['available_forms'] = array_values(array_intersect(
-            $request->input('available_forms', []),
-            ['Fresh', 'Frozen', 'Processed']
-        ));
-
-        $category->update($data);
 
         $pathsToDelete = $removedPaths;
+
         if ($newImage && $oldImage) {
             $pathsToDelete[] = $oldImage;
         }
+
+        $pathsToDelete = array_values(array_unique(array_filter($pathsToDelete)));
         Storage::disk('encap_images')->delete($pathsToDelete);
         Storage::disk('public')->delete($pathsToDelete);
 
-        return redirect()->route('admin.categories.index')->with('success', __('Category updated.'));
+        $usedFallbackStorage = collect($storedUploads)->contains(
+            fn (array $upload): bool => $upload['disk'] === 'public'
+        );
+
+        return redirect()->route('admin.categories.index')
+            ->with('success', __('Category updated.'))
+            ->with('image_storage_fallback', $usedFallbackStorage);
     }
 
     public function destroy(Category $category): RedirectResponse
     {
-        $pathsToDelete = array_filter(array_merge([$category->image], $category->gallery ?? []));
+        $pathsToDelete = array_values(array_unique(array_filter(array_merge(
+            [$category->image],
+            $category->gallery ?? []
+        ))));
+
         $category->delete();
+
+        Storage::disk('encap_images')->delete($pathsToDelete);
         Storage::disk('public')->delete($pathsToDelete);
 
         return back()->with('success', __('Category deleted.'));
+    }
+
+    /**
+     * @param array<array{path: string, disk: string}> $uploads
+     */
+    private function removeStoredUploads(array $uploads): void
+    {
+        foreach ($uploads as $upload) {
+            Storage::disk($upload['disk'])->delete($upload['path']);
+        }
     }
 
     private function validated(Request $request, ?Category $category = null): array
@@ -176,10 +249,8 @@ class CategoryController extends Controller
             'seo_title_ar' => ['nullable', 'string', 'max:255'],
             'seo_description_en' => ['nullable', 'string', 'max:500'],
             'seo_description_ar' => ['nullable', 'string', 'max:500'],
-            // The batch's first image is the primary image; the rest join the gallery.
             'images' => ['nullable', 'array', 'max:' . $productImageBatchLimit],
             'images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            // Keep accepting the legacy single-image field for existing integrations.
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'gallery' => ['nullable', 'array', 'max:' . $gallerySlotsAvailable],
             'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],

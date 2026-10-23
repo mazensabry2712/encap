@@ -1,6 +1,8 @@
 <?php
 
+use App\Services\EncapImageUpload;
 use App\Support\EncapImage;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,6 +39,31 @@ test('legacy category uploads remain visible through the encap image route befor
         ->assertOk()
         ->assertHeader('Cache-Control', 'max-age=86400, public')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
+});
+
+test('new image uploads fall back to laravel storage when encap-img cannot be written', function () {
+    Storage::fake('public');
+
+    $blockedRoot = tempnam(sys_get_temp_dir(), 'encap-image-root-blocker-');
+    expect($blockedRoot)->toBeString();
+    file_put_contents($blockedRoot, 'this file intentionally blocks a directory path');
+
+    $originalRoot = config('filesystems.disks.encap_images.root');
+    config(['filesystems.disks.encap_images.root' => $blockedRoot]);
+    Storage::forgetDisk('encap_images');
+
+    try {
+        $image = UploadedFile::fake()->image('mango.png', 2, 2);
+        $stored = app(EncapImageUpload::class)->store($image, 'categories', 'images');
+
+        expect($stored['disk'])->toBe('public');
+        Storage::disk('public')->assertExists($stored['path']);
+        $this->get('/encap-img/'.$stored['path'])->assertOk();
+    } finally {
+        config(['filesystems.disks.encap_images.root' => $originalRoot]);
+        Storage::forgetDisk('encap_images');
+        @unlink($blockedRoot);
+    }
 });
 
 test('image preparation copies uploaded category photos before slow stock image downloads', function () {
