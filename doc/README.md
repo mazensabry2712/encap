@@ -85,6 +85,20 @@ The public Blade layout loads `public/css/site-motion.css` and `public/js/site-m
 Motion is built with native CSS and small vanilla JavaScript; no animation package or 3D runtime is required. Keep movement bounded, keep content readable and clickable throughout, test RTL and small screens, and respect `prefers-reduced-motion`. Avoid nesting multiple reveal wrappers on the same component or moving neighbouring elements through one another. The automated test `site-wide motion assets are loaded on public English and Arabic page templates` protects shared-layout coverage.
 
 
+## Quality references, frozen formats and regional enquiries
+
+The public quality page describes product specifications, grading, handling, traceability, food safety, packing, cold-chain coordination and export preparation. It references BRCGS Food Safety (BRC), GLOBALG.A.P., ISO 9001, GRASP and SEDEX/SMETA as frameworks used to structure relevant buyer or supplier requirements. The site does not claim that ENCAP or a supplier is certified or audited: any certification, audit or facility status must be verified and documented for the relevant operation before it is stated. SEDEX/SMETA is described as a supply-chain and ethical-trade assessment approach, not as a certification.
+
+The homepage includes a dedicated frozen-range feature. Category cards appear only for published categories whose available_forms field explicitly includes Frozen. If no category is marked Frozen, the section remains a buyer enquiry entry point and does not imply a specific frozen item is currently available. Product availability, processing scope and packing formats are confirmed per enquiry.
+
+The public footer includes the regional business details provided by the ENCAP team:
+- Saudi subsidiary: شركة حدائق الشمال (Hadaeq Al-Shamal Company), Kingdom of Saudi Arabia, Tabarjal — Al-Aziziyah, Al-Jawf.
+- Eng. Ahmed Elshamy, Chairman of the Board: +966 56 830 9656.
+- Eng. Mohamed Saad, Export Sector Manager: +20 106 011 3074, Nubaria — Beheira, Egypt.
+
+The two contact cards use initial-based, image-ready placeholders so approved profile photos can be added later without changing their layout. The phone numbers use telephone links and the regional addresses open map searches.
+
+
 ## Image storage
 
 All static editorial photos, the brand logo, the favicon and uploaded category/SEO images are served from `encap-img/` at the project root, outside `public`. Laravel serves `/encap-img/{path}` through a cacheable image controller, so no symlink or SSH is required. After deploying, sign in to the Admin Panel and press **Prepare image library** on the dashboard. This downloads missing site photography and copies current category/SEO uploads from the legacy public disk while keeping old copies for rollback. The same operation is also available as `php artisan encap:images:prepare` on hosts with CLI access. New uploads first try `encap-img/categories` or `encap-img/seo`. If the hosting account cannot write there, the upload automatically falls back to `storage/app/public`, remains served through the same `/encap-img/{path}` route, and shows an admin warning. Once folder permissions are corrected, use **Prepare image library** to migrate these fallback uploads into `encap-img`. Runtime uploads are excluded from Git.
