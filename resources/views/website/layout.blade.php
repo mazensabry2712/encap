@@ -22,10 +22,11 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="apple-touch-icon" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>{{ $pageTitle }}</title><meta name="description" content="{{ $pageDescription }}"><meta name="robots" content="{{ $robotsDirective }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
-    @foreach(['en', 'ar', 'fr', 'ru', 'tr'] as $alternateLocale)
-        <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $canonicalBase . '/' . $alternateLocale . $localizedSuffix }}">
-    @endforeach
-    <link rel="alternate" hreflang="x-default" href="{{ $alternateEnglishUrl }}">
+    @if(!isset($category) || ($category->name_ar && $category->description_ar))
+        <link rel="alternate" hreflang="en" href="{{ $alternateEnglishUrl }}">
+        <link rel="alternate" hreflang="ar" href="{{ $alternateArabicUrl }}">
+        <link rel="alternate" hreflang="x-default" href="{{ $alternateEnglishUrl }}">
+    @endif
     <meta property="og:type" content="website"><meta property="og:site_name" content="{{ $seoDefaults->organization_name }}"><meta property="og:title" content="{{ $pageTitle }}"><meta property="og:description" content="{{ $pageDescription }}"><meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:image" content="{{ $ogImageUrl }}">
     <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#08291e">
