@@ -46,15 +46,15 @@
                 <div class="encap-catalog-orbit encap-catalog-orbit--inner"></div>
 
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--primary">
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=82') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
                     <figcaption>{{ __('Agricultural production') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=800&amp;q=82" alt="" width="800" height="900" loading="lazy" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('fresh-produce.jpg', 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=82') }}" alt="" width="800" height="900" loading="lazy" decoding="async">
                     <figcaption>{{ __('Fresh produce') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--tertiary">
-                    <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&amp;fit=crop&amp;w=650&amp;q=82" alt="" width="650" height="520" loading="lazy" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('cultivated-field.jpg', 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=650&q=82') }}" alt="" width="650" height="520" loading="lazy" decoding="async">
                     <figcaption>{{ __('From origin to market') }}</figcaption>
                 </figure>
 
@@ -128,7 +128,7 @@
                     <a class="encap-catalog-card" data-tilt href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
                         <div class="encap-catalog-card-media">
                             @if($category->image)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $categoryName }}" width="720" height="520" @if($loop->first) fetchpriority="high" @else loading="lazy" @endif decoding="async">
+                                <img src="{{ \App\Support\EncapImage::url($category->image) }}" alt="{{ $categoryName }}" width="720" height="520" @if($loop->first) fetchpriority="high" @else loading="lazy" @endif decoding="async">
                             @else
                                 <span class="encap-catalog-card-placeholder" aria-hidden="true">
                                     <svg viewBox="0 0 24 24"><use href="#icon-sprout"></use></svg>
@@ -181,10 +181,10 @@
 <section class="encap-catalog-cta-section">
     <div class="container">
         <div class="encap-catalog-cta">
-            <img class="encap-catalog-cta-image" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="" width="1200" height="900" loading="lazy" decoding="async" aria-hidden="true">
+            <img class="encap-catalog-cta-image" src="{{ \App\Support\EncapImage::url('fresh-produce.jpg', 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=82') }}" alt="" width="1200" height="900" loading="lazy" decoding="async" aria-hidden="true">
             <div class="encap-catalog-cta-orbit" aria-hidden="true">
                 <span></span><span></span>
-                <div class="encap-shared-brand-core"><img src="{{ asset('assets/favicone.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div>
+                <div class="encap-shared-brand-core"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div>
             </div>
             <div class="encap-catalog-cta-copy">
                 <span class="encap-catalog-kicker">{{ __('Have a specific requirement?') }}</span>

@@ -109,6 +109,7 @@ test('admin can save shared seo defaults and configured contact details', functi
 
 test('admin can configure product detail copy and control visible sections', function () {
     \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
     $category = Category::query()->create([
         'name_en' => 'Managed Mango',
         'name_ar' => 'مانجو بإدارة لوحة التحكم',
@@ -192,6 +193,7 @@ test('admin can update contact message status', function () {
 
 test('admin can create a published category', function () {
     \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
     $this->actingAs(User::factory()->create());
 
     $this->post('/admin/categories', [

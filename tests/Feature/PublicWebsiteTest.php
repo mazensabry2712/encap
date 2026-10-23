@@ -17,8 +17,8 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
     $this->get('/en')
         ->assertOk()
         ->assertSee('class="skip-link"', false)
-        ->assertSee('assets/logo.png', false)
-        ->assertSee('assets/favicone.png', false)
+        ->assertSee('encap-img/logo.png', false)
+        ->assertSee('encap-img/favicon.png', false)
         ->assertSee('encap-hero', false)
         ->assertSee('encap-hero-experience', false)
         ->assertSee('data-hero-tilt', false)
@@ -94,12 +94,13 @@ test('quality pages do not show decorative page numbering', function () {
 test('admin sign-in uses the ENCAP logo and favicon assets', function () {
     $this->get('/admin/login')
         ->assertOk()
-        ->assertSee('assets/logo.png', false)
-        ->assertSee('assets/favicone.png', false);
+        ->assertSee('encap-img/logo.png', false)
+        ->assertSee('encap-img/favicon.png', false);
 });
 
 test('product detail gallery renders accessible thumbnail controls', function () {
     \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
 
     $category = Category::query()->create([
         'name_en' => 'Gallery Citrus',
@@ -232,7 +233,7 @@ test('bilingual company pages render the About supply story and principles', fun
         ->assertSee('Our mission, vision & values')
         ->assertSee('encap-about-final-cta', false)
         ->assertSee('encap-shared-brand-core', false)
-        ->assertSee('assets/favicone.png')
+        ->assertSee('encap-img/favicon.png')
         ->assertSee('Illustrative stock photography.');
 
     $this->get('/ar/about')
@@ -288,11 +289,11 @@ test('product catalogue uses the redesigned hero and data-backed category cards'
     $this->get('/en/products')
         ->assertOk()
         ->assertSee('encap-catalog-hero', false)
-        ->assertSee('photo-1500382017468-9049fed747ef')
-        ->assertSee('photo-1542838132-92c53300491e')
+        ->assertSee(\App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=82'))
+        ->assertSee(\App\Support\EncapImage::url('fresh-produce.jpg', 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=82'))
         ->assertSee('encap-catalog-cta-image', false)
         ->assertSee('encap-shared-brand-core', false)
-        ->assertSee('assets/favicone.png')
+        ->assertSee('encap-img/favicon.png')
         ->assertSee('encap-catalog-grid', false)
         ->assertDontSee('encap-catalog-heading-number', false)
         ->assertDontSee('encap-catalog-card-index', false)
@@ -511,7 +512,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('encap-service-card-media', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false)
-        ->assertSee('images.unsplash.com/photo-1761839259494', false);
+        ->assertSee(\App\Support\EncapImage::url('orchard-harvest.jpg', 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?auto=format&fit=crop&w=1400&q=78'));
 
     $this->get('/ar/farms')
         ->assertOk()
@@ -520,7 +521,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('encap-service-visual-copy', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false)
-        ->assertSee('images.unsplash.com/photo-1761839259494', false);
+        ->assertSee(\App\Support\EncapImage::url('orchard-harvest.jpg', 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?auto=format&fit=crop&w=1400&q=78'));
 
     $this->get('/en/packing-stations')
         ->assertOk()
@@ -528,8 +529,8 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Sorting & grading')
         ->assertSee('Pre-cooling & cold-chain coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee('images.unsplash.com/photo-1767982619694', false)
-        ->assertSee('assets/favicone.png', false)
+        ->assertSee(\App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'))
+        ->assertSee('encap-img/favicon.png', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
 
@@ -546,7 +547,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Export & Logistics')
         ->assertSee('Documentation & compliance coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee('images.unsplash.com/photo-1774929104515', false)
+        ->assertSee(\App\Support\EncapImage::url('cargo-port.jpg', 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?auto=format&fit=crop&w=1400&q=78'))
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
 

@@ -34,6 +34,7 @@ test('category editor presents an organized gallery manager with live image prev
 
 test('selecting multiple product photos saves the first as primary and all remaining photos to the gallery', function () {
     Storage::fake('public');
+    Storage::fake('encap_images');
     $oldMain = 'categories/existing-main.png';
     Storage::disk('public')->put($oldMain, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGNUjjJiYGBgYmBgYGBgAAAITwCzmz5grAAAAABJRU5ErkJggg=='));
 
@@ -71,14 +72,15 @@ test('selecting multiple product photos saves the first as primary and all remai
         ->and($category->gallery)->toHaveCount(2);
 
     Storage::disk('public')->assertMissing($oldMain);
-    Storage::disk('public')->assertExists($category->image);
+    Storage::disk('encap_images')->assertExists($category->image);
     foreach ($category->gallery as $path) {
-        Storage::disk('public')->assertExists($path);
+        Storage::disk('encap_images')->assertExists($path);
     }
 });
 
 test('category gallery cannot exceed twelve additional images across repeated edits', function () {
     Storage::fake('public');
+    Storage::fake('encap_images');
     $gallery = ['categories/gallery/remove-me.png'];
 
     foreach (range(2, 12) as $number) {
@@ -117,11 +119,12 @@ test('category gallery cannot exceed twelve additional images across repeated ed
         ->and($category->gallery)->not->toContain('categories/gallery/remove-me.png');
 
     Storage::disk('public')->assertMissing('categories/gallery/remove-me.png');
-    expect(Storage::disk('public')->exists($category->gallery[11]))->toBeTrue();
+    expect(Storage::disk('encap_images')->exists($category->gallery[11]))->toBeTrue();
 });
 
 test('category gallery rejects a thirteenth image when no existing image is removed', function () {
     Storage::fake('public');
+    Storage::fake('encap_images');
 
     $gallery = array_map(
         fn ($number) => "categories/gallery/image-{$number}.png",

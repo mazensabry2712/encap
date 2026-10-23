@@ -23,7 +23,7 @@
     <div class="admin-primary-image-layout">
         <div class="admin-primary-image-preview" data-main-image-preview>
             @if($category->image)
-                <img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $category->name_en }}" data-main-image-current loading="lazy" width="360" height="270">
+                <img src="{{ \App\Support\EncapImage::url($category->image) }}" alt="{{ $category->name_en }}" data-main-image-current loading="lazy" width="360" height="270">
             @else
                 <div class="admin-primary-image-empty" data-main-image-empty><span aria-hidden="true">＋</span><strong>{{ __('No main image yet') }}</strong></div>
             @endif
@@ -50,7 +50,7 @@
                 @foreach($category->gallery as $index => $image)
                     <article class="admin-gallery-item">
                         <div class="admin-gallery-image">
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url($image) }}" alt="{{ __('Gallery image :number', ['number' => $loop->iteration]) }}" loading="lazy" width="320" height="240">
+                            <img src="{{ \App\Support\EncapImage::url($image) }}" alt="{{ __('Gallery image :number', ['number' => $loop->iteration]) }}" loading="lazy" width="320" height="240">
                             <span class="admin-gallery-index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                         </div>
                         <div class="admin-gallery-item-details">

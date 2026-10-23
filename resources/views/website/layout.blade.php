@@ -14,10 +14,10 @@
 @php($pageTitle = $pageSeo['title'] ?? $defaultTitle)
 @php($pageDescription = $pageSeo['description'] ?? $defaultDescription)
 @php($robotsDirective = $pageSeo['robots'] ?? $seoDefaults->default_robots)
-@php($ogImageUrl = $seoDefaults->default_og_image ? url(\Illuminate\Support\Facades\Storage::url($seoDefaults->default_og_image)) : null)
+@php($ogImageUrl = $seoDefaults->default_og_image ? \App\Support\EncapImage::url($seoDefaults->default_og_image) : null)
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
-    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ asset('assets/favicone.png') }}"><link rel="apple-touch-icon" href="{{ asset('assets/favicone.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="apple-touch-icon" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>{{ $pageTitle }}</title><meta name="description" content="{{ $pageDescription }}"><meta name="robots" content="{{ $robotsDirective }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
     @if(!isset($category) || ($category->name_ar && $category->description_ar))
@@ -27,8 +27,7 @@
     @if($ogImageUrl)<meta property="og:image" content="{{ $ogImageUrl }}">@endif
     <meta name="twitter:card" content="{{ $ogImageUrl ? 'summary_large_image' : 'summary' }}"><meta name="theme-color" content="#08291e">
     @if(request()->routeIs('home'))
-        <link rel="preconnect" href="https://images.unsplash.com">
-        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=2000&amp;q=82">
+        <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=82') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
     <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}">
@@ -57,7 +56,7 @@
 <header class="site-header primary-header">
     <div class="container primary-nav">
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
-            <img class="primary-brand-logo" src="{{ asset('assets/logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" decoding="async">
+            <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" decoding="async">
         </a>
         @php($operationsActive = request()->routeIs('farms', 'packing-stations', 'export', 'quality'))
         <nav class="primary-links" aria-label="{{ __('Main navigation') }}">
@@ -120,12 +119,12 @@
 </header>
 <main id="main-content">@yield('content')</main>
 <footer class="footer"><div class="container"><div class="footer-top">
-    <div><a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ asset('assets/logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" loading="lazy" decoding="async"></a><p class="footer-intro">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
+    <div><a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" loading="lazy" decoding="async"></a><p class="footer-intro">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
     @if(!empty($socialLinks))<nav class="footer-social-links" aria-label="{{ __('Social profiles') }}">@foreach($socialLinks as $network => $url)<a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $network }} <span aria-hidden="true">↗</span></a>@endforeach</nav>@endif
     </div>
     <div><h2 class="footer-heading">{{ __('Explore') }}</h2><div class="footer-links"><a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a><a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Agriculture & Farms') }}</a><a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}">{{ __('Packing Stations') }}</a><a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality') }}</a><a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export & Logistics') }}</a></div></div>
     <div><h2 class="footer-heading">{{ __('Products & contact') }}</h2><div class="footer-links"><a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Our Products') }}</a><a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a><a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a></div></div>
-</div><div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
+</div><div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
 <script src="{{ asset('js/encap-interactions.js') }}" defer></script>
 @if(request()->routeIs('home'))<script src="{{ asset('js/hero-experience.js') }}" defer></script>@endif
 <script src="{{ asset('js/language-switcher.js') }}" defer></script>

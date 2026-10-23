@@ -15,7 +15,7 @@ ENCAP remains a server-rendered Laravel Blade application. Keep the runtime simp
 
 ## Visual design assets
 
-The homepage uses a representative agricultural landscape image hosted by Unsplash as a visual direction, not a claim that the pictured land belongs to ENCAP. Replace it with an optimized, company-approved image when available; self-hosting an optimized asset would also remove the third-party image dependency. Product/category imagery should come from ENCAP-approved uploads.
+Editorial agriculture, packing and logistics photography is downloaded once into the project-root `encap-img/` directory and served locally through `public/encap-img`, a symlink. The photographs are representative stock imagery, not evidence of ENCAP-owned farms or facilities; replace them with company-approved images when available. Product/category imagery should come from ENCAP-approved uploads.
 
 ## Measure rather than assume
 
@@ -31,7 +31,9 @@ Performance and accessibility improvements are goals, not measured results. Befo
 
 ## Interface behavior
 
-- public/js/site-motion.js is the single owner of public-page scroll reveals, pointer-based 3D card tilt, magnetic actions, image depth and the scroll-progress line.
+- All public-facing photographs and uploaded product/SEO images resolve through the `encap_images` disk rooted at `base_path('encap-img')`. Run `php artisan encap:images:prepare` after deployment to copy current uploads and ensure the stock photo set is available locally.
+
+`public/js/site-motion.js` is the single owner of public-page scroll reveals, pointer-based 3D card tilt, magnetic actions, image depth and the scroll-progress line.
 - public/js/hero-experience.js adds the homepage's dedicated layered parallax and orbit effects; the site-wide controller deliberately skips that hero to avoid competing transforms.
 - public/js/encap-interactions.js handles only functional interactions: the sticky-header state, mobile-menu close behavior and product-gallery thumbnail selection.
 - Components receive at most one reveal wrapper, preventing nested reveal/transform effects that can obscure content or make elements feel like they collide.

@@ -23,21 +23,21 @@
             <div class="encap-about-hero-art" aria-label="{{ $pageContent['hero_badge'] }}">
                 <div class="encap-about-art-orbit" aria-hidden="true"></div>
                 <figure class="encap-about-landscape">
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&amp;fit=crop&amp;w=1500&amp;q=82" alt="{{ $pageContent['hero_landscape_alt'] }}" width="1200" height="1450" fetchpriority="high" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1500&q=82') }}" alt="{{ $pageContent['hero_landscape_alt'] }}" width="1200" height="1450" fetchpriority="high" decoding="async">
                     <figcaption>{{ $pageContent['hero_caption'] }}</figcaption>
                 </figure>
                 <figure class="encap-about-produce">
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&amp;fit=crop&amp;w=800&amp;q=82" alt="{{ $pageContent['hero_produce_alt'] }}" width="700" height="520" loading="lazy" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('fresh-produce.jpg', 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=82') }}" alt="{{ $pageContent['hero_produce_alt'] }}" width="700" height="520" loading="lazy" decoding="async">
                     <figcaption><span>ENCAP /</span> {{ $pageContent['hero_badge'] }}</figcaption>
                 </figure>
-                <div class="encap-about-floating-mark" aria-hidden="true"><img src="{{ asset('assets/favicone.png') }}" alt="" width="32" height="32" decoding="async"></div>
+                <div class="encap-about-floating-mark" aria-hidden="true"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="32" height="32" decoding="async"></div>
             </div>
         </div>
         <div class="encap-about-hero-baseline"><span>{{ __('From origin to market') }}</span><span aria-hidden="true">✳</span><span>{{ __('Growing with purpose. Supplying with care.') }}</span></div>
     </div>
 </section>
 @else
-<section class="page-head"><div class="container"><div class="breadcrumbs"><a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a> &nbsp; / &nbsp; {{ $pageContent['eyebrow'] }}</div><div class="page-intro-grid"><div><div class="eyebrow">{{ $pageContent['eyebrow'] }}</div><h1>{{ $pageContent['title'] }}</h1><p class="lead">{{ $pageContent['intro'] }}</p></div><aside class="page-aside-note"><strong><img class="encap-inline-brand" src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="24" height="24" decoding="async"> {{ __('Our approach') }}</strong>{{ __('Clear product requirements, current availability and direct communication with our team.') }}</aside></div></div></section>
+<section class="page-head"><div class="container"><div class="breadcrumbs"><a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a> &nbsp; / &nbsp; {{ $pageContent['eyebrow'] }}</div><div class="page-intro-grid"><div><div class="eyebrow">{{ $pageContent['eyebrow'] }}</div><h1>{{ $pageContent['title'] }}</h1><p class="lead">{{ $pageContent['intro'] }}</p></div><aside class="page-aside-note"><strong><img class="encap-inline-brand" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="24" height="24" decoding="async"> {{ __('Our approach') }}</strong>{{ __('Clear product requirements, current availability and direct communication with our team.') }}</aside></div></div></section>
 @endif
 @if(!empty($pageContent['hero_image']))
 <section class="encap-service-visual-section">
@@ -105,7 +105,7 @@
 @endif
 
 @if(empty($pageContent['services']))
-<div class="content-story-marker"><span class="content-story-brand"><img src="{{ asset('assets/favicone.png') }}" alt="ENCAP" width="24" height="24" decoding="async"></span><span>{{ __('From origin to market') }}</span></div><div class="content-layout"><div class="content-copy"><p>{{ $pageContent['body'] }}</p></div><aside class="feature-panel"><div class="eyebrow">{{ __('Let us talk supply') }}</div><strong>{{ __('Looking for a reliable agricultural supply partner?') }}</strong><p>{{ __('Share your product, quantity and destination requirements with our team.') }}</p><a class="text-link" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request a Quote') }} <span>↗</span></a></aside></div>
+<div class="content-story-marker"><span class="content-story-brand"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="24" height="24" decoding="async"></span><span>{{ __('From origin to market') }}</span></div><div class="content-layout"><div class="content-copy"><p>{{ $pageContent['body'] }}</p></div><aside class="feature-panel"><div class="eyebrow">{{ __('Let us talk supply') }}</div><strong>{{ __('Looking for a reliable agricultural supply partner?') }}</strong><p>{{ __('Share your product, quantity and destination requirements with our team.') }}</p><a class="text-link" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request a Quote') }} <span>↗</span></a></aside></div>
 @endif
 </div></section>
 @endif
@@ -128,9 +128,9 @@
 <section class="encap-about-practice" aria-labelledby="encap-about-practice-title">
     <div class="container encap-about-practice-grid">
         <figure class="encap-about-practice-visual">
-            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="{{ $pageContent['approach_image_alt'] }}" width="1200" height="1000" loading="lazy" decoding="async">
+            <img src="{{ \App\Support\EncapImage::url('cultivated-field.jpg', 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=82') }}" alt="{{ $pageContent['approach_image_alt'] }}" width="1200" height="1000" loading="lazy" decoding="async">
             <figcaption>{{ $pageContent['hero_caption'] }}</figcaption>
-            <span class="encap-about-practice-stamp" aria-hidden="true"><img src="{{ asset('assets/favicone.png') }}" alt="" width="38" height="38" loading="lazy" decoding="async"><span>ORIGIN<br>TO MARKET</span></span>
+            <span class="encap-about-practice-stamp" aria-hidden="true"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="38" height="38" loading="lazy" decoding="async"><span>ORIGIN<br>TO MARKET</span></span>
         </figure>
         <div class="encap-about-practice-copy">
             <span class="encap-section-index">{{ __('How we work') }}</span><h2 id="encap-about-practice-title">{{ $pageContent['approach_heading'] }}</h2>
@@ -163,7 +163,7 @@
             <div class="encap-about-catalog-grid">
                 @foreach($categories as $category)
                     <a class="encap-about-category-card" href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}">
-                        <div class="encap-about-category-media"><img src="{{ \Illuminate\Support\Facades\Storage::url($category->image) }}" alt="{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}" width="640" height="720" loading="lazy" decoding="async"><span aria-hidden="true">↗</span></div>
+                        <div class="encap-about-category-media"><img src="{{ \App\Support\EncapImage::url($category->image) }}" alt="{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}" width="640" height="720" loading="lazy" decoding="async"><span aria-hidden="true">↗</span></div>
                         <div class="encap-about-category-copy"><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><h3>{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}</h3></div>
                     </a>
                 @endforeach
@@ -177,7 +177,7 @@
 
 <section class="encap-about-final-cta" aria-labelledby="encap-about-final-title"><div class="container">
     <div class="encap-about-final-panel encap-final-panel">
-        <div class="encap-about-final-orbit" aria-hidden="true"><div class="encap-shared-brand-core"><img src="{{ asset('assets/favicone.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div><span class="encap-about-final-orbit-sweep"></span></div>
+        <div class="encap-about-final-orbit" aria-hidden="true"><div class="encap-shared-brand-core"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div><span class="encap-about-final-orbit-sweep"></span></div>
         <div class="encap-about-final-copy"><span class="encap-section-index">{{ __('For importers, distributors and partners') }}</span><h2 id="encap-about-final-title">{{ __('Let’s talk about what your market needs.') }}</h2><p>{{ __('Share the product, quantity and destination you have in mind. We will start by reviewing the details that matter to your enquiry.') }}</p><a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Start an export enquiry') }} <span aria-hidden="true">↗</span></a></div>
         <span class="encap-about-final-index" aria-hidden="true">ENCAP <i>/ 04</i></span>
     </div>

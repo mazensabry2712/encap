@@ -47,6 +47,15 @@ return [
             'report' => false,
         ],
 
+        'encap_images' => [
+            'driver' => 'local',
+            'root' => base_path('encap-img'),
+            'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/encap-img',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -75,6 +84,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('encap-img') => base_path('encap-img'),
     ],
 
 ];

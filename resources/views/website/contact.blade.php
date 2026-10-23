@@ -34,7 +34,7 @@
                 <div class="encap-contact-orbit encap-contact-orbit--inner"></div>
                 <div class="encap-contact-orbit-axis"></div>
                 <div class="encap-contact-orbit-core">
-                    <img src="{{ asset('assets/favicone.png') }}" alt="" width="56" height="56" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="56" height="56" decoding="async">
                     <span>ENCAP</span>
                     <small>{{ __('Contact ENCAP directly') }}</small>
                 </div>

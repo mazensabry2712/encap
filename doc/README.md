@@ -63,7 +63,7 @@ SMTP delivery is not yet part of the verified workflow. Both enquiry types are s
 
 ## Performance approach
 
-Use server-rendered content, low request count, a separately cacheable CSS file, reserved image dimensions, lazy loading for non-critical images and pagination. The current hero artwork is a CSS illustration and is not an ENCAP farm photograph. Category images must be supplied by the company. Lighthouse and Core Web Vitals are targets to measure, not claimed results.
+Use server-rendered content, low request count, a separately cacheable CSS file, reserved image dimensions, lazy loading for non-critical images and pagination. The editorial landscape and packing images are downloaded into the root `encap-img/` directory for local serving; they remain representative stock photography, not proof of ENCAP-owned farms or facilities. Category images must be supplied by the company. Lighthouse and Core Web Vitals are targets to measure, not claimed results.
 
 ## Documentation index
 
@@ -83,3 +83,8 @@ GitHub Actions is configured to run the Pest feature suite and Vite production b
 The public Blade layout loads `public/css/site-motion.css` and `public/js/site-motion.js` on all English and Arabic marketing pages (not the admin panel). The shared system includes a scroll-progress line, native page transitions where supported, staggered reveals for inner-page content, pointer-responsive 3D tilt on desktop cards, restrained photo parallax, magnetic primary actions, and slowly moving decorative rings. The homepage keeps its dedicated hero module as an additional layer.
 
 Motion is built with native CSS and small vanilla JavaScript; no animation package or 3D runtime is required. Keep movement bounded, keep content readable and clickable throughout, test RTL and small screens, and respect `prefers-reduced-motion`. Avoid nesting multiple reveal wrappers on the same component or moving neighbouring elements through one another. The automated test `site-wide motion assets are loaded on public English and Arabic page templates` protects shared-layout coverage.
+
+
+## Image storage
+
+All static editorial photos, the brand logo, the favicon and uploaded category/SEO images are served from `encap-img/` at the project root, outside `public`. The `public/encap-img` symbolic link maps the URL prefix to that folder. Run `php artisan encap:images:prepare` after deploying the code: it downloads the site photo set and copies current image uploads from the legacy public disk while keeping the old copies for rollback. New uploads go directly to `encap-img/categories` or `encap-img/seo`. Runtime uploads are excluded from Git.

@@ -79,7 +79,7 @@ class SeoSettingController extends Controller
         $data['page_metadata'] = $pageMetadata;
         $oldImage = $settings->default_og_image;
         if ($request->hasFile('default_og_image')) {
-            $data['default_og_image'] = $request->file('default_og_image')->store('seo', 'public');
+            $data['default_og_image'] = $request->file('default_og_image')->store('seo', 'encap_images');
         } else {
             unset($data['default_og_image']);
         }
@@ -87,6 +87,7 @@ class SeoSettingController extends Controller
         $settings->fill($data)->save();
 
         if ($request->hasFile('default_og_image') && $oldImage) {
+            Storage::disk('encap_images')->delete($oldImage);
             Storage::disk('public')->delete($oldImage);
         }
 

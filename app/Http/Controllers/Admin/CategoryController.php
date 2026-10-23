@@ -37,14 +37,14 @@ class CategoryController extends Controller
         unset($data['remove_gallery']);
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
         $primaryImage = $selectedImages[0] ?? $request->file('image');
-        $data['image'] = $primaryImage?->store('categories', 'public');
+        $data['image'] = $primaryImage?->store('categories', 'encap_images');
 
         $galleryUploads = array_merge(
             array_slice($selectedImages, 1),
             (array) $request->file('gallery', [])
         );
         $data['gallery'] = collect($galleryUploads)
-            ->map(fn ($file) => $file->store('categories/gallery', 'public'))->all();
+            ->map(fn ($file) => $file->store('categories/gallery', 'encap_images'))->all();
         $data['is_published'] = $request->boolean('is_published');
         $data['available_forms'] = array_values(array_intersect(
             $request->input('available_forms', []),
@@ -72,7 +72,7 @@ class CategoryController extends Controller
         $oldImage = $category->image;
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
         $primaryImage = $selectedImages[0] ?? $request->file('image');
-        $newImage = $primaryImage?->store('categories', 'public');
+        $newImage = $primaryImage?->store('categories', 'encap_images');
         if ($newImage) {
             $data['image'] = $newImage;
         }
@@ -91,7 +91,7 @@ class CategoryController extends Controller
             (array) $request->file('gallery', [])
         );
         foreach ($galleryUploads as $file) {
-            $gallery[] = $file->store('categories/gallery', 'public');
+            $gallery[] = $file->store('categories/gallery', 'encap_images');
         }
 
         $data['gallery'] = array_values($gallery);
@@ -107,6 +107,7 @@ class CategoryController extends Controller
         if ($newImage && $oldImage) {
             $pathsToDelete[] = $oldImage;
         }
+        Storage::disk('encap_images')->delete($pathsToDelete);
         Storage::disk('public')->delete($pathsToDelete);
 
         return redirect()->route('admin.categories.index')->with('success', __('Category updated.'));
