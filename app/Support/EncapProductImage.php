@@ -1,93 +1,62 @@
 <?php
 
-namespace App\Support;
+namespace App\\Support;
 
-use App\Models\Category;
+use App\\Models\\Category;
 
 final class EncapProductImage
 {
     /**
-     * Real stock photographs used only when a category has no uploaded main image.
+     * Crop-specific stock photographs used only when a category has no main image.
+     * An image uploaded through the admin dashboard always takes precedence.
      *
      * @var array<string, array{0: string, 1: string}>
      */
     private const FALLBACKS = [
         'mango' => [
-            'product-mangoes.jpg',
-            'https://images.pexels.com/photos/5767159/pexels-photo-5767159.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-mangoes-2026.jpg',
+            'https://images.unsplash.com/photo-1605027990121-cbae9e0642df?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'citrus' => [
-            'citrus-orchard.jpg',
-            'https://images.unsplash.com/photo-1772638583263-a4f953c856cf?fit=crop&fm=jpg&w=1000&q=76',
+            'product-citrus-2026.jpg',
+            'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'grapes' => [
-            'product-grapes.jpg',
-            'https://images.pexels.com/photos/9192252/pexels-photo-9192252.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-grapes-2026.jpg',
+            'https://images.unsplash.com/photo-1626964146632-d08eadf9f5bb?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'potatoes' => [
-            'potato-sorting.jpg',
-            'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?fit=crop&fm=jpg&w=1400&q=78',
+            'product-potatoes-2026.jpg',
+            'https://images.unsplash.com/photo-1756361947495-7f56ed41ac38?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'onions' => [
-            'product-onions.jpg',
-            'https://images.pexels.com/photos/10444827/pexels-photo-10444827.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-onions-2026.jpg',
+            'https://images.unsplash.com/photo-1746499866328-d11aea3ed522?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'garlic' => [
-            'product-garlic.jpg',
-            'https://images.pexels.com/photos/4024739/pexels-photo-4024739.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-garlic-2026.jpg',
+            'https://images.unsplash.com/photo-1685130055879-c4e72e7281c9?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'pomegranates' => [
-            'product-pomegranates.jpg',
-            'https://images.pexels.com/photos/29310033/pexels-photo-29310033/free-photo-of-close-up-of-fresh-pomegranates-on-display.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-pomegranates-2026.jpg',
+            'https://images.unsplash.com/photo-1642359548284-80879b7677dc?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'peppers' => [
-            'product-peppers.jpg',
-            'https://images.pexels.com/photos/35542734/pexels-photo-35542734/free-photo-of-colorful-bell-peppers-display-at-market.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-peppers-2026.jpg',
+            'https://images.unsplash.com/photo-1742304267119-330daeadcdca?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'strawberries' => [
-            'product-strawberries.jpg',
-            'https://images.pexels.com/photos/12095219/pexels-photo-12095219.jpeg?auto=compress&cs=tinysrgb&w=1400',
+            'product-strawberries-2026.jpg',
+            'https://images.unsplash.com/photo-1633360819525-fc421f11c65c?fit=crop&fm=jpg&w=1400&q=85',
         ],
         'other-fruits-vegetables' => [
-            'fresh-produce.jpg',
-            'https://images.unsplash.com/photo-1542838132-92c53300491e?fit=crop&fm=jpg&w=1600&q=78',
+            'produce-mix-2026.jpg',
+            'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=1600&q=85',
         ],
     ];
-
-
-    /**
-     * Better curated photography for categories whose current live images need replacement.
-     * The known legacy mango upload is replaced; any newer admin upload remains preferred.
-     *
-     * @var array<string, array{0: string, 1: string}>
-     */
-    private const PREFERRED_PHOTOGRAPHY = [
-        'mango' => [
-            'product-mangoes-export.jpg',
-            'https://images.pexels.com/photos/5640033/pexels-photo-5640033.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        ],
-        'onions' => [
-            'product-onions-export.jpg',
-            'https://images.pexels.com/photos/6316541/pexels-photo-6316541.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        ],
-        'potatoes' => [
-            'product-potatoes-export.jpg',
-            'https://images.pexels.com/photos/10899606/pexels-photo-10899606.jpeg?auto=compress&cs=tinysrgb&w=1600',
-        ],
-    ];
-
-    private const LEGACY_MANGO_IMAGE = 'categories/ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg';
 
     public static function url(Category $category): ?string
     {
-        $preferred = self::PREFERRED_PHOTOGRAPHY[$category->slug] ?? null;
-        $replaceLegacyMango = $category->slug === 'mango'
-            && $category->image === self::LEGACY_MANGO_IMAGE;
-
-        if ($preferred && (!filled($category->image) || $replaceLegacyMango)) {
-            return EncapImage::url($preferred[0], $preferred[1]);
-        }
-
         if (filled($category->image)) {
             return EncapImage::url($category->image);
         }
