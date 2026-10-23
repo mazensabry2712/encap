@@ -1,8 +1,8 @@
 <?php
 
-namespace App\\Support;
+namespace App\Support;
 
-use App\\Models\\Category;
+use App\Models\Category;
 
 final class EncapProductImage
 {
