@@ -23,11 +23,11 @@
             <div class="encap-about-hero-art" aria-label="{{ $pageContent['hero_badge'] }}">
                 <div class="encap-about-art-orbit" aria-hidden="true"></div>
                 <figure class="encap-about-landscape">
-                    <img src="{{ \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1500&q=82') }}" alt="{{ $pageContent['hero_landscape_alt'] }}" width="1200" height="1450" fetchpriority="high" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=1500&q=85') }}" alt="{{ $pageContent['hero_landscape_alt'] }}" width="1200" height="1450" fetchpriority="high" decoding="async">
                     <figcaption>{{ $pageContent['hero_caption'] }}</figcaption>
                 </figure>
                 <figure class="encap-about-produce">
-                    <img src="{{ \App\Support\EncapImage::url('fresh-produce.jpg', 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=82') }}" alt="{{ $pageContent['hero_produce_alt'] }}" width="700" height="520" loading="lazy" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=800&q=85') }}" alt="{{ $pageContent['hero_produce_alt'] }}" width="700" height="520" loading="lazy" decoding="async">
                     <figcaption><span>ENCAP /</span> {{ $pageContent['hero_badge'] }}</figcaption>
                 </figure>
                 <div class="encap-about-floating-mark" aria-hidden="true"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="32" height="32" decoding="async"></div>
@@ -148,7 +148,7 @@
 <section class="encap-about-practice" aria-labelledby="encap-about-practice-title">
     <div class="container encap-about-practice-grid">
         <figure class="encap-about-practice-visual">
-            <img src="{{ \App\Support\EncapImage::url('cultivated-field.jpg', 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=82') }}" alt="{{ $pageContent['approach_image_alt'] }}" width="1200" height="1000" loading="lazy" decoding="async">
+            <img src="{{ \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=1200&q=85') }}" alt="{{ $pageContent['approach_image_alt'] }}" width="1200" height="1000" loading="lazy" decoding="async">
             <figcaption>{{ $pageContent['hero_caption'] }}</figcaption>
             <span class="encap-about-practice-stamp" aria-hidden="true"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="38" height="38" loading="lazy" decoding="async"><span>ORIGIN<br>TO MARKET</span></span>
         </figure>
