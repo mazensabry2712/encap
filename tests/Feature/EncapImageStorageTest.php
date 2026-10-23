@@ -39,22 +39,29 @@ test('legacy category uploads remain visible through the encap image route befor
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 });
 
-test('image preparation downloads site photography and copies legacy uploads without deleting rollback copies', function () {
+test('image preparation copies uploaded category photos before slow stock image downloads', function () {
     Storage::fake('public');
     Storage::fake('encap_images');
-    Storage::disk('public')->put('categories/legacy.jpg', 'legacy image');
+    Storage::disk('public')->put('categories/legacy-mango.jpg', 'legacy mango image');
 
     $jpeg = "\xFF\xD8\xFF" . str_repeat('A', 6000);
+    $legacyCopiedBeforeDownload = false;
     Http::preventStrayRequests();
     Http::fake([
-        'https://images.unsplash.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+        'https://images.unsplash.com/*' => function ($request) use (&$legacyCopiedBeforeDownload, $jpeg) {
+            $legacyCopiedBeforeDownload = Storage::disk('encap_images')->exists('categories/legacy-mango.jpg');
+
+            return Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']);
+        },
         'https://images.pexels.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
     ]);
 
     $this->artisan('encap:images:prepare')->assertSuccessful();
 
+    expect($legacyCopiedBeforeDownload)->toBeTrue();
+
     Storage::disk('encap_images')->assertExists('farm-landscape.jpg');
     Storage::disk('encap_images')->assertExists('cargo-port.jpg');
-    Storage::disk('encap_images')->assertExists('categories/legacy.jpg');
-    Storage::disk('public')->assertExists('categories/legacy.jpg');
+    Storage::disk('encap_images')->assertExists('categories/legacy-mango.jpg');
+    Storage::disk('public')->assertExists('categories/legacy-mango.jpg');
 });

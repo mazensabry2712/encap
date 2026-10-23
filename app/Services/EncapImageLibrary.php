@@ -32,6 +32,30 @@ final class EncapImageLibrary
         $legacy = Storage::disk('public');
         $result = ['downloaded' => 0, 'kept' => 0, 'copied' => 0, 'errors' => [], 'complete' => true];
 
+        // Copy uploaded product/SEO images first. Shared hosting may stop a request
+        // while the later third-party image downloads are still running.
+        $allowedImage = '/\.(?:jpe?g|png|webp|avif|gif)$/i';
+
+        foreach ($legacy->allFiles() as $path) {
+            if (! preg_match('#^(?:categories|seo)/#', $path) || ! preg_match($allowedImage, $path)) {
+                continue;
+            }
+
+            if ($images->exists($path)) {
+                continue;
+            }
+
+            try {
+                if ($images->put($path, $legacy->get($path))) {
+                    $result['copied']++;
+                } else {
+                    $result['errors'][] = "{$path}: could not copy the existing upload.";
+                }
+            } catch (Throwable $exception) {
+                $result['errors'][] = "{$path}: {$exception->getMessage()}";
+            }
+        }
+
         foreach (self::STOCK_IMAGES as $filename => $url) {
             if (! $force && $images->exists($filename)) {
                 $result['kept']++;
@@ -57,28 +81,6 @@ final class EncapImageLibrary
                 $result['downloaded']++;
             } catch (Throwable $exception) {
                 $result['errors'][] = "{$filename}: {$exception->getMessage()}";
-            }
-        }
-
-        $allowedImage = '/\.(?:jpe?g|png|webp|avif|gif)$/i';
-
-        foreach ($legacy->allFiles() as $path) {
-            if (! preg_match('#^(?:categories|seo)/#', $path) || ! preg_match($allowedImage, $path)) {
-                continue;
-            }
-
-            if ($images->exists($path)) {
-                continue;
-            }
-
-            try {
-                if ($images->put($path, $legacy->get($path))) {
-                    $result['copied']++;
-                } else {
-                    $result['errors'][] = "{$path}: could not copy the existing upload.";
-                }
-            } catch (Throwable $exception) {
-                $result['errors'][] = "{$path}: {$exception->getMessage()}";
             }
         }
 
