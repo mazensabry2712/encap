@@ -1025,3 +1025,64 @@ html[dir=rtl] .encap-frozen-feature .encap-frozen-copy h2{background-image:linea
 .encap-frozen-visual-label strong{max-width:440px;color:#fff;font-size:clamp(27px,3vw,40px);font-weight:750;line-height:1.2}
 @media(max-width:850px){.encap-frozen-grid{grid-template-columns:1fr;gap:28px}.encap-frozen-copy{max-width:680px}.encap-frozen-visual{min-height:360px}}
 @media(max-width:600px){.encap-frozen-feature{padding-block:52px}.encap-frozen-copy h2{font-size:clamp(35px,9.5vw,48px)}.encap-frozen-copy>p:not(.encap-frozen-footnote){font-size:13px}.encap-frozen-copy .encap-button{width:100%;justify-content:center}.encap-frozen-visual{min-height:300px;border-radius:2px 30px 2px 2px}.encap-frozen-visual-label{padding:25px}.encap-frozen-visual-label strong{font-size:28px}.encap-frozen-photo{object-position:center center}}
+
+/* ENCAP capability cards: photographic backgrounds with calm, readable glass treatment. */
+.encap-service-hub-card{
+ position:relative;isolation:isolate;overflow:hidden;min-height:315px;padding:clamp(24px,3vw,34px);
+ border:1px solid rgba(238,246,226,.28);border-radius:2px 28px 2px 2px;background:#0b2d20;color:#fff;
+ box-shadow:0 12px 34px rgba(8,28,18,.10);transition:transform .38s,border-color .38s,box-shadow .38s,background .38s
+}
+.encap-service-hub-card:before{
+ content:"";position:absolute;z-index:0;inset:-7px;pointer-events:none;
+ background-image:var(--encap-service-card-image);background-size:cover;background-position:center;
+ filter:blur(3px) saturate(.88);transform:scale(1.045);
+ transition:transform .75s cubic-bezier(.2,.7,.2,1),filter .55s
+}
+.encap-service-hub-card:after{
+ content:"";position:absolute;z-index:1;inset:0;pointer-events:none;
+ background:
+  radial-gradient(circle at 92% 8%,rgba(209,234,163,.16),transparent 36%),
+  linear-gradient(132deg,rgba(4,24,16,.47) 0%,rgba(5,27,18,.68) 48%,rgba(4,22,15,.92) 100%);
+ transition:background .38s
+}
+.encap-service-hub-card>*{position:relative;z-index:2}
+.encap-service-hub-card:hover{
+ transform:translateY(-5px);border-color:rgba(238,246,226,.58);background:#0b2d20;
+ box-shadow:0 22px 48px rgba(8,28,18,.22)
+}
+.encap-service-hub-card:hover:before{transform:scale(1.095);filter:blur(2px) saturate(1.02)}
+.encap-service-hub-icon{
+ width:48px;height:48px;margin-bottom:25px;background:rgba(222,239,187,.92);color:#173e2c;
+ border:1px solid rgba(255,255,255,.40);box-shadow:0 8px 22px rgba(0,0,0,.12);backdrop-filter:blur(8px)
+}
+.encap-service-hub-icon svg{stroke-width:1.65}
+.encap-service-hub-number{
+ align-self:flex-start;width:max-content;max-width:100%;padding:7px 10px;border:1px solid rgba(238,246,226,.28);
+ border-radius:999px;background:rgba(7,30,20,.31);color:#e2efcd;font-size:9px;letter-spacing:.16em;
+ backdrop-filter:blur(7px)
+}
+.encap-service-hub-card h3{margin:13px 0 9px;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.22)}
+.encap-service-hub-card p{color:rgba(249,251,245,.84);text-shadow:0 1px 12px rgba(0,0,0,.16)}
+.encap-service-hub-link{
+ margin-top:auto;padding-top:18px;border-top:1px solid rgba(242,247,233,.22);color:#e5f0cf
+}
+.encap-service-hub-link b{
+ width:32px;height:32px;border-color:rgba(244,248,237,.42);color:#fff;background:rgba(255,255,255,.06);
+ backdrop-filter:blur(7px)
+}
+.encap-service-hub-card:hover .encap-service-hub-link b{background:rgba(221,239,183,.94);border-color:transparent;color:#143a28}
+.encap-service-hub-card:nth-child(1):before{background-position:center 54%}
+.encap-service-hub-card:nth-child(2):before{background-position:center 57%}
+.encap-service-hub-card:nth-child(3):before{background-position:center 48%}
+@media(max-width:950px){.encap-service-hub-card{min-height:300px}}
+@media(max-width:650px){
+ .encap-service-hub-card{min-height:290px;padding:25px;border-radius:2px 24px 2px 2px}
+ .encap-service-hub-icon{margin-bottom:18px}
+ .encap-service-hub-card h3{font-size:27px}
+ .encap-service-hub-link{padding-top:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .encap-service-hub-card,.encap-service-hub-card:before,.encap-service-hub-card:after,.encap-service-hub-link b{transition:none!important}
+ .encap-service-hub-card:hover,.encap-service-hub-card:hover:before{transform:none}
+}
+
