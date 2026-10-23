@@ -23,7 +23,7 @@
             <div class="encap-about-hero-art" aria-label="{{ $pageContent['hero_badge'] }}">
                 <div class="encap-about-art-orbit" aria-hidden="true"></div>
                 <figure class="encap-about-landscape">
-                    <img src="{{ \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=1500&q=85') }}" alt="{{ $pageContent['hero_landscape_alt'] }}" width="1200" height="1450" fetchpriority="high" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1500&q=85') }}" alt="{{ $pageContent['hero_landscape_alt'] }}" width="1200" height="1450" fetchpriority="high" decoding="async">
                     <figcaption>{{ $pageContent['hero_caption'] }}</figcaption>
                 </figure>
                 <figure class="encap-about-produce">
