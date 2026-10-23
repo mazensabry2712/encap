@@ -16,10 +16,12 @@ final class EncapImageUpload
     public function store(UploadedFile $file, string $directory, string $errorField = 'image'): array
     {
         foreach (['encap_images', 'public'] as $diskName) {
-            $disk = Storage::disk($diskName);
+            $disk = null;
             $path = null;
 
             try {
+                // Disk construction itself can fail if the configured root is unavailable.
+                $disk = Storage::disk($diskName);
                 $directoryPath = $disk->path($directory);
 
                 if (! is_dir($directoryPath)
@@ -35,13 +37,14 @@ final class EncapImageUpload
                 $path = $file->store($directory, $diskName);
 
                 if (! is_string($path) || $path === '' || ! $disk->exists($path)) {
-                    $this->deleteQuietly($disk, $path);
                     throw new RuntimeException('The host did not confirm that the uploaded file was saved.');
                 }
 
                 return ['path' => $path, 'disk' => $diskName];
             } catch (Throwable $exception) {
-                $this->deleteQuietly($disk, $path);
+                if ($disk !== null) {
+                    $this->deleteQuietly($disk, $path);
+                }
 
                 logger()->warning('ENCAP image upload storage attempt failed.', [
                     'disk' => $diskName,
