@@ -664,7 +664,7 @@ test('site-wide heading treatments preserve contrast on dark photographic sectio
     $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
 
     expect($stylesheet)
-        ->toContain('section:not(.encap-catalog-hero):not(.encap-contact-hero)')
+        ->toContain('section:not(.encap-hero):not(.encap-catalog-hero):not(.encap-contact-hero)')
         ->toContain('not(.encap-quality-band):not(.encap-frozen-feature)')
         ->toContain('not(.encap-final-cta):not(.encap-about-final-cta)')
         ->toContain('not(.encap-about-principles):not(.dark-feature)')
