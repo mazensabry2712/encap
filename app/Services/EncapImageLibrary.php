@@ -30,7 +30,7 @@ final class EncapImageLibrary
         'export-crates-2026.jpg' => 'https://images.pexels.com/photos/7843989/pexels-photo-7843989.jpeg?auto=compress&cs=tinysrgb&w=1400',
         'frozen-berries-2026.jpg' => 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1600',
         'cargo-port-2026.jpg' => 'https://images.unsplash.com/photo-1759272840538-ae4b07214c71?fit=crop&fm=jpg&w=1400&q=85',
-    ];];
+    ];
 
     /**
      * @return array{downloaded: int, kept: int, copied: int, errors: list<string>, complete: bool}
