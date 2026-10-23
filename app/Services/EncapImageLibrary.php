@@ -21,7 +21,7 @@ final class EncapImageLibrary
         'carton-labels.jpg' => 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?fit=crop&fm=jpg&w=1000&q=76',
         'dispatch-cartons.jpg' => 'https://images.unsplash.com/photo-1775880306542-57d598d773a0?fit=crop&fm=jpg&w=1000&q=76',
         'frozen-berries.jpg' => 'https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?fit=crop&fm=jpg&w=1600&q=78',
-        'frozen-berries-export.jpg' => 'https://images.pexels.com/photos/6823367/pexels-photo-6823367.jpeg?auto=compress&cs=tinysrgb&w=1600',
+        'frozen-transport.jpg' => 'https://images.pexels.com/photos/27099094/pexels-photo-27099094/free-photo-of-view-of-parked-trucks.jpeg?auto=compress&dpr=1&h=750&w=1260',
         'cargo-port.jpg' => 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?fit=crop&fm=jpg&w=1400&q=78',
     ];
 
