@@ -12,6 +12,13 @@ final class EncapImageLibrary
     private const STOCK_IMAGES = [
         'farm-landscape.jpg' => 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?fit=crop&fm=jpg&w=2000&q=78',
         'fresh-produce.jpg' => 'https://images.unsplash.com/photo-1542838132-92c53300491e?fit=crop&fm=jpg&w=1600&q=78',
+        'product-mangoes.jpg' => 'https://images.pexels.com/photos/5767159/pexels-photo-5767159.jpeg?auto=compress&cs=tinysrgb&w=1400',
+        'product-grapes.jpg' => 'https://images.pexels.com/photos/9192252/pexels-photo-9192252.jpeg?auto=compress&cs=tinysrgb&w=1400',
+        'product-onions.jpg' => 'https://images.pexels.com/photos/10444827/pexels-photo-10444827.jpeg?auto=compress&cs=tinysrgb&w=1400',
+        'product-garlic.jpg' => 'https://images.pexels.com/photos/4024739/pexels-photo-4024739.jpeg?auto=compress&cs=tinysrgb&w=1400',
+        'product-pomegranates.jpg' => 'https://images.pexels.com/photos/29310033/pexels-photo-29310033/free-photo-of-close-up-of-fresh-pomegranates-on-display.jpeg?auto=compress&cs=tinysrgb&w=1400',
+        'product-peppers.jpg' => 'https://images.pexels.com/photos/35542734/pexels-photo-35542734/free-photo-of-colorful-bell-peppers-display-at-market.jpeg?auto=compress&cs=tinysrgb&w=1400',
+        'product-strawberries.jpg' => 'https://images.pexels.com/photos/12095219/pexels-photo-12095219.jpeg?auto=compress&cs=tinysrgb&w=1400',
         'cultivated-field.jpg' => 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?fit=crop&fm=jpg&w=1400&q=78',
         'orchard-harvest.jpg' => 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?fit=crop&fm=jpg&w=1400&q=78',
         'citrus-orchard.jpg' => 'https://images.unsplash.com/photo-1772638583263-a4f953c856cf?fit=crop&fm=jpg&w=1000&q=76',
