@@ -107,11 +107,18 @@ test('authenticated administrators can prepare image storage from the dashboard 
         ->post(route('admin.images.prepare'))
         ->assertRedirect(route('admin.dashboard'))
         ->assertSessionHas('imageLibraryResult.complete', true)
-        ->assertSessionHas('imageLibraryResult.downloaded', 13)
+        ->assertSessionHas('imageLibraryResult.downloaded', 20)
         ->assertSessionHas('imageLibraryResult.copied', 1);
 
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('farm-landscape.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-transport.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-grapes.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-garlic.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-pomegranates.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-peppers.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-strawberries.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('categories/legacy-photo.jpg');
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists('categories/legacy-photo.jpg');
 });
