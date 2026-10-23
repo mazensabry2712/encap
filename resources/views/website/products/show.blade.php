@@ -55,7 +55,7 @@
                     <div class="product-gallery-thumbs" role="group" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : 'Product gallery' }}">
                         @foreach($productImages as $image)
                             <button class="product-gallery-thumb" type="button" data-gallery-thumb data-gallery-index="{{ $loop->iteration }}" data-image-src="{{ $image }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة المنتج' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">
-                                <img src="{{ \App\Support\EncapImage::url($image) }}" alt="" loading="lazy" width="240" height="190" decoding="async">
+                                <img src="{{ \App\Support\$image }}" alt="" loading="lazy" width="240" height="190" decoding="async">
                                 <span class="product-gallery-thumb-index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                             </button>
                         @endforeach
