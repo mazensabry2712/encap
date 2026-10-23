@@ -928,12 +928,12 @@ html[lang="ar"] body.site-body .encap-contact-hero h1{font-size:clamp(36px,4.55v
 
 
 /* ENCAP brand sizing, section-heading contrast, quality references, frozen range and regional contacts. */
-.primary-brand{width:clamp(225px,19vw,280px)}
-.primary-brand-logo{height:86px}
-@media(max-width:1120px){.primary-brand{width:clamp(205px,24vw,250px)}.primary-brand-logo{height:78px}}
-@media(max-width:1030px){.primary-brand{width:clamp(205px,29vw,250px)}.primary-brand-logo{height:74px}}
-@media(max-width:600px){.primary-brand{width:min(220px,calc(100vw - 150px))}.primary-brand-logo{height:64px}}
-@media(max-width:370px){.primary-brand{width:calc(100vw - 138px)}}
+.primary-brand{width:clamp(240px,21vw,300px)}
+.primary-brand-logo{height:94px}
+@media(max-width:1120px){.primary-brand{width:clamp(215px,25vw,260px)}.primary-brand-logo{height:84px}}
+@media(max-width:1030px){.primary-brand{width:clamp(210px,29vw,260px)}.primary-brand-logo{height:78px}}
+@media(max-width:600px){.primary-brand{width:min(230px,calc(100vw - 145px))}.primary-brand-logo{height:70px}}
+@media(max-width:370px){.primary-brand{width:calc(100vw - 132px)}}
 body.site-body main section :is(h1,h2){font-weight:800!important;background:linear-gradient(105deg,#173d2a 0%,#173d2a 62%,#91a85d 62%,#e0b23e 100%);-webkit-background-clip:text;background-clip:text;color:transparent!important;text-wrap:balance}
 html[dir=rtl] body.site-body main section :is(h1,h2){background-image:linear-gradient(255deg,#173d2a 0%,#173d2a 62%,#91a85d 62%,#e0b23e 100%)}
 body.site-body main section:is(.dark-feature,.encap-quality-band,.encap-final-cta,.encap-about-final-cta,.encap-about-principles) h2,body.site-body main section .contact-details h2{font-weight:800!important;background:linear-gradient(105deg,#fff 0%,#fff 64%,#e3b53e 64%,#e3b53e 100%);-webkit-background-clip:text;background-clip:text;color:transparent!important}
