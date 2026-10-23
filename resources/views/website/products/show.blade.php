@@ -1,7 +1,7 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
 @php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
-@php($productImages = array_values(array_filter(array_merge($category->image ? [$category->image] : [], $category->gallery ?? []))))
+@php($productImages = \App\Support\EncapProductImage::galleryUrls($category))
 @php($shortDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en)
 @php($description = $locale === 'ar' && $category->description_ar ? $category->description_ar : $category->description_en)
 @php($varieties = $locale === 'ar' && filled($category->varieties_ar) ? $category->varieties_ar : $category->varieties_en)
@@ -38,7 +38,7 @@
             <div class="product-detail-media">
                 <div class="product-gallery-main" data-gallery-viewer>
                     @if(count($productImages))
-                        <img data-gallery-main src="{{ \App\Support\EncapImage::url($productImages[0]) }}" alt="{{ $name }}" width="900" height="760" fetchpriority="high" decoding="async">
+                        <img data-gallery-main src="{{ $productImages[0] }}" alt="{{ $name }}" width="900" height="760" fetchpriority="high" decoding="async">
                         @if(count($productImages) > 1)
                             <span class="product-gallery-counter" data-gallery-counter data-total-images="{{ count($productImages) }}">1 / {{ count($productImages) }}</span>
                         @endif
@@ -54,7 +54,7 @@
                     </div>
                     <div class="product-gallery-thumbs" role="group" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : 'Product gallery' }}">
                         @foreach($productImages as $image)
-                            <button class="product-gallery-thumb" type="button" data-gallery-thumb data-gallery-index="{{ $loop->iteration }}" data-image-src="{{ \App\Support\EncapImage::url($image) }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة المنتج' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">
+                            <button class="product-gallery-thumb" type="button" data-gallery-thumb data-gallery-index="{{ $loop->iteration }}" data-image-src="{{ $image }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة المنتج' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">
                                 <img src="{{ \App\Support\EncapImage::url($image) }}" alt="" loading="lazy" width="240" height="190" decoding="async">
                                 <span class="product-gallery-thumb-index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                             </button>
