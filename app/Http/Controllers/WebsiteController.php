@@ -332,7 +332,7 @@ class WebsiteController extends Controller
 
         $serviceMedia = [
             'farms' => [
-                'hero' => \App\Support\EncapImage::url('orchard-harvest.jpg', 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?auto=format&fit=crop&w=1400&q=78'),
+                'hero' => \App\Support\EncapImage::url('orchard-harvest-2026.jpg', 'https://images.unsplash.com/photo-1643138411076-238fda8c1e1d?fit=crop&fm=jpg&w=1400&q=85'),
                 'hero_alt' => [
                     'en' => 'A grower reaching into an orchard to harvest fruit.',
                     'ar' => 'عامل يقطف ثمارًا من شجرة في بستان.',
@@ -347,21 +347,21 @@ class WebsiteController extends Controller
                 ],
                 'services' => [
                     [
-                        'image' => \App\Support\EncapImage::url('citrus-orchard.jpg', 'https://images.unsplash.com/photo-1772638583263-a4f953c856cf?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=720&q=85'),
                         'alt' => ['en' => 'Citrus fruit growing on a tree branch.', 'ar' => 'ثمار موالح تنمو على أغصان الشجرة.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('cultivated-field.jpg', 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=720&q=85'),
                         'alt' => ['en' => 'A cultivated field ready for crop care and harvest planning.', 'ar' => 'أرض زراعية مزروعة ضمن مراحل العناية بالمحصول والتخطيط للحصاد.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=720&q=85'),
                         'alt' => ['en' => 'Rows of agricultural land extending across a broad landscape.', 'ar' => 'صفوف من الأراضي الزراعية تمتد عبر مساحة واسعة.'],
                     ],
                 ],
             ],
             'packing-stations' => [
-                'hero' => \App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'),
+                'hero' => \App\Support\EncapImage::url('potato-sorting-2026.jpg', 'https://images.pexels.com/photos/2889093/pexels-photo-2889093.jpeg?auto=compress&cs=tinysrgb&w=1400'),
                 'hero_alt' => [
                     'en' => 'Freshly harvested potatoes moving through a sorting conveyor.',
                     'ar' => 'محصول بطاطس طازج يمر على سير للفرز.',
@@ -376,29 +376,29 @@ class WebsiteController extends Controller
                 ],
                 'services' => [
                     [
-                        'image' => \App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('potato-sorting-2026.jpg', 'https://images.pexels.com/photos/2889093/pexels-photo-2889093.jpeg?auto=compress&cs=tinysrgb&w=720'),
                         'alt' => ['en' => 'Potatoes travelling along a sorting conveyor.', 'ar' => 'بطاطس تمر على سير لفرز المحصول.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('packing-line-berries.jpg', 'https://images.pexels.com/photos/5085939/pexels-photo-5085939.jpeg?auto=compress&cs=tinysrgb&w=720'),
+                        'image' => \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=720'),
                         'alt' => ['en' => 'Fresh berries being sorted by workers at a packing line.', 'ar' => 'عمال يفرزون ثمارًا طازجة على خط تجهيز.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('packing-warehouse.jpg', 'https://images.unsplash.com/photo-1755599604342-186a96a57570?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=720'),
                         'alt' => ['en' => 'People preparing and handling cartons in a warehouse.', 'ar' => 'عاملون يجهزون ويتعاملون مع الكراتين داخل مخزن.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('carton-labels.jpg', 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('crate-labels-2026.jpg', 'https://images.unsplash.com/photo-1625207883754-c0314540c03c?fit=crop&fm=jpg&w=720&q=85'),
                         'alt' => ['en' => 'Cardboard cartons prepared with produce labels.', 'ar' => 'كراتين مجهزة بملصقات خاصة بالمنتجات.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('dispatch-cartons.jpg', 'https://images.unsplash.com/photo-1775880306542-57d598d773a0?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('export-crates-2026.jpg', 'https://images.pexels.com/photos/7843989/pexels-photo-7843989.jpeg?auto=compress&cs=tinysrgb&w=720'),
                         'alt' => ['en' => 'Organized cartons arranged for storage and dispatch planning.', 'ar' => 'كراتين مرتبة للتخزين والتجهيز للإرسال.'],
                     ],
                 ],
             ],
             'export' => [
-                'hero' => \App\Support\EncapImage::url('cargo-port.jpg', 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?auto=format&fit=crop&w=1400&q=78'),
+                'hero' => \App\Support\EncapImage::url('cargo-port-2026.jpg', 'https://images.unsplash.com/photo-1759272840538-ae4b07214c71?fit=crop&fm=jpg&w=1400&q=85'),
                 'hero_alt' => [
                     'en' => 'Cargo containers stacked at an international port terminal.',
                     'ar' => 'حاويات بضائع مكدسة في محطة ميناء دولي.',
@@ -413,33 +413,33 @@ class WebsiteController extends Controller
                 ],
                 'services' => [
                     [
-                        'image' => \App\Support\EncapImage::url('citrus-orchard.jpg', 'https://images.unsplash.com/photo-1772638583263-a4f953c856cf?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=720&q=85'),
                         'alt' => ['en' => 'Citrus fruit growing on a tree, representing farm-level sourcing.', 'ar' => 'ثمار موالح على الشجرة لتمثيل التوريد من مصدر المحصول.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('carton-labels.jpg', 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('crate-labels-2026.jpg', 'https://images.unsplash.com/photo-1625207883754-c0314540c03c?fit=crop&fm=jpg&w=720&q=85'),
                         'alt' => ['en' => 'Produce cartons with labels prepared for a supply order.', 'ar' => 'كراتين منتجات عليها ملصقات ومجهزة لطلب توريد.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('packing-warehouse.jpg', 'https://images.unsplash.com/photo-1755599604342-186a96a57570?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=720'),
                         'alt' => ['en' => 'Cartons handled and arranged in a warehouse before dispatch.', 'ar' => 'كراتين يجري تجهيزها وترتيبها في مخزن قبل الإرسال.'],
                     ],
                     [
-                        'image' => \App\Support\EncapImage::url('dispatch-cartons.jpg', 'https://images.unsplash.com/photo-1775880306542-57d598d773a0?auto=format&fit=crop&w=720&q=76'),
+                        'image' => \App\Support\EncapImage::url('export-crates-2026.jpg', 'https://images.pexels.com/photos/7843989/pexels-photo-7843989.jpeg?auto=compress&cs=tinysrgb&w=720'),
                         'alt' => ['en' => 'Organized boxes illustrating shipment and supply-chain preparation.', 'ar' => 'صناديق مرتبة توضح تجهيز الشحنات وسلسلة التوريد.'],
                     ],
                 ],
             ],
             'quality' => [
-                'hero' => \App\Support\EncapImage::url('packing-line-berries.jpg', 'https://images.pexels.com/photos/5085939/pexels-photo-5085939.jpeg?auto=compress&cs=tinysrgb&w=1400'),
+                'hero' => \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=1400'),
                 'hero_alt' => ['en' => 'Produce moving through a packing line for handling and quality review.', 'ar' => 'منتجات زراعية على خط تعبئة أثناء التجهيز ومراجعة الجودة.'],
                 'heading' => ['en' => 'Good quality is planned before dispatch.', 'ar' => 'الجودة الجيدة يجري التخطيط لها قبل الإرسال.'],
                 'detail' => ['en' => 'Align specifications, handling, packing and destination requirements before the shipment plan is confirmed.', 'ar' => 'توحيد المواصفات والتعامل مع المنتج والتعبئة ومتطلبات الوجهة قبل تأكيد خطة الشحن.'],
                 'services' => [
-                    ['image' => \App\Support\EncapImage::url('carton-labels.jpg', 'https://images.unsplash.com/photo-1768656089428-111196e0b1ab?fit=crop&fm=jpg&w=900&q=78'), 'alt' => ['en' => 'Produce cartons and labels prepared for order identification.', 'ar' => 'كراتين منتجات وملصقات لتحديد بيانات الطلب.']],
-                    ['image' => \App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?fit=crop&fm=jpg&w=900&q=78'), 'alt' => ['en' => 'Harvested potatoes on a sorting line.', 'ar' => 'بطاطس بعد الحصاد على خط للفرز.']],
-                    ['image' => \App\Support\EncapImage::url('packing-warehouse.jpg', 'https://images.unsplash.com/photo-1755599604342-186a96a57570?fit=crop&fm=jpg&w=900&q=78'), 'alt' => ['en' => 'Produce cartons handled in a packing warehouse.', 'ar' => 'كراتين منتجات زراعية يجري التعامل معها في مخزن تعبئة.']],
-                    ['image' => \App\Support\EncapImage::url('packing-line-berries.jpg', 'https://images.pexels.com/photos/5085939/pexels-photo-5085939.jpeg?auto=compress&cs=tinysrgb&w=900'), 'alt' => ['en' => 'Fresh berries being handled along a produce packing line.', 'ar' => 'ثمار طازجة يجري التعامل معها على خط تعبئة.']],
+                    ['image' => \App\Support\EncapImage::url('crate-labels-2026.jpg', 'https://images.unsplash.com/photo-1625207883754-c0314540c03c?fit=crop&fm=jpg&w=900&q=85'), 'alt' => ['en' => 'Produce cartons and labels prepared for order identification.', 'ar' => 'كراتين منتجات وملصقات لتحديد بيانات الطلب.']],
+                    ['image' => \App\Support\EncapImage::url('potato-sorting-2026.jpg', 'https://images.pexels.com/photos/2889093/pexels-photo-2889093.jpeg?auto=compress&cs=tinysrgb&w=900'), 'alt' => ['en' => 'Harvested potatoes on a sorting line.', 'ar' => 'بطاطس بعد الحصاد على خط للفرز.']],
+                    ['image' => \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=900'), 'alt' => ['en' => 'Produce cartons handled in a packing warehouse.', 'ar' => 'كراتين منتجات زراعية يجري التعامل معها في مخزن تعبئة.']],
+                    ['image' => \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=900'), 'alt' => ['en' => 'Fresh berries being handled along a produce packing line.', 'ar' => 'ثمار طازجة يجري التعامل معها على خط تعبئة.']],
                 ],
             ],
         ];
