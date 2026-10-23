@@ -670,6 +670,7 @@ test('site-wide heading treatments preserve contrast on dark photographic sectio
         ->toContain('not(.encap-about-principles):not(.dark-feature)')
         ->toContain('.encap-contact-hero h1{max-width:720px')
         ->toContain('.encap-catalog-cta h2{max-width:650px;margin:14px 0 14px;color:#fff')
+        ->toContain('.encap-catalog-cta-orbit>.encap-shared-brand-core{position:relative;inset:auto;display:flex;align-items:center;justify-content:center;flex-direction:column;margin:auto;width:104px;aspect-ratio:1;}')
         ->toContain('.encap-frozen-feature .encap-frozen-copy h2')
         ->not->toContain('body.site-body main section :is(h1,h2){font-weight:800!important;background:');
 });
