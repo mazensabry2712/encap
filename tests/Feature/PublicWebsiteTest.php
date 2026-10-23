@@ -628,3 +628,35 @@ test('homepage capability cards use photographic backgrounds with blur and contr
         ->toContain('.encap-service-hub-card:after')
         ->toContain('rgba(4,22,15,.92)');
 });
+
+test('mobile navigation keeps the export quote action pinned outside the scrollable links', function () {
+    $response = $this->get('/ar')->assertOk();
+    $html = $response->getContent();
+
+    expect($html)
+        ->toContain('class="primary-mobile-panel-links"')
+        ->toContain('class="primary-mobile-quote"');
+
+    $stylesheet = file_get_contents(public_path('css/navigation.css'));
+
+    expect($stylesheet)
+        ->toContain('grid-template-rows:minmax(0,1fr) auto')
+        ->toContain('.primary-mobile-panel-links{display:grid;align-content:start;')
+        ->toContain('max-height:min(72vh,620px);overflow:hidden');
+});
+
+test('Arabic contact and quote pages show usable regional phone links and translated helpers', function () {
+    $this->get('/ar/contact')
+        ->assertOk()
+        ->assertSee('tel:+966568309656', false)
+        ->assertSee('tel:+201060113074', false)
+        ->assertSee('تواصل مباشرة مع فرقنا الإقليمية أو استخدم النموذج أدناه.')
+        ->assertSee('يساعدنا تحديد المنتج والكمية وشكل المنتج والتعبئة والوجهة على فهم متطلباتك.')
+        ->assertDontSee('ستظهر بيانات التواصل هنا بعد إدخالها من لوحة الإدارة.');
+
+    $this->get('/ar/request-a-quote')
+        ->assertOk()
+        ->assertSee('placeholder="مثال: طن متري"', false)
+        ->assertDontSee('e.g. metric tons');
+});
+
