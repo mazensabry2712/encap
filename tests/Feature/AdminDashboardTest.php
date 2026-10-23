@@ -107,7 +107,7 @@ test('authenticated administrators can prepare image storage from the dashboard 
         ->post(route('admin.images.prepare'))
         ->assertRedirect(route('admin.dashboard'))
         ->assertSessionHas('imageLibraryResult.complete', true)
-        ->assertSessionHas('imageLibraryResult.downloaded', 11)
+        ->assertSessionHas('imageLibraryResult.downloaded', 12)
         ->assertSessionHas('imageLibraryResult.copied', 1);
 
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('farm-landscape.jpg');
