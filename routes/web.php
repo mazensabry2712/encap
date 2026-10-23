@@ -9,14 +9,14 @@ Route::get('/encap-img/{path}', [EncapImageController::class, 'show'])
     ->where('path', '.*')->name('encap-images.show');
 
 Route::redirect('/', '/ar', 302);
-Route::pattern('locale', 'en|ar');
+Route::pattern('locale', 'en|ar|fr|ru|tr');
 
 Route::get('/robots.txt', fn () => response()->view('seo.robots')->header('Content-Type', 'text/plain; charset=UTF-8'))
     ->name('seo.robots');
 
 Route::get('/sitemap.xml', function () {
     return response()->view('seo.sitemap', [
-        'locales' => ['en', 'ar'],
+        'locales' => ['en', 'ar', 'fr', 'ru', 'tr'],
         'categories' => Category::query()->where('is_published', true)->orderBy('sort_order')->get(['slug', 'updated_at', 'name_ar', 'description_ar']),
     ])->header('Content-Type', 'application/xml; charset=UTF-8');
 })->name('seo.sitemap');
