@@ -93,16 +93,15 @@
 <section class="encap-frozen-feature" aria-labelledby="encap-frozen-title">
  <div class="container encap-frozen-grid">
   <div class="encap-frozen-copy">
-   <span class="encap-frozen-eyebrow">{{ __('Frozen range') }}</span>
-   <h2 id="encap-frozen-title">{{ __('Frozen fruit and vegetables for global markets.') }}</h2>
-   <p>{{ __('We welcome enquiries for frozen fruit and vegetables. Product type, specifications, packaging, quantity and destination are confirmed with our team before an order is agreed.') }}</p>
-   <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Discuss frozen supply') }} <span aria-hidden="true">↗</span></a>
-   <p class="encap-frozen-footnote"><span aria-hidden="true">🇪🇬</span>{{ __('Product availability and packing details are confirmed for each enquiry.') }}</p>
+   <span class="encap-frozen-eyebrow">{{ __('Frozen supply / export') }}</span>
+   <h2 id="encap-frozen-title">{{ __('Frozen produce, specified for your market.') }}</h2>
+   <p>{{ __('Tell us the product, format, volume and destination. We’ll align the supply, packaging and export requirements with you from the outset.') }}</p>
+   <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale, 'form' => 'frozen']) }}">{{ __('Request a frozen-supply quote') }} <span aria-hidden="true">↗</span></a>
   </div>
   <figure class="encap-frozen-visual" style="background-image:url('{{ \App\Support\EncapImage::url('frozen-berries.jpg', 'https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?auto=format&fit=crop&w=1600&q=82') }}')" aria-labelledby="encap-frozen-photo-caption">
    <figcaption class="encap-frozen-visual-label" id="encap-frozen-photo-caption">
-    <small>{{ __('ENCAP / FROZEN PRODUCE') }}</small>
-    <strong>{{ __('From origin to export.') }}</strong>
+    <small>{{ __('ENCAP / FROZEN SUPPLY') }}</small>
+    <strong>{{ __('Supply built around your specification.') }}</strong>
    </figcaption>
   </figure>
  </div>

@@ -26,7 +26,7 @@ A polished, responsive agricultural company website for ENCAP. The company produ
 - Home and category overview.
 - About, Farms & Production, Quality & Processing, Export, Gallery and Contact.
 - Product category detail routes such as /en/products/mango and /ar/products/mango.
-- Export quote form saves an enquiry and preselects a category when opened from a category page.
+- Export quote form saves an enquiry and preselects a category when opened from a category page; the frozen-supply CTA also opens the form with “Frozen” preselected.
 - General contact form saves a message.
 - English/Arabic navigation and RTL/LTR layout.
 

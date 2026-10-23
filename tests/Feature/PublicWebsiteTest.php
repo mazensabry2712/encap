@@ -44,6 +44,10 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-quality-band', false)
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
+        ->assertSee('Frozen produce, specified for your market.')
+        ->assertSee('Request a frozen-supply quote')
+        ->assertSee('/en/request-a-quote?form=frozen', false)
+        ->assertDontSee('We welcome enquiries for frozen fruit and vegetables.')
         ->assertDontSee('encap-frozen-product', false)
         ->assertDontSee('Profile photos can be added to these contact cards later.')
         ->assertSee('footer-business-contacts', false)
@@ -443,6 +447,33 @@ test('sitemap only includes published categories and is xml', function () {
         ->assertSee('/ar/packing-stations')
         ->assertSee('/en/products/visible-mango')
         ->assertDontSee('/en/products/hidden-mango');
+});
+
+test('frozen supply section uses direct buyer-focused copy in both locales', function () {
+    $this->get('/en')
+        ->assertOk()
+        ->assertSee('Frozen produce, specified for your market.')
+        ->assertSee('Tell us the product, format, volume and destination.')
+        ->assertSee('Supply built around your specification.');
+
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee('توريد المجمدات وفق مواصفات سوقك.')
+        ->assertSee('حدد الصنف وشكل التجهيز والكمية والوجهة، وسننسق معك متطلبات التوريد والتعبئة والتصدير من البداية.')
+        ->assertSee('توريد يبدأ من مواصفاتك.')
+        ->assertDontSee('ENCAP / FROZEN PRODUCE');
+});
+
+test('frozen supply CTA preselects frozen on the quote form in both locales', function () {
+    foreach (['/en/request-a-quote?form=frozen', '/ar/request-a-quote?form=frozen'] as $path) {
+        $this->get($path)
+            ->assertOk()
+            ->assertSee('value="frozen" selected', false);
+    }
+
+    $this->get('/en/request-a-quote?form=unsupported')
+        ->assertOk()
+        ->assertDontSee('value="frozen" selected', false);
 });
 
 test('quote enquiry is validated and saved for the admin inbox', function () {

@@ -526,9 +526,16 @@ class WebsiteController extends Controller
 
         $pageSeo['robots'] = 'noindex,follow';
 
+        $requestedForm = $request->query('form');
+        $selectedForm = is_string($requestedForm)
+            && in_array($requestedForm, ['fresh', 'frozen', 'processed'], true)
+                ? $requestedForm
+                : null;
+
         return view('website.quote', [
             'categories' => $categories,
             'selectedCategory' => $request->integer('category') ?: null,
+            'selectedForm' => $selectedForm,
             'locale' => $locale,
             'pageSeo' => $pageSeo,
         ]);
