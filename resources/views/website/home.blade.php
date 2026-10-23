@@ -90,35 +90,21 @@
  @else<div class="encap-catalog-empty"><span class="encap-kicker">{{ __('Made for your market') }}</span><h3>{{ __('Tell us what you are looking for.') }}</h3><p>{{ __('Our team can discuss sourcing requirements, product forms and export needs directly with you.') }}</p><a class="encap-button encap-button-primary" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request a quote') }} <span>↗</span></a></div>@endif
  <div class="encap-catalog-footer"><span>{{ __('Every market has its own requirements.') }}</span><span>{{ __('Let’s discuss the right fit for yours.') }}</span><a href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Discuss your requirements') }} ↗</a></div>
 </div></section>
-@php($frozenCategories = $categories->filter(fn ($category) => collect((array) $category->available_forms)->contains(fn ($form) => strtolower((string) $form) === 'frozen'))->take(3))
 <section class="encap-frozen-feature" aria-labelledby="encap-frozen-title">
  <div class="container encap-frozen-grid">
   <div class="encap-frozen-copy">
-   <span class="encap-section-index">{{ __('03 / Frozen range') }}</span>
-   <div class="encap-kicker">{{ __('Frozen fruit & vegetables') }}</div>
-   <h2 id="encap-frozen-title">{{ __('Frozen produce, prepared for your market.') }}</h2>
-   <p>{{ __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.') }}</p>
-   <div class="encap-frozen-pills"><span>{{ __('Fruit & vegetables') }}</span><span>{{ __('Buyer-led specifications') }}</span><span>{{ __('Packing options confirmed per enquiry') }}</span></div>
-   <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Ask us about frozen formats') }} <span aria-hidden="true">↗</span></a>
+   <span class="encap-frozen-eyebrow">{{ __('Frozen range') }}</span>
+   <h2 id="encap-frozen-title">{{ __('Frozen fruit and vegetables for global markets.') }}</h2>
+   <p>{{ __('We welcome enquiries for frozen fruit and vegetables. Product type, specifications, packaging, quantity and destination are confirmed with our team before an order is agreed.') }}</p>
+   <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Discuss frozen supply') }} <span aria-hidden="true">↗</span></a>
+   <p class="encap-frozen-footnote"><span aria-hidden="true">🇪🇬</span>{{ __('Product availability and packing details are confirmed for each enquiry.') }}</p>
   </div>
-  <div class="encap-frozen-visual" style="background-image:url('{{ \App\Support\EncapImage::url('packing-warehouse.jpg', 'https://images.unsplash.com/photo-1755599604342-186a96a57570?fit=crop&fm=jpg&w=1400&q=78') }}')" aria-hidden="true">
-   <span class="encap-frozen-snowflake">❄</span>
-   <div class="encap-frozen-visual-label"><small>ENCAP / FROZEN RANGE</small><strong>{{ __('Frozen fruit & vegetables') }}</strong><span>{{ __('Availability and pack formats are confirmed per enquiry.') }}</span></div>
-  </div>
- </div>
- <div class="container">
-  @if($frozenCategories->isNotEmpty())
-   <div class="encap-frozen-products" aria-label="{{ __('Frozen product categories') }}">
-    @foreach($frozenCategories as $category)
-     <a class="encap-frozen-product" href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}">
-      @if($category->image)<img src="{{ \App\Support\EncapImage::url($category->image) }}" alt="" width="240" height="180" loading="lazy" decoding="async">@else<div class="encap-frozen-product-placeholder"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="44" height="44" loading="lazy" decoding="async"></div>@endif
-      <span><strong>{{ $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en }}</strong><small>{{ __('Explore') }} ↗</small></span>
-     </a>
-    @endforeach
-   </div>
-  @else
-   <div class="encap-frozen-followup"><span>{{ __('Availability and pack formats are confirmed per enquiry.') }}</span><a href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Explore all products') }} <span aria-hidden="true">↗</span></a></div>
-  @endif
+  <figure class="encap-frozen-visual" style="background-image:url('{{ \App\Support\EncapImage::url('frozen-berries.jpg', 'https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?auto=format&fit=crop&w=1600&q=82') }}')" aria-labelledby="encap-frozen-photo-caption">
+   <figcaption class="encap-frozen-visual-label" id="encap-frozen-photo-caption">
+    <small>{{ __('ENCAP / FROZEN PRODUCE') }}</small>
+    <strong>{{ __('From origin to export.') }}</strong>
+   </figcaption>
+  </figure>
  </div>
 </section>
 <section class="section encap-process"><div class="container encap-process-grid"><div class="encap-process-heading"><span class="encap-section-index">{{ __('04 / How we work') }}</span><div class="encap-kicker">{{ __('Clear steps. Direct communication.') }}</div><h2>{{ __('A considered route from field to shipment.') }}</h2><p>{{ __('We keep the process practical: understand your requirement, review sourcing options, align the details and agree on the next step.') }}</p><a class="encap-text-link" href="{{ route('farms', ['locale' => $locale]) }}">{{ __('Explore our production approach') }} <span>↗</span></a><div class="encap-process-decoration"><img class="encap-process-decoration-logo" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="90" height="90" loading="lazy" decoding="async"><span>✳</span></div></div>

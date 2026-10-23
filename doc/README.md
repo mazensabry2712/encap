@@ -89,7 +89,7 @@ Motion is built with native CSS and small vanilla JavaScript; no animation packa
 
 The public quality page describes product specifications, grading, handling, traceability, food safety, packing, cold-chain coordination and export preparation. It references BRCGS Food Safety (BRC), GLOBALG.A.P., ISO 9001, GRASP and SEDEX/SMETA as frameworks used to structure relevant buyer or supplier requirements. The site does not claim that ENCAP or a supplier is certified or audited: any certification, audit or facility status must be verified and documented for the relevant operation before it is stated. SEDEX/SMETA is described as a supply-chain and ethical-trade assessment approach, not as a certification.
 
-The homepage includes a dedicated frozen-range feature. Category cards appear only for published categories whose available_forms field explicitly includes Frozen. If no category is marked Frozen, the section remains a buyer enquiry entry point and does not imply a specific frozen item is currently available. Product availability, processing scope and packing formats are confirmed per enquiry.
+The homepage includes a dedicated frozen-range banner with frozen-fruit imagery and a quotation call to action. It deliberately does not reuse general product-category cards, because a category-level form option is not enough to establish that a specific frozen SKU is offered. Product availability, packing and processing scope must be confirmed per enquiry before a frozen-product catalogue is published.
 
 The public footer includes the regional business details provided by the ENCAP team:
 - Saudi subsidiary: شركة حدائق الشمال (Hadaeq Al-Shamal Company), Kingdom of Saudi Arabia, Tabarjal — Al-Aziziyah, Al-Jawf.

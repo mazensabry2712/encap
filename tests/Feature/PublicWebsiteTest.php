@@ -11,6 +11,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         'name_en' => 'Homepage Citrus',
         'name_ar' => 'موالح الرئيسية',
         'slug' => 'homepage-citrus',
+        'available_forms' => ['Fresh', 'Frozen'],
         'is_published' => true,
     ]);
 
@@ -39,6 +40,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-quality-band', false)
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
+        ->assertDontSee('encap-frozen-product', false)
         ->assertSee('footer-business-contacts', false)
         ->assertSee('+966 56 830 9656', false)
         ->assertSee('+20 106 011 3074', false)
