@@ -32,7 +32,7 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=82') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261023-logo-2">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261023-hero-heading-fix-1">
     <link rel="stylesheet" href="{{ asset('css/navigation.css') }}">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
