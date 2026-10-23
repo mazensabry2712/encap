@@ -56,7 +56,9 @@ test('new image uploads fall back to laravel storage when encap-img cannot be wr
         $image = UploadedFile::fake()->image('mango.png', 2, 2);
         $stored = app(EncapImageUpload::class)->store($image, 'categories', 'images');
 
-        expect($stored['disk'])->toBe('public');
+        expect($stored['disk'])->toBe('public')
+            ->and(EncapImage::url($stored['path']))->toContain('/encap-img/categories/');
+
         Storage::disk('public')->assertExists($stored['path']);
         $this->get('/encap-img/'.$stored['path'])->assertOk();
     } finally {

@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Throwable;
 
 final class EncapImageController extends Controller
 {
     /**
-     * Serve approved image files from encap-img, with a legacy upload fallback.
+     * Serve approved image files from encap-img or Laravel's fallback upload disk.
      */
     public function show(string $path): BinaryFileResponse
     {
@@ -23,17 +24,32 @@ final class EncapImageController extends Controller
             404
         );
 
-        $disk = Storage::disk('encap_images');
+        $imageDisk = null;
 
-        // Older dashboard uploads may still exist under storage/app/public.
-        // Serve them through this controller too, so no public/storage symlink is required.
-        if (! $disk->exists($path)) {
-            $disk = Storage::disk('public');
+        foreach (['encap_images', 'public'] as $diskName) {
+            try {
+                $candidate = Storage::disk($diskName);
+
+                if ($candidate->exists($path)) {
+                    $imageDisk = $candidate;
+                    break;
+                }
+            } catch (Throwable) {
+                // The other disk may still contain the requested image.
+            }
         }
 
-        abort_unless($disk->exists($path), 404);
+        abort_unless($imageDisk !== null, 404);
 
-        return response()->file($disk->path($path), [
+        try {
+            $absolutePath = $imageDisk->path($path);
+        } catch (Throwable) {
+            abort(404);
+        }
+
+        abort_unless(is_file($absolutePath), 404);
+
+        return response()->file($absolutePath, [
             'Cache-Control' => 'public, max-age=86400',
             'X-Content-Type-Options' => 'nosniff',
         ]);
