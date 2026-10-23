@@ -45,7 +45,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
         ->assertSee('Frozen produce, specified for your market.')
-        ->assertSee('images.pexels.com/photos/27099094', false)
+        ->assertSee('images.pexels.com/photos/9814690', false)
         ->assertSee('Refrigerated trucks prepared for temperature-controlled food transport.')
         ->assertSee('Request a frozen-supply quote')
         ->assertSee('/en/request-a-quote?form=frozen', false)
@@ -313,8 +313,8 @@ test('product catalogue uses the redesigned hero and data-backed category cards'
     $this->get('/en/products')
         ->assertOk()
         ->assertSee('encap-catalog-hero', false)
-        ->assertSee(\App\Support\EncapImage::url('farm-landscape.jpg', 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=82'))
-        ->assertSee(\App\Support\EncapImage::url('fresh-produce.jpg', 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=82'))
+        ->assertSee(\App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=1000&q=85'))
+        ->assertSee(\App\Support\EncapImage::url('produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=800&q=85'))
         ->assertSee('encap-catalog-cta-image', false)
         ->assertSee('encap-shared-brand-core', false)
         ->assertSee('encap-img/favicon.png')
@@ -566,7 +566,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('encap-service-card-media', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false)
-        ->assertSee(\App\Support\EncapImage::url('orchard-harvest.jpg', 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?auto=format&fit=crop&w=1400&q=78'));
+        ->assertSee(\App\Support\EncapImage::url('orchard-harvest-2026.jpg', 'https://images.unsplash.com/photo-1643138411076-238fda8c1e1d?fit=crop&fm=jpg&w=1400&q=85'));
 
     $this->get('/ar/farms')
         ->assertOk()
@@ -575,7 +575,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('encap-service-visual-copy', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false)
-        ->assertSee(\App\Support\EncapImage::url('orchard-harvest.jpg', 'https://images.unsplash.com/photo-1761839259494-71caddcdd6b3?auto=format&fit=crop&w=1400&q=78'));
+        ->assertSee(\App\Support\EncapImage::url('orchard-harvest-2026.jpg', 'https://images.unsplash.com/photo-1643138411076-238fda8c1e1d?fit=crop&fm=jpg&w=1400&q=85'));
 
     $this->get('/en/packing-stations')
         ->assertOk()
@@ -583,7 +583,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Sorting & grading')
         ->assertSee('Pre-cooling & cold-chain coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee(\App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'))
+        ->assertSee(\App\Support\EncapImage::url('potato-sorting-2026.jpg', 'https://images.pexels.com/photos/2889093/pexels-photo-2889093.jpeg?auto=compress&cs=tinysrgb&w=1400'))
         ->assertSee('encap-img/favicon.png', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
@@ -601,7 +601,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Export & Logistics')
         ->assertSee('Documentation & compliance coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee(\App\Support\EncapImage::url('cargo-port.jpg', 'https://images.unsplash.com/photo-1774929104515-ac1b747a8c4c?auto=format&fit=crop&w=1400&q=78'))
+        ->assertSee(\App\Support\EncapImage::url('cargo-port-2026.jpg', 'https://images.unsplash.com/photo-1759272840538-ae4b07214c71?fit=crop&fm=jpg&w=1400&q=85'))
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
 
@@ -695,19 +695,19 @@ test('catalogue and product details show real crop-specific photos when no admin
 
     $this->get('/en/products')
         ->assertOk()
-        ->assertSee('images.pexels.com/photos/5640033', false)
-        ->assertSee('images.unsplash.com/photo-1772638583263', false)
-        ->assertSee('images.pexels.com/photos/9192252', false)
-        ->assertSee('images.pexels.com/photos/10899606', false)
-        ->assertSee('images.pexels.com/photos/6316541', false)
-        ->assertSee('images.pexels.com/photos/4024739', false)
-        ->assertSee('images.pexels.com/photos/29310033', false)
-        ->assertSee('images.pexels.com/photos/35542734', false)
-        ->assertSee('images.pexels.com/photos/12095219', false);
+        ->assertSee('images.unsplash.com/photo-1605027990121', false)
+        ->assertSee('images.unsplash.com/photo-1705573382809', false)
+        ->assertSee('images.unsplash.com/photo-1626964146632', false)
+        ->assertSee('images.unsplash.com/photo-1756361947495', false)
+        ->assertSee('images.unsplash.com/photo-1746499866328', false)
+        ->assertSee('images.unsplash.com/photo-1685130055879', false)
+        ->assertSee('images.unsplash.com/photo-1642359548284', false)
+        ->assertSee('images.unsplash.com/photo-1742304267119', false)
+        ->assertSee('images.unsplash.com/photo-1633360819525', false);
 
     $this->get('/ar/products/grapes')
         ->assertOk()
-        ->assertSee('images.pexels.com/photos/9192252', false);
+        ->assertSee('images.unsplash.com/photo-1626964146632', false);
 });
 
 test('an uploaded category image remains preferred over a stock fallback', function () {
@@ -725,10 +725,10 @@ test('an uploaded category image remains preferred over a stock fallback', funct
     $this->get('/en/products')
         ->assertOk()
         ->assertSee($expectedImage, false)
-        ->assertDontSee('images.pexels.com/photos/9192252', false);
+        ->assertDontSee('images.unsplash.com/photo-1626964146632', false);
 });
 
-test('legacy mango photography is replaced and product gallery thumbnails never double-prefix image URLs', function () {
+test('a dashboard-uploaded legacy mango photo stays visible and product gallery URLs remain correct', function () {
     Category::query()->create([
         'name_en' => 'Mango',
         'name_ar' => 'مانجو',
@@ -742,13 +742,11 @@ test('legacy mango photography is replaced and product gallery thumbnails never 
 
     $this->get('/ar/products/mango')
         ->assertOk()
-        ->assertSee('images.pexels.com/photos/5640033', false)
-        ->assertDontSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false)
+        ->assertSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false)
+        ->assertSee('data-image-src', false)
         ->assertDontSee('/encap-img/https://', false);
 
     $this->get('/ar/products')
         ->assertOk()
-        ->assertSee('images.pexels.com/photos/5640033', false)
-        ->assertDontSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false);
+        ->assertSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false);
 });
-
