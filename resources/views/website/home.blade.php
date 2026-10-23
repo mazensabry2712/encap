@@ -98,7 +98,8 @@
    <p>{{ __('Tell us the product, format, volume and destination. We’ll align the supply, packaging and export requirements with you from the outset.') }}</p>
    <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale, 'form' => 'frozen']) }}">{{ __('Request a frozen-supply quote') }} <span aria-hidden="true">↗</span></a>
   </div>
-  <figure class="encap-frozen-visual" style="background-image:url('{{ \App\Support\EncapImage::url('frozen-berries.jpg', 'https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?auto=format&fit=crop&w=1600&q=82') }}')" aria-labelledby="encap-frozen-photo-caption">
+  <figure class="encap-frozen-visual" aria-labelledby="encap-frozen-photo-caption">
+   <img class="encap-frozen-photo" src="{{ \App\Support\EncapImage::url('frozen-berries-export.jpg', 'https://images.pexels.com/photos/6823367/pexels-photo-6823367.jpeg?auto=compress&cs=tinysrgb&w=1600') }}" alt="{{ __('Frozen berries covered with frost and ice.') }}" width="1600" height="1067" loading="lazy" decoding="async">
    <figcaption class="encap-frozen-visual-label" id="encap-frozen-photo-caption">
     <small>{{ __('ENCAP / FROZEN SUPPLY') }}</small>
     <strong>{{ __('Supply built around your specification.') }}</strong>

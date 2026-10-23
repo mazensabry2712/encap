@@ -45,6 +45,8 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
         ->assertSee('Frozen produce, specified for your market.')
+        ->assertSee('images.pexels.com/photos/6823367', false)
+        ->assertSee('Frozen berries covered with frost and ice.')
         ->assertSee('Request a frozen-supply quote')
         ->assertSee('/en/request-a-quote?form=frozen', false)
         ->assertDontSee('We welcome enquiries for frozen fruit and vegetables.')
