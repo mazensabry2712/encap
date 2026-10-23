@@ -583,7 +583,7 @@ test('farm, packing station and export service pages render in English and Arabi
         ->assertSee('Sorting & grading')
         ->assertSee('Pre-cooling & cold-chain coordination')
         ->assertSee('encap-service-visual-figure', false)
-        ->assertSee(\App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.pexels.com/photos/10899606-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'))
+        ->assertSee(\App\Support\EncapImage::url('potato-sorting.jpg', 'https://images.unsplash.com/photo-1767982619694-32f8450ea5f7?auto=format&fit=crop&w=1400&q=78'))
         ->assertSee('encap-img/favicon.png', false)
         ->assertDontSee('encap-service-number', false)
         ->assertDontSee('encap-service-step-number', false);
