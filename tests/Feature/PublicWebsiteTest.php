@@ -38,6 +38,11 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-process-row', false)
         ->assertSee('encap-quality-band', false)
         ->assertSee('encap-final-cta', false)
+        ->assertSee('encap-frozen-feature', false)
+        ->assertSee('footer-business-contacts', false)
+        ->assertSee('+966 56 830 9656', false)
+        ->assertSee('+20 106 011 3074', false)
+        ->assertSee('شركة حدائق الشمال', false)
         ->assertSee('encap-service-hub', false)
         ->assertSee('/en/packing-stations', false)
         ->assertSee('encap-signature-logo', false)
@@ -78,16 +83,18 @@ test('site-wide motion assets are loaded on public English and Arabic page templ
     }
 });
 
-test('quality pages do not show decorative page numbering', function () {
-    $this->get('/en/quality')
-        ->assertOk()
-        ->assertSee('content-story-brand', false)
-        ->assertDontSee('decoding="async"> / 04', false);
-
-    $this->get('/ar/quality')
-        ->assertOk()
-        ->assertSee('content-story-brand', false)
-        ->assertDontSee('decoding="async"> / 04', false);
+test('quality pages explain reference frameworks without claiming ENCAP certification', function () {
+    foreach (['/en/quality', '/ar/quality'] as $path) {
+        $this->get($path)
+            ->assertOk()
+            ->assertSee('encap-quality-frameworks', false)
+            ->assertSee('BRCGS Food Safety (BRC)')
+            ->assertSee('GLOBALG.A.P.')
+            ->assertSee('ISO 9001')
+            ->assertSee('GRASP')
+            ->assertSee('SEDEX / SMETA')
+            ->assertDontSee('decoding="async"> / 04', false);
+    }
 });
 
 

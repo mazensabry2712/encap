@@ -56,7 +56,7 @@
 <header class="site-header primary-header">
     <div class="container primary-nav">
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
-            <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" decoding="async">
+            <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="300" height="90" decoding="async">
         </a>
         @php($operationsActive = request()->routeIs('farms', 'packing-stations', 'export', 'quality'))
         <nav class="primary-links" aria-label="{{ __('Main navigation') }}">
@@ -119,12 +119,22 @@
 </header>
 <main id="main-content">@yield('content')</main>
 <footer class="footer"><div class="container"><div class="footer-top">
-    <div><a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="180" height="52" loading="lazy" decoding="async"></a><p class="footer-intro">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
+    <div><a class="brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home"><img class="brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" loading="lazy" decoding="async"></a><p class="footer-intro">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
     @if(!empty($socialLinks))<nav class="footer-social-links" aria-label="{{ __('Social profiles') }}">@foreach($socialLinks as $network => $url)<a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $network }} <span aria-hidden="true">↗</span></a>@endforeach</nav>@endif
     </div>
     <div><h2 class="footer-heading">{{ __('Explore') }}</h2><div class="footer-links"><a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a><a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Agriculture & Farms') }}</a><a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}">{{ __('Packing Stations') }}</a><a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality') }}</a><a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export & Logistics') }}</a></div></div>
     <div><h2 class="footer-heading">{{ __('Products & contact') }}</h2><div class="footer-links"><a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Our Products') }}</a><a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a><a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a></div></div>
-</div><div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
+</div>
+<section class="footer-business-contacts" aria-labelledby="footer-business-title">
+ <div class="footer-business-heading"><div><span class="footer-business-eyebrow">🇸🇦 🇪🇬 ENCAP GROUP</span><h2 id="footer-business-title">{{ __('Business Inquiries') }}</h2></div><p>{{ __('Contact our regional teams for business and export enquiries.') }}</p></div>
+ <div class="footer-subsidiary"><span class="footer-subsidiary-flag" aria-hidden="true">🇸🇦</span><div><span class="footer-subsidiary-label">{{ __('ENCAP subsidiary') }}</span><h3>{{ $currentLocale === 'ar' ? 'شركة حدائق الشمال' : 'Hadaeq Al-Shamal Company' }} @if($currentLocale !== 'ar')<span lang="ar" dir="rtl">شركة حدائق الشمال</span>@endif</h3><p>🇸🇦 {{ __('Kingdom of Saudi Arabia') }}</p><a href="https://www.google.com/maps/search/?api=1&query=Tabarjal+Al-Aziziyah+Al-Jawf+Saudi+Arabia" target="_blank" rel="noopener noreferrer" aria-label="{{ __('Open location in Maps') }}">📍 {{ __('Al-Jawf region — Tabarjal — Al-Aziziyah neighborhood') }} <span aria-hidden="true">↗</span></a></div></div>
+ <div class="footer-contact-grid">
+  <article class="footer-contact-card"><div class="footer-contact-avatar" aria-hidden="true">AS</div><div class="footer-contact-content"><h3>🇸🇦 Eng. Ahmed Elshamy</h3><p class="footer-contact-role">{{ __('Chairman of the Board') }}</p><a class="footer-contact-phone" href="tel:+966568309656">📞 <span dir="ltr">+966 56 830 9656</span></a><a class="footer-contact-location" href="https://www.google.com/maps/search/?api=1&query=Tabarjal+Al-Aziziyah+Al-Jawf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">{{ __('Open location in Maps') }}: 📍 {{ __('Al-Jawf region — Tabarjal — Al-Aziziyah neighborhood') }} ↗</a></div></article>
+  <article class="footer-contact-card"><div class="footer-contact-avatar" aria-hidden="true">MS</div><div class="footer-contact-content"><h3>🇪🇬 Eng. Mohamed Saad</h3><p class="footer-contact-role">{{ __('Export Sector Manager') }}</p><a class="footer-contact-phone" href="tel:+201060113074">📞 <span dir="ltr">+20 106 011 3074</span></a><a class="footer-contact-location" href="https://www.google.com/maps/search/?api=1&query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Open location in Maps') }}: 📍 {{ __('Nubaria — Beheira, Egypt') }} ↗</a></div></article>
+ </div>
+ <p class="footer-avatar-note">{{ __('Profile photos can be added to these contact cards later.') }}</p>
+</section>
+<div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
 <script src="{{ asset('js/encap-interactions.js') }}" defer></script>
 @if(request()->routeIs('home'))<script src="{{ asset('js/hero-experience.js') }}" defer></script>@endif
 <script src="{{ asset('js/language-switcher.js') }}" defer></script>

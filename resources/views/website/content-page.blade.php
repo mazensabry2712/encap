@@ -56,6 +56,26 @@
     </div>
 </section>
 @endif
+@if($page === 'quality')
+<section class="encap-quality-frameworks" aria-labelledby="encap-quality-frameworks-title">
+    <div class="container">
+        <div class="encap-quality-frameworks-heading">
+            <span class="encap-section-index">{{ __('International quality references') }}</span>
+            <h2 id="encap-quality-frameworks-title">{{ $pageContent['frameworks_heading'] }}</h2>
+            <p>{{ $pageContent['frameworks_intro'] }}</p>
+        </div>
+        <div class="encap-quality-framework-grid">
+            @foreach($pageContent['frameworks'] as $framework)
+                <article class="encap-quality-framework-card">
+                    <span class="encap-quality-framework-code" aria-hidden="true">{{ $framework['code'] }}</span>
+                    <div><h3>{{ $framework['name'] }}</h3><p>{{ $framework['description'] }}</p></div>
+                </article>
+            @endforeach
+        </div>
+        <p class="encap-quality-framework-note"><span aria-hidden="true">ⓘ</span> {{ $pageContent['frameworks_note'] }}</p>
+    </div>
+</section>
+@endif
 @if($page !== 'about')
 <section class="section"><div class="container">
 @if(!empty($pageContent['services']))
