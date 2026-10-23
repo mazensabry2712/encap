@@ -1,17 +1,17 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
-@php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
+@php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : __($category->name_en))
 @php($productImages = \App\Support\EncapProductImage::galleryUrls($category))
-@php($shortDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : $category->short_description_en)
-@php($description = $locale === 'ar' && $category->description_ar ? $category->description_ar : $category->description_en)
-@php($varieties = $locale === 'ar' && filled($category->varieties_ar) ? $category->varieties_ar : $category->varieties_en)
-@php($harvestWindow = $locale === 'ar' && filled($category->harvest_window_ar) ? $category->harvest_window_ar : $category->harvest_window_en)
-@php($specifications = $locale === 'ar' && filled($category->specifications_ar) ? $category->specifications_ar : $category->specifications_en)
-@php($overviewHeading = ($locale === 'ar' ? $category->overview_heading_ar : $category->overview_heading_en) ?: __('Quality supply, tailored to your needs'))
-@php($enquiryHeading = ($locale === 'ar' ? $category->enquiry_note_heading_ar : $category->enquiry_note_heading_en) ?: __('Product enquiry'))
-@php($enquiryText = ($locale === 'ar' ? $category->enquiry_note_text_ar : $category->enquiry_note_text_en) ?: __('Share your target quantity and destination to help us review current availability.'))
-@php($bottomCtaHeading = ($locale === 'ar' ? $category->bottom_cta_heading_ar : $category->bottom_cta_heading_en) ?: __('Let’s confirm the details that matter.'))
-@php($bottomCtaText = ($locale === 'ar' ? $category->bottom_cta_text_ar : $category->bottom_cta_text_en) ?: __('Tell us the product form, quantity, packaging and destination you need.'))
+@php($shortDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : __($category->short_description_en ?? ''))
+@php($description = $locale === 'ar' && $category->description_ar ? $category->description_ar : __($category->description_en ?? ''))
+@php($varieties = $locale === 'ar' && filled($category->varieties_ar) ? $category->varieties_ar : __($category->varieties_en ?? ''))
+@php($harvestWindow = $locale === 'ar' && filled($category->harvest_window_ar) ? $category->harvest_window_ar : __($category->harvest_window_en ?? ''))
+@php($specifications = $locale === 'ar' && filled($category->specifications_ar) ? $category->specifications_ar : __($category->specifications_en ?? ''))
+@php($overviewHeading = ($locale === 'ar' ? $category->overview_heading_ar : __($category->overview_heading_en ?? '')) ?: __('Quality supply, tailored to your needs'))
+@php($enquiryHeading = ($locale === 'ar' ? $category->enquiry_note_heading_ar : __($category->enquiry_note_heading_en ?? '')) ?: __('Product enquiry'))
+@php($enquiryText = ($locale === 'ar' ? $category->enquiry_note_text_ar : __($category->enquiry_note_text_en ?? '')) ?: __('Share your target quantity and destination to help us review current availability.'))
+@php($bottomCtaHeading = ($locale === 'ar' ? $category->bottom_cta_heading_ar : __($category->bottom_cta_heading_en ?? '')) ?: __('Let’s confirm the details that matter.'))
+@php($bottomCtaText = ($locale === 'ar' ? $category->bottom_cta_text_ar : __($category->bottom_cta_text_en ?? '')) ?: __('Tell us the product form, quantity, packaging and destination you need.'))
 @php($siteBase = rtrim(config('app.url'), '/'))
 @php($breadcrumbSchema = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => $siteBase . '/' . $locale], ['@type' => 'ListItem', 'position' => 2, 'name' => __('Products'), 'item' => $siteBase . '/' . $locale . '/products'], ['@type' => 'ListItem', 'position' => 3, 'name' => $name, 'item' => $siteBase . '/' . $locale . '/products/' . $category->slug]]])
 @push('head')<script type="application/ld+json">{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>@endpush
@@ -52,9 +52,9 @@
                         <div><span>{{ __('Product photography') }}</span><strong>{{ __('Explore the product gallery') }}</strong></div>
                         <span class="product-gallery-total">{{ count($productImages) }} {{ __('images') }}</span>
                     </div>
-                    <div class="product-gallery-thumbs" role="group" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : 'Product gallery' }}">
+                    <div class="product-gallery-thumbs" role="group" aria-label="{{ $locale === 'ar' ? 'صور المنتج' : __('Product gallery') }}">
                         @foreach($productImages as $image)
-                            <button class="product-gallery-thumb" type="button" data-gallery-thumb data-gallery-index="{{ $loop->iteration }}" data-image-src="{{ $image }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة المنتج' : 'View product image' }} {{ $loop->iteration }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">
+                            <button class="product-gallery-thumb" type="button" data-gallery-thumb data-gallery-index="{{ $loop->iteration }}" data-image-src="{{ $image }}" data-image-alt="{{ $name }}" aria-label="{{ $locale === 'ar' ? 'عرض صورة المنتج' : __('View product image') }} {{ $loop->iteration }}" aria-pressed="{{ $loop->first ? 'true' : 'false' }}">
                                 <img src="{{ $image }}" alt="" loading="lazy" width="240" height="190" decoding="async">
                                 <span class="product-gallery-thumb-index">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                             </button>
@@ -70,7 +70,7 @@
                 <div class="product-overview">
                     <div class="eyebrow">{{ __('Product overview') }}</div>
                     <h2>{{ $overviewHeading }}</h2>
-                    <p>{{ $description ?: ($locale === 'ar' ? 'تواصل معنا لمعرفة التوافر الحالي والمواصفات والتعبئة المناسبة لاحتياجاتك.' : 'Contact our team to confirm current availability, specifications and packaging for your requirements.') }}</p>
+                    <p>{{ $description ?: ($locale === 'ar' ? 'تواصل معنا لمعرفة التوافر الحالي والمواصفات والتعبئة المناسبة لاحتياجاتك.' : __('Contact our team to confirm current availability, specifications and packaging for your requirements.')) }}</p>
                 </div>
             @endif
 
@@ -88,7 +88,7 @@
             @if($category->show_packaging && ($category->packaging_en || $category->packaging_ar))
                 <div class="detail-block">
                     <h3 class="detail-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-package"></use></svg>{{ __('Packaging') }}</h3>
-                    <p>{{ $locale === 'ar' && $category->packaging_ar ? $category->packaging_ar : $category->packaging_en }}</p>
+                    <p>{{ $locale === 'ar' && $category->packaging_ar ? $category->packaging_ar : __($category->packaging_en ?? '') }}</p>
                 </div>
             @endif
 
