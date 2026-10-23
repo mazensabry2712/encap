@@ -140,7 +140,7 @@
                 <div class="encap-contact-details-heading">
                     <span class="encap-section-index">{{ __('Contact details') }}</span>
                     <h2>{{ __('Let’s start a conversation.') }}</h2>
-                    <p>{{ __('Reach out through the official channels configured for ENCAP.') }}</p>
+                    <p>{{ __('Contact our regional teams directly, or use the form below.') }}</p>
                 </div>
 
                 @if($hasDirectContact)
