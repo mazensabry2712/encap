@@ -65,7 +65,7 @@
    <p>{{ __('Explore how we connect crop sourcing, post-harvest preparation and export coordination around your requirements.') }}</p>
   </div>
   <div class="encap-service-hub-grid">
-   <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=1400&q=85') }}')" href="{{ route('farms', ['locale' => $locale]) }}">
+   <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1400&q=85') }}')" href="{{ route('farms', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sprout"></use></svg></span>
     <span class="encap-service-hub-number">01 / ORIGIN</span><h3>{{ __('Agriculture & Farms') }}</h3><p>{{ __('Crop sourcing and seasonal planning.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
