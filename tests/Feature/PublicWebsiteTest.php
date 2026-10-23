@@ -751,3 +751,65 @@ test('a dashboard-uploaded legacy mango photo stays visible and product gallery 
         ->assertOk()
         ->assertSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false);
 });
+
+
+test('French Russian and Turkish public pages are localized while editable SEO stays Arabic and English', function () {
+    $locales = [
+        'fr' => [
+            'about' => 'Une agriculture reliée clairement aux marchés',
+            'farms' => 'Tout commence dans les champs',
+            'packing-stations' => 'De la réception des récoltes à la préparation pour l’expédition',
+            'quality' => 'La qualité est intégrée à chaque étape.',
+            'export' => 'Une coordination des exportations adaptée à votre marché',
+            'product' => 'Produits pour les marchés mondiaux',
+        ],
+        'ru' => [
+            'about' => 'Сельское хозяйство с понятным выходом на рынок',
+            'farms' => 'Всё начинается в поле',
+            'packing-stations' => 'От приёмки урожая до подготовки к отправке',
+            'quality' => 'Качество закладывается на каждом этапе.',
+            'export' => 'Координация экспорта с учётом вашего рынка',
+            'product' => 'Продукция для мировых рынков',
+        ],
+        'tr' => [
+            'about' => 'Pazara açık bir yol sunan tarım',
+            'farms' => 'Tarladan başlayarak',
+            'packing-stations' => 'Gelen üründen sevkiyata hazır hazırlığa',
+            'quality' => 'Kalite her aşamanın bir parçasıdır.',
+            'export' => 'Pazarınıza göre ihracat koordinasyonu',
+            'product' => 'Küresel pazarlar için ürünler',
+        ],
+    ];
+
+    foreach ($locales as $locale => $phrases) {
+        $this->get('/' . $locale . '/about')
+            ->assertOk()
+            ->assertSee('lang="' . $locale . '"', false)
+            ->assertSee($phrases['about'])
+            ->assertSee($phrases['farms'] === '' ? '' : '/'. $locale . '/farms', false)
+            ->assertSee('/' . $locale . '/products', false)
+            ->assertDontSee('hreflang="' . $locale . '"', false);
+
+        foreach (['farms', 'packing-stations', 'quality', 'export'] as $page) {
+            $this->get('/' . $locale . '/' . $page)
+                ->assertOk()
+                ->assertSee($phrases[$page]);
+        }
+
+        $this->get('/' . $locale)
+            ->assertOk()
+            ->assertSee('lang="' . $locale . '"', false)
+            ->assertSee('href="' . route('home', ['locale' => $locale]) . '"', false)
+            ->assertSee('hreflang="en"', false)
+            ->assertSee('hreflang="ar"', false)
+            ->assertDontSee('hreflang="' . $locale . '"', false);
+
+        $this->get('/' . $locale . '/products')
+            ->assertOk()
+            ->assertSee($phrases['product']);
+
+        $this->get('/' . $locale . '/contact')->assertOk();
+        $this->get('/' . $locale . '/request-a-quote')->assertOk();
+    }
+});
+
