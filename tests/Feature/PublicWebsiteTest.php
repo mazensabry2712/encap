@@ -761,7 +761,7 @@ test('French Russian and Turkish public pages are localized while editable SEO s
             'packing-stations' => 'De la réception des récoltes à la préparation pour l’expédition',
             'quality' => 'La qualité est intégrée à chaque étape.',
             'export' => 'Une coordination des exportations adaptée à votre marché',
-            'product' => 'Produits pour les marchés mondiaux',
+            'product' => 'Des produits pour les marchés mondiaux',
         ],
         'ru' => [
             'about' => 'Сельское хозяйство с понятным выходом на рынок',
