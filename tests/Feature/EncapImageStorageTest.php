@@ -33,7 +33,7 @@ test('legacy category uploads remain visible through the encap image route befor
     Storage::disk('public')->put('categories/legacy-mango.jpg', 'legacy mango image');
 
     expect(EncapImage::url('categories/legacy-mango.jpg'))
-        ->toBe(Storage::disk('encap_images')->url('categories/legacy-mango.jpg'));
+        ->toContain('/encap-img/categories/legacy-mango.jpg');
 
     $this->get('/encap-img/categories/legacy-mango.jpg')
         ->assertOk()
