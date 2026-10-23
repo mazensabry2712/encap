@@ -46,7 +46,7 @@
                 <div class="encap-catalog-orbit encap-catalog-orbit--inner"></div>
 
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--primary">
-                    <img src="{{ \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
                     <figcaption>{{ __('Agricultural production') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
