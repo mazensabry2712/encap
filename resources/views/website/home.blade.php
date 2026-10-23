@@ -99,7 +99,7 @@
    <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale, 'form' => 'frozen']) }}">{{ __('Request a frozen-supply quote') }} <span aria-hidden="true">↗</span></a>
   </div>
   <figure class="encap-frozen-visual" aria-labelledby="encap-frozen-photo-caption">
-   <img class="encap-frozen-photo" src="{{ \App\Support\EncapImage::url('frozen-berries-export.jpg', 'https://images.pexels.com/photos/6823367/pexels-photo-6823367.jpeg?auto=compress&cs=tinysrgb&w=1600') }}" alt="{{ __('Frozen berries covered with frost and ice.') }}" width="1600" height="1067" loading="lazy" decoding="async">
+   <img class="encap-frozen-photo" src="{{ \App\Support\EncapImage::url('frozen-transport.jpg', 'https://images.pexels.com/photos/27099094/pexels-photo-27099094/free-photo-of-view-of-parked-trucks.jpeg?auto=compress&dpr=1&h=750&w=1260') }}" alt="{{ __('Refrigerated trucks prepared for temperature-controlled food transport.') }}" width="1600" height="1067" loading="lazy" decoding="async">
    <figcaption class="encap-frozen-visual-label" id="encap-frozen-photo-caption">
     <small>{{ __('ENCAP / FROZEN SUPPLY') }}</small>
     <strong>{{ __('Supply built around your specification.') }}</strong>
