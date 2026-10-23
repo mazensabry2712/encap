@@ -29,6 +29,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('css/hero-experience.css', false)
         ->assertSee('js/hero-experience.js', false)
         ->assertSee('encap-hero-image', false)
+        ->assertSee('images.pexels.com/photos/10970006', false)
         ->assertSee('encap-image-label-logo', false)
         ->assertSee('encap-story-brand', false)
         ->assertSee('encap-orbit-brand', false)
