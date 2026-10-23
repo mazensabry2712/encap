@@ -180,9 +180,25 @@
                         @endif
                     </div>
                 @else
-                    <div class="encap-contact-not-configured">
-                        <span aria-hidden="true">01</span>
-                        <p>{{ __('Company contact details are shown here once configured by an administrator.') }}</p>
+                    <div class="encap-contact-channels">
+                        <article class="encap-contact-channel">
+                            <span class="encap-contact-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.4 4-2 1.6a14 14 0 0 0 5.5 5.5l1.6-2 4 1.4v3c0 1.1-.9 2-2 2A15.5 15.5 0 0 1 5 5.5c0-1.1.9-2 2-2Z"/></svg></span>
+                            <div>
+                                <span>{{ __('Kingdom of Saudi Arabia') }}</span>
+                                <a href="tel:+966568309656" dir="ltr">+966 56 830 9656</a>
+                                <p>Eng. Ahmed Elshamy · {{ __('Chairman of the Board') }}</p>
+                            </div>
+                            <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
+                        </article>
+                        <article class="encap-contact-channel">
+                            <span class="encap-contact-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.4 4-2 1.6a14 14 0 0 0 5.5 5.5l1.6-2 4 1.4v3c0 1.1-.9 2-2 2A15.5 15.5 0 0 1 5 5.5c0-1.1.9-2 2-2Z"/></svg></span>
+                            <div>
+                                <span>{{ __('Nubaria — Beheira, Egypt') }}</span>
+                                <a href="tel:+201060113074" dir="ltr">+20 106 011 3074</a>
+                                <p>Eng. Mohamed Saad · {{ __('Export Sector Manager') }}</p>
+                            </div>
+                            <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
+                        </article>
                     </div>
                 @endif
 
