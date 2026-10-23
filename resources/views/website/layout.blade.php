@@ -3,14 +3,14 @@
 @php($seoDefaults = \App\Models\SeoSetting::current())
 @php($socialLinks = array_filter([__('Facebook') => $seoDefaults->facebook_url, __('Instagram') => $seoDefaults->instagram_url, __('LinkedIn') => $seoDefaults->linkedin_url, __('YouTube') => $seoDefaults->youtube_url]))
 @php($requestPath = request()->path())
-@php($pathAfterLocale = preg_replace('/^(en|ar)(?=\/|$)/', '', $requestPath))
+@php($pathAfterLocale = preg_replace('/^(en|ar|fr|ru|tr)(?=\/|$)/', '', $requestPath))
 @php($localizedSuffix = $pathAfterLocale ? '/' . ltrim($pathAfterLocale, '/') : '')
 @php($canonicalBase = rtrim(config('app.url'), '/'))
 @php($canonicalUrl = $canonicalBase . '/' . ($locale ?? 'en') . $localizedSuffix)
 @php($alternateEnglishUrl = $canonicalBase . '/en' . $localizedSuffix)
 @php($alternateArabicUrl = $canonicalBase . '/ar' . $localizedSuffix)
-@php($defaultTitle = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_title_ar : $seoDefaults->site_title_en)
-@php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : $seoDefaults->site_description_en)
+@php($defaultTitle = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_title_ar : __($seoDefaults->site_title_en))
+@php($defaultDescription = ($locale ?? 'en') === 'ar' ? $seoDefaults->site_description_ar : __($seoDefaults->site_description_en))
 @php($pageTitle = $pageSeo['title'] ?? $defaultTitle)
 @php($pageDescription = $pageSeo['description'] ?? $defaultDescription)
 @php($robotsDirective = $pageSeo['robots'] ?? $seoDefaults->default_robots)
@@ -22,9 +22,10 @@
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="apple-touch-icon" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>{{ $pageTitle }}</title><meta name="description" content="{{ $pageDescription }}"><meta name="robots" content="{{ $robotsDirective }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
-    @if(!isset($category) || ($category->name_ar && $category->description_ar))
-        <link rel="alternate" hreflang="en" href="{{ $alternateEnglishUrl }}"><link rel="alternate" hreflang="ar" href="{{ $alternateArabicUrl }}"><link rel="alternate" hreflang="x-default" href="{{ $alternateEnglishUrl }}">
-    @endif
+    @foreach(['en', 'ar', 'fr', 'ru', 'tr'] as $alternateLocale)
+        <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $canonicalBase . '/' . $alternateLocale . $localizedSuffix }}">
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ $alternateEnglishUrl }}">
     <meta property="og:type" content="website"><meta property="og:site_name" content="{{ $seoDefaults->organization_name }}"><meta property="og:title" content="{{ $pageTitle }}"><meta property="og:description" content="{{ $pageDescription }}"><meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:image" content="{{ $ogImageUrl }}">
     <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#08291e">
@@ -55,6 +56,7 @@
 </svg>
 <a class="skip-link" href="#main-content">{{ __('Skip to content') }}</a>
 @php($currentLocale = $locale ?? 'en')
+@php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
 <header class="site-header primary-header">
     <div class="container primary-nav">
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
@@ -65,7 +67,7 @@
             <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
             <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
             <details class="primary-dropdown">
-                <summary @if($operationsActive) class="is-active" @endif><span>{{ $currentLocale === 'ar' ? 'عملياتنا' : 'Operations' }}</span><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg></summary>
+                <summary @if($operationsActive) class="is-active" @endif><span>{{ __('Operations') }}</span><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg></summary>
                 <div class="primary-dropdown-panel">
                     <a href="{{ route('farms', ['locale' => $currentLocale]) }}" @if(request()->routeIs('farms')) aria-current="page" @endif>{{ __('Agriculture & Farms') }}</a>
                     <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}" @if(request()->routeIs('packing-stations')) aria-current="page" @endif>{{ __('Packing Stations') }}</a>
@@ -88,16 +90,13 @@
                 </button>
                 <nav class="language-menu" id="language-menu" aria-label="{{ __('Select language') }}" data-language-menu hidden>
                     <p class="language-menu-label">{{ __('Select language') }}</p>
-                    <a class="language-option" href="{{ $alternateEnglishUrl }}" lang="en" @if($currentLocale === 'en') aria-current="page" @endif>
-                        <span class="language-option-code">EN</span>
-                        <span class="language-option-text"><strong>English</strong><small>English</small></span>
-                        @if($currentLocale === 'en')<svg class="language-option-check" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"></path></svg>@endif
+                    @foreach($availableLocales as $languageLocale => $language)
+                    <a class="language-option" href="{{ $canonicalBase . '/' . $languageLocale . $localizedSuffix }}" lang="{{ $languageLocale }}" @if($currentLocale === $languageLocale) aria-current="page" @endif>
+                        <span class="language-option-code">{{ $language['code'] }}</span>
+                        <span class="language-option-text" @if($language['dir'] === 'rtl') dir="rtl" @endif><strong>{{ $language['label'] }}</strong><small>{{ $language['native'] }}</small></span>
+                        @if($currentLocale === $languageLocale)<svg class="language-option-check" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"></path></svg>@endif
                     </a>
-                    <a class="language-option" href="{{ $alternateArabicUrl }}" lang="ar" @if($currentLocale === 'ar') aria-current="page" @endif>
-                        <span class="language-option-code">AR</span>
-                        <span class="language-option-text" dir="rtl"><strong>العربية</strong><small>اللغة العربية</small></span>
-                        @if($currentLocale === 'ar')<svg class="language-option-check" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"></path></svg>@endif
-                    </a>
+                    @endforeach
                 </nav>
             </div>
             <a class="button primary-quote" href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} <span class="button-arrow" aria-hidden="true">↗</span></a>
