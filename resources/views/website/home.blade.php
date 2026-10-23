@@ -4,7 +4,7 @@
 <section class="encap-hero-experience encap-hero" data-encap-hero aria-labelledby="encap-hero-title">
  <div class="encap-hero-background" aria-hidden="true">
   <div class="encap-hero-image-plane" data-hero-layer data-hero-depth="7" data-hero-background>
-   <img class="encap-hero-image" src="{{ \App\Support\EncapImage::url('field-origin-2026.jpg', 'https://images.unsplash.com/photo-1775931438023-f042dfda9a14?fit=crop&fm=jpg&w=2000&q=85') }}" alt="" width="2400" height="1600" fetchpriority="high" decoding="async">
+   <img class="encap-hero-image" src="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}" alt="" width="2400" height="1600" fetchpriority="high" decoding="async">
   </div>
   <div class="encap-hero-vignette"></div>
   <div class="encap-hero-backdrop-orbit encap-hero-backdrop-orbit--one"></div>
