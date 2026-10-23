@@ -107,11 +107,11 @@ test('authenticated administrators can prepare image storage from the dashboard 
         ->post(route('admin.images.prepare'))
         ->assertRedirect(route('admin.dashboard'))
         ->assertSessionHas('imageLibraryResult.complete', true)
-        ->assertSessionHas('imageLibraryResult.downloaded', 23)
+        ->assertSessionHas('imageLibraryResult.downloaded', 20)
         ->assertSessionHas('imageLibraryResult.copied', 1);
 
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('farm-landscape.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-transport.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('field-origin-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-berries-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes-export.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions-export.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-potatoes-export.jpg');
