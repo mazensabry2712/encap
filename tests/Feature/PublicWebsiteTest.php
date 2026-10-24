@@ -151,11 +151,11 @@ test('mango uses one curated stock photo instead of dashboard-uploaded photos', 
 
     expect($images)
         ->toHaveCount(1)
-        ->and($images[0])->toContain('images.unsplash.com/photo-1605027990121-cbae9e0642df');
+        ->and($images[0])->toContain('images.unsplash.com/photos/29782357');
 
     $this->get('/ar/products/mango')
         ->assertOk()
-        ->assertSee('photo-1605027990121-cbae9e0642df', false)
+        ->assertSee('photos/29782357', false)
         ->assertDontSee('categories/mango-dashboard-upload.jpg')
         ->assertDontSee('categories/gallery/mango-dashboard-gallery.jpg')
         ->assertDontSee('data-total-images=', false);
@@ -188,11 +188,11 @@ test('mango uses one curated stock photo instead of dashboard-uploaded photos', 
 
     expect($images)
         ->toHaveCount(1)
-        ->and($images[0])->toContain('images.unsplash.com/photo-1605027990121-cbae9e0642df');
+        ->and($images[0])->toContain('images.unsplash.com/photos/29782357');
 
     $this->get('/ar/products/mango')
         ->assertOk()
-        ->assertSee('photo-1605027990121-cbae9e0642df', false)
+        ->assertSee('photos/29782357', false)
         ->assertDontSee('categories/mango-dashboard-upload.jpg')
         ->assertDontSee('categories/gallery/mango-dashboard-gallery.jpg')
         ->assertDontSee('data-total-images=', false);
