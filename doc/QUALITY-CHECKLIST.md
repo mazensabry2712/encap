@@ -8,7 +8,7 @@ Use this for each meaningful change. Mark an item complete only after it has act
 - [ ] The ten initial categories are inserted in a new database by the category seeder.
 - [ ] Category links open the correct details page and work on direct refresh.
 - [ ] Main image and gallery render; missing images fail gracefully.
-- [ ] English/Arabic page content, language switching and RTL/LTR direction work.
+- [ ] English, Arabic, French, Russian and Turkish public copy and language switching work; Arabic uses RTL and the other supported locales use LTR.
 - [ ] Quote form validates and persists a request.
 - [ ] Contact form validates and persists a message; the honeypot rejects filled submissions.
 - [ ] Admin can review and update the status of both enquiry types.
@@ -25,11 +25,11 @@ Use this for each meaningful change. Mark an item complete only after it has act
 - [ ] Title/description/canonical tags are not duplicated.
 - [ ] Canonical URLs use configured APP_URL, not a request host header.
 - [ ] Open Graph, Twitter card and valid structured data are present.
-- [ ] Sitemap is valid XML and contains only public, published/indexable categories.
+- [ ] Sitemap is valid XML, includes supported public locale routes, and contains only published/indexable categories.
 - [ ] robots.txt resolves through Laravel and links to sitemap.
 - [ ] Quote form is `noindex,follow`, omitted from the sitemap, and not blocked in `robots.txt`; admin paths remain disallowed.
 - [ ] Open Graph and Twitter large-card metadata include a usable social image even when no image is configured in admin settings.
-- [ ] English/Arabic alternates are emitted only when appropriate.
+- [ ] Reciprocal hreflang alternates cover all supported locales, with Arabic category URLs omitted when translated category copy is incomplete.
 - [ ] Missing public routes return HTTP 404.
 
 ## Performance and accessibility
@@ -37,7 +37,7 @@ Use this for each meaningful change. Mark an item complete only after it has act
 - [ ] Production asset build passes.
 - [ ] Static CSS is independently cacheable.
 - [ ] Below-the-fold images lazy-load; the primary image is not unnecessarily delayed.
-- [ ] `php artisan encap:images:prepare` completes successfully and every curated stock image exists under `encap-img/`.
+- [ ] `php artisan encap:images:prepare` completes successfully using bounded batches and every curated stock image exists under `encap-img/`.
 - [ ] Existing category/gallery/SEO uploads are copied into `encap-img/`, and the original files remain intact until visual verification is complete.
 - [ ] The authenticated admin dashboard can prepare the image library without shell access; image URLs use the `/encap-img/...` Laravel route and return HTTP 200.
 - [ ] Images have dimensions and descriptive alt text.
@@ -79,4 +79,4 @@ Report checks as Passed, Failed, or Not run. Do not claim CI, Lighthouse, deploy
 - [ ] Arabic RTL layout verified for navigation, buttons, cards, product formats and forms.
 - [ ] Reduced-motion behavior verified with the operating-system preference enabled.
 - [ ] No horizontal scrolling at 390px mobile width.
-- [ ] Production deploy and real-world image loading verified separately from CI.
+- [ ] Production deploy, folder permissions, all `/encap-img/...` responses, real email delivery and real-world image loading verified separately from CI.
