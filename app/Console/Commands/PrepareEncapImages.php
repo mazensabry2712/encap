@@ -13,18 +13,34 @@ class PrepareEncapImages extends Command
 
     public function handle(EncapImageLibrary $library): int
     {
-        $result = $library->prepare((bool) $this->option('force'));
+        $summary = ['downloaded' => 0, 'kept' => 0, 'copied' => 0, 'errors' => []];
+        $offset = 0;
+        $total = null;
 
-        $this->info('New stock images downloaded: '.$result['downloaded']);
-        $this->info('Existing stock images kept: '.$result['kept']);
-        $this->info('Existing category/SEO uploads copied: '.$result['copied']);
+        do {
+            $batch = $library->prepare((bool) $this->option('force'), $offset);
+            foreach (['downloaded', 'kept', 'copied'] as $counter) {
+                $summary[$counter] += $batch[$counter];
+            }
+            $summary['errors'] = array_merge($summary['errors'], $batch['errors']);
+            $total = $batch['total'];
+            $offset = $batch['next_offset'];
 
-        foreach ($result['errors'] as $error) {
+            if ($offset < $total) {
+                $this->comment("Prepared image batch through {$offset} of {$total}.");
+            }
+        } while ($offset < $total);
+
+        $this->info('New stock images downloaded: '.$summary['downloaded']);
+        $this->info('Existing stock images kept: '.$summary['kept']);
+        $this->info('Existing category/SEO uploads copied: '.$summary['copied']);
+
+        foreach (array_unique($summary['errors']) as $error) {
             $this->error($error);
         }
 
         $this->comment('Original files under storage/app/public were preserved for rollback.');
 
-        return $result['complete'] ? self::SUCCESS : self::FAILURE;
+        return $summary['errors'] === [] ? self::SUCCESS : self::FAILURE;
     }
 }
