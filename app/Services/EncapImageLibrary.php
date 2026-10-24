@@ -35,11 +35,25 @@ final class EncapImageLibrary
     /**
      * @return array{downloaded: int, kept: int, copied: int, errors: list<string>, complete: bool}
      */
-    public function prepare(bool $force = false): array
+    public function prepare(bool $force = false, int $offset = 0, int $limit = 4): array
     {
         $images = Storage::disk('encap_images');
         $legacy = Storage::disk('public');
-        $result = ['downloaded' => 0, 'kept' => 0, 'copied' => 0, 'errors' => [], 'complete' => true];
+        $total = count(self::STOCK_IMAGES);
+        $offset = max(0, min($offset, $total));
+        $limit = max(1, min($limit, 5));
+        $batch = array_slice(self::STOCK_IMAGES, $offset, $limit, true);
+        $result = [
+            'downloaded' => 0,
+            'kept' => 0,
+            'copied' => 0,
+            'errors' => [],
+            'complete' => false,
+            'finished' => false,
+            'offset' => $offset,
+            'next_offset' => $offset + count($batch),
+            'total' => $total,
+        ];
 
         // Copy uploaded product/SEO images first. Shared hosting may stop a request
         // while the later third-party image downloads are still running.
@@ -65,7 +79,7 @@ final class EncapImageLibrary
             }
         }
 
-        foreach (self::STOCK_IMAGES as $filename => $url) {
+        foreach ($batch as $filename => $url) {
             if (! $force && $images->exists($filename)) {
                 $result['kept']++;
                 continue;
@@ -93,7 +107,8 @@ final class EncapImageLibrary
             }
         }
 
-        $result['complete'] = $result['errors'] === [];
+        $result['finished'] = $result['next_offset'] >= $result['total'];
+        $result['complete'] = $result['finished'] && $result['errors'] === [];
 
         return $result;
     }
