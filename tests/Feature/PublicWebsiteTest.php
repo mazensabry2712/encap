@@ -999,3 +999,14 @@ test('French Russian and Turkish public pages are localized while editable SEO s
     }
 });
 
+
+test('social link previews consistently use the ENCAP logo instead of produce photography', function () {
+    $html = $this->get('/en')->assertOk()->getContent();
+
+    expect($html)
+        ->toMatch('/<meta property="og:image" content="[^"]*\/encap-img\/logo\.png"/')
+        ->and($html)->toMatch('/<meta name="twitter:image" content="[^"]*\/encap-img\/logo\.png"/')
+        ->and($html)->toContain('property="og:image:alt" content="ENCAP company logo"')
+        ->and($html)->toContain('name="twitter:image:alt" content="ENCAP company logo"')
+        ->and($html)->not->toContain('citrus-orchard-2026.jpg');
+});
