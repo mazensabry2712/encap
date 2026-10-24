@@ -4,7 +4,7 @@
 
 ENCAP is presented as a premium Egyptian agricultural production, sourcing and export business. The site should feel editorial, precise and trustworthy—not like a generic ecommerce theme. The design is informed by corporate storytelling and agricultural export product catalogues, while retaining an original ENCAP identity.
 
-The official Arabic company name is **الشركة المصرية الوطنية للإنتاج الزراعي**. Show it in a slim, animated ticker above (and outside) the sticky navigation so it never changes the ENCAP logo size or navbar layout. Repeat it once as a restrained legal-name line in the footer and expose it as `legalName`, with `ENCAP` as `alternateName`, in Organization structured data. The ticker pauses on hover, respects reduced-motion preferences, and remains compact on mobile. Do not place the full name beneath or inside the logo.
+The official Arabic company name is **الشركة المصرية الوطنية للإنتاج الزراعي**. Show it in a slim, animated ticker as the first row inside the sticky header, directly attached to the navigation with no margin or gap. Keep the original ENCAP logo size and navbar dimensions unchanged; the ticker remains part of the sticky header when scrolling. Repeat it once as a restrained legal-name line in the footer and expose it as `legalName`, with `ENCAP` as `alternateName`, in Organization structured data. The ticker pauses on hover, respects reduced-motion preferences, and remains compact on mobile. Do not place the full name beneath or inside the logo.
 
 ## Visual tokens
 
