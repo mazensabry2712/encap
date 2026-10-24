@@ -35,8 +35,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-1">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-1">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-2">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-2">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
@@ -59,13 +59,15 @@
 <a class="skip-link" href="#main-content">{{ __('Skip to content') }}</a>
 @php($currentLocale = $locale ?? 'en')
 @php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
+
+<header class="site-header primary-header">
 <div class="encap-legal-ticker" role="note" aria-label="الشركة المصرية الوطنية للإنتاج الزراعي">
     <div class="encap-legal-ticker-track" aria-hidden="true">
         <div class="encap-legal-ticker-sequence" lang="ar" dir="rtl"><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span></div>
         <div class="encap-legal-ticker-sequence" lang="ar" dir="rtl"><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span></div>
     </div>
 </div>
-<header class="site-header primary-header">
+
     <div class="container primary-nav">
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
             <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP" width="300" height="90" decoding="async">
