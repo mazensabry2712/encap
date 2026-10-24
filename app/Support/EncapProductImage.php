@@ -15,8 +15,8 @@ final class EncapProductImage
      */
     private const FALLBACKS = [
         'mango' => [
-            'product-mangoes-2026.jpg',
-            'https://images.unsplash.com/photo-1605027990121-cbae9e0642df?fit=crop&fm=jpg&w=1400&q=85',
+            'mango-replacement-2026.jpg',
+            'https://images.pexels.com/photos/29782357/pexels-photo-29782357/free-photo-of-ripe-mangoes-hanging-from-tree-in-tropical-setting.jpeg?auto=compress&w=1600',
         ],
         'citrus' => [
             'product-citrus-2026.jpg',
