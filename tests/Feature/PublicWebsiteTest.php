@@ -58,6 +58,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('href="https://bahnes.com"', false)
         ->assertSee('BAHNES IT SOLUTIONS')
         ->assertSee('footer-agency-credit', false)
+        ->assertSee('encap-footer-bottom-separator', false)
         ->assertSee('+966 56 830 9656', false)
         ->assertSee('+20 106 011 3074', false)
         ->assertSee('شركة حدائق الشمال', false)
@@ -271,6 +272,27 @@ test('the full Arabic company name is prominent across supported locales and str
         ->assertSee('footer-legal-name', false)
         ->assertDontSee('primary-brand-lockup', false)
         ->assertDontSee('encap-company-name-band', false);
+});
+
+
+test('footer closing signature groups ENCAP legal text with the Bahnes developer link', function () {
+    $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
+
+    expect($stylesheet)
+        ->toContain('.footer.encap-footer .encap-footer-bottom{')
+        ->toContain('.footer.encap-footer .encap-footer-bottom-legal{')
+        ->toContain('.footer.encap-footer .footer-agency-credit:before')
+        ->toContain('@media(max-width:600px)');
+
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee('encap-footer-bottom', false)
+        ->assertSee('encap-footer-bottom-separator', false)
+        ->assertSee('جميع الحقوق محفوظة.')
+        ->assertSee('الشركة المصرية الوطنية للإنتاج الزراعي')
+        ->assertSee('تصميم وتطوير بواسطة')
+        ->assertSee('BAHNES IT SOLUTIONS')
+        ->assertSee('href="https://bahnes.com"', false);
 });
 
 test('the company legal name appears in a static strip above the sticky navigation', function () {
