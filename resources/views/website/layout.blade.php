@@ -35,8 +35,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-company-lockup-3">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-company-lockup-3">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-1">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-1">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
@@ -59,14 +59,17 @@
 <a class="skip-link" href="#main-content">{{ __('Skip to content') }}</a>
 @php($currentLocale = $locale ?? 'en')
 @php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
+<div class="encap-legal-ticker" role="note" aria-label="الشركة المصرية الوطنية للإنتاج الزراعي">
+    <div class="encap-legal-ticker-track" aria-hidden="true">
+        <div class="encap-legal-ticker-sequence" lang="ar" dir="rtl"><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span></div>
+        <div class="encap-legal-ticker-sequence" lang="ar" dir="rtl"><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span><span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span></div>
+    </div>
+</div>
 <header class="site-header primary-header">
     <div class="container primary-nav">
-        <div class="primary-brand-lockup">
-            <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
-                <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP" width="300" height="90" decoding="async">
-            </a>
-            <span class="primary-brand-legal-name" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span>
-        </div>
+        <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
+            <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP" width="300" height="90" decoding="async">
+        </a>
         @php($operationsActive = request()->routeIs('farms', 'packing-stations', 'export', 'quality'))
         <nav class="primary-links" aria-label="{{ __('Main navigation') }}">
             <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
@@ -141,7 +144,7 @@
   <article class="footer-contact-card"><div class="footer-contact-avatar" aria-hidden="true">MS</div><div class="footer-contact-content"><h3>🇪🇬 Eng. Mohamed Saad</h3><p class="footer-contact-role">{{ __('Export Sector Manager') }}</p><a class="footer-contact-phone" href="tel:+201060113074">📞 <span dir="ltr">+20 106 011 3074</span></a><a class="footer-contact-location" href="https://www.google.com/maps/search/?api=1&query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Open location in Maps') }}: 📍 {{ __('Nubaria — Beheira, Egypt') }} ↗</a></div></article>
  </div>
 </section>
-<div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
+<div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span class="footer-legal-name" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
 <script src="{{ asset('js/encap-interactions.js') }}" defer></script>
 @if(request()->routeIs('home'))<script src="{{ asset('js/hero-experience.js') }}" defer></script>@endif
 <script src="{{ asset('js/language-switcher.js') }}" defer></script>
