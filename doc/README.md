@@ -3,7 +3,7 @@
 **Repository:** https://github.com/mazensabry2712/encap  
 **Stack:** Laravel 13 + Blade + MySQL-compatible database  
 **Source of truth:** main  
-**Languages:** English (default) and Arabic (RTL)
+**Languages:** English, Arabic (RTL), French, Russian and Turkish
 
 This folder documents project scope, implementation decisions, performance targets, testing and release safety. Keep it aligned with the application.
 
@@ -57,9 +57,9 @@ Do not run migrations or seeders blindly against an existing production database
 
 ## Central SEO rules
 
-The shared Blade layout outputs title, description, robots, canonical, Open Graph/Twitter card fields and Organization/WebSite JSON-LD. Home uses central title/description defaults; category detail pages can override title and description. A configured social image is used when present, otherwise the farm-landscape image is the fallback for Open Graph and large Twitter cards. Sitemap is generated from configured APP_URL and published categories. Quote pages are excluded from the sitemap and marked `noindex,follow`, but remain crawlable so search engines can read the directive; admin paths are disallowed in `robots.txt`.
+The shared Blade layout outputs title, description, robots, canonical, reciprocal hreflang alternates for supported public locales, Open Graph/Twitter card fields and Organization/WebSite JSON-LD. Home uses central title/description defaults; category detail pages can override title and description. A configured social image is used when present, otherwise the farm-landscape image is the fallback for Open Graph and large Twitter cards. Sitemap is generated from configured APP_URL and published categories. Quote pages are excluded from the sitemap and marked `noindex,follow`, but remain crawlable so search engines can read the directive; admin paths are disallowed in `robots.txt`.
 
-SMTP delivery is not yet part of the verified workflow. Both enquiry types are stored in the database and can be reviewed in the admin. Configure and test mail before promising email notifications.
+Both enquiry types are stored in the database and can be reviewed in the admin. The application attempts an email notification to the configured Central SEO contact email only when a real mail transport is configured; log/array mailers are treated as non-delivery, and notification failures do not discard a saved enquiry. Configure valid SMTP credentials in the hosting environment and test real delivery before treating notifications as operational.
 
 ## Performance approach
 
@@ -75,7 +75,7 @@ Use server-rendered content, low request count, a separately cacheable CSS file,
 
 ## Verification status
 
-GitHub Actions is configured to run the Pest feature suite and Vite production build on pushes/pull requests to main. Treat tests and builds as not verified until the corresponding GitHub Actions run has completed successfully. Deployment, real email delivery, image optimization, and Lighthouse scores require separate environment-specific verification.
+GitHub Actions runs the Pest feature suite, standalone browser-script checks and Vite production build on pushes/pull requests to main. The stock image library is prepared in small batches through the admin to avoid one long shared-hosting request. Treat tests and builds as not verified until the corresponding GitHub Actions run has completed successfully. Deployment, real email delivery, image optimization, and Lighthouse scores require separate environment-specific verification.
 
 
 ## Site-wide motion system
