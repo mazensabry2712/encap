@@ -282,6 +282,11 @@ test('the legal-name ticker is attached to the sticky header without changing lo
     expect($stylesheet)->not->toContain('primary-brand-lockup');
 
     $html = $this->get('/ar')->assertOk()->getContent();
+    $tickerMarkupStart = strpos($html, 'class="encap-legal-ticker"');
+    $tickerMarkupEnd = strpos($html, 'class="container primary-nav"', $tickerMarkupStart);
+    $tickerMarkup = substr($html, $tickerMarkupStart, $tickerMarkupEnd - $tickerMarkupStart);
+
+    expect(substr_count($tickerMarkup, 'class="encap-legal-ticker-item"'))->toBe(64);
     $headerStart = strpos($html, '<header class="site-header primary-header">');
     $headerEnd = strpos($html, '</header>', $headerStart);
     $tickerStart = strpos($html, 'class="encap-legal-ticker"', $headerStart);
