@@ -269,7 +269,7 @@ test('the full Arabic company name is prominent across supported locales and str
         ->assertDontSee('encap-company-name-band', false);
 });
 
-test('the legal-name ticker is attached to the sticky header without changing logo or navbar sizing', function () {
+test('the legal-name ticker is rebuilt from one seed into a measured infinite loop', function () {
     $stylesheet = file_get_contents(public_path('css/navigation.css'));
 
     expect($stylesheet)
@@ -277,24 +277,31 @@ test('the legal-name ticker is attached to the sticky header without changing lo
         ->toContain('min-height:100px')
         ->toContain('flex:0 0 30px')
         ->toContain('animation:none!important')
-        ->toContain('legal-name-ticker.js');
+        ->toContain('.encap-legal-ticker-group');
 
-    expect($stylesheet)->not->toContain('encap-legal-ticker-scroll');
+    expect($stylesheet)
+        ->not->toContain('encap-legal-ticker-sequence')
+        ->not->toContain('encap-legal-ticker-scroll')
+        ->not->toContain('primary-brand-lockup');
 
     $tickerScript = file_get_contents(public_path('js/legal-name-ticker.js'));
     expect($tickerScript)
-        ->toContain('sequences[0].getBoundingClientRect().width')
+        ->toContain('const viewportWidth = ticker.clientWidth')
+        ->toContain('sourceGroup.getBoundingClientRect().width')
+        ->toContain('track.replaceChildren(sourceGroup)')
+        ->toContain('const duplicate = sourceGroup.cloneNode(true)')
         ->toContain('iterations: Infinity')
         ->toContain("easing: 'linear'");
-
-    expect($stylesheet)->not->toContain('primary-brand-lockup');
 
     $html = $this->get('/ar')->assertOk()->assertSee('js/legal-name-ticker.js', false)->getContent();
     $tickerMarkupStart = strpos($html, 'class="encap-legal-ticker"');
     $tickerMarkupEnd = strpos($html, 'class="container primary-nav"', $tickerMarkupStart);
     $tickerMarkup = substr($html, $tickerMarkupStart, $tickerMarkupEnd - $tickerMarkupStart);
 
-    expect(substr_count($tickerMarkup, 'class="encap-legal-ticker-item"'))->toBe(64);
+    expect(substr_count($tickerMarkup, 'class="encap-legal-ticker-item"'))->toBe(1)
+        ->and($tickerMarkup)->toContain('data-legal-ticker-track')
+        ->and($tickerMarkup)->toContain('data-legal-ticker-source');
+
     $headerStart = strpos($html, '<header class="site-header primary-header">');
     $headerEnd = strpos($html, '</header>', $headerStart);
     $tickerStart = strpos($html, 'class="encap-legal-ticker"', $headerStart);
