@@ -68,6 +68,31 @@ test('new image uploads fall back to laravel storage when encap-img cannot be wr
     }
 });
 
+test('image library preparation is split into bounded batches', function () {
+    Storage::fake('public');
+    Storage::fake('encap_images');
+    Http::preventStrayRequests();
+    $jpeg = "\xFF\xD8\xFF" . str_repeat('B', 6000);
+    Http::fake([
+        'https://images.unsplash.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+        'https://images.pexels.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+    ]);
+
+    $library = app(\App\Services\EncapImageLibrary::class);
+    $first = $library->prepare(false, 0, 4);
+
+    expect($first['downloaded'])->toBe(4)
+        ->and($first['finished'])->toBeFalse()
+        ->and($first['complete'])->toBeFalse()
+        ->and($first['next_offset'])->toBe(4)
+        ->and($first['total'])->toBeGreaterThan(4);
+
+    $second = $library->prepare(false, $first['next_offset'], 4);
+    expect($second['downloaded'])->toBe(4)
+        ->and($second['offset'])->toBe(4)
+        ->and($second['finished'])->toBeFalse();
+});
+
 test('image preparation copies uploaded category photos before slow stock image downloads', function () {
     Storage::fake('public');
     Storage::fake('encap_images');
