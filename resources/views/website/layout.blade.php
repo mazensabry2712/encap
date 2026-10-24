@@ -35,8 +35,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-4">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-4">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-5">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-5">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
