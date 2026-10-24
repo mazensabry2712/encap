@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\\Database\\Migrations\\Migration;
-use Illuminate\\Support\\Facades\\DB;
-use Illuminate\\Support\\Facades\\Storage;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 return new class extends Migration
@@ -87,6 +87,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        // Intentionally irreversible: the replaced dashboard image files are deleted.
+        // Intentionally irreversible: the retired dashboard image files are deleted.
     }
 };
