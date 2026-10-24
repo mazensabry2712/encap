@@ -251,7 +251,8 @@ test('the full Arabic company name is prominent across supported locales and str
     foreach (['en', 'ar', 'fr', 'ru', 'tr'] as $locale) {
         $this->get('/'.$locale)
             ->assertOk()
-            ->assertSee('encap-company-name-band', false)
+            ->assertSee('primary-brand-legal-name', false)
+            ->assertDontSee('encap-company-name-band', false)
             ->assertSee($companyName)
             ->assertSee('legalName', false)
             ->assertSee('alternateName', false);
@@ -259,8 +260,8 @@ test('the full Arabic company name is prominent across supported locales and str
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('encap-company-name-band', false)
-        ->assertDontSee('encap-company-name-lockup', false);
+        ->assertSee('primary-brand-legal-name', false)
+        ->assertDontSee('encap-company-name-band', false);
 });
 
 test('bilingual company pages render the About supply story and principles', function () {
