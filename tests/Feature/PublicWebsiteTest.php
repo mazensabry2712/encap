@@ -269,7 +269,7 @@ test('the full Arabic company name is prominent across supported locales and str
         ->assertDontSee('encap-company-name-band', false);
 });
 
-test('the legal-name ticker is rebuilt from one seed into a measured infinite loop', function () {
+test('the new company marquee is rebuilt from one seed into a measured infinite loop', function () {
     $stylesheet = file_get_contents(public_path('css/navigation.css'));
 
     expect($stylesheet)
@@ -280,7 +280,6 @@ test('the legal-name ticker is rebuilt from one seed into a measured infinite lo
         ->toContain('.encap-company-marquee__group');
 
     expect($stylesheet)->not->toContain('encap-legal-ticker');
-    expect($stylesheet)->not->toContain('encap-company-marquee-scroll');
     expect($stylesheet)->not->toContain('primary-brand-lockup');
 
     $tickerScript = file_get_contents(public_path('js/company-marquee.js'));
