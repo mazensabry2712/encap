@@ -245,6 +245,23 @@ test('the home page uses central defaults and social preview metadata without wr
     expect(SeoSetting::query()->count())->toBe(0);
 });
 
+test('the full Arabic company name is prominent across supported locales and structured data', function () {
+    $companyName = 'الشركة المصرية الوطنية للإنتاج الزراعي';
+
+    foreach (['en', 'ar', 'fr', 'ru', 'tr'] as $locale) {
+        $this->get('/'.$locale)
+            ->assertOk()
+            ->assertSee('encap-company-name-band', false)
+            ->assertSee($companyName)
+            ->assertSee('legalName', false)
+            ->assertSee('alternateName', false);
+    }
+
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee('encap-company-name-lockup', false);
+});
+
 test('bilingual company pages render the About supply story and principles', function () {
     $this->get('/en/about')
         ->assertOk()
