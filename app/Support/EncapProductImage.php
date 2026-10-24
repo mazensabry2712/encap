@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Support;
+namespace App\\Support;
 
-use App\Models\Category;
+use App\\Models\\Category;
 
 final class EncapProductImage
 {
     /**
      * Crop-specific stock photographs used only when a category has no main image.
-     * An image uploaded through the admin dashboard always takes precedence.
+     * An image uploaded through the admin dashboard always takes precedence,
+     * except for mango, which uses one curated image to replace the old upload.
      *
      * @var array<string, array{0: string, 1: string}>
      */
@@ -57,6 +58,14 @@ final class EncapProductImage
 
     public static function url(Category $category): ?string
     {
+        // Use one controlled stock photo for mango even if an older admin upload remains
+        // attached to the database record. This prevents stale uploads from winning.
+        if ($category->slug === 'mango') {
+            [$path, $fallbackUrl] = self::FALLBACKS['mango'];
+
+            return EncapImage::url($path, $fallbackUrl);
+        }
+
         if (filled($category->image)) {
             return EncapImage::url($category->image);
         }
@@ -72,10 +81,14 @@ final class EncapProductImage
     public static function galleryUrls(Category $category): array
     {
         $mainImage = self::url($category);
-        $galleryImages = array_map(
-            static fn (string $path): string => EncapImage::url($path),
-            $category->gallery ?? []
-        );
+
+        // The previous uploaded mango image and its gallery are being retired together.
+        $galleryImages = $category->slug === 'mango'
+            ? []
+            : array_map(
+                static fn (string $path): string => EncapImage::url($path),
+                $category->gallery ?? []
+            );
 
         return array_values(array_filter(array_merge(
             $mainImage ? [$mainImage] : [],
