@@ -278,7 +278,11 @@ test('the legal-name ticker is attached to the sticky header without changing lo
         ->toContain('encap-legal-ticker-scroll')
         ->toContain('flex:0 0 30px')
         ->toContain('@media(prefers-reduced-motion:reduce)')
-        ->toContain('body.site-body .primary-header .encap-legal-ticker-track{animation:encap-legal-ticker-scroll 120s linear infinite!important}');
+        ->toContain('body.site-body .primary-header .encap-legal-ticker-track{animation:encap-legal-ticker-scroll 120s linear infinite!important}')
+        ->toContain('animation-play-state:running!important')
+        ->toContain('100%{transform:translate3d(-50%,0,0)}');
+
+    expect($stylesheet)->not->toContain('.encap-legal-ticker:hover .encap-legal-ticker-track{animation-play-state:paused}');
 
     expect($stylesheet)->not->toContain('primary-brand-lockup');
 
