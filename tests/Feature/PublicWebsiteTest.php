@@ -252,16 +252,30 @@ test('the full Arabic company name is prominent across supported locales and str
         $this->get('/'.$locale)
             ->assertOk()
             ->assertSee('primary-brand-legal-name', false)
+            ->assertSee('alt="ENCAP"', false)
+            ->assertDontSee('alt="ENCAP — الشركة المصرية الوطنية للإنتاج الزراعي"', false)
             ->assertDontSee('encap-company-name-band', false)
             ->assertSee($companyName)
             ->assertSee('legalName', false)
             ->assertSee('alternateName', false);
     }
 
-    $this->get('/ar')
+    $response = $this->get('/ar');
+    $response
         ->assertOk()
+        ->assertSee('primary-brand-lockup', false)
         ->assertSee('primary-brand-legal-name', false)
+        ->assertSee('alt="ENCAP"', false)
         ->assertDontSee('encap-company-name-band', false);
+
+    $html = $response->getContent();
+    $brandLinkStart = strpos($html, 'class="primary-brand"');
+    $brandLinkEnd = strpos($html, '</a>', $brandLinkStart);
+    $legalNameStart = strpos($html, 'class="primary-brand-legal-name"');
+
+    expect($brandLinkStart)->not->toBeFalse()
+        ->and($brandLinkEnd)->not->toBeFalse()
+        ->and($legalNameStart)->toBeGreaterThan($brandLinkEnd);
 });
 
 test('bilingual company pages render the About supply story and principles', function () {
