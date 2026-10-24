@@ -9,7 +9,7 @@
     tickers.forEach((track) => {
         const ticker = track.closest('.encap-company-marquee');
         const sourceGroup = track.querySelector('[data-company-marquee-source]');
-        const seed = sourceGroup?.querySelector('.encap-company-marquee-item');
+        const seed = sourceGroup?.querySelector('.encap-company-marquee__item');
 
         if (!ticker || !sourceGroup || !seed || typeof track.animate !== 'function') return;
 
