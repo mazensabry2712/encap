@@ -454,6 +454,43 @@ test('sitemap only includes published categories and is xml', function () {
         ->assertDontSee('/en/products/hidden-mango');
 });
 
+test('all supported locales expose canonical and hreflang metadata', function () {
+    foreach (['en', 'ar', 'fr', 'ru', 'tr'] as $locale) {
+        $response = $this->get('/'.$locale);
+        $response->assertOk()
+            ->assertSee('<link rel="canonical" href="'.rtrim(config('app.url'), '/').'/'.$locale.'">', false)
+            ->assertSee('hreflang="en"', false)
+            ->assertSee('hreflang="ar"', false)
+            ->assertSee('hreflang="fr"', false)
+            ->assertSee('hreflang="ru"', false)
+            ->assertSee('hreflang="tr"', false)
+            ->assertSee('hreflang="x-default"', false);
+    }
+});
+
+test('XML sitemap includes all supported public locales', function () {
+    Category::query()->create([
+        'name_en' => 'Sitemap Mango',
+        'name_ar' => 'مانجو خريطة الموقع',
+        'slug' => 'sitemap-mango',
+        'description_ar' => 'وصف عربي للمانجو.',
+        'is_published' => true,
+    ]);
+
+    $this->get('/sitemap.xml')
+        ->assertOk()
+        ->assertHeader('content-type', 'application/xml; charset=UTF-8')
+        ->assertSee('/en')
+        ->assertSee('/ar')
+        ->assertSee('/fr')
+        ->assertSee('/ru')
+        ->assertSee('/tr')
+        ->assertSee('/fr/products/sitemap-mango')
+        ->assertSee('hreflang="fr"', false)
+        ->assertSee('hreflang="ru"', false)
+        ->assertSee('hreflang="tr"', false);
+});
+
 test('frozen supply section uses direct buyer-focused copy in both locales', function () {
     $this->get('/en')
         ->assertOk()
