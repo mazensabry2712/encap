@@ -1,7 +1,7 @@
 /* ENCAP navigation — one layout system, isolated from site-wide component styles. */
-.primary-header{position:sticky;inset-block-start:0;z-index:120;background:rgba(251,250,245,.97);border-bottom:1px solid rgba(29,56,40,.1);backdrop-filter:blur(16px);transition:box-shadow .22s ease,background .22s ease}
+.primary-header{position:sticky;inset-block-start:0;z-index:120;display:block;margin:0;padding:0;background:rgba(251,250,245,.97);border-bottom:1px solid rgba(29,56,40,.1);backdrop-filter:blur(16px);transition:box-shadow .22s ease,background .22s ease}
 .primary-header.is-scrolled{background:rgba(251,250,245,.985);box-shadow:0 8px 28px rgba(16,43,32,.09)}
-.encap-legal-ticker{position:relative;z-index:121;display:flex;align-items:center;width:100%;height:30px;overflow:hidden;background:#102b20;color:#fffdf6;border-bottom:1px solid rgba(227,181,62,.72)}
+.encap-legal-ticker{position:relative;z-index:1;display:flex;align-items:center;flex:0 0 30px;width:100%;height:30px;min-height:30px;margin:0;padding:0;overflow:hidden;background:#102b20;color:#fffdf6;box-shadow:inset 0 -1px rgba(227,181,62,.45)}
 .encap-legal-ticker::after{position:absolute;inset-block-end:0;inset-inline-start:0;width:clamp(50px,8vw,120px);height:2px;background:#e3b53e;content:""}
 .encap-legal-ticker-track{display:flex;flex:0 0 auto;width:max-content;direction:ltr;animation:encap-legal-ticker-scroll 42s linear infinite;will-change:transform}
 .encap-legal-ticker-sequence{display:flex;flex:0 0 auto;align-items:center;gap:clamp(28px,3.5vw,58px);padding-inline-end:clamp(28px,3.5vw,58px);white-space:nowrap}
@@ -63,5 +63,5 @@ html[dir=rtl] .language-menu{transform-origin:top left}
 @media(max-width:370px){.primary-nav{width:calc(100% - 20px);gap:6px}.primary-brand{width:calc(100vw - 138px)}.primary-brand-logo{height:72px}.primary-mobile-menu>summary{padding-inline:7px}.primary-menu-word{display:none}}
 @media(prefers-reduced-motion:reduce){.primary-header,.primary-links a,.primary-dropdown-panel a,.language-switcher-trigger,.language-menu,.language-option,.primary-quote.button,.primary-mobile-menu>summary,.primary-menu-icon i,.primary-mobile-panel a{transition:none!important}
 .language-menu.is-open{animation:none!important}.primary-mobile-menu[open] .primary-menu-icon i{transform:none!important}.primary-dropdown[open]>summary svg{transform:none!important}}
-@media(max-width:600px){.encap-legal-ticker{height:28px}.encap-legal-ticker-sequence{gap:30px;padding-inline-end:30px}.encap-legal-ticker-item{font-size:11px}.encap-legal-ticker-track{animation-duration:32s}.footer-legal-name{white-space:normal}}
+@media(max-width:600px){.encap-legal-ticker{height:28px;min-height:28px;flex-basis:28px}.encap-legal-ticker-sequence{gap:30px;padding-inline-end:30px}.encap-legal-ticker-item{font-size:11px}.encap-legal-ticker-track{animation-duration:32s}.footer-legal-name{white-space:normal}}
 @media(prefers-reduced-motion:reduce){.encap-legal-ticker-track{width:100%;animation:none;transform:none}.encap-legal-ticker-sequence{display:none}.encap-legal-ticker-sequence:first-child{display:flex;justify-content:center;width:100%;padding:0;gap:0}.encap-legal-ticker-item:not(:first-child){display:none}.encap-legal-ticker-item::before{display:none}}
