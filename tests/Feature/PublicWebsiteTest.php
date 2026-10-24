@@ -279,10 +279,9 @@ test('the legal-name ticker is rebuilt from one seed into a measured infinite lo
         ->toContain('animation:none!important')
         ->toContain('.encap-legal-ticker-group');
 
-    expect($stylesheet)
-        ->not->toContain('encap-legal-ticker-sequence')
-        ->not->toContain('encap-legal-ticker-scroll')
-        ->not->toContain('primary-brand-lockup');
+    expect($stylesheet)->not->toContain('encap-legal-ticker-sequence');
+    expect($stylesheet)->not->toContain('encap-legal-ticker-scroll');
+    expect($stylesheet)->not->toContain('primary-brand-lockup');
 
     $tickerScript = file_get_contents(public_path('js/legal-name-ticker.js'));
     expect($tickerScript)
