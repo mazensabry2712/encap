@@ -1,6 +1,12 @@
 /* ENCAP navigation — one layout system, isolated from site-wide component styles. */
 .primary-header{position:sticky;inset-block-start:0;z-index:120;background:rgba(251,250,245,.97);border-bottom:1px solid rgba(29,56,40,.1);backdrop-filter:blur(16px);transition:box-shadow .22s ease,background .22s ease}
 .primary-header.is-scrolled{background:rgba(251,250,245,.985);box-shadow:0 8px 28px rgba(16,43,32,.09)}
+.encap-company-name-band{position:relative;z-index:1;min-height:36px;display:flex;align-items:center;justify-content:center;padding:5px 14px;background:#102b20;color:#fbfaf5;border-bottom:1px solid rgba(227,181,62,.7)}
+.encap-company-name-band::after{position:absolute;inset-inline-start:0;inset-block-end:-1px;width:clamp(72px,12vw,180px);height:2px;background:#e3b53e;content:""}
+.encap-company-name-band-inner{display:flex;align-items:center;justify-content:center;gap:11px;width:min(100%,1400px);margin-inline:auto;text-align:center}
+.encap-company-name-band-brand{flex:0 0 auto;color:#e3b53e;font-size:9px;font-weight:900;letter-spacing:.18em;line-height:1.4}
+.encap-company-name-band-divider{width:1px;height:15px;flex:0 0 auto;background:rgba(251,250,245,.34)}
+.encap-company-name-band-text{margin:0;color:#fffdf6;font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;font-size:12px;font-weight:800;line-height:1.6;letter-spacing:0}
 .primary-nav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:clamp(16px,2vw,30px);width:min(calc(100% - 56px),1400px);min-height:100px;margin-inline:auto;padding-block:10px}
 .primary-brand{display:inline-flex;align-items:center;justify-self:start;flex:0 0 auto;width:clamp(300px,27vw,380px);line-height:0;text-decoration:none}
 .primary-brand-logo{display:block;width:100%;height:118px;object-fit:contain;object-position:left center}
@@ -51,6 +57,6 @@ html[dir=rtl] .primary-brand-logo{object-position:right center}
 @media(max-width:1030px){.primary-nav{grid-template-columns:minmax(0,1fr) auto;min-height:82px;gap:12px}.primary-links,.primary-quote.button{display:none}.primary-brand{width:clamp(250px,32vw,320px)}.primary-brand-logo{height:95px}.primary-mobile-menu{display:block}}
 @media(max-width:600px){.primary-nav{width:calc(100% - 28px);min-height:74px;gap:8px;padding-block:7px}.primary-brand{width:min(250px,calc(100vw - 146px))}.primary-brand-logo{height:82px}.primary-actions{gap:7px;margin-inline-start:0}.language-switcher-trigger{width:40px;height:40px}.language-menu{top:calc(100% + 9px);width:216px}.primary-mobile-menu>summary{min-height:38px;padding-inline:8px}.primary-mobile-panel{width:min(360px,calc(100vw - 20px))}}
 html[dir=rtl] .language-menu{transform-origin:top left}
-@media(max-width:370px){.primary-nav{width:calc(100% - 20px);gap:6px}.primary-brand{width:calc(100vw - 138px)}.primary-brand-logo{height:72px}.primary-mobile-menu>summary{padding-inline:7px}.primary-menu-word{display:none}}
+@media(max-width:370px){.encap-company-name-band{padding-inline:8px}.encap-company-name-band-inner{gap:7px}.encap-company-name-band-text{font-size:10.5px}.primary-nav{width:calc(100% - 20px);gap:6px}.primary-brand{width:calc(100vw - 138px)}.primary-brand-logo{height:72px}.primary-mobile-menu>summary{padding-inline:7px}.primary-menu-word{display:none}}
 @media(prefers-reduced-motion:reduce){.primary-header,.primary-links a,.primary-dropdown-panel a,.language-switcher-trigger,.language-menu,.language-option,.primary-quote.button,.primary-mobile-menu>summary,.primary-menu-icon i,.primary-mobile-panel a{transition:none!important}
 .language-menu.is-open{animation:none!important}.primary-mobile-menu[open] .primary-menu-icon i{transform:none!important}.primary-dropdown[open]>summary svg{transform:none!important}}
