@@ -988,7 +988,7 @@ html[dir=rtl] .encap-frozen-feature .encap-frozen-copy h2{background-image:linea
 .footer-business-heading>p{max-width:390px;margin:0;color:#bdcdbf;font-size:11px;line-height:1.8}
 .footer-subsidiary{display:grid;grid-template-columns:48px minmax(0,1fr);gap:15px;align-items:start;margin-bottom:15px;padding:18px 20px;border:1px solid #ffffff2c;background:#ffffff08}
 .footer-subsidiary-flag{display:grid;place-items:center;width:46px;height:46px;border:1px solid #ffffff3d;background:#ffffff0d;font-size:25px}
-.footer-subsidiary-label{color:#d3e1c5;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.footer-subsidiary-label{color:#d3e1c5;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .footer-subsidiary h3{display:flex;align-items:baseline;flex-wrap:wrap;gap:9px;margin:4px 0 7px;color:#fff;font-size:15px;font-weight:850}
 .footer-subsidiary h3 span{color:#d5e4cc;font-size:13px}
 .footer-subsidiary p,.footer-subsidiary a{display:block;margin:4px 0 0;color:#d0ddd0;font-size:11px;line-height:1.8}
