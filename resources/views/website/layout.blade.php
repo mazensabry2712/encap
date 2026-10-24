@@ -61,7 +61,7 @@
 @php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
 
 <header class="site-header primary-header">
-<div class="encap-company-name-strip" role="note" aria-label="الشركة المصرية الوطنية للإنتاج الزراعي">
+<div class="encap-company-name-strip" role="note">
     <span class="encap-company-name-strip__text" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span>
 </div>
     <div class="container primary-nav">
