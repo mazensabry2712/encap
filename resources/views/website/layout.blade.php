@@ -35,8 +35,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-marquee-rebuild-1">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-marquee-rebuild-1">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-marquee-rebuild-2">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-marquee-rebuild-2">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
@@ -61,10 +61,10 @@
 @php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
 
 <header class="site-header primary-header">
-<div class="encap-legal-ticker" role="note" aria-label="الشركة المصرية الوطنية للإنتاج الزراعي">
-    <div class="encap-legal-ticker-track" data-legal-ticker-track aria-hidden="true">
-        <div class="encap-legal-ticker-group" data-legal-ticker-source lang="ar" dir="rtl">
-            <span class="encap-legal-ticker-item">الشركة المصرية الوطنية للإنتاج الزراعي</span>
+<div class="encap-company-marquee" role="note" aria-label="الشركة المصرية الوطنية للإنتاج الزراعي">
+    <div class="encap-company-marquee__track" data-company-marquee-track aria-hidden="true">
+        <div class="encap-company-marquee__group" data-company-marquee-source lang="ar" dir="rtl">
+            <span class="encap-company-marquee__item">الشركة المصرية الوطنية للإنتاج الزراعي</span>
         </div>
     </div>
 </div>
@@ -147,7 +147,7 @@
  </div>
 </section>
 <div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span class="footer-legal-name" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
-<script src="{{ asset('js/legal-name-ticker.js') }}?v=20261024-marquee-rebuild-1" defer></script>
+<script src="{{ asset('js/company-marquee.js') }}?v=20261024-marquee-rebuild-2" defer></script>
 <script src="{{ asset('js/encap-interactions.js') }}" defer></script>
 @if(request()->routeIs('home'))<script src="{{ asset('js/hero-experience.js') }}" defer></script>@endif
 <script src="{{ asset('js/language-switcher.js') }}" defer></script>
