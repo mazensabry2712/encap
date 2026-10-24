@@ -13,6 +13,7 @@
  <div class="container encap-hero-experience-grid">
   <div class="encap-hero-copy">
    <div class="encap-kicker encap-hero-kicker" data-hero-reveal style="--hero-delay:80ms"><span class="encap-kicker-dot"></span><span>{{ __('Egyptian agricultural production & export') }}</span></div>
+   <div class="encap-company-name-lockup" data-hero-reveal style="--hero-delay:120ms"><span class="encap-company-name-lockup-brand">ENCAP</span><span class="encap-company-name-lockup-name" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span></div>
    <h1 id="encap-hero-title" data-hero-reveal style="--hero-delay:160ms">{{ __('From Egyptian soil to the world’s table.') }}</h1>
    <p class="encap-hero-lead" data-hero-reveal style="--hero-delay:240ms">{{ __('We bring together our own farms, trusted growers and careful preparation to connect Egyptian produce with global markets.') }}</p>
    <div class="encap-hero-actions" data-hero-reveal style="--hero-delay:320ms">
