@@ -35,8 +35,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-5">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-5">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261024-legal-ticker-6">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261024-legal-ticker-6">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
@@ -154,6 +154,7 @@
  </div>
 </section>
 <div class="footer-bottom"><span class="footer-copyright-brand">© {{ date('Y') }} <img class="encap-inline-brand footer-copyright-symbol" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="18" height="18" loading="lazy" decoding="async"> {{ __('All rights reserved.') }}</span><span class="footer-legal-name" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div></div></footer>
+<script src="{{ asset('js/legal-name-ticker.js') }}?v=20261024-loop-1" defer></script>
 <script src="{{ asset('js/encap-interactions.js') }}" defer></script>
 @if(request()->routeIs('home'))<script src="{{ asset('js/hero-experience.js') }}" defer></script>@endif
 <script src="{{ asset('js/language-switcher.js') }}" defer></script>
