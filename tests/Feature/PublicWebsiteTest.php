@@ -259,7 +259,8 @@ test('the full Arabic company name is prominent across supported locales and str
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('encap-company-name-lockup', false);
+        ->assertSee('encap-company-name-band', false)
+        ->assertDontSee('encap-company-name-lockup', false);
 });
 
 test('bilingual company pages render the About supply story and principles', function () {
