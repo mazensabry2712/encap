@@ -103,12 +103,21 @@ test('authenticated administrators can prepare image storage from the dashboard 
         'https://images.pexels.com/*' => \Illuminate\Support\Facades\Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
     ]);
 
-    $this->actingAs(User::factory()->create())
-        ->post(route('admin.images.prepare'))
-        ->assertRedirect(route('admin.dashboard'))
-        ->assertSessionHas('imageLibraryResult.complete', true)
-        ->assertSessionHas('imageLibraryResult.downloaded', 20)
-        ->assertSessionHas('imageLibraryResult.copied', 1);
+    $this->actingAs(User::factory()->create());
+
+    $offset = 0;
+    $result = null;
+    do {
+        $response = $this->post(route('admin.images.prepare'), ['offset' => $offset]);
+        $response->assertRedirect(route('admin.dashboard'));
+        $result = session('imageLibraryResult');
+        expect($result)->toBeArray();
+        $offset = $result['next_offset'];
+    } while (! $result['finished']);
+
+    expect($result['complete'])->toBeTrue()
+        ->and($result['downloaded'])->toBe(20)
+        ->and($result['copied'])->toBe(1);
 
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('citrus-orchard-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('frozen-berries-2026.jpg');
