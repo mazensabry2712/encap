@@ -31,7 +31,7 @@ Performance and accessibility improvements are goals, not measured results. Befo
 
 ## Interface behavior
 
-- All public-facing photographs and uploaded product/SEO images resolve through the `encap_images` disk rooted at `base_path('encap-img')`. After deployment, use **Prepare image library** on the authenticated admin dashboard to copy current uploads and ensure the stock photo set is available locally. CLI-capable hosts may instead run `php artisan encap:images:prepare`.
+- All public-facing photographs and uploaded product/SEO images resolve through the `encap_images` disk rooted at `base_path('encap-img')`. After deployment, use **Prepare image library** on the authenticated admin dashboard to copy current uploads and ensure the stock photo set is available locally. The admin flow processes small batches and provides a continue/retry action instead of attempting every remote download in a single shared-hosting request. CLI-capable hosts may instead run `php artisan encap:images:prepare`.
 
 `public/js/site-motion.js` is the single owner of public-page scroll reveals, pointer-based 3D card tilt, magnetic actions, image depth and the scroll-progress line.
 - public/js/hero-experience.js adds the homepage's dedicated layered parallax and orbit effects; the site-wide controller deliberately skips that hero to avoid competing transforms.
