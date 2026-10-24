@@ -16,9 +16,7 @@
 @php($pageTitle = $pageSeo['title'] ?? $defaultTitle)
 @php($pageDescription = $pageSeo['description'] ?? $defaultDescription)
 @php($robotsDirective = $pageSeo['robots'] ?? $seoDefaults->default_robots)
-@php($ogImageUrl = $seoDefaults->default_og_image
-    ? \App\Support\EncapImage::url($seoDefaults->default_og_image)
-    : \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1200&q=85'))
+@php($ogImageUrl = \App\Support\EncapImage::url('logo.png'))
 @php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'legalName' => 'الشركة المصرية الوطنية للإنتاج الزراعي', 'alternateName' => 'ENCAP', 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="apple-touch-icon" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,8 +27,8 @@
     @endforeach
     <link rel="alternate" hreflang="x-default" href="{{ $canonicalBase . '/en' . $localizedSuffix }}">
     <meta property="og:type" content="website"><meta property="og:site_name" content="{{ $seoDefaults->organization_name }}"><meta property="og:title" content="{{ $pageTitle }}"><meta property="og:description" content="{{ $pageDescription }}"><meta property="og:url" content="{{ $canonicalUrl }}">
-    <meta property="og:image" content="{{ $ogImageUrl }}">
-    <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#08291e">
+    <meta property="og:image" content="{{ $ogImageUrl }}"><meta property="og:image:alt" content="ENCAP company logo">
+    <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{{ $pageTitle }}"><meta name="twitter:description" content="{{ $pageDescription }}"><meta name="twitter:image" content="{{ $ogImageUrl }}"><meta name="twitter:image:alt" content="ENCAP company logo"><meta name="theme-color" content="#08291e">
     @if(request()->routeIs('home'))
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
