@@ -626,5 +626,10 @@
     "Refrigerated trucks prepared for temperature-controlled food transport.": "شاحنات مبردة مخصصة لنقل الأغذية المجمدة.",
     "e.g. metric tons": "مثال: طن متري",
     "Product, volume, form, packaging and destination help us understand your requirement.": "يساعدنا تحديد المنتج والكمية وشكل المنتج والتعبئة والوجهة على فهم متطلباتك.",
-    "Contact our regional teams directly, or use the form below.": "تواصل مباشرة مع فرقنا الإقليمية أو استخدم النموذج أدناه."
+    "Contact our regional teams directly, or use the form below.": "تواصل مباشرة مع فرقنا الإقليمية أو استخدم النموذج أدناه.",
+    "In progress": "جارٍ التنفيذ",
+    "Image preparation is processed in short batches to avoid shared-hosting request timeouts.": "يتم تجهيز الصور على دفعات قصيرة لتجنب انتهاء مهلة الطلب على الاستضافة المشتركة.",
+    "Continue image preparation": "استكمال تجهيز الصور",
+    "Retry missing images": "إعادة محاولة الصور غير المكتملة",
+    "Some images could not be prepared. Retry the library setup after checking the hosting connection and folder permissions.": "تعذر تجهيز بعض الصور. أعد المحاولة بعد مراجعة اتصال الاستضافة وصلاحيات المجلد."
 }
