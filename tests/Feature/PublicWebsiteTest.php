@@ -847,7 +847,7 @@ test('French Russian and Turkish public pages are localized while editable SEO s
             ->assertSee($phrases['about'])
             ->assertSee($phrases['farms'] === '' ? '' : '/'. $locale . '/farms', false)
             ->assertSee('/' . $locale . '/products', false)
-            ->assertDontSee('hreflang="' . $locale . '"', false);
+            ->assertSee('hreflang="' . $locale . '"', false);
 
         foreach (['farms', 'packing-stations', 'quality', 'export'] as $page) {
             $this->get('/' . $locale . '/' . $page)
@@ -861,7 +861,7 @@ test('French Russian and Turkish public pages are localized while editable SEO s
             ->assertSee('href="' . route('home', ['locale' => $locale]) . '"', false)
             ->assertSee('hreflang="en"', false)
             ->assertSee('hreflang="ar"', false)
-            ->assertDontSee('hreflang="' . $locale . '"', false);
+            ->assertSee('hreflang="' . $locale . '"', false);
 
         $this->get('/' . $locale . '/products')
             ->assertOk()
