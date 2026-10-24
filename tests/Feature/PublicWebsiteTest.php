@@ -151,7 +151,7 @@ test('mango uses one curated stock photo instead of dashboard-uploaded photos', 
 
     expect($images)
         ->toHaveCount(1)
-        ->and($images[0])->toContain('images.unsplash.com/photos/29782357');
+        ->and($images[0])->toContain('images.pexels.com/photos/29782357');
 
     $this->get('/ar/products/mango')
         ->assertOk()
@@ -161,42 +161,6 @@ test('mango uses one curated stock photo instead of dashboard-uploaded photos', 
         ->assertDontSee('data-total-images=', false);
 });
 
-
-test('mango uses one curated stock photo instead of dashboard-uploaded photos', function () {
-    \Illuminate\Support\Facades\Storage::fake('public');
-    \Illuminate\Support\Facades\Storage::fake('encap_images');
-
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->put(
-        'categories/mango-dashboard-upload.jpg',
-        'old mango image'
-    );
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->put(
-        'categories/gallery/mango-dashboard-gallery.jpg',
-        'old mango gallery image'
-    );
-
-    $category = Category::query()->create([
-        'name_en' => 'Mango',
-        'name_ar' => 'مانجو',
-        'slug' => 'mango',
-        'image' => 'categories/mango-dashboard-upload.jpg',
-        'gallery' => ['categories/gallery/mango-dashboard-gallery.jpg'],
-        'is_published' => true,
-    ]);
-
-    $images = \App\Support\EncapProductImage::galleryUrls($category);
-
-    expect($images)
-        ->toHaveCount(1)
-        ->and($images[0])->toContain('images.unsplash.com/photos/29782357');
-
-    $this->get('/ar/products/mango')
-        ->assertOk()
-        ->assertSee('photos/29782357', false)
-        ->assertDontSee('categories/mango-dashboard-upload.jpg')
-        ->assertDontSee('categories/gallery/mango-dashboard-gallery.jpg')
-        ->assertDontSee('data-total-images=', false);
-});
 
 test('product detail gallery renders accessible thumbnail controls', function () {
     \Illuminate\Support\Facades\Storage::fake('public');
