@@ -269,16 +269,29 @@ test('the full Arabic company name is prominent across supported locales and str
         ->assertDontSee('encap-company-name-band', false);
 });
 
-test('the legal-name ticker preserves the original logo and navbar sizing', function () {
+test('the legal-name ticker is attached to the sticky header without changing logo or navbar sizing', function () {
     $stylesheet = file_get_contents(public_path('css/navigation.css'));
 
     expect($stylesheet)
         ->toContain('height:118px')
         ->toContain('min-height:100px')
         ->toContain('encap-legal-ticker-scroll')
+        ->toContain('flex:0 0 30px')
         ->toContain('@media(prefers-reduced-motion:reduce)');
 
     expect($stylesheet)->not->toContain('primary-brand-lockup');
+
+    $html = $this->get('/ar')->assertOk()->getContent();
+    $headerStart = strpos($html, '<header class="site-header primary-header">');
+    $headerEnd = strpos($html, '</header>', $headerStart);
+    $tickerStart = strpos($html, 'class="encap-legal-ticker"', $headerStart);
+    $navStart = strpos($html, 'class="container primary-nav"', $headerStart);
+
+    expect($headerStart)->not->toBeFalse()
+        ->and($headerEnd)->not->toBeFalse()
+        ->and($tickerStart)->toBeGreaterThan($headerStart)
+        ->and($navStart)->toBeGreaterThan($tickerStart)
+        ->and($headerEnd)->toBeGreaterThan($navStart);
 });
 
 test('bilingual company pages render the About supply story and principles', function () {
