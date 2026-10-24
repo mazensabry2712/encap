@@ -468,6 +468,26 @@ test('all supported locales expose canonical and hreflang metadata', function ()
     }
 });
 
+test('French Russian and Turkish homepage and catalogue headlines are translated', function () {
+    $expected = [
+        'fr' => ['De la terre égyptienne à la table du monde.', 'Trouvez la bonne catégorie de produits.'],
+        'ru' => ['С египетской земли — к столам всего мира.', 'Выберите подходящую категорию продукции.'],
+        'tr' => ['Mısır toprağından dünyanın sofralarına.', 'Doğru ürün kategorisini bulun.'],
+    ];
+
+    foreach ($expected as $locale => [$homeHeadline, $catalogueHeadline]) {
+        $this->get('/'.$locale)
+            ->assertOk()
+            ->assertSee($homeHeadline)
+            ->assertDontSee('From Egyptian soil to the world’s table.');
+
+        $this->get('/'.$locale.'/products')
+            ->assertOk()
+            ->assertSee($catalogueHeadline)
+            ->assertDontSee('Find the right product category.');
+    }
+});
+
 test('XML sitemap includes all supported public locales', function () {
     Category::query()->create([
         'name_en' => 'Sitemap Mango',
