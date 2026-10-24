@@ -19,7 +19,7 @@
 @php($ogImageUrl = $seoDefaults->default_og_image
     ? \App\Support\EncapImage::url($seoDefaults->default_og_image)
     : \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1200&q=85'))
-@php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
+@php($organizationSchema = ['@context' => 'https://schema.org', '@graph' => [['@type' => 'Organization', 'name' => $seoDefaults->organization_name, 'legalName' => 'الشركة المصرية الوطنية للإنتاج الزراعي', 'alternateName' => 'ENCAP', 'url' => $seoDefaults->organization_url ?: $canonicalBase], ['@type' => 'WebSite', 'name' => $seoDefaults->organization_name, 'url' => $canonicalBase, 'inLanguage' => $locale ?? 'en']]])
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" type="image/png" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="apple-touch-icon" href="{{ \App\Support\EncapImage::url('favicon.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <title>{{ $pageTitle }}</title><meta name="description" content="{{ $pageDescription }}"><meta name="robots" content="{{ $robotsDirective }}">
@@ -60,9 +60,16 @@
 @php($currentLocale = $locale ?? 'en')
 @php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
 <header class="site-header primary-header">
+    <div class="encap-company-name-band" aria-label="ENCAP company identity">
+        <div class="encap-company-name-band-inner">
+            <span class="encap-company-name-band-brand" aria-hidden="true">ENCAP</span>
+            <span class="encap-company-name-band-divider" aria-hidden="true"></span>
+            <p class="encap-company-name-band-text" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</p>
+        </div>
+    </div>
     <div class="container primary-nav">
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
-            <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="300" height="90" decoding="async">
+            <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — الشركة المصرية الوطنية للإنتاج الزراعي" width="300" height="90" decoding="async">
         </a>
         @php($operationsActive = request()->routeIs('farms', 'packing-stations', 'export', 'quality'))
         <nav class="primary-links" aria-label="{{ __('Main navigation') }}">
