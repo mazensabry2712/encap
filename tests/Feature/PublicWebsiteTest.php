@@ -251,31 +251,34 @@ test('the full Arabic company name is prominent across supported locales and str
     foreach (['en', 'ar', 'fr', 'ru', 'tr'] as $locale) {
         $this->get('/'.$locale)
             ->assertOk()
-            ->assertSee('primary-brand-legal-name', false)
+            ->assertSee('encap-legal-ticker', false)
+            ->assertSee('footer-legal-name', false)
             ->assertSee('alt="ENCAP"', false)
-            ->assertDontSee('alt="ENCAP — الشركة المصرية الوطنية للإنتاج الزراعي"', false)
+            ->assertDontSee('primary-brand-lockup', false)
             ->assertDontSee('encap-company-name-band', false)
             ->assertSee($companyName)
             ->assertSee('legalName', false)
             ->assertSee('alternateName', false);
     }
 
-    $response = $this->get('/ar');
-    $response
+    $this->get('/ar')
         ->assertOk()
-        ->assertSee('primary-brand-lockup', false)
-        ->assertSee('primary-brand-legal-name', false)
-        ->assertSee('alt="ENCAP"', false)
+        ->assertSee('encap-legal-ticker', false)
+        ->assertSee('footer-legal-name', false)
+        ->assertDontSee('primary-brand-lockup', false)
         ->assertDontSee('encap-company-name-band', false);
+});
 
-    $html = $response->getContent();
-    $brandLinkStart = strpos($html, 'class="primary-brand"');
-    $brandLinkEnd = strpos($html, '</a>', $brandLinkStart);
-    $legalNameStart = strpos($html, 'class="primary-brand-legal-name"');
+test('the legal-name ticker preserves the original logo and navbar sizing', function () {
+    $stylesheet = file_get_contents(public_path('css/navigation.css'));
 
-    expect($brandLinkStart)->not->toBeFalse()
-        ->and($brandLinkEnd)->not->toBeFalse()
-        ->and($legalNameStart)->toBeGreaterThan($brandLinkEnd);
+    expect($stylesheet)
+        ->toContain('height:118px')
+        ->toContain('min-height:100px')
+        ->toContain('encap-legal-ticker-scroll')
+        ->toContain('@media(prefers-reduced-motion:reduce)');
+
+    expect($stylesheet)->not->toContain('primary-brand-lockup');
 });
 
 test('bilingual company pages render the About supply story and principles', function () {
