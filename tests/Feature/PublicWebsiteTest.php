@@ -251,7 +251,7 @@ test('the full Arabic company name is prominent across supported locales and str
     foreach (['en', 'ar', 'fr', 'ru', 'tr'] as $locale) {
         $this->get('/'.$locale)
             ->assertOk()
-            ->assertSee('encap-legal-ticker', false)
+            ->assertSee('encap-company-marquee', false)
             ->assertSee('footer-legal-name', false)
             ->assertSee('alt="ENCAP"', false)
             ->assertDontSee('primary-brand-lockup', false)
@@ -263,7 +263,7 @@ test('the full Arabic company name is prominent across supported locales and str
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('encap-legal-ticker', false)
+        ->assertSee('encap-company-marquee', false)
         ->assertSee('footer-legal-name', false)
         ->assertDontSee('primary-brand-lockup', false)
         ->assertDontSee('encap-company-name-band', false);
@@ -277,13 +277,13 @@ test('the legal-name ticker is rebuilt from one seed into a measured infinite lo
         ->toContain('min-height:100px')
         ->toContain('flex:0 0 30px')
         ->toContain('animation:none!important')
-        ->toContain('.encap-legal-ticker-group');
+        ->toContain('.encap-company-marquee__group');
 
-    expect($stylesheet)->not->toContain('encap-legal-ticker-sequence');
-    expect($stylesheet)->not->toContain('encap-legal-ticker-scroll');
+    expect($stylesheet)->not->toContain('encap-legal-ticker');
+    expect($stylesheet)->not->toContain('encap-company-marquee-scroll');
     expect($stylesheet)->not->toContain('primary-brand-lockup');
 
-    $tickerScript = file_get_contents(public_path('js/legal-name-ticker.js'));
+    $tickerScript = file_get_contents(public_path('js/company-marquee.js'));
     expect($tickerScript)
         ->toContain('const viewportWidth = ticker.clientWidth')
         ->toContain('sourceGroup.getBoundingClientRect().width')
@@ -292,18 +292,18 @@ test('the legal-name ticker is rebuilt from one seed into a measured infinite lo
         ->toContain('iterations: Infinity')
         ->toContain("easing: 'linear'");
 
-    $html = $this->get('/ar')->assertOk()->assertSee('js/legal-name-ticker.js', false)->getContent();
-    $tickerMarkupStart = strpos($html, 'class="encap-legal-ticker"');
+    $html = $this->get('/ar')->assertOk()->assertSee('js/company-marquee.js', false)->getContent();
+    $tickerMarkupStart = strpos($html, 'class="encap-company-marquee"');
     $tickerMarkupEnd = strpos($html, 'class="container primary-nav"', $tickerMarkupStart);
     $tickerMarkup = substr($html, $tickerMarkupStart, $tickerMarkupEnd - $tickerMarkupStart);
 
-    expect(substr_count($tickerMarkup, 'class="encap-legal-ticker-item"'))->toBe(1)
-        ->and($tickerMarkup)->toContain('data-legal-ticker-track')
-        ->and($tickerMarkup)->toContain('data-legal-ticker-source');
+    expect(substr_count($tickerMarkup, 'class="encap-company-marquee__item"'))->toBe(1)
+        ->and($tickerMarkup)->toContain('data-company-marquee-track')
+        ->and($tickerMarkup)->toContain('data-company-marquee-source');
 
     $headerStart = strpos($html, '<header class="site-header primary-header">');
     $headerEnd = strpos($html, '</header>', $headerStart);
-    $tickerStart = strpos($html, 'class="encap-legal-ticker"', $headerStart);
+    $tickerStart = strpos($html, 'class="encap-company-marquee"', $headerStart);
     $navStart = strpos($html, 'class="container primary-nav"', $headerStart);
 
     expect($headerStart)->not->toBeFalse()
