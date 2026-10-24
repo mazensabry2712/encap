@@ -275,18 +275,21 @@ test('the legal-name ticker is attached to the sticky header without changing lo
     expect($stylesheet)
         ->toContain('height:118px')
         ->toContain('min-height:100px')
-        ->toContain('encap-legal-ticker-scroll')
         ->toContain('flex:0 0 30px')
-        ->toContain('@media(prefers-reduced-motion:reduce)')
-        ->toContain('body.site-body .primary-header .encap-legal-ticker-track{animation:encap-legal-ticker-scroll 120s linear infinite!important}')
-        ->toContain('animation-play-state:running!important')
-        ->toContain('100%{transform:translate3d(-50%,0,0)}');
+        ->toContain('animation:none!important')
+        ->toContain('legal-name-ticker.js');
 
-    expect($stylesheet)->not->toContain('.encap-legal-ticker:hover .encap-legal-ticker-track{animation-play-state:paused}');
+    expect($stylesheet)->not->toContain('encap-legal-ticker-scroll');
+
+    $tickerScript = file_get_contents(public_path('js/legal-name-ticker.js'));
+    expect($tickerScript)
+        ->toContain('sequences[0].getBoundingClientRect().width')
+        ->toContain('iterations: Infinity')
+        ->toContain("easing: 'linear'");
 
     expect($stylesheet)->not->toContain('primary-brand-lockup');
 
-    $html = $this->get('/ar')->assertOk()->getContent();
+    $html = $this->get('/ar')->assertOk()->assertSee('js/legal-name-ticker.js', false)->getContent();
     $tickerMarkupStart = strpos($html, 'class="encap-legal-ticker"');
     $tickerMarkupEnd = strpos($html, 'class="container primary-nav"', $tickerMarkupStart);
     $tickerMarkup = substr($html, $tickerMarkupStart, $tickerMarkupEnd - $tickerMarkupStart);
