@@ -64,4 +64,7 @@ html[dir=rtl] .language-menu{transform-origin:top left}
 @media(prefers-reduced-motion:reduce){.primary-header,.primary-links a,.primary-dropdown-panel a,.language-switcher-trigger,.language-menu,.language-option,.primary-quote.button,.primary-mobile-menu>summary,.primary-menu-icon i,.primary-mobile-panel a{transition:none!important}
 .language-menu.is-open{animation:none!important}.primary-mobile-menu[open] .primary-menu-icon i{transform:none!important}.primary-dropdown[open]>summary svg{transform:none!important}}
 @media(max-width:600px){.encap-legal-ticker{height:28px;min-height:28px;flex-basis:28px}.encap-legal-ticker-sequence{gap:30px;padding-inline-end:30px}.encap-legal-ticker-item{font-size:11px}.encap-legal-ticker-track{animation-duration:60s}.footer-legal-name{white-space:normal}}
-@media(prefers-reduced-motion:reduce){.encap-legal-ticker-track{width:100%;animation:none;transform:none}.encap-legal-ticker-sequence{display:none}.encap-legal-ticker-sequence:first-child{display:flex;justify-content:center;width:100%;padding:0;gap:0}.encap-legal-ticker-item:not(:first-child){display:none}.encap-legal-ticker-item::before{display:none}}
+@media(prefers-reduced-motion:reduce){
+    /* Keep the explicitly requested legal-name ticker moving, but at a slower pace. */
+    body.site-body .primary-header .encap-legal-ticker-track{animation:encap-legal-ticker-scroll 120s linear infinite!important}
+}
