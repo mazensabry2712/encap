@@ -111,7 +111,7 @@
                     <h2 id="image-library-result-title">{{ __('Image library setup results') }}</h2>
                     <p>{{ __('Downloaded: :downloaded · Already present: :kept · Existing uploads copied: :copied', ['downloaded' => $imageLibraryResult['downloaded'], 'kept' => $imageLibraryResult['kept'], 'copied' => $imageLibraryResult['copied']]) }}</p>
                 </div>
-                <span class="admin-badge {{ $imageLibraryResult['complete'] ? '' : 'draft' }}">{{ $imageLibraryResult['complete'] ? __('Complete') : __('Needs retry') }}</span>
+                <span class="admin-badge {{ $imageLibraryResult['complete'] ? '' : 'draft' }}">{{ $imageLibraryResult['complete'] ? __('Complete') : (count($imageLibraryResult['errors']) ? __('Needs retry') : __('In progress')) }}</span>
             </div>
             @if(count($imageLibraryResult['errors']))
                 <ul>
@@ -119,7 +119,21 @@
                         <li>{{ $imageLibraryError }}</li>
                     @endforeach
                 </ul>
-                <p>{{ __('You can run the setup again; completed downloads and copied uploads will be kept.') }}</p>
+            @endif
+            @if(!$imageLibraryResult['finished'])
+                <p>{{ __('Image preparation is processed in short batches to avoid shared-hosting request timeouts.') }}</p>
+                <form method="post" action="{{ route('admin.images.prepare') }}">
+                    @csrf
+                    <input type="hidden" name="offset" value="{{ $imageLibraryResult['next_offset'] }}">
+                    <button class="admin-btn" type="submit">{{ __('Continue image preparation') }} ({{ min($imageLibraryResult['next_offset'] + 1, $imageLibraryResult['total']) }}–{{ min($imageLibraryResult['next_offset'] + 4, $imageLibraryResult['total']) }} / {{ $imageLibraryResult['total'] }})</button>
+                </form>
+            @elseif(count($imageLibraryResult['errors']))
+                <p>{{ __('Some images could not be prepared. Retry the library setup after checking the hosting connection and folder permissions.') }}</p>
+                <form method="post" action="{{ route('admin.images.prepare') }}">
+                    @csrf
+                    <input type="hidden" name="offset" value="0">
+                    <button class="admin-btn secondary" type="submit">{{ __('Retry missing images') }}</button>
+                </form>
             @else
                 <p>{{ __('The root-level image folder is ready. Existing uploads in the old location were kept as a backup.') }}</p>
             @endif
