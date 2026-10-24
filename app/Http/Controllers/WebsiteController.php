@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\ContactMessage;
 use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
+use App\Services\EnquiryNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -528,7 +529,8 @@ class WebsiteController extends Controller
         ]);
 
         unset($validated['website']);
-        ContactMessage::create($validated);
+        $contactMessage = ContactMessage::create($validated);
+        app(EnquiryNotifier::class)->contactMessageCreated($contactMessage);
 
         return back()->with('success', __('Your message has been received. Our team will get back to you soon.'));
     }
@@ -583,7 +585,8 @@ class WebsiteController extends Controller
         ]);
 
         unset($validated['website']);
-        QuoteRequest::create($validated);
+        $quoteRequest = QuoteRequest::create($validated);
+        app(EnquiryNotifier::class)->quoteRequestCreated($quoteRequest);
 
         return back()->with('success', __('Your request has been received. Our team will contact you soon.'));
     }
