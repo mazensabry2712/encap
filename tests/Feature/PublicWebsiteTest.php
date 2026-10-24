@@ -251,7 +251,7 @@ test('the full Arabic company name is prominent across supported locales and str
     foreach (['en', 'ar', 'fr', 'ru', 'tr'] as $locale) {
         $this->get('/'.$locale)
             ->assertOk()
-            ->assertSee('encap-company-marquee', false)
+            ->assertSee('encap-company-name-strip', false)
             ->assertSee('footer-legal-name', false)
             ->assertSee('alt="ENCAP"', false)
             ->assertDontSee('primary-brand-lockup', false)
@@ -263,52 +263,48 @@ test('the full Arabic company name is prominent across supported locales and str
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('encap-company-marquee', false)
+        ->assertSee('encap-company-name-strip', false)
         ->assertSee('footer-legal-name', false)
         ->assertDontSee('primary-brand-lockup', false)
         ->assertDontSee('encap-company-name-band', false);
 });
 
-test('the new company marquee is rebuilt from one seed into a measured infinite loop', function () {
+test('the company legal name appears in a static strip above the sticky navigation', function () {
     $stylesheet = file_get_contents(public_path('css/navigation.css'));
 
     expect($stylesheet)
         ->toContain('height:118px')
         ->toContain('min-height:100px')
-        ->toContain('flex:0 0 30px')
-        ->toContain('animation:none!important')
-        ->toContain('.encap-company-marquee__group');
+        ->toContain('flex:0 0 32px')
+        ->toContain('.encap-company-name-strip__text')
+        ->not->toContain('encap-company-marquee');
 
-    expect($stylesheet)->not->toContain('encap-legal-ticker');
     expect($stylesheet)->not->toContain('primary-brand-lockup');
 
-    $tickerScript = file_get_contents(public_path('js/company-marquee.js'));
-    expect($tickerScript)
-        ->toContain('const viewportWidth = ticker.clientWidth')
-        ->toContain('sourceGroup.getBoundingClientRect().width')
-        ->toContain('track.replaceChildren(sourceGroup)')
-        ->toContain('const duplicate = sourceGroup.cloneNode(true)')
-        ->toContain('iterations: Infinity')
-        ->toContain("easing: 'linear'");
+    $html = $this->get('/ar')
+        ->assertOk()
+        ->assertSee('encap-company-name-strip', false)
+        ->assertDontSee('company-marquee.js', false)
+        ->getContent();
 
-    $html = $this->get('/ar')->assertOk()->assertSee('js/company-marquee.js', false)->getContent();
-    $tickerMarkupStart = strpos($html, 'class="encap-company-marquee"');
-    $tickerMarkupEnd = strpos($html, 'class="container primary-nav"', $tickerMarkupStart);
-    $tickerMarkup = substr($html, $tickerMarkupStart, $tickerMarkupEnd - $tickerMarkupStart);
+    $stripStart = strpos($html, 'class="encap-company-name-strip"');
+    $stripEnd = strpos($html, 'class="container primary-nav"', $stripStart);
+    $stripMarkup = substr($html, $stripStart, $stripEnd - $stripStart);
 
-    expect(substr_count($tickerMarkup, 'class="encap-company-marquee__item"'))->toBe(1)
-        ->and($tickerMarkup)->toContain('data-company-marquee-track')
-        ->and($tickerMarkup)->toContain('data-company-marquee-source');
+    expect(substr_count($stripMarkup, 'الشركة المصرية الوطنية للإنتاج الزراعي'))->toBe(1)
+        ->and($stripMarkup)->toContain('encap-company-name-strip__text')
+        ->and($stripMarkup)->not->toContain('data-company-marquee-track')
+        ->and($stripMarkup)->not->toContain('data-company-marquee-source');
 
     $headerStart = strpos($html, '<header class="site-header primary-header">');
     $headerEnd = strpos($html, '</header>', $headerStart);
-    $tickerStart = strpos($html, 'class="encap-company-marquee"', $headerStart);
+    $stripStart = strpos($html, 'class="encap-company-name-strip"', $headerStart);
     $navStart = strpos($html, 'class="container primary-nav"', $headerStart);
 
     expect($headerStart)->not->toBeFalse()
         ->and($headerEnd)->not->toBeFalse()
-        ->and($tickerStart)->toBeGreaterThan($headerStart)
-        ->and($navStart)->toBeGreaterThan($tickerStart)
+        ->and($stripStart)->toBeGreaterThan($headerStart)
+        ->and($navStart)->toBeGreaterThan($stripStart)
         ->and($headerEnd)->toBeGreaterThan($navStart);
 });
 
