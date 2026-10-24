@@ -1,14 +1,10 @@
 /* ENCAP navigation — one layout system, isolated from site-wide component styles. */
 .primary-header{position:sticky;inset-block-start:0;z-index:120;display:block;margin:0;padding:0;background:rgba(251,250,245,.97);border-bottom:1px solid rgba(29,56,40,.1);backdrop-filter:blur(16px);transition:box-shadow .22s ease,background .22s ease}
 .primary-header.is-scrolled{background:rgba(251,250,245,.985);box-shadow:0 8px 28px rgba(16,43,32,.09)}
-.encap-company-marquee{position:relative;z-index:1;display:flex;align-items:center;flex:0 0 30px;width:100%;height:30px;min-height:30px;margin:0;padding:0;overflow:hidden;background:#102b20;color:#fffdf6;box-shadow:inset 0 -1px rgba(227,181,62,.45)}
-.encap-company-marquee::after{position:absolute;inset-block-end:0;inset-inline-start:0;width:clamp(50px,8vw,120px);height:2px;background:#e3b53e;content:""}
-/* Fresh marquee: JavaScript measures one dynamically-sized group and loops by that exact distance. */
-.encap-company-marquee__track{display:flex;flex:0 0 auto;width:max-content;min-width:max-content;direction:ltr;transform:translate3d(0,0,0);animation:none!important;will-change:transform}
-.encap-company-marquee__group{display:flex;flex:0 0 auto;align-items:center;gap:clamp(28px,3.5vw,58px);padding-inline-end:clamp(28px,3.5vw,58px);white-space:nowrap}
-.encap-company-marquee__item{display:inline-flex;flex:0 0 auto;align-items:center;gap:12px;color:#fffdf6;font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;font-size:12px;font-weight:750;line-height:1;letter-spacing:0;white-space:nowrap}
-.encap-company-marquee__item::before{display:block;width:5px;height:5px;flex:0 0 5px;border:1px solid #e3b53e;border-radius:50%;content:""}
-
+.encap-company-name-strip{position:relative;z-index:1;display:flex;flex:0 0 32px;align-items:center;justify-content:center;width:100%;height:32px;min-height:32px;margin:0;padding:0 14px;overflow:hidden;background:#102b20;color:#fffdf6;box-shadow:inset 0 -1px rgba(227,181,62,.45)}
+.encap-company-name-strip::after{position:absolute;inset-block-end:0;inset-inline:0;height:2px;background:linear-gradient(90deg,transparent 0%,#e3b53e 22%,#e3b53e 78%,transparent 100%);content:""}
+.encap-company-name-strip__text{display:inline-flex;align-items:center;justify-content:center;gap:12px;max-width:100%;color:#fffdf6;font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;font-size:12px;font-weight:750;line-height:1.4;text-align:center;white-space:nowrap}
+.encap-company-name-strip__text::before,.encap-company-name-strip__text::after{display:block;width:5px;height:5px;flex:0 0 5px;border:1px solid #e3b53e;border-radius:50%;content:""}
 .footer-legal-name{color:#dce7cb;font-family:"Cairo","IBM Plex Sans Arabic",sans-serif;font-size:10px;font-weight:650;line-height:1.6;white-space:nowrap}
 .primary-nav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:clamp(16px,2vw,30px);width:min(calc(100% - 56px),1400px);min-height:100px;margin-inline:auto;padding-block:10px}
 .primary-brand{display:inline-flex;align-items:center;justify-self:start;flex:0 0 auto;width:clamp(300px,27vw,380px);line-height:0;text-decoration:none}
@@ -63,4 +59,4 @@ html[dir=rtl] .language-menu{transform-origin:top left}
 @media(max-width:370px){.primary-nav{width:calc(100% - 20px);gap:6px}.primary-brand{width:calc(100vw - 138px)}.primary-brand-logo{height:72px}.primary-mobile-menu>summary{padding-inline:7px}.primary-menu-word{display:none}}
 @media(prefers-reduced-motion:reduce){.primary-header,.primary-links a,.primary-dropdown-panel a,.language-switcher-trigger,.language-menu,.language-option,.primary-quote.button,.primary-mobile-menu>summary,.primary-menu-icon i,.primary-mobile-panel a{transition:none!important}
 .language-menu.is-open{animation:none!important}.primary-mobile-menu[open] .primary-menu-icon i{transform:none!important}.primary-dropdown[open]>summary svg{transform:none!important}}
-@media(max-width:600px){.encap-company-marquee{height:28px;min-height:28px;flex-basis:28px}.encap-company-marquee__group{gap:30px;padding-inline-end:30px}.encap-company-marquee__item{font-size:11px}.footer-legal-name{white-space:normal}}
+@media(max-width:600px){.encap-company-name-strip{height:28px;min-height:28px;flex-basis:28px;padding-inline:8px}.encap-company-name-strip__text{gap:9px;font-size:11px}.footer-legal-name{white-space:normal}}
