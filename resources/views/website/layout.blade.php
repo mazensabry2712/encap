@@ -33,8 +33,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261025-business-contact-ui-1">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261025-business-contact-ui-1">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261025-separated-group-companies-1">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261025-separated-group-companies-1">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
@@ -180,16 +180,6 @@
             </div>
 
             <div class="encap-footer-business-grid">
-                <article class="encap-footer-business-card encap-footer-subsidiary-card">
-                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇸🇦</span><span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span></div>
-                    <h3>{{ $currentLocale === 'ar' ? 'شركة حدائق الشمال' : 'Hadaeq Al-Shamal Company' }}</h3>
-                    @if($currentLocale !== 'ar')<p class="encap-footer-arabic-name" lang="ar" dir="rtl">شركة حدائق الشمال</p>@endif
-                    <p class="encap-footer-location-label">🇸🇦 {{ __('Kingdom of Saudi Arabia') }}</p>
-                    <a class="encap-footer-location-link" href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer" aria-label="{{ __('Open location in Maps') }}">
-                        <span aria-hidden="true">⌖</span> {{ __('Aljouf - Saudia') }} <span class="encap-footer-outbound" aria-hidden="true">↗</span>
-                    </a>
-                </article>
-
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇸🇦</span><span class="encap-footer-card-tag">{{ __('Saudi Arabia') }}</span></div>
                     <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }}</h3>
@@ -223,6 +213,30 @@
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
                 </article>
             </div>
+        </section>
+
+        <section class="encap-footer-group-companies" aria-labelledby="footer-group-companies-title">
+            <div class="encap-footer-group-companies-heading">
+                <div>
+                    <span class="encap-footer-eyebrow">{{ __('ENCAP GROUP · EGYPT & SAUDI ARABIA') }}</span>
+                    <h2 id="footer-group-companies-title">{{ __('Group Companies') }}</h2>
+                    <p>{{ __('A regional company within the ENCAP group.') }}</p>
+                </div>
+            </div>
+            <article class="encap-footer-group-company-card">
+                <div class="encap-footer-group-company-mark" aria-hidden="true">🇸🇦</div>
+                <div class="encap-footer-group-company-identity">
+                    <span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span>
+                    <h3>{{ __('Hadaeq Al-Shamal Company') }}</h3>
+                    @if($currentLocale !== 'ar')<p class="encap-footer-arabic-name" lang="ar" dir="rtl">شركة حدائق الشمال</p>@endif
+                </div>
+                <div class="encap-footer-group-company-location">
+                    <span class="encap-footer-group-company-country">{{ __('Kingdom of Saudi Arabia') }}</span>
+                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">
+                        <span aria-hidden="true">⌖</span> {{ __('Aljouf - Saudia') }} <span class="encap-footer-outbound" aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </article>
         </section>
 
         <div class="encap-footer-bottom">
