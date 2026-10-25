@@ -30,7 +30,7 @@
      <div class="encap-hero-photo-shade"></div>
      <div class="encap-hero-photo-label">
       <span class="encap-image-label-mark"><img class="encap-image-label-logo" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="28" height="28" decoding="async"></span>
-      <span><small>ENCAP / ORIGIN</small><strong>{{ __('Farm to market') }}</strong></span>
+      <span><small>ENCAP / {{ __('ORIGIN') }}</small><strong>{{ __('Farm to market') }}</strong></span>
      </div>
     </div>
    </div>
@@ -67,21 +67,21 @@
   <div class="encap-service-hub-grid">
    <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1400&q=85') }}')" href="{{ route('farms', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sprout"></use></svg></span>
-    <span class="encap-service-hub-number">01 / ORIGIN</span><h3>{{ __('Agriculture & Farms') }}</h3><p>{{ __('Crop sourcing and seasonal planning.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
+    <span class="encap-service-hub-number">01 / {{ __('ORIGIN') }}</span><h3>{{ __('Agriculture & Farms') }}</h3><p>{{ __('Crop sourcing and seasonal planning.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
    <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \App\Support\EncapImage::url('produce-packing-2026.jpg', 'https://images.pexels.com/photos/8877381/pexels-photo-8877381.jpeg?auto=compress&cs=tinysrgb&w=1400') }}')" href="{{ route('packing-stations', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-package"></use></svg></span>
-    <span class="encap-service-hub-number">02 / PREPARATION</span><h3>{{ __('Packing Stations') }}</h3><p>{{ __('Sorting, grading, packing and preparation.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
+    <span class="encap-service-hub-number">02 / {{ __('PREPARATION') }}</span><h3>{{ __('Packing Stations') }}</h3><p>{{ __('Sorting, grading, packing and preparation.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
    <a class="encap-service-hub-card" style="--encap-service-card-image: url('{{ \App\Support\EncapImage::url('cargo-port-2026.jpg', 'https://images.unsplash.com/photo-1759272840538-ae4b07214c71?fit=crop&fm=jpg&w=1400&q=85') }}')" href="{{ route('export', ['locale' => $locale]) }}">
     <span class="encap-service-hub-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-truck"></use></svg></span>
-    <span class="encap-service-hub-number">03 / MARKETS</span><h3>{{ __('Export & Logistics') }}</h3><p>{{ __('Requirements, compliance coordination and shipping partners.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
+    <span class="encap-service-hub-number">03 / {{ __('MARKETS') }}</span><h3>{{ __('Export & Logistics') }}</h3><p>{{ __('Requirements, compliance coordination and shipping partners.') }}</p><span class="encap-service-hub-link">{{ __('Explore service') }} <b>↗</b></span>
    </a>
   </div>
  </div>
 </section>
 <section class="section encap-story" id="our-approach"><div class="container encap-story-grid">
- <div class="encap-story-art"><img src="{{ \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=900&q=85') }}" alt="{{ __('Sunlight across agricultural land') }}" loading="lazy" width="900" height="1100"><div class="encap-story-sideword">ORIGIN / QUALITY / GROWTH</div><div class="encap-story-caption"><img class="encap-story-brand" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="36" height="36" loading="lazy" decoding="async"><strong>{{ __('A stronger link between growers and global buyers.') }}</strong></div></div>
+ <div class="encap-story-art"><img src="{{ \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=900&q=85') }}" alt="{{ __('Sunlight across agricultural land') }}" loading="lazy" width="900" height="1100"><div class="encap-story-sideword">{{ __('ORIGIN') }} / {{ __('QUALITY') }} / {{ __('GROWTH') }}</div><div class="encap-story-caption"><img class="encap-story-brand" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="36" height="36" loading="lazy" decoding="async"><strong>{{ __('A stronger link between growers and global buyers.') }}</strong></div></div>
  <div class="encap-story-copy"><span class="encap-section-index">{{ __('01 / Who we are') }}</span><div class="encap-kicker">{{ __('Agriculture with a wider view') }}</div><h2>{{ __('Good produce starts with good decisions.') }}</h2><p>{{ __('We work across agricultural production, partner sourcing, processing and export. Our approach starts with understanding the crop, the buyer’s needs and the journey ahead.') }}</p><p>{{ __('Every enquiry is a chance to align product details, availability, preparation and destination before moving forward.') }}</p><a class="encap-text-link" href="{{ route('about', ['locale' => $locale]) }}">{{ __('Discover ENCAP') }} <span>↗</span></a><div class="encap-story-signature"><span class="encap-signature-mark"><img class="encap-signature-logo" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="32" height="32" loading="lazy" decoding="async"></span><span><strong>{{ __('Rooted in Egypt.') }}</strong><small>{{ __('Connected to opportunity.') }}</small></span></div></div>
 </div></section>
 <section class="section encap-products" id="products"><div class="container">
