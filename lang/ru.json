@@ -553,5 +553,11 @@
     "TO MARKET": "НА РЫНОК",
     "GROUP": "ГРУППА",
     "ENCAP GROUP · EGYPT & SAUDI ARABIA": "ГРУППА ENCAP · ЕГИПЕТ И САУДОВСКАЯ АРАВИЯ",
-    "Eng.": "Инж."
+    "Eng.": "Инж.",
+    "01 / ORIGIN": "01 / ПРОИСХОЖДЕНИЕ",
+    "02 / SOURCING": "02 / ПОСТАВКИ",
+    "03 / PREPARATION": "03 / ПОДГОТОВКА",
+    "04 / DESTINATION": "04 / НАЗНАЧЕНИЕ",
+    "ISO 9001": "ISO 9001",
+    "SEDEX / SMETA": "SEDEX / SMETA"
 }
