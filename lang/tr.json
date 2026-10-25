@@ -544,5 +544,14 @@
     "YouTube": "YouTube",
     "The image could not be saved. Please try a JPG, PNG, WebP or AVIF file up to 5 MB. If this continues, the hosting image-folder permissions need checking.": "Görsel kaydedilemedi. Lütfen en fazla 5 MB boyutunda JPG, PNG, WebP veya AVIF dosyası kullanın. Sorun devam ederse barındırma ortamındaki görsel klasörünün izinlerini kontrol edin.",
     "The image was saved and remains visible, but the encap-img folder is not writable. Fix its permissions to keep new uploads in the main image folder.": "Görsel kaydedildi ve görüntülenebilir durumda, ancak encap-img klasörüne yazılamıyor. Yeni yüklemelerin ana görsel klasörüne kaydedilebilmesi için klasör izinlerini düzeltin.",
-    "03 / Frozen range": "03 / Dondurulmuş ürünler"
+    "03 / Frozen range": "03 / Dondurulmuş ürünler",
+    "ORIGIN": "KÖKEN",
+    "PREPARATION": "HAZIRLIK",
+    "MARKETS": "PAZARLAR",
+    "QUALITY": "KALİTE",
+    "GROWTH": "BÜYÜME",
+    "TO MARKET": "PAZARA",
+    "GROUP": "GRUP",
+    "ENCAP GROUP · EGYPT & SAUDI ARABIA": "ENCAP GRUBU · MISIR VE SUUDİ ARABİSTAN",
+    "Eng.": "Müh."
 }
