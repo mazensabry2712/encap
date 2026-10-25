@@ -150,7 +150,7 @@
         <figure class="encap-about-practice-visual">
             <img src="{{ \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=1200&q=85') }}" alt="{{ $pageContent['approach_image_alt'] }}" width="1200" height="1000" loading="lazy" decoding="async">
             <figcaption>{{ $pageContent['hero_caption'] }}</figcaption>
-            <span class="encap-about-practice-stamp" aria-hidden="true"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="38" height="38" loading="lazy" decoding="async"><span>ORIGIN<br>TO MARKET</span></span>
+            <span class="encap-about-practice-stamp" aria-hidden="true"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="38" height="38" loading="lazy" decoding="async"><span>{{ __('ORIGIN') }}<br>{{ __('TO MARKET') }}</span></span>
         </figure>
         <div class="encap-about-practice-copy">
             <span class="encap-section-index">{{ __('How we work') }}</span><h2 id="encap-about-practice-title">{{ $pageContent['approach_heading'] }}</h2>
