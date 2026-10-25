@@ -128,7 +128,7 @@
 <footer class="footer encap-footer">
     <div class="container encap-footer-shell">
         <div class="encap-footer-topline">
-            <span class="encap-footer-wordmark">ENCAP <span aria-hidden="true">/</span> GROUP</span>
+            <span class="encap-footer-wordmark">ENCAP <span aria-hidden="true">/</span> {{ __('GROUP') }}</span>
             <span class="encap-footer-topline-note">{{ __('Agricultural production · Sourcing · Processing · Export') }}</span>
         </div>
 
@@ -172,7 +172,7 @@
         <section class="encap-footer-business" aria-labelledby="footer-business-title">
             <div class="encap-footer-business-heading">
                 <div>
-                    <span class="encap-footer-eyebrow">ENCAP GROUP <span aria-hidden="true">·</span> EGYPT &amp; SAUDI ARABIA</span>
+                    <span class="encap-footer-eyebrow">{{ __('ENCAP GROUP · EGYPT & SAUDI ARABIA') }}</span>
                     <h2 id="footer-business-title">{{ __('Business Inquiries') }}</h2>
                     <p>{{ __('Contact our regional teams for business and export enquiries.') }}</p>
                 </div>
@@ -192,7 +192,7 @@
 
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇸🇦</span><span class="encap-footer-card-tag">{{ __('Saudi Arabia') }}</span></div>
-                    <h3>Eng. Ahmed Elshamy</h3>
+                    <h3>{{ __('Eng.') }} Ahmed Elshamy</h3>
                     <p class="encap-footer-person-role">{{ __('Chairman of the Board') }}</p>
                     <a class="encap-footer-phone" href="tel:+966568309656"><span aria-hidden="true">↗</span><span dir="ltr">+966 56 830 9656</span></a>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Tabarjal+Al-Aziziyah+Al-Jawf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">{{ __('Al-Jawf region — Tabarjal — Al-Aziziyah neighborhood') }} <span aria-hidden="true">↗</span></a>
@@ -200,7 +200,7 @@
 
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇪🇬</span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
-                    <h3>Eng. Mohamed Saad</h3>
+                    <h3>{{ __('Eng.') }} Mohamed Saad</h3>
                     <p class="encap-footer-person-role">{{ __('Export Sector Manager') }}</p>
                     <a class="encap-footer-phone" href="tel:+201060113074"><span aria-hidden="true">↗</span><span dir="ltr">+20 106 011 3074</span></a>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
