@@ -814,5 +814,11 @@
     "Produce cartons handled in a packing warehouse.": "كراتين منتجات زراعية يجري تجهيزها داخل مستودع للتعبئة.",
     "Fresh berries being handled along a produce packing line.": "ثمار توت طازجة يجري التعامل معها على خط تعبئة المنتجات الزراعية.",
     "Contact ENCAP for current availability and export specifications.": "تواصل مع ENCAP لمعرفة التوافر الحالي ومواصفات التصدير.",
-    "Product availability, specifications, grades and packaging are confirmed for each buyer enquiry.": "يتم تأكيد توافر المنتج ومواصفاته ودرجاته وطرق تعبئته لكل استفسار من المشترين."
+    "Product availability, specifications, grades and packaging are confirmed for each buyer enquiry.": "يتم تأكيد توافر المنتج ومواصفاته ودرجاته وطرق تعبئته لكل استفسار من المشترين.",
+    "01 / ORIGIN": "٠١ / المصدر",
+    "02 / SOURCING": "٠٢ / التوريد",
+    "03 / PREPARATION": "٠٣ / التجهيز",
+    "04 / DESTINATION": "٠٤ / الوجهة",
+    "ISO 9001": "ISO 9001",
+    "SEDEX / SMETA": "SEDEX / SMETA"
 }
