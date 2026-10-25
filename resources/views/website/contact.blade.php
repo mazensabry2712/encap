@@ -186,7 +186,7 @@
                             <div>
                                 <span>{{ __('Kingdom of Saudi Arabia') }}</span>
                                 <a href="tel:+966568309656" dir="ltr">+966 56 830 9656</a>
-                                <p>Eng. Ahmed Elshamy · {{ __('Chairman of the Board') }}</p>
+                                <p>{{ __('Eng.') }} Ahmed Elshamy · {{ __('Chairman of the Board') }}</p>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
                         </article>
@@ -195,7 +195,7 @@
                             <div>
                                 <span>{{ __('Nubaria — Beheira, Egypt') }}</span>
                                 <a href="tel:+201060113074" dir="ltr">+20 106 011 3074</a>
-                                <p>Eng. Mohamed Saad · {{ __('Export Sector Manager') }}</p>
+                                <p>{{ __('Eng.') }} Mohamed Saad · {{ __('Export Sector Manager') }}</p>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
                         </article>
