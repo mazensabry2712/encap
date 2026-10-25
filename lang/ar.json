@@ -820,5 +820,8 @@
     "03 / PREPARATION": "٠٣ / التجهيز",
     "04 / DESTINATION": "٠٤ / الوجهة",
     "ISO 9001": "ISO 9001",
-    "SEDEX / SMETA": "SEDEX / SMETA"
+    "SEDEX / SMETA": "SEDEX / SMETA",
+    "Pagination": "التنقل بين الصفحات",
+    "pagination.previous": "السابق",
+    "pagination.next": "التالي"
 }
