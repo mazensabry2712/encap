@@ -19,7 +19,7 @@
     <a class="encap-button encap-button-primary" href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Discover our products') }} <span aria-hidden="true">↗</span></a>
     <a class="encap-button encap-button-quiet" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Start a conversation') }} <span aria-hidden="true">→</span></a>
    </div>
-   <div class="encap-hero-footnote" data-hero-reveal style="--hero-delay:400ms"><span class="encap-footnote-icon" aria-hidden="true">✳</span><span>{{ __('Production') }} <i>·</i> {{ __('Sourcing') }} <i>·</i> {{ __('Processing') }} <i>·</i> {{ __('Export') }}</span></div>
+   <div class="encap-hero-footnote" data-hero-reveal style="--hero-delay:400ms"><span class="encap-footnote-icon" aria-hidden="true">✳</span><span>{{ __('Agricultural production · Sourcing · Processing · Export') }}</span></div>
   </div>
   <div class="encap-hero-stage" data-hero-tilt aria-hidden="true">
    <div class="encap-hero-stage-ring encap-hero-stage-ring--outer"></div>
