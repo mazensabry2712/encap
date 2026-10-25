@@ -60,7 +60,7 @@
 
 <header class="site-header primary-header">
 <div class="encap-company-name-strip" role="note">
-    <span class="encap-company-name-strip__text" lang="ar" dir="rtl">الشركة المصرية الوطنية للإنتاج الزراعي</span>
+    <span class="encap-company-name-strip__text" lang="{{ $currentLocale }}" dir="{{ $currentLocale === 'ar' ? 'rtl' : 'ltr' }}">{{ __('The Egyptian National Company for Agricultural Production') }}</span>
 </div>
     <div class="container primary-nav">
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
