@@ -553,5 +553,11 @@
     "TO MARKET": "PAZARA",
     "GROUP": "GRUP",
     "ENCAP GROUP · EGYPT & SAUDI ARABIA": "ENCAP GRUBU · MISIR VE SUUDİ ARABİSTAN",
-    "Eng.": "Müh."
+    "Eng.": "Müh.",
+    "01 / ORIGIN": "01 / KÖKEN",
+    "02 / SOURCING": "02 / TEDARİK",
+    "03 / PREPARATION": "03 / HAZIRLIK",
+    "04 / DESTINATION": "04 / VARIŞ NOKTASI",
+    "ISO 9001": "ISO 9001",
+    "SEDEX / SMETA": "SEDEX / SMETA"
 }
