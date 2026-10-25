@@ -634,5 +634,15 @@
     "Image preparation is processed in short batches to avoid shared-hosting request timeouts.": "يتم تجهيز الصور على دفعات قصيرة لتجنب انتهاء مهلة الطلب على الاستضافة المشتركة.",
     "Continue image preparation": "استكمال تجهيز الصور",
     "Retry missing images": "إعادة محاولة الصور غير المكتملة",
-    "Some images could not be prepared. Retry the library setup after checking the hosting connection and folder permissions.": "تعذر تجهيز بعض الصور. أعد المحاولة بعد مراجعة اتصال الاستضافة وصلاحيات المجلد."
+    "Some images could not be prepared. Retry the library setup after checking the hosting connection and folder permissions.": "تعذر تجهيز بعض الصور. أعد المحاولة بعد مراجعة اتصال الاستضافة وصلاحيات المجلد.",
+    "Operations": "الأنشطة",
+    "ORIGIN": "المصدر",
+    "PREPARATION": "التجهيز",
+    "MARKETS": "الأسواق",
+    "QUALITY": "الجودة",
+    "GROWTH": "النمو",
+    "TO MARKET": "إلى السوق",
+    "GROUP": "المجموعة",
+    "ENCAP GROUP · EGYPT & SAUDI ARABIA": "مجموعة ENCAP · مصر والسعودية",
+    "Eng.": "م."
 }
