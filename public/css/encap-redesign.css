@@ -1280,3 +1280,250 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
     .footer.encap-footer .footer-agency-credit-label{font-size:9px}
     .footer.encap-footer .footer-agency-credit strong{font-size:10px}
 }
+
+
+
+/* Business contacts UI — clear hierarchy, compact call actions, and responsive cards. */
+.encap-footer-business-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:15px;
+}
+.encap-footer-business-card{
+    position:relative;
+    min-height:0;
+    padding:20px;
+    overflow:hidden;
+    border:1px solid rgba(220,235,209,.16);
+    border-radius:7px;
+    background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease;
+}
+.encap-footer-business-card:before{
+    position:absolute;
+    inset:0 0 auto;
+    height:2px;
+    background:linear-gradient(90deg,rgba(227,181,62,.9),rgba(214,229,191,.22),transparent 78%);
+    content:"";
+    opacity:.78;
+}
+.encap-footer-business-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(214,229,191,.36);
+    background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.028));
+    box-shadow:0 16px 34px rgba(0,0,0,.12);
+}
+.encap-footer-business-card .encap-footer-card-topline{margin-bottom:17px}
+.encap-footer-region-mark{border-radius:5px}
+.encap-footer-card-tag{font-size:10px;letter-spacing:.035em}
+.encap-footer-business-card h3{font-size:17px;line-height:1.45;letter-spacing:-.015em}
+.encap-footer-person-role{
+    display:inline-flex;
+    align-self:flex-start;
+    margin:2px 0 13px;
+    padding:6px 9px;
+    border:1px solid rgba(213,229,188,.18);
+    border-radius:4px;
+    background:rgba(213,229,188,.075);
+    color:#e0eccf;
+    font-size:10px;
+    font-weight:750;
+    line-height:1.55;
+}
+.encap-footer-phone-list{
+    display:grid;
+    gap:7px;
+    width:100%;
+    margin:2px 0 15px;
+}
+.encap-footer-phone-list .encap-footer-phone{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    width:100%;
+    min-height:36px;
+    margin:0;
+    padding:5px 9px;
+    border:1px solid rgba(255,255,255,.105);
+    border-radius:5px;
+    background:rgba(4,21,14,.22);
+    color:#f4f7ef;
+    font-size:12px;
+    font-weight:750;
+    line-height:1.4;
+    text-align:start;
+    transition:border-color .18s ease,background .18s ease,color .18s ease;
+}
+.encap-footer-phone-list .encap-footer-phone>span:first-child{
+    flex:0 0 25px;
+    width:25px;
+    height:25px;
+    border-color:rgba(227,181,62,.28);
+    background:rgba(227,181,62,.07);
+}
+.encap-footer-phone-list .encap-footer-phone:hover{
+    border-color:rgba(227,181,62,.48);
+    background:rgba(227,181,62,.08);
+    color:#f6d981;
+    text-decoration:none;
+}
+.encap-footer-person-card .encap-footer-person-location{
+    align-items:center;
+    gap:8px;
+    margin-top:auto;
+    padding-top:11px;
+    border-top:1px solid rgba(255,255,255,.095);
+    font-size:10px;
+    font-weight:650;
+}
+.encap-footer-subsidiary-card{
+    grid-column:1/-1;
+    display:grid;
+    grid-template-columns:minmax(160px,.8fr) minmax(200px,1fr) minmax(250px,1.2fr);
+    align-items:center;
+    gap:8px 24px;
+    padding:17px 22px;
+    background:linear-gradient(110deg,rgba(213,229,188,.075),rgba(255,255,255,.018) 65%);
+}
+.encap-footer-subsidiary-card .encap-footer-card-topline{
+    grid-column:1;
+    grid-row:1/3;
+    align-self:center;
+    margin:0;
+}
+.encap-footer-subsidiary-card h3{grid-column:2;grid-row:1;margin:0}
+.encap-footer-subsidiary-card .encap-footer-arabic-name{grid-column:2;grid-row:2;margin:0;color:#d5e3c8}
+.encap-footer-subsidiary-card .encap-footer-location-label{grid-column:3;grid-row:1;margin:0}
+.encap-footer-subsidiary-card .encap-footer-location-link{
+    grid-column:3;
+    grid-row:2;
+    align-self:start;
+    margin:0;
+    padding-top:0;
+}
+.encap-footer-business-heading{margin-bottom:24px}
+.encap-footer-quote-link{border-radius:5px}
+.encap-contact-business-channels{grid-template-columns:minmax(0,1fr);gap:12px}
+.encap-contact-business-channels .encap-contact-channel--business-person{
+    grid-template-columns:42px minmax(0,1fr) 14px;
+    align-items:start;
+    gap:13px;
+    padding:17px;
+    border:1px solid rgba(255,255,255,.105);
+    border-inline-start:2px solid rgba(213,229,188,.42);
+    border-radius:6px;
+    background:linear-gradient(125deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+    transition:background .22s ease,border-color .22s ease,transform .22s ease;
+}
+.encap-contact-business-channels .encap-contact-channel--business-person:hover{
+    border-color:rgba(213,229,188,.34);
+    background:linear-gradient(125deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
+    transform:translateY(-2px);
+}
+.encap-contact-business-channels .encap-contact-channel-icon{
+    width:40px;
+    height:40px;
+    border-radius:6px;
+    background:rgba(213,229,188,.055);
+}
+.encap-contact-business-channels .encap-contact-person-content{min-width:0}
+.encap-contact-business-channels .encap-contact-person-location{
+    display:block;
+    margin:0 0 7px;
+    color:#b6cba7;
+    font-size:9px;
+    font-weight:850;
+    letter-spacing:.045em;
+    line-height:1.5;
+    text-transform:uppercase;
+}
+.encap-contact-business-channels .encap-contact-person-name{
+    margin:0 0 3px;
+    color:#fff;
+    font-size:14px;
+    font-weight:850;
+    line-height:1.5;
+    overflow-wrap:anywhere;
+}
+.encap-contact-business-channels .encap-contact-person-role{
+    margin:0 0 12px;
+    color:#d8e5c9;
+    font-size:10px;
+    font-weight:700;
+    line-height:1.65;
+}
+.encap-contact-business-channels .encap-contact-phone-list{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:7px;
+}
+.encap-contact-business-channels .encap-contact-phone-list a{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    width:auto;
+    min-height:34px;
+    margin:0;
+    padding:6px 9px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:5px;
+    background:rgba(3,20,13,.22);
+    color:#f3f6ed;
+    font-size:11px;
+    font-weight:750;
+    line-height:1.4;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:border-color .18s ease,background .18s ease,color .18s ease;
+}
+.encap-contact-business-channels .encap-contact-phone-list a:before{
+    color:#d8e5c9;
+    content:"☎";
+    font-size:11px;
+}
+.encap-contact-business-channels .encap-contact-phone-list a:hover{
+    border-color:rgba(227,181,62,.5);
+    background:rgba(227,181,62,.08);
+    color:#f6d981;
+    text-decoration:none;
+}
+.encap-contact-business-channels .encap-contact-channel-arrow{
+    padding-top:5px;
+}
+@media(max-width:900px){
+    .encap-footer-business-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .encap-footer-subsidiary-card{
+        grid-template-columns:minmax(130px,.65fr) minmax(0,1fr) minmax(0,1.15fr);
+        gap:8px 17px;
+        padding:16px;
+    }
+}
+@media(max-width:600px){
+    .encap-footer-business-grid{grid-template-columns:minmax(0,1fr);gap:11px}
+    .encap-footer-business-card{padding:17px}
+    .encap-footer-subsidiary-card{
+        display:flex;
+        align-items:flex-start;
+        gap:0;
+        padding:17px;
+    }
+    .encap-footer-subsidiary-card .encap-footer-card-topline{margin-bottom:12px}
+    .encap-footer-subsidiary-card h3{margin:0 0 5px}
+    .encap-footer-subsidiary-card .encap-footer-arabic-name{margin:0 0 6px}
+    .encap-footer-subsidiary-card .encap-footer-location-label{margin:0 0 8px}
+    .encap-footer-subsidiary-card .encap-footer-location-link{margin-top:0}
+    .encap-footer-phone-list .encap-footer-phone{min-height:38px}
+    .encap-contact-business-channels .encap-contact-channel--business-person{
+        grid-template-columns:36px minmax(0,1fr) 12px;
+        gap:10px;
+        padding:13px;
+    }
+    .encap-contact-business-channels .encap-contact-channel-icon{width:35px;height:35px}
+    .encap-contact-business-channels .encap-contact-phone-list{display:grid;grid-template-columns:minmax(0,1fr)}
+    .encap-contact-business-channels .encap-contact-phone-list a{width:100%;white-space:normal}
+}
+@media(prefers-reduced-motion:reduce){
+    .encap-footer-business-card,.encap-footer-business-card:hover,
+    .encap-contact-business-channels .encap-contact-channel--business-person,
+    .encap-contact-business-channels .encap-contact-channel--business-person:hover{transition:none;transform:none}
+}
