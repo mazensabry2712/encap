@@ -180,34 +180,43 @@
                         @endif
                     </div>
                 @else
-                    <div class="encap-contact-channels">
-                        <article class="encap-contact-channel">
+                    <div class="encap-contact-channels encap-contact-business-channels">
+                        <article class="encap-contact-channel encap-contact-channel--business-person">
                             <span class="encap-contact-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.4 4-2 1.6a14 14 0 0 0 5.5 5.5l1.6-2 4 1.4v3c0 1.1-.9 2-2 2A15.5 15.5 0 0 1 5 5.5c0-1.1.9-2 2-2Z"/></svg></span>
-                            <div>
-                                <span>{{ __('Aljouf - Saudia') }}</span>
-                                <p>{{ __('Eng.') }} {{ $locale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }} · {{ __('Company Manager in Saudi Arabia') }}</p>
-                                <a href="tel:+966568309656" dir="ltr">+966 56 830 9656</a>
-                                <a href="tel:+966541533750" dir="ltr">+966 54 153 3750</a>
-                                <a href="tel:+201036199429" dir="ltr">+20 10 36199429</a>
+                            <div class="encap-contact-person-content">
+                                <span class="encap-contact-person-location">{{ __('Aljouf - Saudia') }}</span>
+                                <p class="encap-contact-person-name">{{ __('Eng.') }} {{ $locale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }}</p>
+                                <p class="encap-contact-person-role">{{ __('Company Manager in Saudi Arabia') }}</p>
+                                <div class="encap-contact-phone-list">
+                                    <a href="tel:+966568309656" dir="ltr">+966 56 830 9656</a>
+                                    <a href="tel:+966541533750" dir="ltr">+966 54 153 3750</a>
+                                    <a href="tel:+201036199429" dir="ltr">+20 10 36199429</a>
+                                </div>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
                         </article>
-                        <article class="encap-contact-channel">
+                        <article class="encap-contact-channel encap-contact-channel--business-person">
                             <span class="encap-contact-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.4 4-2 1.6a14 14 0 0 0 5.5 5.5l1.6-2 4 1.4v3c0 1.1-.9 2-2 2A15.5 15.5 0 0 1 5 5.5c0-1.1.9-2 2-2Z"/></svg></span>
-                            <div>
-                                <span>{{ __('Nubaria — Beheira, Egypt') }}</span>
-                                <p>{{ __('Eng.') }} {{ $locale === 'ar' ? 'شعبان شاهين' : 'Shaban Shahen' }} · {{ __('Company Manager in Egypt') }}</p>
-                                <a href="tel:+966530750780" dir="ltr">+966 53 075 0780</a>
-                                <a href="tel:+201044735045" dir="ltr">+20 10 44735045</a>
+                            <div class="encap-contact-person-content">
+                                <span class="encap-contact-person-location">{{ __('Nubaria — Beheira, Egypt') }}</span>
+                                <p class="encap-contact-person-name">{{ __('Eng.') }} {{ $locale === 'ar' ? 'شعبان شاهين' : 'Shaban Shahen' }}</p>
+                                <p class="encap-contact-person-role">{{ __('Company Manager in Egypt') }}</p>
+                                <div class="encap-contact-phone-list">
+                                    <a href="tel:+966530750780" dir="ltr">+966 53 075 0780</a>
+                                    <a href="tel:+201044735045" dir="ltr">+20 10 44735045</a>
+                                </div>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
                         </article>
-                        <article class="encap-contact-channel">
-                            <span class="encap-contact-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.4 4-2 1.6a14 14 0 0 0 5.5 5.5l1.6-2 4 1.4v3c0 1.1-.9 2-2 2A15.5 15.5 0 0 1 5 5.5c0-1.1.9-2 2-2Z"/></svg></span>
-                            <div>
-                                <span>{{ __('Nubaria — Beheira, Egypt') }}</span>
-                                <p>{{ __('Eng.') }} {{ $locale === 'ar' ? 'محمد سعد' : 'Mohamed Saad' }} · {{ __('Export Sector Manager') }}</p>
-                                <a href="tel:+201060113074" dir="ltr">+20 106 011 3074</a>
+                        <article class="encap-contact-channel encap-contact-channel--business-person">
+                            <span class="encap-contact-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h3l1.4 4-2 1.6a14 14 0 0 0 5.5 5.5l1.6-2 2.1 1.2v2.5c0 1.1-.9 2-2 2A15.5 15.5 0 0 1 5 5.5c0-1.1.9-2 2-2Z"/></svg></span>
+                            <div class="encap-contact-person-content">
+                                <span class="encap-contact-person-location">{{ __('Nubaria — Beheira, Egypt') }}</span>
+                                <p class="encap-contact-person-name">{{ __('Eng.') }} {{ $locale === 'ar' ? 'محمد سعد' : 'Mohamed Saad' }}</p>
+                                <p class="encap-contact-person-role">{{ __('Export Sector Manager') }}</p>
+                                <div class="encap-contact-phone-list">
+                                    <a href="tel:+201060113074" dir="ltr">+20 106 011 3074</a>
+                                </div>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
                         </article>
