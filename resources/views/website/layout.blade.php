@@ -185,22 +185,33 @@
                     <h3>{{ $currentLocale === 'ar' ? 'شركة حدائق الشمال' : 'Hadaeq Al-Shamal Company' }}</h3>
                     @if($currentLocale !== 'ar')<p class="encap-footer-arabic-name" lang="ar" dir="rtl">شركة حدائق الشمال</p>@endif
                     <p class="encap-footer-location-label">🇸🇦 {{ __('Kingdom of Saudi Arabia') }}</p>
-                    <a class="encap-footer-location-link" href="https://www.google.com/maps/search/?api=1&amp;query=Tabarjal+Al-Aziziyah+Al-Jawf+Saudi+Arabia" target="_blank" rel="noopener noreferrer" aria-label="{{ __('Open location in Maps') }}">
-                        <span aria-hidden="true">⌖</span> {{ __('Al-Jawf region — Tabarjal — Al-Aziziyah neighborhood') }} <span class="encap-footer-outbound" aria-hidden="true">↗</span>
+                    <a class="encap-footer-location-link" href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer" aria-label="{{ __('Open location in Maps') }}">
+                        <span aria-hidden="true">⌖</span> {{ __('Aljouf - Saudia') }} <span class="encap-footer-outbound" aria-hidden="true">↗</span>
                     </a>
                 </article>
 
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇸🇦</span><span class="encap-footer-card-tag">{{ __('Saudi Arabia') }}</span></div>
-                    <h3>{{ __('Eng.') }} Ahmed Elshamy</h3>
-                    <p class="encap-footer-person-role">{{ __('Chairman of the Board') }}</p>
+                    <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }}</h3>
+                    <p class="encap-footer-person-role">{{ __('Company Manager in Saudi Arabia') }}</p>
                     <a class="encap-footer-phone" href="tel:+966568309656"><span aria-hidden="true">↗</span><span dir="ltr">+966 56 830 9656</span></a>
-                    <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Tabarjal+Al-Aziziyah+Al-Jawf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">{{ __('Al-Jawf region — Tabarjal — Al-Aziziyah neighborhood') }} <span aria-hidden="true">↗</span></a>
+                    <a class="encap-footer-phone" href="tel:+966541533750"><span aria-hidden="true">↗</span><span dir="ltr">+966 54 153 3750</span></a>
+                    <a class="encap-footer-phone" href="tel:+201036199429"><span aria-hidden="true">↗</span><span dir="ltr">+20 10 36199429</span></a>
+                    <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">{{ __('Aljouf - Saudia') }} <span aria-hidden="true">↗</span></a>
                 </article>
 
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇪🇬</span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
-                    <h3>{{ __('Eng.') }} Mohamed Saad</h3>
+                    <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'شعبان شاهين' : 'Shaban Shahen' }}</h3>
+                    <p class="encap-footer-person-role">{{ __('Company Manager in Egypt') }}</p>
+                    <a class="encap-footer-phone" href="tel:+966530750780"><span aria-hidden="true">↗</span><span dir="ltr">+966 53 075 0780</span></a>
+                    <a class="encap-footer-phone" href="tel:+201044735045"><span aria-hidden="true">↗</span><span dir="ltr">+20 10 44735045</span></a>
+                    <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
+                </article>
+
+                <article class="encap-footer-business-card encap-footer-person-card">
+                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇪🇬</span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
+                    <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'محمد سعد' : 'Mohamed Saad' }}</h3>
                     <p class="encap-footer-person-role">{{ __('Export Sector Manager') }}</p>
                     <a class="encap-footer-phone" href="tel:+201060113074"><span aria-hidden="true">↗</span><span dir="ltr">+20 106 011 3074</span></a>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
