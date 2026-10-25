@@ -544,5 +544,14 @@
     "YouTube": "YouTube",
     "The image could not be saved. Please try a JPG, PNG, WebP or AVIF file up to 5 MB. If this continues, the hosting image-folder permissions need checking.": "Impossible d’enregistrer l’image. Veuillez utiliser un fichier JPG, PNG, WebP ou AVIF de 5 Mo maximum. Si le problème persiste, vérifiez les autorisations du dossier d’images sur l’hébergement.",
     "The image was saved and remains visible, but the encap-img folder is not writable. Fix its permissions to keep new uploads in the main image folder.": "L’image a été enregistrée et reste visible, mais le dossier encap-img n’est pas accessible en écriture. Corrigez ses autorisations pour que les prochaines images soient enregistrées dans le dossier principal.",
-    "03 / Frozen range": "03 / Gamme surgelée"
+    "03 / Frozen range": "03 / Gamme surgelée",
+    "ORIGIN": "ORIGINE",
+    "PREPARATION": "PRÉPARATION",
+    "MARKETS": "MARCHÉS",
+    "QUALITY": "QUALITÉ",
+    "GROWTH": "CROISSANCE",
+    "TO MARKET": "JUSQU’AU MARCHÉ",
+    "GROUP": "GROUPE",
+    "ENCAP GROUP · EGYPT & SAUDI ARABIA": "GROUPE ENCAP · ÉGYPTE & ARABIE SAOUDITE",
+    "Eng.": "Ing."
 }
