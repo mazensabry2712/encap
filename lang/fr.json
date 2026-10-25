@@ -559,5 +559,8 @@
     "03 / PREPARATION": "03 / PRÉPARATION",
     "04 / DESTINATION": "04 / DESTINATION",
     "ISO 9001": "ISO 9001",
-    "SEDEX / SMETA": "SEDEX / SMETA"
+    "SEDEX / SMETA": "SEDEX / SMETA",
+    "Pagination": "Pagination",
+    "pagination.previous": "Précédent",
+    "pagination.next": "Suivant"
 }
