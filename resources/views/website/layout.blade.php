@@ -108,6 +108,7 @@
                 <nav class="primary-mobile-panel" aria-label="{{ __('Mobile navigation') }}" data-primary-mobile-nav>
                     <div class="primary-mobile-panel-links">
                     <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
+                    <span class="primary-mobile-section-label">{{ __('Our Company') }}</span>
                     <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
                     <a href="{{ route('farms', ['locale' => $currentLocale]) }}" @if(request()->routeIs('farms')) aria-current="page" @endif>{{ __('Agriculture & Farms') }}</a>
                     <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}" @if(request()->routeIs('packing-stations')) aria-current="page" @endif>{{ __('Packing Stations') }}</a>
