@@ -126,14 +126,14 @@ test('admin sign-in uses the ENCAP logo and favicon assets', function () {
 
 
 test('mango uses one curated stock photo instead of dashboard-uploaded photos', function () {
-    \\Illuminate\\Support\\Facades\\Storage::fake('public');
-    \\Illuminate\\Support\\Facades\\Storage::fake('encap_images');
+    \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
 
-    \\Illuminate\\Support\\Facades\\Storage::disk('encap_images')->put(
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->put(
         'categories/mango-dashboard-upload.jpg',
         'old mango image'
     );
-    \\Illuminate\\Support\\Facades\\Storage::disk('encap_images')->put(
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->put(
         'categories/gallery/mango-dashboard-gallery.jpg',
         'old mango gallery image'
     );
@@ -147,7 +147,7 @@ test('mango uses one curated stock photo instead of dashboard-uploaded photos', 
         'is_published' => true,
     ]);
 
-    $images = \\App\\Support\\EncapProductImage::galleryUrls($category);
+    $images = \App\Support\EncapProductImage::galleryUrls($category);
 
     expect($images)
         ->toHaveCount(1)
