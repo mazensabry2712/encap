@@ -673,5 +673,10 @@
     "Hold Ctrl or Command to select multiple images. Existing files remain in the library when removed from a company profile.": "Hold Ctrl or Command to select multiple images. Existing files remain in the library when removed from a company profile.",
     "Publish this company on the public website": "Publish this company on the public website",
     "Company website URL": "Company website URL",
-    "Company manager image library": "Company manager image library"
+    "Company manager image library": "Company manager image library",
+    "Group companies": "Group companies",
+    "Search": "Search",
+    "JPG, PNG, WebP, AVIF or GIF · maximum 5 MB.": "JPG, PNG, WebP, AVIF or GIF · maximum 5 MB.",
+    "JPG, PNG, WebP or AVIF · maximum 5 MB. A new upload replaces the current image.": "JPG, PNG, WebP or AVIF · maximum 5 MB. A new upload replaces the current image.",
+    "JPG, PNG, WebP or AVIF · maximum 5 MB.": "JPG, PNG, WebP or AVIF · maximum 5 MB."
 }
