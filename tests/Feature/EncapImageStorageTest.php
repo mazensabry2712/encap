@@ -21,7 +21,7 @@ test('encap image storage lives outside public and takes precedence over legacy 
 
     $this->get('/encap-img/categories/sample.jpg')
         ->assertOk()
-        ->assertHeader('Cache-Control', 'max-age=86400, public')
+        ->assertHeader('Cache-Control', 'public, max-age=300, must-revalidate')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 
     $this->get('/encap-img/categories/sample.svg')->assertNotFound();
@@ -37,7 +37,7 @@ test('legacy category uploads remain visible through the encap image route befor
 
     $this->get('/encap-img/categories/legacy-mango.jpg')
         ->assertOk()
-        ->assertHeader('Cache-Control', 'max-age=86400, public')
+        ->assertHeader('Cache-Control', 'public, max-age=300, must-revalidate')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 });
 
