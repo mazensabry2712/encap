@@ -242,7 +242,7 @@ test('group company catalogue and detail pages use the public product catalogue 
         ->assertSee('encap-product-grid', false)
         ->assertSee('شركة حدائق الشمال')
         ->assertSee('/ar/companies/hadaeq-al-shamal', false)
-        ->assertSee('Published companies');
+        ->assertSee('الشركات المنشورة');
 
     $this->get('/ar/companies/hadaeq-al-shamal')
         ->assertOk()
