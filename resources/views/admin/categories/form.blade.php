@@ -15,6 +15,15 @@
 <div class="admin-field"><label for="packaging_en">{{ __('Packaging (English)') }}</label><input id="packaging_en" name="packaging_en" maxlength="255" value="{{ old('packaging_en', $category->packaging_en) }}"></div><div class="admin-field"><label for="packaging_ar">{{ __('Packaging (Arabic)') }}</label><input id="packaging_ar" name="packaging_ar" maxlength="255" dir="auto" value="{{ old('packaging_ar', $category->packaging_ar) }}"></div>
 <div class="admin-field full"><label>{{ __('Available formats') }}</label><div class="admin-inline">@foreach(['Fresh', 'Frozen', 'Processed'] as $format)<label class="admin-check"><input type="checkbox" name="available_forms[]" value="{{ $format }}" @checked(in_array($format, old('available_forms', $category->available_forms ?? ['Fresh', 'Frozen', 'Processed'])))>{{ __($format) }}</label>@endforeach</div></div>
 <h2 class="admin-section-title">{{ __('Catalogue imagery') }}</h2>
+@if($category->slug === 'mango')
+<div class="admin-field full admin-mango-image-note">
+    <div class="admin-company-image-current">
+        <img src="{{ \App\Support\EncapImage::url('mango-replacement-2026.jpg', 'https://images.pexels.com/photos/29782357/pexels-photo-29782357/free-photo-of-ripe-mangoes-hanging-from-tree-in-tropical-setting.jpeg?auto=compress&w=1200') }}" alt="{{ __('Curated mango image') }}" width="180" height="140" loading="lazy">
+        <div><strong>{{ __('Curated mango image') }}</strong><p>{{ __('The public mango photo is controlled from the central image library so the approved image stays consistent throughout the website.') }}</p>
+        <a class="admin-panel-link" href="{{ route('admin.media.index', ['q' => 'mango-replacement-2026.jpg']) }}">{{ __('Open the central image library') }} ↗</a></div>
+    </div>
+</div>
+@else
 <div class="admin-field full admin-primary-image-field" data-main-image-manager data-current-gallery-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12" data-text-no-replacement="{{ __('No product photos selected.') }}" data-text-batch-selected="{{ __(':count product photos selected.') }}" data-text-gallery-count="{{ __(':count will be added to the gallery.') }}" data-text-main-image-label="{{ __('Main image') }}" data-text-gallery-image-label="{{ __('Gallery image :number') }}" data-text-too-many="{{ __('Too many product photos selected. Mark current gallery images for removal or choose fewer files.') }}">
     <div class="admin-media-field-heading">
         <div><label for="image">{{ __('Product photos') }}</label><p>{{ __('Select multiple product photos at once. The first becomes the main image; the rest are added to the gallery automatically.') }}</p></div>
@@ -100,6 +109,8 @@
         </div>
     </div>
 </div>
+@endif
+
 <h2 class="admin-section-title">{{ __('Public product detail page') }}</h2>
 <div class="admin-field full"><small>{{ __('Control the copy and visibility of sections on this category\'s public page. Leave custom headings or messages blank to use the site\'s default text.') }}</small></div>
 <div class="admin-field"><label for="overview_heading_en">{{ __('Product overview heading (English)') }}</label><input id="overview_heading_en" name="overview_heading_en" maxlength="255" value="{{ old('overview_heading_en', $category->overview_heading_en) }}"></div><div class="admin-field"><label for="overview_heading_ar">{{ __('Product overview heading (Arabic)') }}</label><input id="overview_heading_ar" name="overview_heading_ar" maxlength="255" dir="auto" value="{{ old('overview_heading_ar', $category->overview_heading_ar) }}"></div>
