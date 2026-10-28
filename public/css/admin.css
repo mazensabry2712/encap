@@ -371,3 +371,8 @@ html[dir="rtl"] .login-story:after{right:auto;left:-150px}
 .admin-company-gallery-item span{display:flex;align-items:center;gap:5px;color:#7b4e42}
 @media(max-width:1050px){.admin-media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-media-upload-form{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-media-upload-form .admin-field:last-child{grid-column:1/-1}}
 @media(max-width:620px){.admin-media-grid{grid-template-columns:minmax(0,1fr)}.admin-media-upload-form{grid-template-columns:minmax(0,1fr)}.admin-media-upload-form .admin-field:last-child{grid-column:auto}.admin-media-search{width:100%}.admin-media-search input{min-width:0;flex:1 1 100%}.admin-media-source-line{align-items:flex-start;flex-direction:column}.admin-media-card-body{padding:12px}}
+
+/* Four dashboard overview cards fit together on desktop, then collapse cleanly. */
+.admin-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){.admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.admin-stat-grid{grid-template-columns:minmax(0,1fr)}}
