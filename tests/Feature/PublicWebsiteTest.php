@@ -233,7 +233,8 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('dir="rtl"', false)
         ->assertSee('اختيار اللغة')
         ->assertSee('aria-current="page"', false)
-        ->assertSee('عملياتنا')
+        ->assertSee('شركتنا')
+        ->assertSee('/ar/about', false)
         ->assertSee('الرئيسية');
 });
 
