@@ -335,3 +335,39 @@ html[dir="rtl"] .login-story:after{right:auto;left:-150px}
 .admin-main-image-selection .admin-gallery-selected-item{align-items:flex-start}
 .admin-main-image-selection .admin-gallery-selected-item img{width:54px;height:54px;object-fit:cover}
 .admin-primary-image-controls .admin-upload-status.is-error{padding:9px 11px;border:1px solid #e2b2a9;background:#fff2ef;color:#8a291d}
+
+
+/* Central media library and group-company administration */
+.admin-media-upload-panel{margin-bottom:22px}
+.admin-media-upload-form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;align-items:end;gap:16px}
+.admin-media-upload-form .admin-field{min-width:0}
+.admin-media-upload-form .admin-field button{white-space:nowrap}
+.admin-media-search{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.admin-media-search input{min-width:min(260px,52vw)}
+.admin-media-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.admin-media-card{min-width:0;overflow:hidden;border:1px solid var(--admin-border,#e2e7df);border-radius:12px;background:var(--admin-surface,#fff)}
+.admin-media-preview{position:relative;display:grid;place-items:center;aspect-ratio:16/10;overflow:hidden;background:#f0f3ed}
+.admin-media-preview img{display:block;width:100%;height:100%;object-fit:cover}
+.admin-media-slot-badge{position:absolute;inset-block-start:10px;inset-inline-start:10px;padding:5px 8px;border:1px solid rgba(255,255,255,.45);border-radius:5px;background:rgba(16,43,32,.84);color:#fff;font-size:10px;font-weight:800}
+.admin-media-card-body{display:grid;gap:9px;padding:14px}
+.admin-media-card-body h3{margin:0;color:var(--admin-text,#182b20);font-size:14px;font-weight:850;line-height:1.45;overflow-wrap:anywhere}
+.admin-media-card-body code{display:block;padding:7px 8px;border-radius:5px;background:#f4f6f1;color:#536557;font-size:10px;line-height:1.55;overflow-wrap:anywhere;white-space:normal}
+.admin-media-usage{margin:0;color:#6b796f;font-size:11px;line-height:1.6;overflow-wrap:anywhere}
+.admin-media-source-line{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.admin-media-source-line a{color:var(--admin-green,#24563b);font-size:11px;font-weight:800;text-decoration:none}
+.admin-media-replace-form{display:grid;gap:7px;margin-top:5px;padding-top:12px;border-top:1px solid var(--admin-border,#e2e7df)}
+.admin-media-replace-form label{font-size:11px;font-weight:800}
+.admin-media-replace-form input[type=file]{display:block;width:100%;min-width:0;font-size:11px}
+.admin-media-replace-form small{color:#738076;font-size:10px;line-height:1.5}
+.admin-media-replace-form .admin-btn{width:100%;justify-content:center}
+.admin-library-image-select select,.admin-form-panel select[multiple]{width:100%;max-width:100%;padding:10px;border:1px solid var(--admin-border,#dce3d9);border-radius:8px;background:#fff;color:var(--admin-text,#1e3227);font:inherit;font-size:12px;line-height:1.6}
+.admin-form-panel select[multiple]{min-height:140px}
+.admin-company-image-current{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.admin-company-image-current img{display:block;width:140px;height:100px;object-fit:cover;border:1px solid var(--admin-border,#e2e7df);border-radius:7px}
+.admin-company-image-current span{color:#718076;font-size:11px;font-weight:700}
+.admin-company-gallery-current{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 12px}
+.admin-company-gallery-item{display:grid;gap:6px;max-width:140px;font-size:10px}
+.admin-company-gallery-item img{width:125px;height:88px;object-fit:cover;border:1px solid var(--admin-border,#e2e7df);border-radius:6px}
+.admin-company-gallery-item span{display:flex;align-items:center;gap:5px;color:#7b4e42}
+@media(max-width:1050px){.admin-media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-media-upload-form{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-media-upload-form .admin-field:last-child{grid-column:1/-1}}
+@media(max-width:620px){.admin-media-grid{grid-template-columns:minmax(0,1fr)}.admin-media-upload-form{grid-template-columns:minmax(0,1fr)}.admin-media-upload-form .admin-field:last-child{grid-column:auto}.admin-media-search{width:100%}.admin-media-search input{min-width:0;flex:1 1 100%}.admin-media-source-line{align-items:flex-start;flex-direction:column}.admin-media-card-body{padding:12px}}
