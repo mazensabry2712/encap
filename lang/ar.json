@@ -585,7 +585,7 @@
     "Product photography": "صور المنتج",
     "Explore the product gallery": "استعرض صور المنتج",
     "images": "صور",
-    "Select an image to view it larger.": "اختر صورة لعرضها بالحجم الأكبر.",
+    "Select an image to view it larger.": "اختر صورة لعرضها بحجم أكبر.",
     "Will be removed": "سيتم حذفها عند الحفظ",
     "Product photos": "صور المنتج",
     "Select multiple product photos at once. The first becomes the main image; the rest are added to the gallery automatically.": "اختار صور المنتج كلها مرة واحدة. أول صورة هتبقى الرئيسية وباقي الصور هتتضاف تلقائيًا للمعرض.",
@@ -934,5 +934,10 @@
     "Hold Ctrl or Command to select multiple images. Existing files remain in the library when removed from a company profile.": "اضغط Ctrl أو Command لاختيار عدة صور. تظل الملفات موجودة في المكتبة عند إزالتها من ملف الشركة.",
     "Publish this company on the public website": "نشر هذه الشركة على الموقع العام",
     "Company website URL": "رابط موقع الشركة",
-    "Company manager image library": "مكتبة صور إدارة الشركات"
+    "Company manager image library": "مكتبة صور إدارة الشركات",
+    "Group companies": "شركات المجموعة",
+    "Search": "بحث",
+    "JPG, PNG, WebP, AVIF or GIF · maximum 5 MB.": "JPG أو PNG أو WebP أو AVIF أو GIF · بحد أقصى 5 ميجابايت.",
+    "JPG, PNG, WebP or AVIF · maximum 5 MB. A new upload replaces the current image.": "JPG أو PNG أو WebP أو AVIF · بحد أقصى 5 ميجابايت. رفع صورة جديدة يستبدل الصورة الحالية.",
+    "JPG, PNG, WebP or AVIF · maximum 5 MB.": "JPG أو PNG أو WebP أو AVIF · بحد أقصى 5 ميجابايت."
 }
