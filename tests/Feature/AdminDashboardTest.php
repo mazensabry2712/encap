@@ -124,7 +124,7 @@ test('authenticated administrators can prepare image storage from the dashboard 
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('mango-replacement-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-potatoes-2026.jpg');
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-mangoes-2026.jpg');
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('mango-replacement-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-grapes-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-onions-2026.jpg');
     \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('product-garlic-2026.jpg');
