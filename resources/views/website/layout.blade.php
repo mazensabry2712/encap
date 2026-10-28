@@ -33,8 +33,8 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261025-separated-group-companies-1">
-    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261025-separated-group-companies-1">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261028-operations-companies-1">
+    <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261028-operations-companies-1">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
     <link rel="stylesheet" href="{{ asset('css/site-motion.css') }}">
@@ -66,11 +66,11 @@
         <a class="primary-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
             <img class="primary-brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP" width="300" height="90" decoding="async">
         </a>
-        @php($companyActive = request()->routeIs('about', 'farms', 'packing-stations', 'export', 'quality'))
+        @php($operationsActive = request()->routeIs('about', 'farms', 'packing-stations', 'export', 'quality'))
         <nav class="primary-links" aria-label="{{ __('Main navigation') }}">
             <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
             <details class="primary-dropdown">
-                <summary @if($companyActive) class="is-active" @endif><span>{{ __('Our Company') }}</span><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg></summary>
+                <summary @if($operationsActive) class="is-active" @endif><span>{{ __('Our Operations') }}</span><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg></summary>
                 <div class="primary-dropdown-panel">
                     <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
                     <a href="{{ route('farms', ['locale' => $currentLocale]) }}" @if(request()->routeIs('farms')) aria-current="page" @endif>{{ __('Agriculture & Farms') }}</a>
@@ -79,6 +79,7 @@
                     <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
                 </div>
             </details>
+            <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Companies') }}</a>
             <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
             <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
         </nav>
@@ -108,14 +109,15 @@
                 <nav class="primary-mobile-panel" aria-label="{{ __('Mobile navigation') }}" data-primary-mobile-nav>
                     <div class="primary-mobile-panel-links">
                     <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
-                    <div class="primary-mobile-company-group">
-                        <span class="primary-mobile-section-label">{{ __('Our Company') }}</span>
+                    <div class="primary-mobile-operations-group">
+                        <span class="primary-mobile-section-label">{{ __('Our Operations') }}</span>
                         <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
                         <a href="{{ route('farms', ['locale' => $currentLocale]) }}" @if(request()->routeIs('farms')) aria-current="page" @endif>{{ __('Agriculture & Farms') }}</a>
                         <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}" @if(request()->routeIs('packing-stations')) aria-current="page" @endif>{{ __('Packing Stations') }}</a>
                         <a href="{{ route('export', ['locale' => $currentLocale]) }}" @if(request()->routeIs('export')) aria-current="page" @endif>{{ __('Export & Logistics') }}</a>
                         <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
                     </div>
+                    <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Companies') }}</a>
                     <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
                     <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
                     </div>
