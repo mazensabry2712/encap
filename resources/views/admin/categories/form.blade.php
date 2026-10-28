@@ -38,6 +38,27 @@
     </div>
 </div>
 
+<div class="admin-field full admin-library-image-select">
+    <label for="library_image">{{ __('Or use an existing image from the central library') }}</label>
+    <select id="library_image" name="library_image">
+        <option value="">{{ __('Use uploaded image / no existing selection') }}</option>
+        @foreach($mediaAssets as $path => $asset)
+            <option value="{{ $path }}" @selected(old('library_image', $category->image) === $path)>{{ $asset['label'] }} — {{ $path }}</option>
+        @endforeach
+    </select>
+    <small>{{ __('An uploaded file takes priority. Selecting a library image reuses it and keeps the shared file available to other pages.') }}</small>
+</div>
+
+<div class="admin-field full">
+    <label for="library_gallery">{{ __('Add existing images from the central library to this gallery') }}</label>
+    <select id="library_gallery" name="library_gallery[]" multiple size="5">
+        @foreach($mediaAssets as $path => $asset)
+            <option value="{{ $path }}" @selected(in_array($path, old('library_gallery', []), true))>{{ $asset['label'] }} — {{ $path }}</option>
+        @endforeach
+    </select>
+    <small>{{ __('Hold Ctrl or Command to select multiple images. The same library image can be reused by more than one product.') }}</small>
+</div>
+
 <div class="admin-field full">
     <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-max-gallery="12" data-text-no-files="{{ __('No new images selected.') }}" data-text-selected="{{ __(':count images selected.') }}" data-text-available="{{ __(':count gallery slots available.') }}" data-text-too-many="{{ __('Too many images selected. Mark current images for removal or choose fewer files.') }}" data-text-full="{{ __('The gallery has reached the 12-image limit.') }}" data-text-mark-remove="{{ __('Mark for removal') }}" data-text-will-remove="{{ __('Will be removed') }}">
         <div class="admin-media-field-heading admin-gallery-heading">
