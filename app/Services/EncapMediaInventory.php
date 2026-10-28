@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Support\EncapImage;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 final class EncapMediaInventory
 {
@@ -15,8 +16,8 @@ final class EncapMediaInventory
         $paths = array_merge(
             ['logo.png', 'favicon.png'],
             array_keys($catalogue),
-            Storage::disk('encap_images')->allFiles(),
-            Storage::disk('public')->allFiles(),
+            $this->allFiles('encap_images'),
+            $this->allFiles('public'),
             Category::query()->whereNotNull('image')->pluck('image')->all(),
             Company::query()->whereNotNull('image')->pluck('image')->all(),
             Category::query()->get()->flatMap(fn (Category $item) => $item->gallery ?? [])->all(),
@@ -32,6 +33,28 @@ final class EncapMediaInventory
             ->sort()
             ->values()
             ->all();
+    }
+
+    /**
+     * Return disk contents without making the dashboard fail when a storage
+     * root has not been created yet or is temporarily inaccessible.
+     *
+     * @return list<string>
+     */
+    private function allFiles(string $diskName): array
+    {
+        try {
+            $disk = Storage::disk($diskName);
+            $root = $disk->path('');
+
+            if (! is_dir($root)) {
+                return [];
+            }
+
+            return $disk->allFiles();
+        } catch (Throwable) {
+            return [];
+        }
     }
 
     /**
