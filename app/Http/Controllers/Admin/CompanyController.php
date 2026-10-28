@@ -116,6 +116,20 @@ final class CompanyController extends Controller
 
     private function validated(Request $request, EncapMediaInventory $mediaInventory, ?Company $company = null): array
     {
+        $currentGallery = $company?->gallery ?? [];
+        $requestedRemovals = collect($request->input('remove_gallery', []))
+            ->filter(fn ($index) => is_scalar($index)
+                && filter_var($index, FILTER_VALIDATE_INT) !== false
+                && array_key_exists((int) $index, $currentGallery))
+            ->map(fn ($index) => (int) $index)
+            ->unique()
+            ->count();
+        $remainingGalleryCount = max(0, count($currentGallery) - $requestedRemovals);
+        $libraryGalleryCount = count(array_filter((array) $request->input('library_gallery', [])));
+        $uploadedGalleryCount = count(array_filter((array) $request->file('gallery', [])));
+        $libraryGallerySlots = max(0, 12 - $remainingGalleryCount - $uploadedGalleryCount);
+        $uploadedGallerySlots = max(0, 12 - $remainingGalleryCount - $libraryGalleryCount);
+
         return $request->validate([
             'name_en' => ['required', 'string', 'max:160'],
             'name_ar' => ['nullable', 'string', 'max:160'],
@@ -131,9 +145,9 @@ final class CompanyController extends Controller
             'website_url' => ['nullable', 'url', 'max:500'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'library_image' => ['nullable', 'string', Rule::in($mediaInventory->paths())],
-            'gallery' => ['nullable', 'array', 'max:12'],
+            'gallery' => ['nullable', 'array', 'max:' . $uploadedGallerySlots],
             'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'library_gallery' => ['nullable', 'array', 'max:12'],
+            'library_gallery' => ['nullable', 'array', 'max:' . $libraryGallerySlots],
             'library_gallery.*' => ['string', Rule::in($mediaInventory->paths())],
             'remove_gallery' => ['nullable', 'array'],
             'remove_gallery.*' => ['integer', 'min:0'],
