@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Services\EncapImageUpload;
+use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -26,20 +27,25 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(EncapMediaInventory $mediaInventory): View
     {
-        return view('admin.categories.form', ['category' => new Category()]);
+        return view('admin.categories.form', [
+            'category' => new Category(),
+            'mediaAssets' => $mediaInventory->options(),
+        ]);
     }
 
-    public function store(Request $request, EncapImageUpload $imageUpload): RedirectResponse
+    public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
     {
-        $data = $this->validated($request);
+        $data = $this->validated($request, $mediaInventory);
 
         foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
             $data[$flag] = $request->boolean($flag);
         }
 
-        unset($data['remove_gallery'], $data['images'], $data['gallery']);
+        $libraryImage = $data['library_image'] ?? null;
+        $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
+        unset($data['library_image'], $data['library_gallery'], $data['remove_gallery'], $data['images'], $data['gallery']);
 
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
         $primaryImage = $selectedImages[0] ?? $request->file('image');
@@ -52,9 +58,11 @@ class CategoryController extends Controller
                 $savedImage = $imageUpload->store($primaryImage, 'categories', 'images');
                 $storedUploads[] = $savedImage;
                 $data['image'] = $savedImage['path'];
+            } else {
+                $data['image'] = $libraryImage;
             }
 
-            $galleryPaths = [];
+            $galleryPaths = $libraryGallery;
             $galleryUploads = array_merge(
                 array_slice($selectedImages, 1),
                 array_values(array_filter((array) $request->file('gallery', [])))
@@ -88,45 +96,48 @@ class CategoryController extends Controller
             ->with('image_storage_fallback', $usedFallbackStorage);
     }
 
-    public function edit(Category $category): View
+    public function edit(Category $category, EncapMediaInventory $mediaInventory): View
     {
-        return view('admin.categories.form', compact('category'));
+        return view('admin.categories.form', [
+            'category' => $category,
+            'mediaAssets' => $mediaInventory->options(),
+        ]);
     }
 
-    public function update(Request $request, Category $category, EncapImageUpload $imageUpload): RedirectResponse
+    public function update(Request $request, Category $category, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
     {
-        $data = $this->validated($request, $category);
+        $data = $this->validated($request, $mediaInventory, $category);
 
         foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
             $data[$flag] = $request->boolean($flag);
         }
 
-        unset($data['remove_gallery'], $data['images'], $data['gallery'], $data['image']);
+        $libraryImage = $data['library_image'] ?? null;
+        $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
+        unset($data['library_image'], $data['library_gallery'], $data['remove_gallery'], $data['images'], $data['gallery'], $data['image']);
 
-        $oldImage = $category->image;
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
         $primaryImage = $selectedImages[0] ?? $request->file('image');
-        $newImage = null;
         $storedUploads = [];
-        $removedPaths = [];
 
         try {
             if ($primaryImage) {
                 $savedImage = $imageUpload->store($primaryImage, 'categories', 'images');
                 $storedUploads[] = $savedImage;
-                $newImage = $savedImage['path'];
-                $data['image'] = $newImage;
+                $data['image'] = $savedImage['path'];
+            } elseif ($libraryImage) {
+                $data['image'] = $libraryImage;
             }
 
             $gallery = $category->gallery ?? [];
 
             foreach ($request->input('remove_gallery', []) as $remove) {
-                if (array_key_exists($remove, $gallery)) {
-                    $removedPaths[] = $gallery[$remove];
-                    unset($gallery[$remove]);
+                if (array_key_exists((int) $remove, $gallery)) {
+                    unset($gallery[(int) $remove]);
                 }
             }
 
+            $gallery = array_merge(array_values($gallery), $libraryGallery);
             $galleryUploads = array_merge(
                 array_slice($selectedImages, 1),
                 array_values(array_filter((array) $request->file('gallery', [])))
@@ -138,7 +149,7 @@ class CategoryController extends Controller
                 $gallery[] = $savedImage['path'];
             }
 
-            $data['gallery'] = array_values($gallery);
+            $data['gallery'] = array_values(array_unique($gallery));
             $data['is_published'] = $request->boolean('is_published');
             $data['available_forms'] = array_values(array_intersect(
                 $request->input('available_forms', []),
@@ -151,15 +162,8 @@ class CategoryController extends Controller
             throw $exception;
         }
 
-        $pathsToDelete = $removedPaths;
-
-        if ($newImage && $oldImage) {
-            $pathsToDelete[] = $oldImage;
-        }
-
-        $pathsToDelete = array_values(array_unique(array_filter($pathsToDelete)));
-        Storage::disk('encap_images')->delete($pathsToDelete);
-        Storage::disk('public')->delete($pathsToDelete);
+        // Keep old media files available in the central library. Other pages may
+        // reference them even after this category stops using them.
 
         $usedFallbackStorage = collect($storedUploads)->contains(
             fn (array $upload): bool => $upload['disk'] === 'public'
@@ -172,15 +176,8 @@ class CategoryController extends Controller
 
     public function destroy(Category $category): RedirectResponse
     {
-        $pathsToDelete = array_values(array_unique(array_filter(array_merge(
-            [$category->image],
-            $category->gallery ?? []
-        ))));
-
+        // Media stays available in the central library even if a category is deleted.
         $category->delete();
-
-        Storage::disk('encap_images')->delete($pathsToDelete);
-        Storage::disk('public')->delete($pathsToDelete);
 
         return back()->with('success', __('Category deleted.'));
     }
@@ -195,7 +192,7 @@ class CategoryController extends Controller
         }
     }
 
-    private function validated(Request $request, ?Category $category = null): array
+    private function validated(Request $request, EncapMediaInventory $mediaInventory, ?Category $category = null): array
     {
         $currentGallery = $category?->gallery ?? [];
         $requestedRemovals = collect($request->input('remove_gallery', []))
@@ -207,9 +204,12 @@ class CategoryController extends Controller
             ->count();
         $remainingGalleryCount = max(0, count($currentGallery) - $requestedRemovals);
         $selectedImages = array_values(array_filter((array) $request->file('images', [])));
-        $batchGalleryCount = max(0, count($selectedImages) - 1);
+        $libraryGalleryCount = count(array_filter((array) $request->input('library_gallery', [])));
+        $uploadedSelectionGalleryCount = max(0, count($selectedImages) - 1);
+        $libraryGallerySlots = max(0, 12 - $remainingGalleryCount - $uploadedSelectionGalleryCount);
+        $batchGalleryCount = $uploadedSelectionGalleryCount + $libraryGalleryCount;
         $gallerySlotsAvailable = max(0, 12 - $remainingGalleryCount - $batchGalleryCount);
-        $productImageBatchLimit = 1 + max(0, 12 - $remainingGalleryCount);
+        $productImageBatchLimit = 1 + max(0, 12 - $remainingGalleryCount - $libraryGalleryCount);
 
         return $request->validate([
             'name_en' => ['required', 'string', 'max:160'],
@@ -252,6 +252,9 @@ class CategoryController extends Controller
             'images' => ['nullable', 'array', 'max:' . $productImageBatchLimit],
             'images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            'library_image' => ['nullable', 'string', Rule::in($mediaInventory->paths())],
+            'library_gallery' => ['nullable', 'array', 'max:' . $libraryGallerySlots],
+            'library_gallery.*' => ['string', Rule::in($mediaInventory->paths())],
             'gallery' => ['nullable', 'array', 'max:' . $gallerySlotsAvailable],
             'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
             'remove_gallery' => ['nullable', 'array'],
