@@ -50,7 +50,7 @@ final class EncapImageController extends Controller
         abort_unless(is_file($absolutePath), 404);
 
         return response()->file($absolutePath, [
-            'Cache-Control' => 'public, max-age=86400',
+            'Cache-Control' => 'public, max-age=300, must-revalidate',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
