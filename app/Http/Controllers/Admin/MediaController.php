@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Company;
-use App\Services\EncapImageLibrary;
+use App\Services\EncapMediaInventory;
 use App\Support\EncapImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,28 +16,11 @@ use Illuminate\View\View;
 
 final class MediaController extends Controller
 {
-    public function index(Request $request, EncapImageLibrary $imageLibrary): View
+    public function index(Request $request, EncapMediaInventory $mediaInventory): View
     {
-        $catalogue = $imageLibrary->catalogue();
-        $paths = array_merge(
-            ['logo.png', 'favicon.png'],
-            array_keys($catalogue),
-            Storage::disk('encap_images')->allFiles(),
-            Storage::disk('public')->allFiles(),
-            Category::query()->whereNotNull('image')->pluck('image')->all(),
-            Company::query()->whereNotNull('image')->pluck('image')->all(),
-            Category::query()->get()->flatMap(fn (Category $item) => $item->gallery ?? [])->all(),
-            Company::query()->get()->flatMap(fn (Company $item) => $item->gallery ?? [])->all(),
-        );
-
-        $paths = collect($paths)
-            ->filter(fn ($path) => is_string($path)
-                && preg_match('/\A[a-zA-Z0-9][a-zA-Z0-9_\/.-]*\z/', $path) === 1
-                && ! collect(explode('/', $path))->contains(fn ($segment) => in_array($segment, ['', '.', '..'], true))
-                && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif', 'ico'], true))
-            ->unique()
-            ->sort()
-            ->values();
+        $catalogue = app(\App\Services\EncapImageLibrary::class)->catalogue();
+        $allPaths = collect($mediaInventory->paths());
+        $paths = $allPaths;
 
         $query = trim((string) $request->query('q', ''));
         if ($query !== '') {
@@ -107,12 +90,12 @@ final class MediaController extends Controller
 
         return view('admin.media.index', [
             'assets' => $assets,
-            'totalAssets' => $paths->count(),
+            'totalAssets' => $allPaths->count(),
             'query' => $query,
         ]);
     }
 
-    public function replace(Request $request, EncapImageLibrary $imageLibrary): RedirectResponse
+    public function replace(Request $request, EncapMediaInventory $mediaInventory): RedirectResponse
     {
         $validated = $request->validate([
             'path' => ['required', 'string', 'max:255'],
@@ -124,7 +107,7 @@ final class MediaController extends Controller
             && ! collect(explode('/', $path))->contains(fn (string $segment) => in_array($segment, ['', '.', '..'], true))
             && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'], true);
 
-        abort_unless($safePath && in_array($path, $this->managedPaths($imageLibrary), true), 404);
+        abort_unless($safePath && in_array($path, $mediaInventory->paths(), true), 404);
 
         $expectedExtension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
         $uploadedExtension = strtolower($request->file('image')->guessExtension() ?: $request->file('image')->getClientOriginalExtension());
@@ -139,6 +122,11 @@ final class MediaController extends Controller
         }
 
         $disk = Storage::disk('encap_images');
+        $root = $disk->path('');
+        if (! is_dir($root) && ! @mkdir($root, 0755, true) && ! is_dir($root)) {
+            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
+        }
+
         $directory = dirname($path);
         if ($directory !== '.' && ! is_dir($disk->path($directory))) {
             if (! @mkdir($disk->path($directory), 0755, true) && ! is_dir($disk->path($directory))) {
@@ -174,6 +162,13 @@ final class MediaController extends Controller
         $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
         $slug = Str::slug($validated['label']) ?: 'site-image';
         $filename = $slug.'-'.Str::lower(Str::random(5)).'.'.$extension;
+        $root = config('filesystems.disks.encap_images.root');
+        if (! is_string($root) || $root === '') {
+            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
+        }
+        if (! is_dir($root) && ! @mkdir($root, 0755, true) && ! is_dir($root)) {
+            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
+        }
         $stored = $file->storeAs('site-library', $filename, 'encap_images');
 
         if (! is_string($stored) || ! Storage::disk('encap_images')->exists($stored)) {
@@ -183,17 +178,4 @@ final class MediaController extends Controller
         return redirect()->route('admin.media.index')->with('success', __('Image added to the central media library.'));
     }
 
-    private function managedPaths(EncapImageLibrary $imageLibrary): array
-    {
-        return array_values(array_unique(array_merge(
-            ['logo.png', 'favicon.png'],
-            array_keys($imageLibrary->catalogue()),
-            Storage::disk('encap_images')->allFiles(),
-            Storage::disk('public')->allFiles(),
-            Category::query()->whereNotNull('image')->pluck('image')->all(),
-            Company::query()->whereNotNull('image')->pluck('image')->all(),
-            Category::query()->get()->flatMap(fn (Category $item) => $item->gallery ?? [])->all(),
-            Company::query()->get()->flatMap(fn (Company $item) => $item->gallery ?? [])->all(),
-        )));
-    }
 }
