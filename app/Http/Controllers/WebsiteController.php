@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\ContactMessage;
 use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
 use App\Services\EnquiryNotifier;
+use App\Services\EncapImageLibrary;
+use App\Support\EncapImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -503,6 +506,12 @@ class WebsiteController extends Controller
     public function companies(string $locale): View
     {
         $this->useLocale($locale);
+        $companies = Company::query()
+            ->where('is_published', true)
+            ->orderBy('sort_order')
+            ->orderBy('name_en')
+            ->paginate(12);
+
         $settings = SeoSetting::current();
         $pageSeo = $settings->metadataFor(
             'companies',
@@ -511,7 +520,43 @@ class WebsiteController extends Controller
             __('Explore the companies affiliated with ENCAP.')
         );
 
-        return view('website.companies', compact('locale', 'pageSeo'));
+        return view('website.companies', compact('locale', 'companies', 'pageSeo'));
+    }
+
+    public function company(string $locale, Company $company): View
+    {
+        $this->useLocale($locale);
+        abort_unless($company->is_published, 404);
+
+        $name = $locale === 'ar' && $company->name_ar ? $company->name_ar : $company->name_en;
+        $description = $locale === 'ar' && $company->description_ar
+            ? $company->description_ar
+            : ($company->description_en ?? $company->short_description_en ?? '');
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            'company-' . $company->slug,
+            $locale,
+            $name . ' | ENCAP',
+            $description
+        );
+
+        $catalogue = app(EncapImageLibrary::class)->catalogue();
+        $imagePaths = array_values(array_unique(array_filter(array_merge(
+            [$company->image],
+            $company->gallery ?? []
+        ))));
+        if ($imagePaths === []) {
+            $imagePaths = ['farm-cultivation-2026.jpg'];
+        }
+        $companyImages = array_map(
+            fn (string $path): array => [
+                'path' => $path,
+                'url' => EncapImage::url($path, $catalogue[$path] ?? null),
+            ],
+            $imagePaths
+        );
+
+        return view('website.company', compact('locale', 'company', 'companyImages', 'pageSeo'));
     }
 
     public function contact(string $locale): View
