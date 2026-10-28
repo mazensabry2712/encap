@@ -53,6 +53,40 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
 });
 
 
+test('authenticated administrators can manage companies and centrally replace website images', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
+
+    $admin = User::factory()->create();
+
+    $this->actingAs($admin)
+        ->get(route('admin.companies.index'))
+        ->assertOk()
+        ->assertSee('Group company directory')
+        ->assertSee('Hadaeq Al-Shamal Company');
+
+    $this->get(route('admin.categories.create'))
+        ->assertOk()
+        ->assertSee('library_image', false)
+        ->assertSee('library_gallery', false);
+
+    $this->get(route('admin.media.index'))
+        ->assertOk()
+        ->assertSee('Central image library')
+        ->assertSee('logo.png')
+        ->assertSee('mango-replacement-2026.jpg')
+        ->assertSee('All site images');
+
+    $response = $this->post(route('admin.media.replace'), [
+        'path' => 'logo.png',
+        'image' => \Illuminate\Http\UploadedFile::fake()->image('replacement.png', 4, 4),
+    ]);
+
+    $response->assertRedirect();
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->assertExists('logo.png');
+});
+
+
 test('admin language preference defaults to Arabic and switches between Arabic and English with correct document direction', function () {
     $this->get('/admin/login')
         ->assertOk()
