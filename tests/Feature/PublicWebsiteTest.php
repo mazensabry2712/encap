@@ -207,6 +207,8 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('data-language-trigger', false)
         ->assertSee('data-language-menu', false)
         ->assertSee('data-primary-mobile-nav', false)
+        ->assertSee('Our Company')
+        ->assertSee('primary-mobile-company-group', false)
         ->assertSee('/en/packing-stations', false)
         ->assertSee('/en/export', false)
         ->assertSee('/en/quality', false)
