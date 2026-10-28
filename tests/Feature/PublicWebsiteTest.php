@@ -207,19 +207,24 @@ test('group companies have a separate localized page from operations', function 
     foreach ($labels as $locale => $label) {
         $this->get('/'.$locale.'/companies')
             ->assertOk()
+            ->assertSee('lang="'.$locale.'"', false)
             ->assertSee($label)
-            ->assertSee('Group Companies')
-            ->assertSee('Hadaeq Al-Shamal Company')
-            ->assertSee('ENCAP subsidiary')
-            ->assertSee('Aljouf - Saudia')
-            ->assertSee('encap-group-companies-panel', false);
+            ->assertSee('encap-group-companies-panel', false)
+            ->assertSee('encap-footer-group-company-card', false);
     }
+
+    $this->get('/en/companies')
+        ->assertOk()
+        ->assertSee('Group Companies')
+        ->assertSee('Hadaeq Al-Shamal Company')
+        ->assertSee('ENCAP subsidiary')
+        ->assertSee('Aljouf - Saudia');
 
     $this->get('/ar/companies')
         ->assertOk()
         ->assertSee('شركة حدائق الشمال')
         ->assertSee('عملياتنا')
-        ->assertDontSee('Our Company');
+        ->assertSee('شركاتنا');
 
     $this->get('/sitemap.xml')
         ->assertOk()
