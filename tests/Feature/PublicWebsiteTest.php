@@ -210,7 +210,7 @@ test('group companies have a separate localized page from operations', function 
             ->assertOk()
             ->assertSee('lang="'.$locale.'"', false)
             ->assertSee($label)
-            ->assertSee('encap-group-companies-panel', false)
+            ->assertSee('encap-catalog-hero', false)
             ->assertSee('encap-footer-group-company-card', false);
     }
 
