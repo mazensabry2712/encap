@@ -125,7 +125,7 @@ test('image preparation copies uploaded category photos before slow stock image 
     Storage::disk('encap_images')->assertExists('export-crates-2026.jpg');
     Storage::disk('encap_images')->assertExists('frozen-berries-2026.jpg');
     Storage::disk('encap_images')->assertExists('cargo-port-2026.jpg');
-    Storage::disk('encap_images')->assertExists('product-mangoes-2026.jpg');
+    Storage::disk('encap_images')->assertExists('mango-replacement-2026.jpg');
     Storage::disk('encap_images')->assertExists('product-citrus-2026.jpg');
     Storage::disk('encap_images')->assertExists('product-grapes-2026.jpg');
     Storage::disk('encap_images')->assertExists('product-potatoes-2026.jpg');
