@@ -5,6 +5,7 @@
     '' => ['priority' => '1.0', 'changefreq' => 'weekly'],
     '/products' => ['priority' => '0.8', 'changefreq' => 'weekly'],
     '/about' => ['priority' => '0.6', 'changefreq' => 'monthly'],
+    '/companies' => ['priority' => '0.6', 'changefreq' => 'monthly'],
     '/farms' => ['priority' => '0.6', 'changefreq' => 'monthly'],
     '/packing-stations' => ['priority' => '0.6', 'changefreq' => 'monthly'],
     '/quality' => ['priority' => '0.5', 'changefreq' => 'monthly'],
