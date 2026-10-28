@@ -40,10 +40,11 @@
                 <div class="admin-media-card-body">
                     <h3>{{ $asset['label'] }}</h3>
                     <code>{{ $asset['path'] }}</code>
-                    @if(count($asset['categories']) || count($asset['companies']))
+                    @if(count($asset['categories']) || count($asset['companies']) || $asset['seo'])
                         <p class="admin-media-usage">
                             @if(count($asset['categories'])){{ __('Products') }}: {{ implode(', ', $asset['categories']) }}@endif
                             @if(count($asset['companies'])){{ count($asset['categories']) ? ' · ' : '' }}{{ __('Companies') }}: {{ implode(', ', $asset['companies']) }}@endif
+                            @if($asset['seo']){{ (count($asset['categories']) || count($asset['companies'])) ? ' · ' : '' }}{{ __('SEO and social sharing') }}@endif
                         </p>
                     @endif
                     <div class="admin-media-source-line">
