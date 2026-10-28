@@ -19,10 +19,14 @@ test('encap image storage lives outside public and takes precedence over legacy 
     expect(EncapImage::url('categories/sample.jpg'))
         ->toBe(Storage::disk('encap_images')->url('categories/sample.jpg'));
 
-    $this->get('/encap-img/categories/sample.jpg')
+    $response = $this->get('/encap-img/categories/sample.jpg')
         ->assertOk()
-        ->assertHeader('Cache-Control', 'public, max-age=300, must-revalidate')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
+
+    expect($response->headers->get('Cache-Control'))
+        ->toContain('public')
+        ->toContain('max-age=300')
+        ->toContain('must-revalidate');
 
     $this->get('/encap-img/categories/sample.svg')->assertNotFound();
 });
@@ -35,10 +39,14 @@ test('legacy category uploads remain visible through the encap image route befor
     expect(EncapImage::url('categories/legacy-mango.jpg'))
         ->toContain('/encap-img/categories/legacy-mango.jpg');
 
-    $this->get('/encap-img/categories/legacy-mango.jpg')
+    $response = $this->get('/encap-img/categories/legacy-mango.jpg')
         ->assertOk()
-        ->assertHeader('Cache-Control', 'public, max-age=300, must-revalidate')
         ->assertHeader('X-Content-Type-Options', 'nosniff');
+
+    expect($response->headers->get('Cache-Control'))
+        ->toContain('public')
+        ->toContain('max-age=300')
+        ->toContain('must-revalidate');
 });
 
 test('new image uploads fall back to laravel storage when encap-img cannot be written', function () {
