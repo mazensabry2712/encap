@@ -62,8 +62,8 @@ test('authenticated administrators can manage companies and centrally replace we
     $this->actingAs($admin)
         ->get(route('admin.companies.index'))
         ->assertOk()
-        ->assertSee('Group company directory')
-        ->assertSee('Hadaeq Al-Shamal Company');
+        ->assertSee('دليل شركات المجموعة')
+        ->assertSee('شركة حدائق الشمال');
 
     $this->get(route('admin.categories.create'))
         ->assertOk()
@@ -72,10 +72,10 @@ test('authenticated administrators can manage companies and centrally replace we
 
     $this->get(route('admin.media.index'))
         ->assertOk()
-        ->assertSee('Central image library')
+        ->assertSee('مكتبة الصور المركزية')
         ->assertSee('logo.png')
         ->assertSee('mango-replacement-2026.jpg')
-        ->assertSee('All site images');
+        ->assertSee('كل صور الموقع');
 
     $response = $this->post(route('admin.media.replace'), [
         'path' => 'logo.png',
