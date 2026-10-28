@@ -80,7 +80,6 @@ class SeoSettingController extends Controller
         }
 
         $data['page_metadata'] = $pageMetadata;
-        $oldImage = $settings->default_og_image;
         $storedImage = null;
 
         if ($request->hasFile('default_og_image')) {
@@ -104,10 +103,8 @@ class SeoSettingController extends Controller
             throw $exception;
         }
 
-        if ($storedImage && $oldImage) {
-            Storage::disk('encap_images')->delete($oldImage);
-            Storage::disk('public')->delete($oldImage);
-        }
+        // Retain replaced SEO images in the central media library so other pages
+        // or future settings can reuse them without losing shared assets.
 
         SeoSetting::clearCache();
 
