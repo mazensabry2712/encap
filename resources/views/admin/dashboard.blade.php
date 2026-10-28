@@ -23,6 +23,13 @@
             <span class="admin-stat-note"><b>{{ number_format($publishedCategoryCount) }}</b> {{ __('published') }} <span aria-hidden="true">·</span> {{ number_format($draftCategoryCount) }} {{ __('drafts') }}</span>
             <span class="admin-stat-link">{{ __('Manage catalogue') }} <span aria-hidden="true">→</span></span>
         </a>
+        <a class="admin-stat-card" href="{{ route('admin.companies.index') }}">
+            <span class="admin-stat-icon" aria-hidden="true">⌂</span>
+            <span class="admin-stat-label">{{ __('Group companies') }}</span>
+            <strong class="admin-stat-value">{{ number_format($companyCount) }}</strong>
+            <span class="admin-stat-note"><b>{{ number_format($publishedCompanyCount) }}</b> {{ __('published') }}</span>
+            <span class="admin-stat-link">{{ __('Manage companies') }} <span aria-hidden="true">→</span></span>
+        </a>
         <a class="admin-stat-card" href="{{ route('admin.quote-requests.index') }}">
             <span class="admin-stat-icon" aria-hidden="true">↗</span>
             <span class="admin-stat-label">{{ __('Export quote requests') }}</span>
@@ -146,10 +153,13 @@
                 <h2 id="image-library-title">{{ __('Image library') }}</h2>
                 <p>{{ __('Save site photography and move current product/SEO uploads into encap-img, outside public. Old copies are not deleted.') }}</p>
             </div>
-            <form method="post" action="{{ route('admin.images.prepare') }}">
-                @csrf
-                <button class="admin-btn" type="submit">{{ __('Prepare image library') }} ↗</button>
-            </form>
+            <div class="admin-actions">
+                <a class="admin-btn secondary" href="{{ route('admin.media.index') }}">{{ __('Manage all site images') }}</a>
+                <form method="post" action="{{ route('admin.images.prepare') }}">
+                    @csrf
+                    <button class="admin-btn" type="submit">{{ __('Prepare image library') }} ↗</button>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -157,6 +167,8 @@
         <div><span class="admin-eyebrow">{{ __('QUICK ACCESS') }}</span><h2>{{ __('What would you like to update?') }}</h2></div>
         <div class="admin-quick-links">
             <a href="{{ route('admin.categories.index') }}"><span aria-hidden="true">▦</span><span><strong>{{ __('Product catalogue') }}</strong><small>{{ __('Edit images, descriptions and page sections') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('admin.companies.index') }}"><span aria-hidden="true">⌂</span><span><strong>{{ __('Group companies') }}</strong><small>{{ __('Manage company cards, locations and photography') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('admin.media.index') }}"><span aria-hidden="true">▧</span><span><strong>{{ __('Central image library') }}</strong><small>{{ __('Replace site photos, logos, icons and product images') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('admin.seo.edit') }}"><span aria-hidden="true">⌕</span><span><strong>{{ __('SEO & site settings') }}</strong><small>{{ __('Manage site metadata and contact details') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('admin.quote-requests.index') }}"><span aria-hidden="true">⇢</span><span><strong>{{ __('Sales enquiries') }}</strong><small>{{ __('Track request status and buyer requirements') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
         </div>
