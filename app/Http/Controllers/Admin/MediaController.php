@@ -120,7 +120,11 @@ final class MediaController extends Controller
         ]);
         $path = ltrim(str_replace('\\', '/', $validated['path']), '/');
 
-        abort_unless(in_array($path, $this->managedPaths($imageLibrary), true), 404);
+        $safePath = preg_match('/\\A[a-zA-Z0-9][a-zA-Z0-9_\\/.-]*\\z/', $path) === 1
+            && ! collect(explode('/', $path))->contains(fn (string $segment) => in_array($segment, ['', '.', '..'], true))
+            && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'], true);
+
+        abort_unless($safePath && in_array($path, $this->managedPaths($imageLibrary), true), 404);
 
         $expectedExtension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
         $uploadedExtension = strtolower($request->file('image')->guessExtension() ?: $request->file('image')->getClientOriginalExtension());
@@ -168,7 +172,8 @@ final class MediaController extends Controller
         ]);
         $file = $request->file('image');
         $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
-        $filename = Str::slug($validated['label']).'-'.Str::lower(Str::random(5)).'.'.$extension;
+        $slug = Str::slug($validated['label']) ?: 'site-image';
+        $filename = $slug.'-'.Str::lower(Str::random(5)).'.'.$extension;
         $stored = $file->storeAs('site-library', $filename, 'encap_images');
 
         if (! is_string($stored) || ! Storage::disk('encap_images')->exists($stored)) {
