@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\Company;
+use App\Models\SeoSetting;
 use App\Support\EncapImage;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -20,6 +21,7 @@ final class EncapMediaInventory
             $this->allFiles('public'),
             Category::query()->whereNotNull('image')->pluck('image')->all(),
             Company::query()->whereNotNull('image')->pluck('image')->all(),
+            SeoSetting::query()->whereNotNull('default_og_image')->pluck('default_og_image')->all(),
             Category::query()->get()->flatMap(fn (Category $item) => $item->gallery ?? [])->all(),
             Company::query()->get()->flatMap(fn (Company $item) => $item->gallery ?? [])->all(),
         );
