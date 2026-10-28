@@ -88,7 +88,7 @@ test('site-wide motion assets are loaded on public English and Arabic page templ
     ]);
 
     $paths = [
-        '/en', '/ar', '/en/about', '/ar/farms', '/en/packing-stations',
+        '/en', '/ar', '/en/about', '/ar/farms', '/en/companies', '/ar/companies', '/en/packing-stations',
         '/ar/quality', '/en/export', '/en/products', '/ar/products',
         '/en/products/motion-mango', '/ar/products/motion-mango',
         '/en/contact', '/ar/request-a-quote',
@@ -195,6 +195,39 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertSee('مجمّد');
 });
 
+test('group companies have a separate localized page from operations', function () {
+    $labels = [
+        'en' => 'Our Companies',
+        'ar' => 'شركاتنا',
+        'fr' => 'Nos sociétés',
+        'ru' => 'Наши компании',
+        'tr' => 'Şirketlerimiz',
+    ];
+
+    foreach ($labels as $locale => $label) {
+        $this->get('/'.$locale.'/companies')
+            ->assertOk()
+            ->assertSee($label)
+            ->assertSee('Group Companies')
+            ->assertSee('Hadaeq Al-Shamal Company')
+            ->assertSee('ENCAP subsidiary')
+            ->assertSee('Aljouf - Saudia')
+            ->assertSee('encap-group-companies-panel', false);
+    }
+
+    $this->get('/ar/companies')
+        ->assertOk()
+        ->assertSee('شركة حدائق الشمال')
+        ->assertSee('عملياتنا')
+        ->assertDontSee('Our Company');
+
+    $this->get('/sitemap.xml')
+        ->assertOk()
+        ->assertSee('/en/companies', false)
+        ->assertSee('/ar/companies', false);
+});
+
+
 test('primary navigation is centered, bilingual, and responsive', function () {
     $englishResponse = $this->get('/en');
 
@@ -207,8 +240,10 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('data-language-trigger', false)
         ->assertSee('data-language-menu', false)
         ->assertSee('data-primary-mobile-nav', false)
-        ->assertSee('Our Company')
-        ->assertSee('primary-mobile-company-group', false)
+        ->assertSee('Our Operations')
+        ->assertSee('Our Companies')
+        ->assertSee('primary-mobile-operations-group', false)
+        ->assertSee('/en/companies', false)
         ->assertSee('/en/packing-stations', false)
         ->assertSee('/en/export', false)
         ->assertSee('/en/quality', false)
@@ -233,7 +268,9 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('dir="rtl"', false)
         ->assertSee('اختيار اللغة')
         ->assertSee('aria-current="page"', false)
-        ->assertSee('شركتنا')
+        ->assertSee('عملياتنا')
+        ->assertSee('شركاتنا')
+        ->assertSee('/ar/companies', false)
         ->assertSee('/ar/about', false)
         ->assertSee('الرئيسية');
 });
