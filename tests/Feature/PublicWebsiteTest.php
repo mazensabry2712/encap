@@ -91,6 +91,7 @@ test('site-wide motion assets are loaded on public English and Arabic page templ
         '/en', '/ar', '/en/about', '/ar/farms', '/en/companies', '/ar/companies', '/en/packing-stations',
         '/ar/quality', '/en/export', '/en/products', '/ar/products',
         '/en/products/motion-mango', '/ar/products/motion-mango',
+        '/en/companies/hadaeq-al-shamal', '/ar/companies/hadaeq-al-shamal',
         '/en/contact', '/ar/request-a-quote',
     ];
 
@@ -230,6 +231,40 @@ test('group companies have a separate localized page from operations', function 
         ->assertOk()
         ->assertSee('/en/companies', false)
         ->assertSee('/ar/companies', false);
+});
+
+
+test('group company catalogue and detail pages use the public product catalogue experience', function () {
+    $this->get('/ar/companies')
+        ->assertOk()
+        ->assertSee('encap-catalog-hero', false)
+        ->assertSee('encap-catalog-summary-band', false)
+        ->assertSee('encap-product-grid', false)
+        ->assertSee('شركة حدائق الشمال')
+        ->assertSee('/ar/companies/hadaeq-al-shamal', false)
+        ->assertSee('Published companies');
+
+    $this->get('/ar/companies/hadaeq-al-shamal')
+        ->assertOk()
+        ->assertSee('product-detail', false)
+        ->assertSee('شركة حدائق الشمال')
+        ->assertSee('نبذة عن الشركة')
+        ->assertSee('الجوف، المملكة العربية السعودية')
+        ->assertSee('encap-img/favicon.png', false);
+
+    $hidden = \App\Models\Company::query()->create([
+        'name_en' => 'Hidden Company',
+        'name_ar' => 'شركة مخفية',
+        'slug' => 'hidden-company',
+        'is_published' => false,
+        'sort_order' => 99,
+    ]);
+
+    $this->get('/ar/companies')
+        ->assertOk()
+        ->assertDontSee('شركة مخفية');
+
+    $this->get('/ar/companies/hidden-company')->assertNotFound();
 });
 
 
