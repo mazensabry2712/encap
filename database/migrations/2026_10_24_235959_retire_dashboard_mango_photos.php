@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Throwable;
 
 return new class extends Migration
 {
@@ -58,7 +57,7 @@ return new class extends Migration
             foreach (['encap_images', 'public'] as $diskName) {
                 try {
                     Storage::disk($diskName)->delete($path);
-                } catch (Throwable) {
+                } catch (\Throwable) {
                     // A missing or inaccessible disk must not interrupt the DB cleanup.
                 }
             }
