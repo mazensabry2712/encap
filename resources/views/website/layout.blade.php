@@ -108,14 +108,15 @@
                 <nav class="primary-mobile-panel" aria-label="{{ __('Mobile navigation') }}" data-primary-mobile-nav>
                     <div class="primary-mobile-panel-links">
                     <a href="{{ route('home', ['locale' => $currentLocale]) }}" @if(request()->routeIs('home')) aria-current="page" @endif>{{ __('Home') }}</a>
-                    <span class="primary-mobile-section-label">{{ __('Our Company') }}</span>
-                    <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
-                    <a href="{{ route('farms', ['locale' => $currentLocale]) }}" @if(request()->routeIs('farms')) aria-current="page" @endif>{{ __('Agriculture & Farms') }}</a>
-                    <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}" @if(request()->routeIs('packing-stations')) aria-current="page" @endif>{{ __('Packing Stations') }}</a>
-                    <a href="{{ route('export', ['locale' => $currentLocale]) }}" @if(request()->routeIs('export')) aria-current="page" @endif>{{ __('Export & Logistics') }}</a>
+                    <div class="primary-mobile-company-group">
+                        <span class="primary-mobile-section-label">{{ __('Our Company') }}</span>
+                        <a href="{{ route('about', ['locale' => $currentLocale]) }}" @if(request()->routeIs('about')) aria-current="page" @endif>{{ __('About') }}</a>
+                        <a href="{{ route('farms', ['locale' => $currentLocale]) }}" @if(request()->routeIs('farms')) aria-current="page" @endif>{{ __('Agriculture & Farms') }}</a>
+                        <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}" @if(request()->routeIs('packing-stations')) aria-current="page" @endif>{{ __('Packing Stations') }}</a>
+                        <a href="{{ route('export', ['locale' => $currentLocale]) }}" @if(request()->routeIs('export')) aria-current="page" @endif>{{ __('Export & Logistics') }}</a>
+                        <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
+                    </div>
                     <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
-                    <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
-                    
                     <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
                     </div>
                     <a class="primary-mobile-quote" href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} <span aria-hidden="true">↗</span></a>
