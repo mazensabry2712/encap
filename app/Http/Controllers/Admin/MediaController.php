@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Company;
+use App\Models\SeoSetting;
 use App\Services\EncapMediaInventory;
 use App\Support\EncapImage;
 use Illuminate\Http\RedirectResponse;
@@ -61,6 +62,8 @@ final class MediaController extends Controller
             }
         }
 
+        $seoImagePaths = SeoSetting::query()->whereNotNull('default_og_image')->pluck('default_og_image')->filter()->all();
+
         $companyNames = [];
         foreach (Company::query()->get(['name_en', 'image', 'gallery']) as $company) {
             foreach (array_merge([$company->image], $company->gallery ?? []) as $path) {
@@ -70,7 +73,7 @@ final class MediaController extends Controller
             }
         }
 
-        $assets = $paths->map(function (string $path) use ($catalogue, $staticLabels, $categoryNames, $companyNames) {
+        $assets = $paths->map(function (string $path) use ($catalogue, $staticLabels, $categoryNames, $companyNames, $seoImagePaths) {
             $mainExists = Storage::disk('encap_images')->exists($path);
             $legacyExists = Storage::disk('public')->exists($path);
             $fallback = $catalogue[$path] ?? null;
@@ -84,6 +87,7 @@ final class MediaController extends Controller
                 'in_legacy' => $legacyExists,
                 'categories' => $categoryNames[$path] ?? [],
                 'companies' => $companyNames[$path] ?? [],
+                'seo' => in_array($path, $seoImagePaths, true),
                 'is_slot' => array_key_exists($path, $staticLabels) || array_key_exists($path, $catalogue),
             ];
         });
