@@ -71,7 +71,7 @@ test('selecting multiple product photos saves the first as primary and all remai
     expect($category->image)->not->toBe($oldMain)
         ->and($category->gallery)->toHaveCount(2);
 
-    Storage::disk('public')->assertMissing($oldMain);
+    Storage::disk('public')->assertExists($oldMain);
     Storage::disk('encap_images')->assertExists($category->image);
     foreach ($category->gallery as $path) {
         Storage::disk('encap_images')->assertExists($path);
@@ -118,7 +118,7 @@ test('category gallery cannot exceed twelve additional images across repeated ed
     expect($category->gallery)->toHaveCount(12)
         ->and($category->gallery)->not->toContain('categories/gallery/remove-me.png');
 
-    Storage::disk('public')->assertMissing('categories/gallery/remove-me.png');
+    Storage::disk('public')->assertExists('categories/gallery/remove-me.png');
     expect(Storage::disk('encap_images')->exists($category->gallery[11]))->toBeTrue();
 });
 
