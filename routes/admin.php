@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImageLibraryController;
@@ -28,7 +30,11 @@ Route::prefix('admin')->name('admin.')->middleware(SetAdminLocale::class)->group
         Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/images/prepare', [ImageLibraryController::class, 'prepare'])->middleware('throttle:20,1')->name('images.prepare');
+        Route::get('/media', [MediaController::class, 'index'])->name('media.index');
+        Route::post('/media/upload', [MediaController::class, 'upload'])->middleware('throttle:20,1')->name('media.upload');
+        Route::post('/media/replace', [MediaController::class, 'replace'])->middleware('throttle:20,1')->name('media.replace');
         Route::resource('categories', CategoryController::class)->except(['show']);
+        Route::resource('companies', CompanyController::class)->except(['show']);
         Route::get('/seo', [SeoSettingController::class, 'edit'])->name('seo.edit');
         Route::put('/seo', [SeoSettingController::class, 'update'])->name('seo.update');
         Route::get('/quote-requests', [QuoteRequestController::class, 'index'])->name('quote-requests.index');
