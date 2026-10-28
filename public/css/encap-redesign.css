@@ -1692,3 +1692,10 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
     .encap-group-companies-panel .encap-group-companies-cta{align-items:stretch;flex-direction:column}
     .encap-group-companies-panel .encap-group-companies-cta .encap-button-primary{justify-content:center}
 }
+
+/* Company cards reuse the public product-catalogue visual system. */
+.encap-company-card .encap-company-location{display:block;margin-top:7px;color:#6a766b;font-size:11px;line-height:1.65}
+.encap-company-card .encap-product-info{align-items:flex-start}
+.encap-company-card .encap-product-link{flex:0 0 auto}
+.encap-company-detail-section{padding-block:clamp(24px,4vw,50px)}
+.encap-company-detail-section .page-aside-note a{display:inline-flex;margin-top:8px;color:#22543a;font-weight:750}
