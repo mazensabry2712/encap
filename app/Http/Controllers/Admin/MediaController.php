@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\SeoSetting;
+use App\Services\EncapImageLibrary;
 use App\Services\EncapMediaInventory;
 use App\Support\EncapImage;
 use Illuminate\Http\RedirectResponse;
@@ -17,9 +18,9 @@ use Illuminate\View\View;
 
 final class MediaController extends Controller
 {
-    public function index(Request $request, EncapMediaInventory $mediaInventory): View
+    public function index(Request $request, EncapImageLibrary $imageLibrary, EncapMediaInventory $mediaInventory): View
     {
-        $catalogue = app(\App\Services\EncapImageLibrary::class)->catalogue();
+        $catalogue = $imageLibrary->catalogue();
         $allPaths = collect($mediaInventory->paths());
         $paths = $allPaths;
 
