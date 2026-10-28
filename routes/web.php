@@ -3,6 +3,7 @@
 use App\Http\Controllers\EncapImageController;
 use App\Http\Controllers\WebsiteController;
 use App\Models\Category;
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/encap-img/{path}', [EncapImageController::class, 'show'])
@@ -18,6 +19,7 @@ Route::get('/sitemap.xml', function () {
     return response()->view('seo.sitemap', [
         'locales' => ['en', 'ar', 'fr', 'ru', 'tr'],
         'categories' => Category::query()->where('is_published', true)->orderBy('sort_order')->get(['slug', 'updated_at', 'name_ar', 'description_ar']),
+        'companies' => Company::query()->where('is_published', true)->orderBy('sort_order')->get(['slug', 'updated_at']),
     ])->header('Content-Type', 'application/xml; charset=UTF-8');
 })->name('seo.sitemap');
 
@@ -29,6 +31,7 @@ Route::prefix('{locale}')->group(function () {
     Route::get('/quality', [WebsiteController::class, 'contentPage'])->defaults('page', 'quality')->name('quality');
     Route::get('/export', [WebsiteController::class, 'contentPage'])->defaults('page', 'export')->name('export');
     Route::get('/companies', [WebsiteController::class, 'companies'])->name('companies');
+    Route::get('/companies/{company:slug}', [WebsiteController::class, 'company'])->name('companies.show');
     Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
     Route::post('/contact', [WebsiteController::class, 'storeContact'])
         ->middleware('throttle:5,1')->name('contact.store');
