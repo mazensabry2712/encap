@@ -34,7 +34,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-story-brand', false)
         ->assertSee('encap-orbit-brand', false)
         ->assertSee('encap-hero-index', false)
-        ->assertSee('footer-copyright-brand', false)
+        ->assertSee('encap-footer-copyright', false)
         ->assertSee('encap-floating-note', false)
         ->assertSee('encap-product-grid', false)
         ->assertSee('encap-process-row', false)
@@ -885,7 +885,7 @@ test('catalogue and product details show real crop-specific photos when no admin
 
     $this->get('/en/products')
         ->assertOk()
-        ->assertSee('images.unsplash.com/photo-1605027990121', false)
+        ->assertSee('images.pexels.com/photos/29782357', false)
         ->assertSee('images.unsplash.com/photo-1705573382809', false)
         ->assertSee('images.unsplash.com/photo-1626964146632', false)
         ->assertSee('images.unsplash.com/photo-1756361947495', false)
@@ -918,7 +918,7 @@ test('an uploaded category image remains preferred over a stock fallback', funct
         ->assertDontSee('images.unsplash.com/photo-1626964146632', false);
 });
 
-test('a dashboard-uploaded legacy mango photo stays visible and product gallery URLs remain correct', function () {
+test('a dashboard-uploaded legacy mango photo is replaced by the curated image', function () {
     Category::query()->create([
         'name_en' => 'Mango',
         'name_ar' => 'مانجو',
@@ -932,13 +932,15 @@ test('a dashboard-uploaded legacy mango photo stays visible and product gallery 
 
     $this->get('/ar/products/mango')
         ->assertOk()
-        ->assertSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false)
-        ->assertSee('data-image-src', false)
+        ->assertSee('photos/29782357', false)
+        ->assertDontSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false)
+        ->assertDontSee('categories/gallery/mango-detail.jpg', false)
         ->assertDontSee('/encap-img/https://', false);
 
     $this->get('/ar/products')
         ->assertOk()
-        ->assertSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false);
+        ->assertSee('photos/29782357', false)
+        ->assertDontSee('ndGv4yhjoLuLommuuXX34GErfjuIUG1wJyiMaDef.jpg', false);
 });
 
 
