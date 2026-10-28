@@ -500,6 +500,20 @@ class WebsiteController extends Controller
         return view('website.content-page', compact('locale', 'page', 'pageContent', 'categories', 'pageSeo'));
     }
 
+    public function companies(string $locale): View
+    {
+        $this->useLocale($locale);
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            'companies',
+            $locale,
+            __('Our Companies') . ' | ENCAP',
+            __('Explore the companies affiliated with ENCAP.')
+        );
+
+        return view('website.companies', compact('locale', 'pageSeo'));
+    }
+
     public function contact(string $locale): View
     {
         $this->useLocale($locale);
