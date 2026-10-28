@@ -33,6 +33,16 @@ final class EncapImageLibrary
     ];
 
     /**
+     * Return the curated site-image paths and their external fallbacks.
+     *
+     * @return array<string, string>
+     */
+    public function catalogue(): array
+    {
+        return self::STOCK_IMAGES;
+    }
+
+    /**
      * @return array{downloaded: int, kept: int, copied: int, errors: list<string>, complete: bool}
      */
     public function prepare(bool $force = false, int $offset = 0, int $limit = 4): array
