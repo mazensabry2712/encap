@@ -304,7 +304,7 @@
                     <div class="hs-company__brand-logo">
                         <img src="{{ \App\Support\EncapImage::url($company->image ?: 'logo.png') }}" alt="{{ $company->image ? $copy['company_logo_alt'] : $copy['logo_alt'] }}" width="300" height="90" decoding="async">
                     </div>
-                    <span class="hs-company__brand-tag">{{ $copy['parent_label'] }}</span>
+                    <span class="hs-company__brand-tag">{{ $copy['eyebrow'] }}</span>
                     <h2 class="hs-company__brand-name">{{ $copy['title'] }}</h2>
                     <p class="hs-company__brand-parent">{{ $copy['parent_name'] }}</p>
                 </aside>
