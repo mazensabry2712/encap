@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function index(): View
     {
         return view('admin.categories.index', [
-            'categories' => Category::query()->orderBy('sort_order')->orderBy('name_en')->paginate(20),
+            'categories' => Category::query()->with('companies')->orderBy('sort_order')->orderBy('name_en')->paginate(20),
         ]);
     }
 

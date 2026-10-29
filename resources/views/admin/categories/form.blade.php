@@ -1,6 +1,7 @@
 @extends('admin.layout')
 @section('page-title', $category->exists ? __('Edit category') : __('Create category'))
 @section('content')
+@php($selectedCompanyIds = collect(old('company_ids', $category->exists ? $category->companies->pluck('id')->all() : []))->map(fn ($id) => (int) $id)->all())
 <div class="admin-page-intro"><div><p>{{ __('Maintain public product information, category imagery and search metadata. Publish only confirmed details.') }}</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.categories.index') }}">{{ __('← All categories') }}</a></div></div>
 <form class="admin-panel admin-form-panel" method="post" enctype="multipart/form-data" action="{{ $category->exists ? route('admin.categories.update', $category) : route('admin.categories.store') }}">@csrf @if($category->exists)@method('PUT')@endif<div class="admin-form-grid">
 <h2 class="admin-section-title">{{ __('Basic information') }}</h2>
@@ -13,7 +14,30 @@
 <div class="admin-field"><label for="harvest_window_en">{{ __('Harvest window / season (English)') }}</label><input id="harvest_window_en" name="harvest_window_en" maxlength="255" value="{{ old('harvest_window_en', $category->harvest_window_en) }}"></div><div class="admin-field"><label for="harvest_window_ar">{{ __('Harvest window / season (Arabic)') }}</label><input id="harvest_window_ar" name="harvest_window_ar" maxlength="255" dir="auto" value="{{ old('harvest_window_ar', $category->harvest_window_ar) }}"></div>
 <div class="admin-field"><label for="specifications_en">{{ __('Specifications, size or grade (English)') }}</label><textarea id="specifications_en" name="specifications_en" maxlength="2000">{{ old('specifications_en', $category->specifications_en) }}</textarea></div><div class="admin-field"><label for="specifications_ar">{{ __('Specifications, size or grade (Arabic)') }}</label><textarea id="specifications_ar" name="specifications_ar" maxlength="2000" dir="auto">{{ old('specifications_ar', $category->specifications_ar) }}</textarea></div>
 <div class="admin-field"><label for="packaging_en">{{ __('Packaging (English)') }}</label><input id="packaging_en" name="packaging_en" maxlength="255" value="{{ old('packaging_en', $category->packaging_en) }}"></div><div class="admin-field"><label for="packaging_ar">{{ __('Packaging (Arabic)') }}</label><input id="packaging_ar" name="packaging_ar" maxlength="255" dir="auto" value="{{ old('packaging_ar', $category->packaging_ar) }}"></div>
-<div class="admin-field full"><label>{{ __('Available formats') }}</label><div class="admin-inline">@foreach(['Fresh', 'Frozen', 'Processed'] as $format)<label class="admin-check"><input type="checkbox" name="available_forms[]" value="{{ $format }}" @checked(in_array($format, old('available_forms', $category->available_forms ?? ['Fresh', 'Frozen', 'Processed'])))>{{ __($format) }}</label>@endforeach</div></div>
+<div class="admin-field full"><label>{{ __('Available formats') }}</label><div class="admin-inline">@foreach(['Fresh', 'Frozen', 'Processed'] as $format)<label class="admin-check"><input type="checkbox" name="available_forms[]" value="{{ $format }}" @checked(in_array($format, old('available_forms', $category->available_forms ?? [])))>{{ __($format) }}</label>@endforeach</div><small>{{ __('Available formats describe the form supplied; display locations are selected separately below.') }}</small></div>
+
+<h2 class="admin-section-title">{{ __('Product placement') }}</h2>
+<div class="admin-field full"><small>{{ __('Create and maintain each product here once. Select every public location where this same product should appear.') }}</small></div>
+<div class="admin-field full"><label>{{ __('Public website locations') }}</label><div class="admin-inline admin-product-page-toggles">
+    <label class="admin-check"><input type="checkbox" name="show_in_catalogue" value="1" @checked(old('show_in_catalogue', $category->exists ? $category->show_in_catalogue : true))> {{ __('Main product catalogue') }}</label>
+    <label class="admin-check"><input type="checkbox" name="show_in_frozen_catalogue" value="1" @checked(old('show_in_frozen_catalogue', $category->show_in_frozen_catalogue ?? false))> {{ __('Frozen products catalogue') }}</label>
+    <label class="admin-check"><input type="checkbox" name="show_on_homepage" value="1" @checked(old('show_on_homepage', $category->exists ? $category->show_on_homepage : true))> {{ __('Homepage products section') }}</label>
+</div><small>{{ __('Showing a product in the frozen catalogue also enables the Frozen available format.') }}</small></div>
+<div class="admin-field full"><label>{{ __('Company pages') }}</label><p class="admin-hint">{{ __('Select the company pages where this product should be listed. You can select more than one company.') }}</p>
+    @if($companies->isEmpty())
+        <p>{{ __('No companies are available yet. Create a company first.') }}</p>
+    @else
+        <div class="admin-company-products-grid">
+            @foreach($companies as $company)
+                @php($companyName = app()->getLocale() === 'ar' && $company->name_ar ? $company->name_ar : $company->name_en)
+                <label class="admin-company-product-option">
+                    <input type="checkbox" name="company_ids[]" value="{{ $company->id }}" @checked(in_array((int) $company->id, $selectedCompanyIds, true))>
+                    <span><strong>{{ $companyName }}</strong>@if($company->location_en)<small>{{ app()->getLocale() === 'ar' && $company->location_ar ? $company->location_ar : $company->location_en }}</small>@endif</span>
+                </label>
+            @endforeach
+        </div>
+    @endif
+</div>
 <h2 class="admin-section-title">{{ __('Catalogue imagery') }}</h2>
 @if($category->slug === 'mango')
 <div class="admin-field full admin-mango-image-note">
@@ -124,6 +148,6 @@
 @endforeach
 </div></div>
 <h2 class="admin-section-title">{{ __('Search engine metadata') }}</h2><div class="admin-field"><label for="seo_title_en">{{ __('SEO title (English)') }}</label><input id="seo_title_en" name="seo_title_en" maxlength="255" value="{{ old('seo_title_en', $category->seo_title_en) }}"></div><div class="admin-field"><label for="seo_title_ar">{{ __('SEO title (Arabic)') }}</label><input id="seo_title_ar" name="seo_title_ar" maxlength="255" dir="auto" value="{{ old('seo_title_ar', $category->seo_title_ar) }}"></div><div class="admin-field"><label for="seo_description_en">{{ __('SEO description (English)') }}</label><textarea id="seo_description_en" name="seo_description_en" maxlength="500">{{ old('seo_description_en', $category->seo_description_en) }}</textarea></div><div class="admin-field"><label for="seo_description_ar">{{ __('SEO description (Arabic)') }}</label><textarea id="seo_description_ar" name="seo_description_ar" maxlength="500" dir="auto">{{ old('seo_description_ar', $category->seo_description_ar) }}</textarea></div>
-<div class="admin-field full"><label class="admin-check"><input type="checkbox" name="is_published" value="1" @checked(old('is_published', $category->is_published))> {{ __('Publish this category on the public website') }}</label></div><div class="admin-field full"><div class="admin-form-actions"><button type="submit">{{ $category->exists ? __('Save changes') : __('Create category') }}</button><a class="admin-btn secondary" href="{{ route('admin.categories.index') }}">{{ __('Cancel') }}</a></div></div>
+<div class="admin-field full"><label class="admin-check"><input type="checkbox" name="is_published" value="1" @checked(old('is_published', $category->is_published))> {{ __('Publish this product on the public website') }}</label></div><div class="admin-field full"><div class="admin-form-actions"><button type="submit">{{ $category->exists ? __('Save changes') : __('Create category') }}</button><a class="admin-btn secondary" href="{{ route('admin.categories.index') }}">{{ __('Cancel') }}</a></div></div>
 </div></form>
 @endsection

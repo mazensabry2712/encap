@@ -10,6 +10,7 @@ test('frozen products catalogue lists only published categories that include the
         'short_description_en' => 'Frozen strawberries test category.',
         'short_description_ar' => 'تصنيف فراولة مجمدة للاختبار.',
         'available_forms' => ['Frozen'],
+        'show_in_frozen_catalogue' => true,
         'is_published' => true,
         'sort_order' => 1,
     ]);
