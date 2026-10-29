@@ -228,8 +228,8 @@
     .hs-company__fact strong{font-size:11px;color:#778176;margin-bottom:3px}
     .hs-company__fact span{font-size:12px;font-weight:700;line-height:1.65}
     .hs-company__brand-card{padding:clamp(22px,3vw,34px);border:1px solid #ffffff;background:#ffffffc9;box-shadow:0 24px 65px #15312012;text-align:center;backdrop-filter:blur(9px)}
-    .hs-company__brand-logo{display:grid;place-items:center;min-height:105px;padding:12px 4px 22px;border-bottom:1px solid var(--hs-line)}
-    .hs-company__brand-logo img{display:block;max-width:min(100%,240px);width:100%;height:82px;object-fit:contain}
+    .hs-company__brand-logo{display:grid;place-items:center;min-height:118px;padding:10px 4px 20px;border-bottom:1px solid var(--hs-line)}
+    .hs-company__brand-logo img{display:block;max-width:min(100%,285px);width:100%;height:98px;object-fit:contain}
     .hs-company__brand-tag{display:inline-block;margin:22px 0 8px;color:var(--hs-green);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
     .hs-company__brand-name{margin:0;color:var(--hs-deep);font-family:Georgia,"Times New Roman",serif;font-size:clamp(22px,2.2vw,31px);font-weight:500;line-height:1.2}
     .hs-company__brand-parent{margin:12px 0 0;color:var(--hs-muted);font-size:11px;line-height:1.8}
@@ -260,7 +260,7 @@
     .hs-company__photo figcaption{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 18px;background:#eeefe4;border-bottom:1px solid #cfd5c7;color:var(--hs-deep);font-size:14px;font-weight:750}
     .hs-company__photo-index{color:#7d8976;font-size:10px;font-weight:800;letter-spacing:.12em}
     .hs-company__image-note{margin:16px 0 0;color:#7a8378;font-size:11px;line-height:1.8}
-    @media (max-width:820px){.hs-company__hero-grid,.hs-company__overview-grid{grid-template-columns:minmax(0,1fr)}.hs-company__brand-card{max-width:440px}.hs-company__brand-logo{min-height:85px}.hs-company__section-heading{display:block}.hs-company__section-intro{margin-top:16px}.hs-company__specialty-grid{gap:14px}}
+    @media (max-width:820px){.hs-company__hero-grid,.hs-company__overview-grid{grid-template-columns:minmax(0,1fr)}.hs-company__brand-card{max-width:440px}.hs-company__brand-logo{min-height:98px}.hs-company__section-heading{display:block}.hs-company__section-intro{margin-top:16px}.hs-company__specialty-grid{gap:14px}}
     @media (max-width:600px){.hs-company__hero{padding-top:18px}.hs-company__breadcrumbs{margin-bottom:24px}.hs-company__facts{display:grid;grid-template-columns:minmax(0,1fr)}.hs-company__fact{min-width:0}.hs-company__specialty-grid,.hs-company__gallery-grid{grid-template-columns:minmax(0,1fr)}.hs-company__photo img{height:270px}.hs-company__section{padding-block:54px}.hs-company__specialty-card{padding:22px}.hs-company__title{font-size:clamp(39px,11vw,58px)}}
     @media (prefers-reduced-motion:reduce){.hs-company__photo img{transition:none}.hs-company__photo:hover img{transform:none}}
 </style>
