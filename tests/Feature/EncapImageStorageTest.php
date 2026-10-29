@@ -18,15 +18,15 @@ test('encap image storage lives outside public and takes precedence over legacy 
     Storage::disk('encap_images')->put('categories/sample.jpg', 'new image');
 
     expect(EncapImage::url('categories/sample.jpg'))
-        ->toBe(Storage::disk('encap_images')->url('categories/sample.jpg'));
+        ->toStartWith(Storage::disk('encap_images')->url('categories/sample.jpg'))
+        ->and(EncapImage::url('categories/sample.jpg'))->toContain('?v=');
 
     $response = $this->get('/encap-img/categories/sample.jpg')
         ->assertOk()
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 
     expect($response->headers->get('Cache-Control'))
-        ->toContain('public')
-        ->toContain('max-age=300')
+        ->toContain('no-cache')
         ->toContain('must-revalidate');
 
     $this->get('/encap-img/categories/sample.svg')->assertNotFound();
@@ -45,8 +45,7 @@ test('legacy category uploads remain visible through the encap image route befor
         ->assertHeader('X-Content-Type-Options', 'nosniff');
 
     expect($response->headers->get('Cache-Control'))
-        ->toContain('public')
-        ->toContain('max-age=300')
+        ->toContain('no-cache')
         ->toContain('must-revalidate');
 });
 
@@ -132,6 +131,39 @@ test('central-library uploads use the fallback disk if the main image folder can
         Storage::forgetDisk('encap_images');
         @unlink($blockedRoot);
     }
+});
+
+test('replacing a central image changes its stored bytes and cache-busted URL immediately', function () {
+    Storage::fake('public');
+    Storage::fake('encap_images');
+
+    $original = UploadedFile::fake()->image('cargo-original.jpg', 12, 12);
+    Storage::disk('encap_images')->put(
+        'cargo-port-2026.jpg',
+        file_get_contents($original->getRealPath())
+    );
+    $oldUrl = EncapImage::url('cargo-port-2026.jpg');
+    $oldBytes = Storage::disk('encap_images')->get('cargo-port-2026.jpg');
+
+    $replacement = UploadedFile::fake()->image('cargo-replacement.jpg', 160, 90);
+
+    $this->actingAs(User::factory()->create())
+        ->from(route('admin.media.index'))
+        ->post(route('admin.media.replace'), [
+            'path' => 'cargo-port-2026.jpg',
+            'image' => $replacement,
+        ])
+        ->assertRedirect(route('admin.media.index'))
+        ->assertSessionHas('success');
+
+    $newBytes = Storage::disk('encap_images')->get('cargo-port-2026.jpg');
+    $newUrl = EncapImage::url('cargo-port-2026.jpg');
+
+    expect($newBytes)->not->toBe($oldBytes)
+        ->and($newUrl)->not->toBe($oldUrl);
+
+    $this->get($newUrl)->assertOk()
+        ->assertHeader('Cache-Control', 'no-cache, must-revalidate');
 });
 
 test('image library preparation is split into bounded batches', function () {

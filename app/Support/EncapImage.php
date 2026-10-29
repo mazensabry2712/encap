@@ -18,15 +18,16 @@ final class EncapImage
             $images = Storage::disk('encap_images');
 
             if ($images->exists($path)) {
-                return $images->url($path);
+                return self::versionedUrl($images->url($path), $images, $path);
             }
         } catch (Throwable) {
             // Keep the public disk and configured fallback URL available if this disk is broken.
         }
 
         try {
-            if (Storage::disk('public')->exists($path)) {
-                return self::encapUrl($path);
+            $legacy = Storage::disk('public');
+            if ($legacy->exists($path)) {
+                return self::versionedUrl(self::encapUrl($path), $legacy, $path);
             }
         } catch (Throwable) {
             // Use the supplied fallback URL when neither disk can be inspected.
@@ -45,4 +46,20 @@ final class EncapImage
 
         return rtrim($baseUrl, '/').'/'.$path;
     }
+    /**
+     * Give replaced assets a new URL so browsers cannot keep showing stale bytes.
+     */
+    private static function versionedUrl(string $url, $disk, string $path): string
+    {
+        try {
+            $absolutePath = $disk->path($path);
+            clearstatcache(true, $absolutePath);
+            $version = $disk->lastModified($path).'-'.$disk->size($path);
+
+            return $url.(str_contains($url, '?') ? '&' : '?').'v='.rawurlencode((string) $version);
+        } catch (Throwable) {
+            return $url;
+        }
+    }
+
 }
