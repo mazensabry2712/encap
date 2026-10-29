@@ -23,6 +23,13 @@
             <span class="admin-stat-note"><b>{{ number_format($publishedCategoryCount) }}</b> {{ __('published') }} <span aria-hidden="true">·</span> {{ number_format($draftCategoryCount) }} {{ __('drafts') }}</span>
             <span class="admin-stat-link">{{ __('Manage catalogue') }} <span aria-hidden="true">→</span></span>
         </a>
+        <a class="admin-stat-card" href="{{ route('admin.categories.index') }}">
+            <span class="admin-stat-icon" aria-hidden="true">❄</span>
+            <span class="admin-stat-label">{{ __('Frozen products assigned') }}</span>
+            <strong class="admin-stat-value">{{ number_format($frozenCategoryCount) }}</strong>
+            <span class="admin-stat-note">{{ __('Only published categories marked Frozen appear in this catalogue.') }}</span>
+            <span class="admin-stat-link">{{ __('Manage catalogue') }} <span aria-hidden="true">→</span></span>
+        </a>
         <a class="admin-stat-card" href="{{ route('admin.companies.index') }}">
             <span class="admin-stat-icon" aria-hidden="true">⌂</span>
             <span class="admin-stat-label">{{ __('Group companies') }}</span>
@@ -44,6 +51,20 @@
             <span class="admin-stat-note"><b>{{ number_format($newContactMessageCount) }}</b> {{ __('new contact messages') }}</span>
             <span class="admin-stat-link">{{ __('View inbox') }} <span aria-hidden="true">→</span></span>
         </a>
+    </section>
+
+    <section class="admin-quick-access" aria-label="{{ __('Public website pages') }}">
+        <div><span class="admin-eyebrow">{{ __('PUBLIC WEBSITE') }}</span><h2>{{ __('Preview public pages') }}</h2></div>
+        <div class="admin-quick-links">
+            <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">⌂</span><span><strong>{{ __('Home') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('products.index', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">▦</span><span><strong>{{ __('Products') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('frozen-products', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">❄</span><span><strong>{{ __('Frozen') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('companies', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">⌘</span><span><strong>{{ __('Our Companies') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('farms', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">♧</span><span><strong>{{ __('Agriculture & Farms') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('quality', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">✓</span><span><strong>{{ __('Quality') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('contact', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">✉</span><span><strong>{{ __('Contact') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('admin.seo.edit') }}"><span aria-hidden="true">⌕</span><span><strong>{{ __('Website content & SEO') }}</strong><small>{{ __('Edit public page text, page metadata and contact details.') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+        </div>
     </section>
 
     <div class="admin-dashboard-lower">

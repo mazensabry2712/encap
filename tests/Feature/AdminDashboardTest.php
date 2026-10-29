@@ -15,6 +15,7 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
         'name_ar' => 'مانجو الداشبورد',
         'slug' => 'dashboard-mango',
         'is_published' => true,
+        'available_forms' => ['Frozen'],
         'sort_order' => 1,
     ]);
 
@@ -48,7 +49,11 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
         ->assertSee('Mona Visitor')
         ->assertSee('Export question')
         ->assertSee('إدارة الكتالوج')
-        ->assertSee('إدارة بيانات الموقع ووسائل التواصل')
+        ->assertSee('تعديل نصوص صفحات الموقع وبيانات SEO ووسائل التواصل.')
+        ->assertSee('تصنيفات المجمدات')
+        ->assertSee('معاينة صفحات الموقع')
+        ->assertSee(route('frozen-products', ['locale' => app()->getLocale()]), false)
+        ->assertSee(route('admin.seo.edit'), false)
         ->assertSee(route('admin.images.prepare'), false);
 });
 

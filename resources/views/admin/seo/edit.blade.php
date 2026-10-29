@@ -14,7 +14,36 @@
 <div class="admin-field"><label for="facebook_url">{{ __('Facebook URL') }}</label><input id="facebook_url" name="facebook_url" type="url" maxlength="255" value="{{ old('facebook_url', $settings->facebook_url) }}" placeholder="https://facebook.com/your-page"></div><div class="admin-field"><label for="instagram_url">{{ __('Instagram URL') }}</label><input id="instagram_url" name="instagram_url" type="url" maxlength="255" value="{{ old('instagram_url', $settings->instagram_url) }}" placeholder="https://instagram.com/your-profile"></div><div class="admin-field"><label for="linkedin_url">{{ __('LinkedIn URL') }}</label><input id="linkedin_url" name="linkedin_url" type="url" maxlength="255" value="{{ old('linkedin_url', $settings->linkedin_url) }}" placeholder="https://linkedin.com/company/your-company"></div><div class="admin-field"><label for="youtube_url">{{ __('YouTube URL') }}</label><input id="youtube_url" name="youtube_url" type="url" maxlength="255" value="{{ old('youtube_url', $settings->youtube_url) }}" placeholder="https://youtube.com/@your-channel"></div>
 <h2 class="admin-section-title">{{ __('Page-level SEO overrides') }}</h2><p class="admin-hint" style="grid-column:1/-1">{{ __('English and Arabic can be customized independently. Leave a field blank to use that page\'s built-in title and description.') }}</p>
 </div>
-@php($pageLabels = ['home' => 'Home', 'about' => 'About', 'farms' => 'Agriculture & Farms', 'packing-stations' => 'Packing Stations', 'products' => 'Products', 'quality' => 'Quality & Processing', 'export' => 'Export & Logistics', 'contact' => 'Contact', 'quote' => 'Request a Quote'])
+@php($pageLabels = ['home' => 'Home', 'about' => 'About', 'farms' => 'Agriculture & Farms', 'packing-stations' => 'Packing Stations', 'products' => 'Products', 'frozen-products' => 'Frozen fruit & vegetables', 'companies' => 'Our Companies', 'quality' => 'Quality & Processing', 'export' => 'Export & Logistics', 'contact' => 'Contact', 'quote' => 'Request a Quote'])
 @foreach($pageLabels as $pageKey => $pageLabel)<details class="admin-seo-group"><summary>{{ __($pageLabel) }}</summary><div class="admin-seo-inner"><div class="admin-seo-locales">@foreach(['en' => 'English', 'ar' => 'Arabic'] as $localeKey => $localeLabel)@php($storedPageMeta = data_get($settings->page_metadata, $pageKey . '.' . $localeKey, []))<section class="admin-seo-locale"><h3>{{ __($localeLabel) }}</h3><div class="admin-field"><label for="seo_{{ $pageKey }}_{{ $localeKey }}_title">{{ __('SEO title') }}</label><input id="seo_{{ $pageKey }}_{{ $localeKey }}_title" name="page_metadata[{{ $pageKey }}][{{ $localeKey }}][title]" maxlength="255" value="{{ old('page_metadata.' . $pageKey . '.' . $localeKey . '.title', $storedPageMeta['title'] ?? '') }}"></div><div class="admin-field"><label for="seo_{{ $pageKey }}_{{ $localeKey }}_description">{{ __('Meta description') }}</label><textarea id="seo_{{ $pageKey }}_{{ $localeKey }}_description" name="page_metadata[{{ $pageKey }}][{{ $localeKey }}][description]" maxlength="500">{{ old('page_metadata.' . $pageKey . '.' . $localeKey . '.description', $storedPageMeta['description'] ?? '') }}</textarea></div></section>@endforeach</div></div></details>@endforeach
+
+<h2 class="admin-section-title">{{ __('Public page content') }}</h2>
+<p class="admin-hint" style="grid-column:1/-1">{{ __('Edit the visible headings and introductory copy for public pages. Leave a field blank to keep its built-in text.') }}</p>
+@foreach($contentPages as $pageKey => $pageConfig)
+    <details class="admin-seo-group">
+        <summary>{{ __($pageConfig['label']) }}</summary>
+        <div class="admin-seo-inner">
+            @foreach($contentLocales as $localeKey => $localeLabel)
+                @php($storedPageContent = data_get($settings->page_content, $pageKey . '.' . $localeKey, []))
+                <details class="admin-seo-group admin-content-locale">
+                    <summary>{{ __($localeLabel) }}</summary>
+                    <div class="admin-seo-inner"><div class="admin-form-grid">
+                        @foreach($pageConfig['fields'] as $fieldKey => $fieldConfig)
+                            @php($fieldId = 'content_' . $pageKey . '_' . $localeKey . '_' . $fieldKey)
+                            <div class="admin-field full">
+                                <label for="{{ $fieldId }}">{{ __($fieldConfig['label']) }}</label>
+                                @if($fieldConfig['type'] === 'textarea')
+                                    <textarea id="{{ $fieldId }}" name="page_content[{{ $pageKey }}][{{ $localeKey }}][{{ $fieldKey }}]" maxlength="{{ $fieldConfig['max'] }}">{{ old('page_content.' . $pageKey . '.' . $localeKey . '.' . $fieldKey, $storedPageContent[$fieldKey] ?? '') }}</textarea>
+                                @else
+                                    <input id="{{ $fieldId }}" name="page_content[{{ $pageKey }}][{{ $localeKey }}][{{ $fieldKey }}]" maxlength="{{ $fieldConfig['max'] }}" value="{{ old('page_content.' . $pageKey . '.' . $localeKey . '.' . $fieldKey, $storedPageContent[$fieldKey] ?? '') }}">
+                                @endif
+                            </div>
+                        @endforeach
+                    </div></div>
+                </details>
+            @endforeach
+        </div>
+    </details>
+@endforeach
 <div class="admin-form-actions" style="margin-top:22px"><button type="submit">{{ __('Save site settings') }}</button></div></form>
 @endsection

@@ -20,9 +20,9 @@
                     <span>{{ $catalogueIsFrozen ? __('Frozen supply / export') : __('Agricultural production') }}</span>
                 </div>
 
-                <h1 id="encap-catalog-title">{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Products for global markets') }}</h1>
-                <p class="encap-catalog-hero-tagline">{{ $catalogueIsFrozen ? __('Frozen produce, prepared for your market.') : __('From Egyptian fields to global markets.') }}</p>
-                <p class="encap-catalog-hero-description">{{ $catalogueIsFrozen ? __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.') : __('Browse the current categories, then share the form, quantity and destination you need.') }}</p>
+                <h1 id="encap-catalog-title">{{ $catalogueContent['title'] }}</h1>
+                <p class="encap-catalog-hero-tagline">{{ $catalogueContent['hero_tagline'] }}</p>
+                <p class="encap-catalog-hero-description">{{ $catalogueContent['hero_description'] }}</p>
 
                 <div class="encap-catalog-hero-actions">
                     <a class="encap-catalog-button encap-catalog-button--light" href="#encap-catalog-grid">
@@ -96,8 +96,8 @@
         <div class="encap-catalog-section-heading">
             <div class="encap-catalog-heading">
                 <span class="encap-catalog-kicker">{{ $catalogueIsFrozen ? __('03 / Frozen range') : __('Explore the range') }} <i aria-hidden="true"></i></span>
-                <h2 id="encap-catalog-section-title">{{ $catalogueIsFrozen ? __('Frozen product categories') : __('Find the right product category.') }}</h2>
-                <p>{{ $catalogueIsFrozen ? __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.') : __('Explore our product categories, then share your required form, quantity and destination so availability can be confirmed for your enquiry.') }}</p>
+                <h2 id="encap-catalog-section-title">{{ $catalogueContent['section_heading'] }}</h2>
+                <p>{{ $catalogueContent['section_intro'] }}</p>
             </div>
             <div class="encap-catalog-heading-aside">
                 <p>{{ __('Product formats vary by category and are confirmed for each enquiry.') }}</p>

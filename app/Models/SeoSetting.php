@@ -12,7 +12,7 @@ class SeoSetting extends Model
         'default_og_image', 'default_robots', 'organization_name', 'organization_url',
         'contact_email', 'contact_phone', 'whatsapp_number', 'address_en', 'address_ar',
         'business_hours_en', 'business_hours_ar', 'facebook_url', 'instagram_url',
-        'linkedin_url', 'youtube_url', 'page_metadata',
+        'linkedin_url', 'youtube_url', 'page_metadata', 'page_content',
     ];
 
     protected $attributes = [
@@ -28,6 +28,7 @@ class SeoSetting extends Model
     {
         return [
             'page_metadata' => 'array',
+            'page_content' => 'array',
         ];
     }
 

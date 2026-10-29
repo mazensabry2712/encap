@@ -17,6 +17,7 @@ class DashboardController extends Controller
             'categoryCount' => Category::query()->count(),
             'publishedCategoryCount' => Category::query()->where('is_published', true)->count(),
             'draftCategoryCount' => Category::query()->where('is_published', false)->count(),
+            'frozenCategoryCount' => Category::query()->where('is_published', true)->whereJsonContains('available_forms', 'Frozen')->count(),
             'companyCount' => Company::query()->count(),
             'publishedCompanyCount' => Company::query()->where('is_published', true)->count(),
             'quoteRequestCount' => QuoteRequest::query()->count(),

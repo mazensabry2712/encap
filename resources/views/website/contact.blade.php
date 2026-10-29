@@ -16,8 +16,8 @@
         <div class="encap-contact-hero-grid">
             <div class="encap-contact-hero-copy">
                 <span class="encap-contact-kicker"><span aria-hidden="true"></span>{{ __('Get in touch') }}</span>
-                <h1 id="encap-contact-title">{{ __('Let’s make the next step clear.') }}</h1>
-                <p>{{ __('Whether you are exploring products or planning a supply request, tell us what you need and where it needs to go.') }}</p>
+                <h1 id="encap-contact-title">{{ $contactContent['title'] ?? __('Let’s make the next step clear.') }}</h1>
+                <p>{{ $contactContent['intro'] ?? __('Whether you are exploring products or planning a supply request, tell us what you need and where it needs to go.') }}</p>
                 <div class="encap-contact-hero-actions">
                     <a class="encap-button encap-button-light" href="#contact-form">{{ __('Send us a message') }} <span aria-hidden="true">↘</span></a>
                     <a class="encap-button encap-button-outline" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Request an export quote') }} <span aria-hidden="true">↗</span></a>

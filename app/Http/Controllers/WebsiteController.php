@@ -46,13 +46,14 @@ class WebsiteController extends Controller
             ->orderBy('sort_order')->orderBy('name_en')->limit(10)->get();
 
         $settings = SeoSetting::current();
+        $homeContent = data_get($settings->page_content, 'home.' . $locale, []);
         $defaultTitle = $locale === 'ar' ? $settings->site_title_ar : __($settings->site_title_en);
         $defaultDescription = $locale === 'ar'
             ? $settings->site_description_ar
             : __($settings->site_description_en);
         $pageSeo = $settings->metadataFor('home', $locale, $defaultTitle, $defaultDescription);
 
-        return view('website.home', compact('categories', 'locale', 'pageSeo'));
+        return view('website.home', compact('categories', 'locale', 'pageSeo', 'homeContent'));
     }
 
     public function products(string $locale): View
@@ -62,16 +63,21 @@ class WebsiteController extends Controller
             ->orderBy('sort_order')->orderBy('name_en')->paginate(12);
 
         $settings = SeoSetting::current();
+        $catalogueMode = 'all';
+        $catalogueContent = array_merge([
+            'title' => __('Products for global markets'),
+            'hero_tagline' => __('From Egyptian fields to global markets.'),
+            'hero_description' => __('Browse the current categories, then share the form, quantity and destination you need.'),
+            'section_heading' => __('Find the right product category.'),
+            'section_intro' => __('Explore our product categories, then share your required form, quantity and destination so availability can be confirmed for your enquiry.'),
+        ], data_get($settings->page_content, 'products.' . $locale, []));
+
         $pageSeo = $settings->metadataFor(
-            'products',
-            $locale,
-            __('Our Products | ENCAP'),
+            'products', $locale, __('Our Products | ENCAP'),
             __('Explore ENCAP agricultural product categories for international wholesale and export enquiries.')
         );
 
-        $catalogueMode = 'all';
-
-        return view('website.products.index', compact('categories', 'locale', 'pageSeo', 'catalogueMode'));
+        return view('website.products.index', compact('categories', 'locale', 'pageSeo', 'catalogueMode', 'catalogueContent'));
     }
 
     public function frozenProducts(string $locale): View
@@ -85,16 +91,21 @@ class WebsiteController extends Controller
             ->paginate(12);
 
         $settings = SeoSetting::current();
+        $catalogueMode = 'frozen';
+        $catalogueContent = array_merge([
+            'title' => __('Frozen fruit & vegetables'),
+            'hero_tagline' => __('Frozen produce, prepared for your market.'),
+            'hero_description' => __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.'),
+            'section_heading' => __('Frozen product categories'),
+            'section_intro' => __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.'),
+        ], data_get($settings->page_content, 'frozen-products.' . $locale, []));
+
         $pageSeo = $settings->metadataFor(
-            'frozen-products',
-            $locale,
-            __('Frozen fruit & vegetables') . ' | ENCAP',
+            'frozen-products', $locale, __('Frozen fruit & vegetables') . ' | ENCAP',
             __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.')
         );
 
-        $catalogueMode = 'frozen';
-
-        return view('website.products.index', compact('categories', 'locale', 'pageSeo', 'catalogueMode'));
+        return view('website.products.index', compact('categories', 'locale', 'pageSeo', 'catalogueMode', 'catalogueContent'));
     }
 
     public function category(string $locale, Category $category): View
@@ -513,6 +524,13 @@ class WebsiteController extends Controller
         }
 
         $settings = SeoSetting::current();
+        $contentOverrides = data_get($settings->page_content, $page . '.' . $locale, []);
+        foreach ($contentOverrides as $field => $value) {
+            if (is_string($value) && filled($value) && isset($pageContent[$field]) && is_string($pageContent[$field])) {
+                $pageContent[$field] = $value;
+            }
+        }
+
         $pageSeo = $settings->metadataFor(
             $page,
             $locale,
@@ -538,14 +556,14 @@ class WebsiteController extends Controller
             ->paginate(12);
 
         $settings = SeoSetting::current();
+        $companiesContent = data_get($settings->page_content, 'companies.' . $locale, []);
         $pageSeo = $settings->metadataFor(
-            'companies',
-            $locale,
-            __('Our Companies') . ' | ENCAP',
-            __('Explore the companies affiliated with ENCAP.')
+            'companies', $locale,
+            (filled($companiesContent['title'] ?? null) ? $companiesContent['title'] : __('Our Companies')) . ' | ENCAP',
+            $companiesContent['hero_description'] ?? __('Explore the companies affiliated with ENCAP.')
         );
 
-        return view('website.companies', compact('locale', 'companies', 'pageSeo'));
+        return view('website.companies', compact('locale', 'companies', 'pageSeo', 'companiesContent'));
     }
 
     public function company(string $locale, Company $company): View
@@ -588,14 +606,14 @@ class WebsiteController extends Controller
     {
         $this->useLocale($locale);
         $settings = SeoSetting::current();
+        $contactContent = data_get($settings->page_content, 'contact.' . $locale, []);
         $pageSeo = $settings->metadataFor(
-            'contact',
-            $locale,
-            __('Contact ENCAP | Agricultural Export Enquiries'),
-            __('Contact ENCAP about agricultural products, wholesale supply and export requirements.')
+            'contact', $locale,
+            filled($contactContent['title'] ?? null) ? $contactContent['title'] : __('Contact ENCAP | Agricultural Export Enquiries'),
+            $contactContent['intro'] ?? __('Contact ENCAP about agricultural products, wholesale supply and export requirements.')
         );
 
-        return view('website.contact', compact('locale', 'settings', 'pageSeo'));
+        return view('website.contact', compact('locale', 'settings', 'pageSeo', 'contactContent'));
     }
 
     public function storeContact(Request $request, string $locale): RedirectResponse
@@ -626,11 +644,11 @@ class WebsiteController extends Controller
             ->orderBy('name_en')->get(['id', 'name_en', 'name_ar']);
 
         $settings = SeoSetting::current();
+        $quoteContent = data_get($settings->page_content, 'quote.' . $locale, []);
         $pageSeo = $settings->metadataFor(
-            'quote',
-            $locale,
-            __('Request a Quote | ENCAP'),
-            __('Send ENCAP your agricultural sourcing and export requirements.')
+            'quote', $locale,
+            (filled($quoteContent['title'] ?? null) ? $quoteContent['title'] : __('Request a Quote')) . ' | ENCAP',
+            $quoteContent['intro'] ?? __('Send ENCAP your agricultural sourcing and export requirements.')
         );
 
         $pageSeo['robots'] = 'noindex,follow';
@@ -647,6 +665,7 @@ class WebsiteController extends Controller
             'selectedForm' => $selectedForm,
             'locale' => $locale,
             'pageSeo' => $pageSeo,
+            'quoteContent' => $quoteContent,
         ]);
     }
 

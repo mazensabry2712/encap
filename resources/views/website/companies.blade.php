@@ -17,9 +17,9 @@
                     <i aria-hidden="true"></i>
                     <span>{{ __('Group Companies') }}</span>
                 </div>
-                <h1 id="encap-companies-title">{{ __('Our Companies') }}</h1>
-                <p class="encap-catalog-hero-tagline">{{ __('A connected group, with a presence across markets.') }}</p>
-                <p class="encap-catalog-hero-description">{{ __('Explore the companies affiliated with ENCAP, learn about their locations and contact our team for business enquiries.') }}</p>
+                <h1 id="encap-companies-title">{{ $companiesContent['title'] ?? __('Our Companies') }}</h1>
+                <p class="encap-catalog-hero-tagline">{{ $companiesContent['hero_tagline'] ?? __('A connected group, with a presence across markets.') }}</p>
+                <p class="encap-catalog-hero-description">{{ $companiesContent['hero_description'] ?? __('Explore the companies affiliated with ENCAP, learn about their locations and contact our team for business enquiries.') }}</p>
                 <div class="encap-catalog-hero-actions">
                     <a class="encap-catalog-button encap-catalog-button--light" href="#encap-companies-grid">
                         {{ __('Explore the collection') }}
