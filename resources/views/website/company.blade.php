@@ -38,7 +38,7 @@
             'image_one_alt' => 'حقل زراعي أخضر ضمن صورة توضيحية للأنشطة الزراعية',
             'image_two_title' => 'المحاصيل الزراعية',
             'image_two_alt' => 'محصول البطاطس ضمن صورة توضيحية للمحاصيل الزراعية',
-            'image_note' => 'الصور المعروضة توضيحية وليست توثيقًا مباشرًا لمزارع حدائق الشمال.',
+            'image_note' => '',
             'logo_alt' => 'شعار ENCAP، الشركة الأم لحدائق الشمال',
             'map_label' => 'منطقة الجوف، السعودية',
         ],
@@ -393,7 +393,7 @@
                     </figcaption>
                 </figure>
             </div>
-            <p class="hs-company__image-note">{{ $copy['image_note'] }}</p>
+            @if(filled($copy['image_note']))<p class="hs-company__image-note">{{ $copy['image_note'] }}</p>@endif
         </div>
     </section>
 </div>
