@@ -8,7 +8,7 @@
         <nav class="encap-catalog-breadcrumbs" aria-label="{{ __('Breadcrumbs') }}">
             <a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a>
             <span aria-hidden="true">/</span>
-            <span aria-current="page">{{ __('Products') }}</span>
+            <span aria-current="page">{{ $catalogueIsFrozen ? ($locale === 'ar' ? 'المجمدات' : __('Frozen fruit & vegetables')) : __('Products') }}</span>
         </nav>
 
         <div class="encap-catalog-hero-grid" data-encap-hero>
@@ -17,7 +17,7 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-leaf"></use></svg>
                     <span>{{ __('Our catalogue') }}</span>
                     <i aria-hidden="true"></i>
-                    <span>{{ __('Agricultural production') }}</span>
+                    <span>{{ $catalogueIsFrozen ? __('Frozen supply / export') : __('Agricultural production') }}</span>
                 </div>
 
                 <h1 id="encap-catalog-title">{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Products for global markets') }}</h1>
@@ -52,7 +52,7 @@
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
                     <img src="{{ \App\Support\EncapImage::url('produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=800&q=85') }}" alt="" width="800" height="900" loading="lazy" decoding="async">
-                    <figcaption>{{ __('Fresh produce') }}</figcaption>
+                    <figcaption>{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Fresh produce') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--tertiary">
                     <img src="{{ \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=650&q=85') }}" alt="" width="650" height="520" loading="lazy" decoding="async">

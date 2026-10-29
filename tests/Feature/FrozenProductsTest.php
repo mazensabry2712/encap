@@ -1,6 +1,6 @@
 <?php
 
-use App\\Models\\Category;
+use App\Models\Category;
 
 test('frozen products catalogue lists only published categories that include the frozen format', function () {
     Category::query()->create([
