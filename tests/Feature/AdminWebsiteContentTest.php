@@ -1,7 +1,7 @@
 <?php
 
-use App\\Models\\SeoSetting;
-use App\\Models\\User;
+use App\Models\SeoSetting;
+use App\Models\User;
 
 test('admins can edit visible copy for homepage, static pages and frozen catalogue in all website locales', function () {
     $this->actingAs(User::factory()->create())
