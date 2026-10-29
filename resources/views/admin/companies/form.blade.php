@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @php($selectedCategoryIds = collect(old('category_ids', $company->exists ? $company->categories->pluck('id')->all() : []))->map(fn ($id) => (int) $id)->all())
-@php($sectionRows = old('sections', $company->content_sections ?: \\App\\Models\\Company::defaultContentSections()))
+@php($sectionRows = old('sections', $company->content_sections ?: \App\Models\Company::defaultContentSections()))
 @section('page-title', __('Edit company profile'))
 @section('content')
 <div class="admin-page-intro"><div><p>{{ __('Manage the public profile for Hadaeq Al-Shamal Company.') }}</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('Company profile') }}</a></div></div>
@@ -164,7 +164,7 @@
                     input.name = input.name.replace(/^sections\[\d+\]/, 'sections[' + index + ']');
                 });
                 const legend = row.querySelector('legend');
-                if (legend) legend.textContent = {{ Illuminate\\Support\\Js::from(__('Content section')) }} + ' ' + (index + 1);
+                if (legend) legend.textContent = @json(__('Content section')) + ' ' + (index + 1);
             });
         };
 
