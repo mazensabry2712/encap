@@ -385,3 +385,47 @@ html[dir="rtl"] .login-story:after{right:auto;left:-150px}
 .admin-company-product-option strong{color:var(--admin-text,#1e3227);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 .admin-company-product-option small{color:#718076;font-size:10px;line-height:1.5}
 @media(max-width:620px){.admin-company-products-grid{grid-template-columns:minmax(0,1fr)}}
+
+
+/* Final dashboard QA: align the four metrics, logical RTL borders and localized UI. */
+.admin-dashboard-welcome {
+    border-left: 0;
+    border-inline-start: 4px solid var(--ay);
+}
+.admin-stat-card {
+    min-height: 100%;
+}
+.admin-stat-note {
+    overflow-wrap: anywhere;
+}
+.admin-stat-link {
+    border-left: 0;
+    border-inline-start: 1px solid #edf0e8;
+    padding-inline-start: 12px;
+    padding-inline-end: 0;
+}
+.admin-stat-card:hover .admin-stat-link span {
+    transform: translateX(3px);
+}
+html[dir="rtl"] .admin-stat-card:hover .admin-stat-link span {
+    transform: translateX(-3px);
+}
+html[dir="rtl"] .admin-dashboard-welcome {
+    border-left: 0;
+    border-inline-start: 4px solid var(--ay);
+}
+@media (max-width: 760px) {
+    .admin-stat-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .admin-stat-link {
+        border-inline-start: 1px solid #edf0e8;
+        padding-inline-start: 12px;
+        padding-inline-end: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .admin-stat-card:hover .admin-stat-link span {
+        transform: none;
+    }
+}

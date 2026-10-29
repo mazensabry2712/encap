@@ -44,6 +44,8 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
         ->assertSee('تصنيفات المنتجات')
         ->assertSee('طلبات عروض التصدير')
         ->assertSee('رسائل التواصل')
+        ->assertSee('تعديل ملف الشركة')
+        ->assertSee(route('admin.companies.index'), false)
         ->assertSee('Ahmed Buyer')
         ->assertSee('مانجو الداشبورد')
         ->assertSee('Mona Visitor')

@@ -38,6 +38,14 @@
             <span class="admin-stat-note"><b>{{ number_format($newContactMessageCount) }}</b> {{ __('new contact messages') }}</span>
             <span class="admin-stat-link">{{ __('View inbox') }} <span aria-hidden="true">→</span></span>
         </a>
+        <a class="admin-stat-card" href="{{ route('admin.companies.index') }}">
+            <span class="admin-stat-icon" aria-hidden="true">⌂</span>
+            <span class="admin-stat-label">{{ __('Company profile') }}</span>
+            <strong class="admin-stat-value">{{ number_format($companyCount) }}</strong>
+            <span class="admin-stat-note"><b>{{ number_format($publishedCompanyCount) }}</b> {{ __('Published') }}</span>
+            <span class="admin-stat-note">{{ __('The public page shows only Hadaeq Al-Shamal Company.') }}</span>
+            <span class="admin-stat-link">{{ __('Edit company profile') }} <span aria-hidden="true">→</span></span>
+        </a>
     </section>
 
     <section class="admin-quick-access" aria-label="{{ __('Public website pages') }}">
@@ -47,7 +55,7 @@
             <a href="{{ route('about', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">ⓘ</span><span><strong>{{ __('About') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('products.index', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">▦</span><span><strong>{{ __('Products') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('frozen-products', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">❄</span><span><strong>{{ __('Frozen') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
-            <a href="{{ route('companies', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">⌘</span><span><strong>{{ __('Our Companies') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('companies', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">⌘</span><span><strong>{{ __('Our Company') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('farms', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">♧</span><span><strong>{{ __('Agriculture & Farms') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('packing-stations', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">▤</span><span><strong>{{ __('Packing Stations') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('export', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">↗</span><span><strong>{{ __('Export & Logistics') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
@@ -76,7 +84,7 @@
                             </div>
                             <div class="admin-record-meta">
                                 <span class="admin-badge {{ $item->status }}">{{ __(ucfirst($item->status)) }}</span>
-                                <time datetime="{{ $item->created_at->toIso8601String() }}">{{ $item->created_at->format('M j, Y') }}</time>
+                                <time datetime="{{ $item->created_at->toIso8601String() }}">{{ $item->created_at->locale(app()->getLocale())->translatedFormat('j M Y') }}</time>
                             </div>
                         </article>
                     @endforeach
@@ -107,7 +115,7 @@
                             </div>
                             <div class="admin-record-meta">
                                 <span class="admin-badge {{ $item->status }}">{{ __(ucfirst($item->status)) }}</span>
-                                <time datetime="{{ $item->created_at->toIso8601String() }}">{{ $item->created_at->format('M j, Y') }}</time>
+                                <time datetime="{{ $item->created_at->toIso8601String() }}">{{ $item->created_at->locale(app()->getLocale())->translatedFormat('j M Y') }}</time>
                             </div>
                         </article>
                     @endforeach
