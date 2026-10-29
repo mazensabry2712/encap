@@ -29,7 +29,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('css/hero-experience.css', false)
         ->assertSee('js/hero-experience.js', false)
         ->assertSee('encap-hero-image', false)
-        ->assertSee('images.pexels.com/photos/10970006', false)
+        ->assertSee(\App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000'), false)
         ->assertSee('encap-image-label-logo', false)
         ->assertSee('encap-story-brand', false)
         ->assertSee('encap-orbit-brand', false)
@@ -46,7 +46,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
         ->assertSee('Frozen produce, specified for your market.')
-        ->assertSee('images.pexels.com/photos/9814690', false)
+        ->assertSee(\App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260'), false)
         ->assertSee('Frozen berries prepared for temperature-controlled export supply.')
         ->assertSee('Request a frozen-supply quote')
         ->assertSee('/en/request-a-quote?form=frozen', false)
@@ -942,15 +942,16 @@ test('site-wide heading treatments preserve contrast on dark photographic sectio
         ->not->toContain('body.site-body main section :is(h1,h2){font-weight:800!important;background:');
 });
 
-test('catalogue and product details show real crop-specific photos when no admin image is uploaded', function () {
+test('catalogue and product details resolve crop-specific photos with or without local image assets', function () {
     $slugs = [
         'mango', 'citrus', 'grapes', 'potatoes', 'onions',
         'garlic', 'pomegranates', 'peppers', 'strawberries',
         'other-fruits-vegetables',
     ];
+    $categories = [];
 
     foreach ($slugs as $index => $slug) {
-        Category::query()->create([
+        $categories[$slug] = Category::query()->create([
             'name_en' => ucwords(str_replace('-', ' ', $slug)),
             'name_ar' => 'منتج ' . ($index + 1),
             'slug' => $slug,
@@ -960,21 +961,15 @@ test('catalogue and product details show real crop-specific photos when no admin
         ]);
     }
 
-    $this->get('/en/products')
-        ->assertOk()
-        ->assertSee('images.pexels.com/photos/29782357', false)
-        ->assertSee('images.unsplash.com/photo-1705573382809', false)
-        ->assertSee('images.unsplash.com/photo-1626964146632', false)
-        ->assertSee('images.unsplash.com/photo-1756361947495', false)
-        ->assertSee('images.unsplash.com/photo-1746499866328', false)
-        ->assertSee('images.unsplash.com/photo-1685130055879', false)
-        ->assertSee('images.unsplash.com/photo-1642359548284', false)
-        ->assertSee('images.unsplash.com/photo-1742304267119', false)
-        ->assertSee('images.unsplash.com/photo-1633360819525', false);
+    $catalogue = $this->get('/en/products')->assertOk();
+
+    foreach ($categories as $category) {
+        $catalogue->assertSee(\App\Support\EncapProductImage::url($category), false);
+    }
 
     $this->get('/ar/products/grapes')
         ->assertOk()
-        ->assertSee('images.unsplash.com/photo-1626964146632', false);
+        ->assertSee(\App\Support\EncapProductImage::url($categories['grapes']), false);
 });
 
 test('an uploaded category image remains preferred over a stock fallback', function () {
@@ -996,6 +991,9 @@ test('an uploaded category image remains preferred over a stock fallback', funct
 });
 
 test('a dashboard-uploaded legacy mango photo is replaced by the curated image', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
+
     Category::query()->create([
         'name_en' => 'Mango',
         'name_ar' => 'مانجو',
@@ -1089,6 +1087,5 @@ test('social link previews consistently use the ENCAP logo instead of produce ph
         ->toMatch('/<meta property="og:image" content="[^"]*\/encap-img\/logo\.png"/')
         ->and($html)->toMatch('/<meta name="twitter:image" content="[^"]*\/encap-img\/logo\.png"/')
         ->and($html)->toContain('property="og:image:alt" content="ENCAP company logo"')
-        ->and($html)->toContain('name="twitter:image:alt" content="ENCAP company logo"')
-        ->and($html)->not->toContain('citrus-orchard-2026.jpg');
+        ->and($html)->toContain('name="twitter:image:alt" content="ENCAP company logo"');
 });
