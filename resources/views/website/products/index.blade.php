@@ -1,5 +1,6 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
+@php($catalogueIsFrozen = ($catalogueMode ?? 'all') === 'frozen')
 @php($categoryOffset = $categories->firstItem() ?? 1)
 @section('content')
 <section class="encap-catalog-hero" aria-labelledby="encap-catalog-title">
@@ -19,13 +20,13 @@
                     <span>{{ __('Agricultural production') }}</span>
                 </div>
 
-                <h1 id="encap-catalog-title">{{ __('Products for global markets') }}</h1>
-                <p class="encap-catalog-hero-tagline">{{ __('From Egyptian fields to global markets.') }}</p>
-                <p class="encap-catalog-hero-description">{{ __('Browse the current categories, then share the form, quantity and destination you need.') }}</p>
+                <h1 id="encap-catalog-title">{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Products for global markets') }}</h1>
+                <p class="encap-catalog-hero-tagline">{{ $catalogueIsFrozen ? __('Frozen produce, prepared for your market.') : __('From Egyptian fields to global markets.') }}</p>
+                <p class="encap-catalog-hero-description">{{ $catalogueIsFrozen ? __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.') : __('Browse the current categories, then share the form, quantity and destination you need.') }}</p>
 
                 <div class="encap-catalog-hero-actions">
                     <a class="encap-catalog-button encap-catalog-button--light" href="#encap-catalog-grid">
-                        {{ __('Explore the collection') }}
+                        {{ $catalogueIsFrozen ? __('Browse products') : __('Explore the collection') }}
                         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg>
                     </a>
                     <a class="encap-catalog-button encap-catalog-button--outline" href="{{ route('quote.create', ['locale' => $locale]) }}">
@@ -46,8 +47,8 @@
                 <div class="encap-catalog-orbit encap-catalog-orbit--inner"></div>
 
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--primary">
-                    <img src="{{ \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
-                    <figcaption>{{ __('Agricultural production') }}</figcaption>
+                    <img src="{{ $catalogueIsFrozen ? \App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260') : \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
+                    <figcaption>{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Agricultural production') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
                     <img src="{{ \App\Support\EncapImage::url('produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=800&q=85') }}" alt="" width="800" height="900" loading="lazy" decoding="async">
@@ -73,7 +74,7 @@
     <div class="container encap-catalog-summary-grid">
         <div class="encap-catalog-summary-count">
             <strong>{{ number_format($categories->total()) }}</strong>
-            <span>{{ __('Published categories') }}</span>
+            <span>{{ $catalogueIsFrozen ? __('Frozen product categories') : __('Published categories') }}</span>
         </div>
         <div class="encap-catalog-summary-item">
             <span class="encap-catalog-summary-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-sprout"></use></svg></span>
@@ -94,9 +95,9 @@
     <div class="container">
         <div class="encap-catalog-section-heading">
             <div class="encap-catalog-heading">
-                <span class="encap-catalog-kicker">{{ __('Explore the range') }} <i aria-hidden="true"></i></span>
-                <h2 id="encap-catalog-section-title">{{ __('Find the right product category.') }}</h2>
-                <p>{{ __('Explore our product categories, then share your required form, quantity and destination so availability can be confirmed for your enquiry.') }}</p>
+                <span class="encap-catalog-kicker">{{ $catalogueIsFrozen ? __('03 / Frozen range') : __('Explore the range') }} <i aria-hidden="true"></i></span>
+                <h2 id="encap-catalog-section-title">{{ $catalogueIsFrozen ? __('Frozen product categories') : __('Find the right product category.') }}</h2>
+                <p>{{ $catalogueIsFrozen ? __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.') : __('Explore our product categories, then share your required form, quantity and destination so availability can be confirmed for your enquiry.') }}</p>
             </div>
             <div class="encap-catalog-heading-aside">
                 <p>{{ __('Product formats vary by category and are confirmed for each enquiry.') }}</p>
@@ -111,7 +112,7 @@
                 </div>
                 <div class="encap-catalog-empty-copy">
                     <span class="encap-catalog-kicker">{{ __('Our catalogue') }}</span>
-                    <h3>{{ __('The catalogue is being prepared.') }}</h3>
+                    <h3>{{ $catalogueIsFrozen ? __('Frozen product categories') : __('The catalogue is being prepared.') }}</h3>
                     <p>{{ __('Product categories will be published here soon. You can still contact us about your requirements.') }}</p>
                     <a class="encap-catalog-text-link" href="{{ route('quote.create', ['locale' => $locale]) }}">
                         {{ __('Contact our team') }}
@@ -124,7 +125,7 @@
                 @foreach($categories as $category)
                     @php($categoryName = $locale === 'ar' && $category->name_ar ? $category->name_ar : __($category->name_en))
                     @php($categoryDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : __($category->short_description_en ?? ''))
-                    @php($categoryForms = $category->available_forms ?? [])
+                    @php($categoryForms = $catalogueIsFrozen ? ['Frozen'] : ($category->available_forms ?? []))
                     @php($categoryImage = \App\Support\EncapProductImage::url($category))
                     <a class="encap-catalog-card" data-tilt href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
                         <div class="encap-catalog-card-media">

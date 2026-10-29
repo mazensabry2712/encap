@@ -4,6 +4,7 @@
 @php($pages = [
     '' => ['priority' => '1.0', 'changefreq' => 'weekly'],
     '/products' => ['priority' => '0.8', 'changefreq' => 'weekly'],
+    '/frozen-products' => ['priority' => '0.7', 'changefreq' => 'weekly'],
     '/about' => ['priority' => '0.6', 'changefreq' => 'monthly'],
     '/companies' => ['priority' => '0.6', 'changefreq' => 'monthly'],
     '/farms' => ['priority' => '0.6', 'changefreq' => 'monthly'],

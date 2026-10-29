@@ -81,6 +81,7 @@
             </details>
             <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Companies') }}</a>
             <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
+            <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}" @if(request()->routeIs('frozen-products')) aria-current="page" @endif>{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
             <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
         </nav>
         <div class="primary-actions">
@@ -119,6 +120,7 @@
                     </div>
                     <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Companies') }}</a>
                     <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
+                    <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}" @if(request()->routeIs('frozen-products')) aria-current="page" @endif>{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
                     <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
                     </div>
                     <a class="primary-mobile-quote" href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }} <span aria-hidden="true">↗</span></a>
@@ -165,6 +167,7 @@
                 <h2 class="encap-footer-heading">{{ __('Products & contact') }}</h2>
                 <div class="encap-footer-links">
                     <a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Our Products') }}</a>
+                    <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}">{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
                     <a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a>
                     <a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a>
                 </div>

@@ -69,7 +69,32 @@ class WebsiteController extends Controller
             __('Explore ENCAP agricultural product categories for international wholesale and export enquiries.')
         );
 
-        return view('website.products.index', compact('categories', 'locale', 'pageSeo'));
+        $catalogueMode = 'all';
+
+        return view('website.products.index', compact('categories', 'locale', 'pageSeo', 'catalogueMode'));
+    }
+
+    public function frozenProducts(string $locale): View
+    {
+        $this->useLocale($locale);
+        $categories = Category::query()
+            ->where('is_published', true)
+            ->whereJsonContains('available_forms', 'Frozen')
+            ->orderBy('sort_order')
+            ->orderBy('name_en')
+            ->paginate(12);
+
+        $settings = SeoSetting::current();
+        $pageSeo = $settings->metadataFor(
+            'frozen-products',
+            $locale,
+            __('Frozen fruit & vegetables') . ' | ENCAP',
+            __('Selected fruit and vegetable categories can be offered in frozen formats subject to product availability, processing scope and buyer specifications.')
+        );
+
+        $catalogueMode = 'frozen';
+
+        return view('website.products.index', compact('categories', 'locale', 'pageSeo', 'catalogueMode'));
     }
 
     public function category(string $locale, Category $category): View
