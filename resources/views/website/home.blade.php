@@ -96,7 +96,7 @@
    <span class="encap-frozen-eyebrow">{{ __('Frozen supply / export') }}</span>
    <h2 id="encap-frozen-title">{{ filled($homeContent['frozen_heading'] ?? null) ? $homeContent['frozen_heading'] : __('Frozen produce, specified for your market.') }}</h2>
    <p>{{ filled($homeContent['frozen_intro'] ?? null) ? $homeContent['frozen_intro'] : __('Tell us the product, format, volume and destination. We’ll align the supply, packaging and export requirements with you from the outset.') }}</p>
-   <a class="encap-button encap-button-light" href="{{ route('quote.create', ['locale' => $locale, 'form' => 'frozen']) }}">{{ __('Request a frozen-supply quote') }} <span aria-hidden="true">↗</span></a>
+   <a class="encap-button encap-button-light" href="{{ route('frozen-products', ['locale' => $locale]) }}">{{ __('Browse frozen products') }} <span aria-hidden="true">↗</span></a>
   </div>
   <figure class="encap-frozen-visual" aria-labelledby="encap-frozen-photo-caption">
    <img class="encap-frozen-photo" src="{{ \App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260') }}" alt="{{ $locale === 'ar' ? 'ثمار مجمدة جاهزة للتوريد والتصدير ضمن سلسلة تبريد مناسبة.' : __('Frozen berries prepared for temperature-controlled export supply.') }}" width="1600" height="1067" loading="lazy" decoding="async">

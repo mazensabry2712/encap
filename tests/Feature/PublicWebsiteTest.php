@@ -48,8 +48,9 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('Frozen produce, specified for your market.')
         ->assertSee(parse_url(\App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260'), PHP_URL_PATH), false)
         ->assertSee('Frozen berries prepared for temperature-controlled export supply.')
-        ->assertSee('Request a frozen-supply quote')
-        ->assertSee('/en/request-a-quote?form=frozen', false)
+        ->assertSee('Browse frozen products')
+        ->assertSee('href="/en/frozen-products"', false)
+        ->assertDontSee('href="/en/request-a-quote?form=frozen"', false)
         ->assertDontSee('We welcome enquiries for frozen fruit and vegetables.')
         ->assertDontSee('encap-frozen-product', false)
         ->assertDontSee('Profile photos can be added to these contact cards later.')
@@ -730,10 +731,12 @@ test('frozen supply section uses direct buyer-focused copy in both locales', fun
         ->assertSee('توريد المجمدات وفق مواصفات سوقك.')
         ->assertSee('حدد الصنف وشكل التجهيز والكمية والوجهة، وسننسق معك متطلبات التوريد والتعبئة والتصدير من البداية.')
         ->assertSee('توريد يبدأ من مواصفاتك.')
+        ->assertSee('تصفح المجمدات')
+        ->assertSee('href="/ar/frozen-products"', false)
         ->assertDontSee('ENCAP / FROZEN PRODUCE');
 });
 
-test('frozen supply CTA preselects frozen on the quote form in both locales', function () {
+test('quote form preselects frozen when explicitly requested in both locales', function () {
     foreach (['/en/request-a-quote?form=frozen', '/ar/request-a-quote?form=frozen'] as $path) {
         $this->get($path)
             ->assertOk()
