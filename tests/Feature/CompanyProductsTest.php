@@ -24,7 +24,6 @@ test('recovery migration restores the public company profile when its database r
 
     $this->get('/ar/companies')
         ->assertOk()
-        ->assertSee('شركة حدائق الشمال')
         ->assertSee('ENCAP');
 });
 
@@ -58,7 +57,7 @@ test('recovery migration preserves existing admin-managed company product assign
         ->toBe([$selected->id]);
 });
 
-test('administrators can assign product categories to a company and unpublished products stay hidden', function () {
+test('administrators can still assign company categories while the public company page is a clean canvas', function () {
     $company = Company::query()
         ->where('slug', 'hadaeq-al-shamal')
         ->firstOrFail();
@@ -100,7 +99,9 @@ test('administrators can assign product categories to a company and unpublished 
 
     $this->get('/ar/companies')
         ->assertOk()
-        ->assertSee('المنتجات التي توفرها هذه الشركة')
-        ->assertSee('طماطم')
+        ->assertSee('شركتنا | ENCAP')
+        ->assertDontSee('encap-company-detail-section', false)
+        ->assertDontSee('المنتجات التي توفرها هذه الشركة')
+        ->assertDontSee('Test Tomatoes')
         ->assertDontSee('رمان غير منشور');
 });

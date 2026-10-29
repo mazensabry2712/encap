@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Company;
 use App\Models\ContactMessage;
 use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
 use App\Services\EnquiryNotifier;
-use App\Services\EncapImageLibrary;
 use App\Support\EncapImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -570,50 +568,15 @@ class WebsiteController extends Controller
     {
         $this->useLocale($locale);
 
-        $company = Company::query()
-            ->where('slug', 'hadaeq-al-shamal')
-            ->firstOrFail();
-
-        return $this->renderCompanyProfile($locale, $company);
-    }
-
-    private function renderCompanyProfile(string $locale, Company $company): View
-    {
-        $name = $locale === 'ar' && $company->name_ar ? $company->name_ar : $company->name_en;
-        $description = $locale === 'ar' && $company->description_ar
-            ? $company->description_ar
-            : ($company->description_en ?? $company->short_description_en ?? '');
         $settings = SeoSetting::current();
-        $pageSeo = $settings->metadataFor(
-            'companies',
-            $locale,
-            $name . ' | ENCAP',
-            $description
-        );
+        $pageSeo = [
+            'title' => __('Our Company') . ' | ENCAP',
+            'description' => $locale === 'ar'
+                ? $settings->site_description_ar
+                : __($settings->site_description_en),
+        ];
 
-        $catalogue = app(EncapImageLibrary::class)->catalogue();
-        $products = $company->categories()
-            ->where('categories.is_published', true)
-            ->orderBy('categories.sort_order')
-            ->orderBy('categories.name_en')
-            ->get();
-
-        $imagePaths = array_values(array_unique(array_filter(array_merge(
-            [$company->image],
-            $company->gallery ?? []
-        ))));
-        if ($imagePaths === []) {
-            $imagePaths = ['farm-cultivation-2026.jpg'];
-        }
-        $companyImages = array_map(
-            fn (string $path): array => [
-                'path' => $path,
-                'url' => EncapImage::url($path, $catalogue[$path] ?? null),
-            ],
-            $imagePaths
-        );
-
-        return view('website.company', compact('locale', 'company', 'companyImages', 'pageSeo', 'products'));
+        return view('website.company', compact('locale', 'pageSeo'));
     }
 
     public function contact(string $locale): View
