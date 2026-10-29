@@ -162,7 +162,10 @@ test('replacing a central image changes its stored bytes and cache-busted URL im
     expect($newBytes)->not->toBe($oldBytes)
         ->and($newUrl)->not->toBe($oldUrl);
 
-    $this->get($newUrl)->assertOk()
+    $query = parse_url($newUrl, PHP_URL_QUERY);
+
+    $this->get('/encap-img/cargo-port-2026.jpg'.($query ? '?'.$query : ''))
+        ->assertOk()
         ->assertHeader('Cache-Control', 'no-cache, must-revalidate');
 });
 
