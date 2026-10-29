@@ -25,8 +25,12 @@ test('footer places companies first, gives each contact name and role before pho
         $footerHtml = substr($html, $footerPosition);
 
         $companiesPosition = strpos($footerHtml, 'class="encap-footer-group-companies"');
+        $companyProfilePosition = strpos($footerHtml, 'class="encap-footer-group-company-identity"');
         $businessPosition = strpos($footerHtml, 'class="encap-footer-business"');
         $taglinePosition = strpos($footerHtml, $expected['tagline']);
+
+        expect($companyProfilePosition)->not->toBeFalse();
+        expect(str_contains($footerHtml, '/'.substr($path, 1).'/companies'))->toBeTrue();
         $wordmarkPosition = strpos($footerHtml, 'class="encap-footer-wordmark"');
         $mainPosition = strpos($footerHtml, 'class="encap-footer-main"');
         $bottomPosition = strpos($footerHtml, 'class="encap-footer-bottom"');

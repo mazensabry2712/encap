@@ -114,6 +114,25 @@ class WebsiteController extends Controller
         $this->useLocale($locale);
         abort_unless($category->is_published, 404);
 
+        return $this->renderCategoryDetails($locale, $category, false);
+    }
+
+    public function frozenCategory(string $locale, Category $category): View
+    {
+        $this->useLocale($locale);
+
+        abort_unless(
+            $category->is_published
+                && $category->show_in_frozen_catalogue
+                && in_array('Frozen', $category->available_forms ?? [], true),
+            404
+        );
+
+        return $this->renderCategoryDetails($locale, $category, true);
+    }
+
+    private function renderCategoryDetails(string $locale, Category $category, bool $isFrozenCategory): View
+    {
         $settings = SeoSetting::current();
         $name = $locale === 'ar' && $category->name_ar ? $category->name_ar : __($category->name_en);
         $shortDescription = $locale === 'ar' && $category->short_description_ar
@@ -125,7 +144,7 @@ class WebsiteController extends Controller
             ?: ($shortDescription ?: ($locale === 'ar' ? $settings->site_description_ar : __($settings->site_description_en)));
         $pageSeo = ['title' => $seoTitle, 'description' => $seoDescription];
 
-        return view('website.products.show', compact('category', 'locale', 'pageSeo'));
+        return view('website.products.show', compact('category', 'locale', 'pageSeo', 'isFrozenCategory'));
     }
 
     public function contentPage(string $locale, string $page): View

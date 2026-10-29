@@ -1,5 +1,10 @@
 @extends('website.layout')
 @php($locale = request()->route('locale', 'en'))
+@php($isFrozenCategory = $isFrozenCategory ?? false)
+@php($catalogueRoute = $isFrozenCategory ? 'frozen-products' : 'products.index')
+@php($detailRoute = $isFrozenCategory ? 'frozen-products.show' : 'products.show')
+@php($catalogueUrl = route($catalogueRoute, ['locale' => $locale]))
+@php($detailUrl = route($detailRoute, ['locale' => $locale, 'category' => $category->slug]))
 @php($name = $locale === 'ar' && $category->name_ar ? $category->name_ar : __($category->name_en))
 @php($productImages = \App\Support\EncapProductImage::galleryUrls($category))
 @php($shortDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : __($category->short_description_en ?? ''))
@@ -13,12 +18,13 @@
 @php($bottomCtaHeading = ($locale === 'ar' ? $category->bottom_cta_heading_ar : __($category->bottom_cta_heading_en ?? '')) ?: __('Let’s confirm the details that matter.'))
 @php($bottomCtaText = ($locale === 'ar' ? $category->bottom_cta_text_ar : __($category->bottom_cta_text_en ?? '')) ?: __('Tell us the product form, quantity, packaging and destination you need.'))
 @php($siteBase = rtrim(config('app.url'), '/'))
-@php($breadcrumbSchema = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => $siteBase . '/' . $locale], ['@type' => 'ListItem', 'position' => 2, 'name' => __('Products'), 'item' => $siteBase . '/' . $locale . '/products'], ['@type' => 'ListItem', 'position' => 3, 'name' => $name, 'item' => $siteBase . '/' . $locale . '/products/' . $category->slug]]])
+@php($catalogueBreadcrumbName = $isFrozenCategory ? ($locale === 'ar' ? 'المجمدات' : __('Frozen fruit & vegetables')) : __('Products'))
+@php($breadcrumbSchema = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => $siteBase . '/' . $locale], ['@type' => 'ListItem', 'position' => 2, 'name' => $catalogueBreadcrumbName, 'item' => $catalogueUrl], ['@type' => 'ListItem', 'position' => 3, 'name' => $name, 'item' => $detailUrl]]])
 @push('head')<script type="application/ld+json">{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!}</script>@endpush
 @section('content')
 <section class="page-head">
     <div class="container">
-        <div class="breadcrumbs"><a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a> &nbsp; / &nbsp; <a href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Products') }}</a> &nbsp; / &nbsp; {{ $name }}</div>
+        <div class="breadcrumbs"><a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a> &nbsp; / &nbsp; <a href="{{ $catalogueUrl }}">{{ $catalogueBreadcrumbName }}</a> &nbsp; / &nbsp; {{ $name }}</div>
         <div class="page-intro-grid">
             <div>
                 <div class="eyebrow"><img class="encap-inline-brand" src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="ENCAP" width="22" height="22" decoding="async"> {{ __('Product category') }}</div>

@@ -127,7 +127,7 @@
                     @php($categoryDescription = $locale === 'ar' && $category->short_description_ar ? $category->short_description_ar : __($category->short_description_en ?? ''))
                     @php($categoryForms = $catalogueIsFrozen ? ['Frozen'] : ($category->available_forms ?? []))
                     @php($categoryImage = \App\Support\EncapProductImage::url($category))
-                    <a class="encap-catalog-card" data-tilt href="{{ route('products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
+                    <a class="encap-catalog-card" data-tilt href="{{ route($catalogueIsFrozen ? 'frozen-products.show' : 'products.show', ['locale' => $locale, 'category' => $category->slug]) }}" aria-label="{{ __('View details') }}: {{ $categoryName }}">
                         <div class="encap-catalog-card-media">
                             @if($categoryImage)
                                 <img src="{{ $categoryImage }}" alt="{{ $categoryName }}" width="720" height="520" @if($loop->first) fetchpriority="high" @else loading="lazy" @endif decoding="async">

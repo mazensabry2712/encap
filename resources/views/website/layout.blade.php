@@ -141,12 +141,12 @@
                 </div>
             </div>
             <article class="encap-footer-group-company-card">
-                <div class="encap-footer-group-company-mark" aria-hidden="true">🇸🇦</div>
-                <div class="encap-footer-group-company-identity">
+                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Companies') }}">🇸🇦</a>
+                <a class="encap-footer-group-company-identity" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Companies') }}">
                     <span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span>
                     <h3>{{ __('Hadaeq Al-Shamal Company') }}</h3>
                     @if($currentLocale !== 'ar')<p class="encap-footer-arabic-name" lang="ar" dir="rtl">شركة حدائق الشمال</p>@endif
-                </div>
+                </a>
                 <div class="encap-footer-group-company-location">
                     <span class="encap-footer-group-company-country">{{ __('Kingdom of Saudi Arabia') }}</span>
                     <a href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">

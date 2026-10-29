@@ -37,9 +37,18 @@ test('frozen products catalogue lists only published categories that include the
         ->assertOk()
         ->assertSee('المجمدات')
         ->assertSee('فراولة مجمدة للاختبار')
-        ->assertSee('/ar/products/test-frozen-strawberries', false)
+        ->assertSee('/ar/frozen-products/test-frozen-strawberries', false)
         ->assertDontSee('موالح طازجة للاختبار')
         ->assertDontSee('منتج مجمد غير منشور للاختبار');
+
+    $this->get('/ar/frozen-products/test-frozen-strawberries')
+        ->assertOk()
+        ->assertSee('فراولة مجمدة للاختبار')
+        ->assertSee('/ar/frozen-products', false)
+        ->assertDontSee('/ar/products/test-frozen-strawberries', false);
+
+    $this->get('/ar/frozen-products/test-fresh-citrus')->assertNotFound();
+    $this->get('/ar/frozen-products/test-hidden-frozen-product')->assertNotFound();
 });
 
 test('frozen products page is linked from desktop and mobile navigation in each locale', function () {

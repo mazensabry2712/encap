@@ -37,6 +37,7 @@ Route::prefix('{locale}')->group(function () {
         ->middleware('throttle:5,1')->name('contact.store');
     Route::get('/products', [WebsiteController::class, 'products'])->name('products.index');
     Route::get('/frozen-products', [WebsiteController::class, 'frozenProducts'])->name('frozen-products');
+    Route::get('/frozen-products/{category:slug}', [WebsiteController::class, 'frozenCategory'])->name('frozen-products.show');
     Route::get('/products/{category:slug}', [WebsiteController::class, 'category'])->name('products.show');
     Route::get('/request-a-quote', [WebsiteController::class, 'quote'])->name('quote.create');
     Route::post('/request-a-quote', [WebsiteController::class, 'storeQuote'])

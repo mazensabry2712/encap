@@ -1591,9 +1591,28 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
     border:1px solid rgba(255,255,255,.15);
     border-radius:6px;
     background:rgba(255,255,255,.05);
+    color:inherit;
     font-size:23px;
+    text-decoration:none;
+    transition:border-color .18s ease,background .18s ease,transform .18s ease;
 }
-.encap-footer-group-company-identity{min-width:0}
+.encap-footer-group-company-mark:hover{
+    border-color:rgba(227,181,62,.55);
+    background:rgba(227,181,62,.10);
+    transform:translateY(-1px);
+}
+.encap-footer-group-company-mark:focus-visible,
+.encap-footer-group-company-identity:focus-visible{
+    outline:2px solid #e3b53e;
+    outline-offset:4px;
+}
+.encap-footer-group-company-identity{
+    display:block;
+    min-width:0;
+    color:inherit;
+    text-decoration:none;
+}
+.encap-footer-group-company-identity:hover h3{color:#f6d981}
 .encap-footer-group-company-identity .encap-footer-card-tag{
     display:block;
     margin-bottom:7px;
