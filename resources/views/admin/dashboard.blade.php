@@ -21,13 +21,7 @@
             <span class="admin-stat-label">{{ __('Product categories') }}</span>
             <strong class="admin-stat-value">{{ number_format($categoryCount) }}</strong>
             <span class="admin-stat-note"><b>{{ number_format($publishedCategoryCount) }}</b> {{ __('published') }} <span aria-hidden="true">·</span> {{ number_format($draftCategoryCount) }} {{ __('drafts') }}</span>
-            <span class="admin-stat-link">{{ __('Manage catalogue') }} <span aria-hidden="true">→</span></span>
-        </a>
-        <a class="admin-stat-card" href="{{ route('admin.categories.index') }}">
-            <span class="admin-stat-icon" aria-hidden="true">❄</span>
-            <span class="admin-stat-label">{{ __('Frozen products assigned') }}</span>
-            <strong class="admin-stat-value">{{ number_format($frozenCategoryCount) }}</strong>
-            <span class="admin-stat-note">{{ __('Only published categories marked Frozen appear in this catalogue.') }}</span>
+            <span class="admin-stat-note"><b>{{ number_format($frozenCategoryCount) }}</b> {{ __('Frozen products assigned') }}</span>
             <span class="admin-stat-link">{{ __('Manage catalogue') }} <span aria-hidden="true">→</span></span>
         </a>
         <a class="admin-stat-card" href="{{ route('admin.companies.index') }}">
@@ -57,12 +51,16 @@
         <div><span class="admin-eyebrow">{{ __('PUBLIC WEBSITE') }}</span><h2>{{ __('Preview public pages') }}</h2></div>
         <div class="admin-quick-links">
             <a href="{{ route('home', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">⌂</span><span><strong>{{ __('Home') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('about', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">ⓘ</span><span><strong>{{ __('About') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('products.index', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">▦</span><span><strong>{{ __('Products') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('frozen-products', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">❄</span><span><strong>{{ __('Frozen') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('companies', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">⌘</span><span><strong>{{ __('Our Companies') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('farms', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">♧</span><span><strong>{{ __('Agriculture & Farms') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('packing-stations', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">▤</span><span><strong>{{ __('Packing Stations') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('export', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">↗</span><span><strong>{{ __('Export & Logistics') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('quality', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">✓</span><span><strong>{{ __('Quality') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('contact', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">✉</span><span><strong>{{ __('Contact') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
+            <a href="{{ route('quote.create', ['locale' => app()->getLocale()]) }}" target="_blank" rel="noopener"><span aria-hidden="true">↗</span><span><strong>{{ __('Request a Quote') }}</strong><small>{{ __('Open this page as a visitor') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
             <a href="{{ route('admin.seo.edit') }}"><span aria-hidden="true">⌕</span><span><strong>{{ __('Website content & SEO') }}</strong><small>{{ __('Edit public page text, page metadata and contact details.') }}</small></span><span class="admin-quick-arrow" aria-hidden="true">↗</span></a>
         </div>
     </section>
