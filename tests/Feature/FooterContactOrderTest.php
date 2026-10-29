@@ -1,42 +1,21 @@
 <?php
 
-test('footer places group companies first, phone numbers second, and ENCAP brand navigation underneath contacts', function () {
-    $layout = file_get_contents(resource_path('views/website/layout.blade.php'));
-
-    $companiesMarkupPosition = strpos($layout, 'class="encap-footer-group-companies"');
-    $businessMarkupPosition = strpos($layout, 'class="encap-footer-business"');
-    $firstPhoneMarkupPosition = strpos($layout, 'href="tel:+966568309656"');
-    $lastPhoneMarkupPosition = strpos($layout, 'href="tel:+201060113074"');
-    $taglineMarkupPosition = strpos($layout, 'class="encap-footer-contact-tagline"');
-    $wordmarkMarkupPosition = strpos($layout, 'class="encap-footer-wordmark"');
-    $mainMarkupPosition = strpos($layout, 'class="encap-footer-main"');
-
-    foreach ([
-        $companiesMarkupPosition,
-        $businessMarkupPosition,
-        $firstPhoneMarkupPosition,
-        $lastPhoneMarkupPosition,
-        $taglineMarkupPosition,
-        $wordmarkMarkupPosition,
-        $mainMarkupPosition,
-    ] as $position) {
-        expect($position)->not->toBeFalse();
-    }
-
-    expect($companiesMarkupPosition)->toBeLessThan($businessMarkupPosition);
-    expect($businessMarkupPosition)->toBeLessThan($firstPhoneMarkupPosition);
-    expect($firstPhoneMarkupPosition)->toBeLessThan($lastPhoneMarkupPosition);
-    expect($lastPhoneMarkupPosition)->toBeLessThan($taglineMarkupPosition);
-    expect($taglineMarkupPosition)->toBeLessThan($wordmarkMarkupPosition);
-    expect($wordmarkMarkupPosition)->toBeLessThan($mainMarkupPosition);
-
+test('footer places companies first, gives each contact name and role before phone numbers, and keeps ENCAP branding underneath', function () {
     foreach ([
         '/ar' => [
-            'contactName' => 'أحمد الشامي',
+            'contacts' => [
+                ['name' => 'أحمد الشامي', 'phone' => 'tel:+966568309656'],
+                ['name' => 'شعبان شاهين', 'phone' => 'tel:+966530750780'],
+                ['name' => 'محمد سعد', 'phone' => 'tel:+201060113074'],
+            ],
             'tagline' => 'إنتاج زراعي · توريد · تجهيز · تصدير',
         ],
         '/en' => [
-            'contactName' => 'Ahmed Elshamy',
+            'contacts' => [
+                ['name' => 'Ahmed Elshamy', 'phone' => 'tel:+966568309656'],
+                ['name' => 'Shaban Shahen', 'phone' => 'tel:+966530750780'],
+                ['name' => 'Mohamed Saad', 'phone' => 'tel:+201060113074'],
+            ],
             'tagline' => 'Agricultural production · Sourcing · Processing · Export',
         ],
     ] as $path => $expected) {
@@ -44,42 +23,46 @@ test('footer places group companies first, phone numbers second, and ENCAP brand
 
         $companiesPosition = strpos($html, 'class="encap-footer-group-companies"');
         $businessPosition = strpos($html, 'class="encap-footer-business"');
-        $businessHtml = $businessPosition === false ? '' : substr($html, $businessPosition);
-
-        $firstPhoneOffset = strpos($businessHtml, 'href="tel:+966568309656"');
-        $lastPhoneOffset = strpos($businessHtml, 'href="tel:+201060113074"');
-        $contactNameOffset = strpos($businessHtml, $expected['contactName']);
-        $taglineOffset = strpos($businessHtml, $expected['tagline']);
-
-        $firstPhonePosition = $firstPhoneOffset === false ? false : $businessPosition + $firstPhoneOffset;
-        $lastPhonePosition = $lastPhoneOffset === false ? false : $businessPosition + $lastPhoneOffset;
-        $contactNamePosition = $contactNameOffset === false ? false : $businessPosition + $contactNameOffset;
-        $taglinePosition = $taglineOffset === false ? false : $businessPosition + $taglineOffset;
+        $taglinePosition = strpos($html, $expected['tagline']);
         $wordmarkPosition = strpos($html, 'class="encap-footer-wordmark"');
         $mainPosition = strpos($html, 'class="encap-footer-main"');
         $bottomPosition = strpos($html, 'class="encap-footer-bottom"');
 
-        foreach ([
-            $companiesPosition,
-            $businessPosition,
-            $firstPhonePosition,
-            $lastPhonePosition,
-            $contactNamePosition,
-            $taglinePosition,
-            $wordmarkPosition,
-            $mainPosition,
-            $bottomPosition,
-        ] as $position) {
+        foreach ([$companiesPosition, $businessPosition, $taglinePosition, $wordmarkPosition, $mainPosition, $bottomPosition] as $position) {
             expect($position)->not->toBeFalse();
         }
 
         expect($companiesPosition)->toBeLessThan($businessPosition);
-        expect($businessPosition)->toBeLessThan($firstPhonePosition);
-        expect($firstPhonePosition)->toBeLessThan($contactNamePosition);
-        expect($lastPhonePosition)->toBeLessThan($taglinePosition);
+        expect($businessPosition)->toBeLessThan($taglinePosition);
         expect($taglinePosition)->toBeLessThan($wordmarkPosition);
         expect($wordmarkPosition)->toBeLessThan($mainPosition);
         expect($mainPosition)->toBeLessThan($bottomPosition);
+
+        preg_match_all(
+            '/<article class="encap-footer-business-card encap-footer-person-card">(.*?)<\/article>/s',
+            substr($html, $businessPosition),
+            $cardMatches
+        );
+
+        expect($cardMatches[1])->toHaveCount(3);
+
+        foreach ($expected['contacts'] as $index => $contact) {
+            $card = $cardMatches[1][$index];
+            $namePosition = strpos($card, $contact['name']);
+            $rolePosition = strpos($card, 'class="encap-footer-person-role"');
+            $phoneListPosition = strpos($card, 'class="encap-footer-phone-list"');
+            $phonePosition = strpos($card, 'href="' . $contact['phone'] . '"');
+            $locationPosition = strpos($card, 'class="encap-footer-person-location"');
+
+            foreach ([$namePosition, $rolePosition, $phoneListPosition, $phonePosition, $locationPosition] as $position) {
+                expect($position)->not->toBeFalse();
+            }
+
+            expect($namePosition)->toBeLessThan($rolePosition);
+            expect($rolePosition)->toBeLessThan($phoneListPosition);
+            expect($phoneListPosition)->toBeLessThan($phonePosition);
+            expect($phonePosition)->toBeLessThan($locationPosition);
+        }
 
         $renderedSocialsPosition = strpos($html, 'class="encap-footer-contact-socials"');
         if ($renderedSocialsPosition !== false) {
