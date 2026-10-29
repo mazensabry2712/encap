@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Services\EncapImageUpload;
 use App\Support\EncapImage;
 use Illuminate\Http\UploadedFile;
@@ -69,6 +70,63 @@ test('new image uploads fall back to laravel storage when encap-img cannot be wr
 
         Storage::disk('public')->assertExists($stored['path']);
         $this->get('/encap-img/'.$stored['path'])->assertOk();
+    } finally {
+        config(['filesystems.disks.encap_images.root' => $originalRoot]);
+        Storage::forgetDisk('encap_images');
+        @unlink($blockedRoot);
+    }
+});
+
+test('the first central-library image upload is saved and immediately servable', function () {
+    Storage::fake('public');
+    Storage::fake('encap_images');
+
+    $image = UploadedFile::fake()->image('farm-overview.png', 40, 30);
+
+    $this->actingAs(User::factory()->create())
+        ->post(route('admin.media.upload'), [
+            'label' => 'New farm overview',
+            'image' => $image,
+        ])
+        ->assertRedirect(route('admin.media.index'))
+        ->assertSessionHas('success');
+
+    $path = collect(Storage::disk('encap_images')->allFiles('site-library'))->first();
+
+    expect($path)->toBeString()
+        ->toStartWith('site-library/new-farm-overview-');
+
+    Storage::disk('encap_images')->assertExists($path);
+    $this->get('/encap-img/'.$path)->assertOk();
+});
+
+test('central-library uploads use the fallback disk if the main image folder cannot be written', function () {
+    Storage::fake('public');
+
+    $blockedRoot = tempnam(sys_get_temp_dir(), 'encap-media-root-blocker-');
+    expect($blockedRoot)->toBeString();
+    file_put_contents($blockedRoot, 'this file intentionally blocks a directory path');
+
+    $originalRoot = config('filesystems.disks.encap_images.root');
+    config(['filesystems.disks.encap_images.root' => $blockedRoot]);
+    Storage::forgetDisk('encap_images');
+
+    try {
+        $this->actingAs(User::factory()->create())
+            ->post(route('admin.media.upload'), [
+                'label' => 'Fallback farm image',
+                'image' => UploadedFile::fake()->image('farm.png', 40, 30),
+            ])
+            ->assertRedirect(route('admin.media.index'))
+            ->assertSessionHas('image_storage_fallback', true);
+
+        $path = collect(Storage::disk('public')->allFiles('site-library'))->first();
+
+        expect($path)->toBeString()
+            ->toStartWith('site-library/fallback-farm-image-');
+
+        Storage::disk('public')->assertExists($path);
+        $this->get('/encap-img/'.$path)->assertOk();
     } finally {
         config(['filesystems.disks.encap_images.root' => $originalRoot]);
         Storage::forgetDisk('encap_images');

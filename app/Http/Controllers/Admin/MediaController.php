@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\SeoSetting;
 use App\Services\EncapImageLibrary;
+use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
 use App\Support\EncapImage;
 use Illuminate\Http\RedirectResponse;
@@ -157,7 +158,7 @@ final class MediaController extends Controller
         return back()->with('success', __('Image replaced across the website wherever this asset is used.'));
     }
 
-    public function upload(Request $request): RedirectResponse
+    public function upload(Request $request, EncapImageUpload $imageUpload): RedirectResponse
     {
         $validated = $request->validate([
             'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,avif,gif', 'max:5120'],
@@ -167,20 +168,12 @@ final class MediaController extends Controller
         $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
         $slug = Str::slug($validated['label']) ?: 'site-image';
         $filename = $slug.'-'.Str::lower(Str::random(5)).'.'.$extension;
-        $root = config('filesystems.disks.encap_images.root');
-        if (! is_string($root) || $root === '') {
-            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
-        }
-        if (! is_dir($root) && ! @mkdir($root, 0755, true) && ! is_dir($root)) {
-            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
-        }
-        $stored = $file->storeAs('site-library', $filename, 'encap_images');
 
-        if (! is_string($stored) || ! Storage::disk('encap_images')->exists($stored)) {
-            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
-        }
+        // Use the same verified upload/fallback path as product, company and SEO images.
+        $stored = $imageUpload->storeAs($file, 'site-library', $filename, 'image');
 
-        return redirect()->route('admin.media.index')->with('success', __('Image added to the central media library.'));
+        return redirect()->route('admin.media.index')
+            ->with('success', __('Image added to the central media library.'))
+            ->with('image_storage_fallback', $stored['disk'] === 'public');
     }
-
 }
