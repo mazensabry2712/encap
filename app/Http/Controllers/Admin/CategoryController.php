@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Company;
 use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +16,8 @@ use Throwable;
 
 class CategoryController extends Controller
 {
+    private const PRODUCT_PLACEMENT_FLAGS = ['show_in_catalogue', 'show_in_frozen_catalogue', 'show_on_homepage'];
+
     private const PRODUCT_PAGE_FLAGS = [
         'show_product_images', 'show_enquiry_note', 'show_description',
         'show_available_forms', 'show_packaging', 'show_specifications', 'show_bottom_cta',
@@ -31,6 +34,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.form', [
             'category' => new Category(),
+            'companies' => Company::query()->orderBy('sort_order')->orderBy('name_en')->get(['id', 'name_en', 'name_ar']),
             'mediaAssets' => $mediaInventory->options(),
         ]);
     }
@@ -38,6 +42,12 @@ class CategoryController extends Controller
     public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
     {
         $data = $this->validated($request, $mediaInventory);
+        $companyIds = array_values(array_unique(array_map('intval', $data['company_ids'] ?? [])));
+        unset($data['company_ids']);
+
+        foreach (self::PRODUCT_PLACEMENT_FLAGS as $flag) {
+            $data[$flag] = $request->boolean($flag);
+        }
 
         foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
             $data[$flag] = $request->boolean($flag);
@@ -80,8 +90,12 @@ class CategoryController extends Controller
                 $request->input('available_forms', []),
                 ['Fresh', 'Frozen', 'Processed']
             ));
+            if ($data['show_in_frozen_catalogue']) {
+                $data['available_forms'] = array_values(array_unique([...$data['available_forms'], 'Frozen']));
+            }
 
-            Category::create($data);
+            $category = Category::create($data);
+            $category->companies()->sync($companyIds);
         } catch (Throwable $exception) {
             $this->removeStoredUploads($storedUploads);
             throw $exception;
@@ -100,6 +114,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.form', [
             'category' => $category,
+            'companies' => Company::query()->orderBy('sort_order')->orderBy('name_en')->get(['id', 'name_en', 'name_ar']),
             'mediaAssets' => $mediaInventory->options(),
         ]);
     }
@@ -107,6 +122,12 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
     {
         $data = $this->validated($request, $mediaInventory, $category);
+        $companyIds = array_values(array_unique(array_map('intval', $data['company_ids'] ?? [])));
+        unset($data['company_ids']);
+
+        foreach (self::PRODUCT_PLACEMENT_FLAGS as $flag) {
+            $data[$flag] = $request->boolean($flag);
+        }
 
         foreach (self::PRODUCT_PAGE_FLAGS as $flag) {
             $data[$flag] = $request->boolean($flag);
@@ -155,8 +176,12 @@ class CategoryController extends Controller
                 $request->input('available_forms', []),
                 ['Fresh', 'Frozen', 'Processed']
             ));
+            if ($data['show_in_frozen_catalogue']) {
+                $data['available_forms'] = array_values(array_unique([...$data['available_forms'], 'Frozen']));
+            }
 
             $category->update($data);
+            $category->companies()->sync($companyIds);
         } catch (Throwable $exception) {
             $this->removeStoredUploads($storedUploads);
             throw $exception;
@@ -237,6 +262,11 @@ class CategoryController extends Controller
             'bottom_cta_heading_ar' => ['nullable', 'string', 'max:255'],
             'bottom_cta_text_en' => ['nullable', 'string', 'max:2000'],
             'bottom_cta_text_ar' => ['nullable', 'string', 'max:2000'],
+            'show_in_catalogue' => ['sometimes', 'boolean'],
+            'show_in_frozen_catalogue' => ['sometimes', 'boolean'],
+            'show_on_homepage' => ['sometimes', 'boolean'],
+            'company_ids' => ['nullable', 'array'],
+            'company_ids.*' => ['integer', 'exists:companies,id'],
             'show_product_images' => ['sometimes', 'boolean'],
             'show_enquiry_note' => ['sometimes', 'boolean'],
             'show_description' => ['sometimes', 'boolean'],

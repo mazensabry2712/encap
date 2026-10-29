@@ -42,8 +42,8 @@ class WebsiteController extends Controller
     public function home(string $locale): View
     {
         $this->useLocale($locale);
-        $categories = Category::query()->where('is_published', true)
-            ->orderBy('sort_order')->orderBy('name_en')->limit(10)->get();
+        $categories = Category::query()->where('is_published', true)->where('show_on_homepage', true)
+            ->orderBy('sort_order')->orderBy('name_en')->get();
 
         $settings = SeoSetting::current();
         $homeContent = data_get($settings->page_content, 'home.' . $locale, []);
@@ -59,7 +59,7 @@ class WebsiteController extends Controller
     public function products(string $locale): View
     {
         $this->useLocale($locale);
-        $categories = Category::query()->where('is_published', true)
+        $categories = Category::query()->where('is_published', true)->where('show_in_catalogue', true)
             ->orderBy('sort_order')->orderBy('name_en')->paginate(12);
 
         $settings = SeoSetting::current();
@@ -85,6 +85,7 @@ class WebsiteController extends Controller
         $this->useLocale($locale);
         $categories = Category::query()
             ->where('is_published', true)
+            ->where('show_in_frozen_catalogue', true)
             ->whereJsonContains('available_forms', 'Frozen')
             ->orderBy('sort_order')
             ->orderBy('name_en')
@@ -584,6 +585,12 @@ class WebsiteController extends Controller
         );
 
         $catalogue = app(EncapImageLibrary::class)->catalogue();
+        $products = $company->categories()
+            ->where('categories.is_published', true)
+            ->orderBy('categories.sort_order')
+            ->orderBy('categories.name_en')
+            ->get();
+
         $imagePaths = array_values(array_unique(array_filter(array_merge(
             [$company->image],
             $company->gallery ?? []
@@ -599,7 +606,7 @@ class WebsiteController extends Controller
             $imagePaths
         );
 
-        return view('website.company', compact('locale', 'company', 'companyImages', 'pageSeo'));
+        return view('website.company', compact('locale', 'company', 'companyImages', 'pageSeo', 'products'));
     }
 
     public function contact(string $locale): View

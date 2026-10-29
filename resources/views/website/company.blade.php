@@ -83,4 +83,39 @@
         </div>
     </div>
 </section>
+@if($products->isNotEmpty())
+<section class="encap-catalog-section" aria-labelledby="encap-company-products-title">
+    <div class="container">
+        <div class="encap-catalog-section-heading">
+            <div class="encap-catalog-heading">
+                <span class="encap-catalog-kicker">{{ __('Product catalogue') }} <i aria-hidden="true"></i></span>
+                <h2 id="encap-company-products-title">{{ __('Products supplied by this company') }}</h2>
+                <p>{{ __('Explore the agricultural products currently listed for this company.') }}</p>
+            </div>
+            <div class="encap-catalog-heading-aside">
+                <a class="encap-text-link" href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('View all products') }} ↗</a>
+            </div>
+        </div>
+        <div class="encap-catalog-grid">
+            @foreach($products as $product)
+                @php($productName = $locale === 'ar' && $product->name_ar ? $product->name_ar : __($product->name_en))
+                @php($productDescription = $locale === 'ar' && $product->short_description_ar ? $product->short_description_ar : __($product->short_description_en ?? ''))
+                <a class="encap-catalog-card" href="{{ route('products.show', ['locale' => $locale, 'category' => $product->slug]) }}">
+                    <div class="encap-catalog-card-media">
+                        @php($productImage = \App\Support\EncapProductImage::url($product))
+                        @if($productImage)<img src="{{ $productImage }}" alt="{{ $productName }}" width="720" height="520" loading="lazy" decoding="async">@endif
+                        <span class="encap-catalog-card-open" aria-hidden="true">↗</span>
+                    </div>
+                    <div class="encap-catalog-card-body">
+                        <div class="encap-catalog-card-title-row"><div><span class="encap-catalog-card-eyebrow">{{ __('Product category') }}</span><h3>{{ $productName }}</h3></div><span class="encap-catalog-card-mark" aria-hidden="true">↗</span></div>
+                        @if(filled($productDescription))<p class="encap-catalog-card-description">{{ $productDescription }}</p>@endif
+                        <div class="encap-catalog-card-footer"><div class="encap-catalog-formats">@foreach(array_slice($product->available_forms ?? [], 0, 3) as $format)<span>{{ __($format) }}</span>@endforeach</div><span class="encap-catalog-card-link">{{ __('View details') }}</span></div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 @endsection
