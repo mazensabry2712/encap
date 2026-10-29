@@ -20,13 +20,16 @@ test('footer places companies first, gives each contact name and role before pho
         ],
     ] as $path => $expected) {
         $html = $this->get($path)->assertOk()->getContent();
+        $footerPosition = strpos($html, '<footer class="footer encap-footer">');
+        expect($footerPosition)->not->toBeFalse();
+        $footerHtml = substr($html, $footerPosition);
 
-        $companiesPosition = strpos($html, 'class="encap-footer-group-companies"');
-        $businessPosition = strpos($html, 'class="encap-footer-business"');
-        $taglinePosition = strpos($html, $expected['tagline']);
-        $wordmarkPosition = strpos($html, 'class="encap-footer-wordmark"');
-        $mainPosition = strpos($html, 'class="encap-footer-main"');
-        $bottomPosition = strpos($html, 'class="encap-footer-bottom"');
+        $companiesPosition = strpos($footerHtml, 'class="encap-footer-group-companies"');
+        $businessPosition = strpos($footerHtml, 'class="encap-footer-business"');
+        $taglinePosition = strpos($footerHtml, $expected['tagline']);
+        $wordmarkPosition = strpos($footerHtml, 'class="encap-footer-wordmark"');
+        $mainPosition = strpos($footerHtml, 'class="encap-footer-main"');
+        $bottomPosition = strpos($footerHtml, 'class="encap-footer-bottom"');
 
         foreach ([$companiesPosition, $businessPosition, $taglinePosition, $wordmarkPosition, $mainPosition, $bottomPosition] as $position) {
             expect($position)->not->toBeFalse();
@@ -40,7 +43,7 @@ test('footer places companies first, gives each contact name and role before pho
 
         preg_match_all(
             '/<article class="encap-footer-business-card encap-footer-person-card">(.*?)<\/article>/s',
-            substr($html, $businessPosition),
+            substr($footerHtml, $businessPosition),
             $cardMatches
         );
 
@@ -64,7 +67,7 @@ test('footer places companies first, gives each contact name and role before pho
             expect($phonePosition)->toBeLessThan($locationPosition);
         }
 
-        $renderedSocialsPosition = strpos($html, 'class="encap-footer-contact-socials"');
+        $renderedSocialsPosition = strpos($footerHtml, 'class="encap-footer-contact-socials"');
         if ($renderedSocialsPosition !== false) {
             expect($taglinePosition)->toBeLessThan($renderedSocialsPosition);
             expect($renderedSocialsPosition)->toBeLessThan($wordmarkPosition);
