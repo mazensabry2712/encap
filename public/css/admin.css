@@ -376,3 +376,12 @@ html[dir="rtl"] .login-story:after{right:auto;left:-150px}
 .admin-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:1100px){.admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.admin-stat-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* Central product-placement selector shared by the product editor. */
+.admin-company-products-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.admin-company-product-option{display:flex;align-items:flex-start;gap:10px;min-width:0;padding:12px;border:1px solid var(--admin-border,#e2e7df);border-radius:8px;background:var(--admin-surface,#fff);cursor:pointer}
+.admin-company-product-option input{flex:0 0 auto;margin-top:3px}
+.admin-company-product-option>span{display:grid;gap:3px;min-width:0}
+.admin-company-product-option strong{color:var(--admin-text,#1e3227);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.admin-company-product-option small{color:#718076;font-size:10px;line-height:1.5}
+@media(max-width:620px){.admin-company-products-grid{grid-template-columns:minmax(0,1fr)}}
