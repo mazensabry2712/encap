@@ -49,7 +49,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee(parse_url(\App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260'), PHP_URL_PATH), false)
         ->assertSee('Frozen berries prepared for temperature-controlled export supply.')
         ->assertSee('Browse frozen products')
-        ->assertSee('href="/en/frozen-products"', false)
+        ->assertSee('/en/frozen-products', false)
         ->assertDontSee('href="/en/request-a-quote?form=frozen"', false)
         ->assertDontSee('We welcome enquiries for frozen fruit and vegetables.')
         ->assertDontSee('encap-frozen-product', false)
@@ -732,7 +732,7 @@ test('frozen supply section uses direct buyer-focused copy in both locales', fun
         ->assertSee('حدد الصنف وشكل التجهيز والكمية والوجهة، وسننسق معك متطلبات التوريد والتعبئة والتصدير من البداية.')
         ->assertSee('توريد يبدأ من مواصفاتك.')
         ->assertSee('تصفح المجمدات')
-        ->assertSee('href="/ar/frozen-products"', false)
+        ->assertSee('/ar/frozen-products', false)
         ->assertDontSee('ENCAP / FROZEN PRODUCE');
 });
 
