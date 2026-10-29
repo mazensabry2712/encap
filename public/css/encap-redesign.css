@@ -1699,3 +1699,25 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
 .encap-company-card .encap-product-link{flex:0 0 auto}
 .encap-company-detail-section{padding-block:clamp(24px,4vw,50px)}
 .encap-company-detail-section .page-aside-note a{display:inline-flex;margin-top:8px;color:#22543a;font-weight:750}
+
+/* Footer contact follow-up: keep the activity line and social profiles directly below the phone cards. */
+.encap-footer-topline{justify-content:flex-start}
+.encap-footer-contact-follow{
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    margin-top:19px;padding-top:17px;border-top:1px solid rgba(235,242,225,.14);
+    text-align:center
+}
+.encap-footer-contact-tagline{
+    margin:0;color:#d5e1cc;font-size:12px;font-weight:750;
+    line-height:1.8;letter-spacing:.015em
+}
+.encap-footer-contact-socials{
+    display:flex;flex-direction:column;align-items:center;gap:7px;width:100%
+}
+.encap-footer-contact-socials-label{color:#aebfae;font-size:10px;line-height:1.6}
+.encap-footer-contact-follow .encap-footer-socials{justify-content:center;margin-top:0}
+@media(max-width:640px){
+    .encap-footer-contact-follow{gap:8px;margin-top:16px;padding-top:14px}
+    .encap-footer-contact-tagline{font-size:11px}
+    .encap-footer-contact-follow .encap-footer-socials a{padding:8px 9px}
+}

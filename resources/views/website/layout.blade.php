@@ -134,7 +134,6 @@
     <div class="container encap-footer-shell">
         <div class="encap-footer-topline">
             <span class="encap-footer-wordmark">ENCAP <span aria-hidden="true">/</span> {{ __('GROUP') }}</span>
-            <span class="encap-footer-topline-note">{{ __('Agricultural production · Sourcing · Processing · Export') }}</span>
         </div>
 
         <div class="encap-footer-main">
@@ -143,13 +142,6 @@
                     <img class="brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" loading="lazy" decoding="async">
                 </a>
                 <p class="encap-footer-description">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
-                @if(!empty($socialLinks))
-                    <nav class="encap-footer-socials" aria-label="{{ __('Social profiles') }}">
-                        @foreach($socialLinks as $network => $url)
-                            <a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $network }} <span aria-hidden="true">↗</span></a>
-                        @endforeach
-                    </nav>
-                @endif
             </div>
 
             <nav class="encap-footer-column" aria-label="{{ __('Explore') }}">
@@ -171,7 +163,6 @@
                     <a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a>
                     <a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a>
                 </div>
-                <div class="encap-footer-market-note"><span aria-hidden="true">⌁</span> {{ __('Agricultural production · Sourcing · Processing · Export') }}</div>
             </nav>
         </div>
 
@@ -243,6 +234,20 @@
                     <p class="encap-footer-person-role">{{ __('Export Sector Manager') }}</p>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
                 </article>
+            </div>
+
+            <div class="encap-footer-contact-follow">
+                <p class="encap-footer-contact-tagline">{{ __('Agricultural production · Sourcing · Processing · Export') }}</p>
+                @if(!empty($socialLinks))
+                    <div class="encap-footer-contact-socials">
+                        <span class="encap-footer-contact-socials-label">{{ $currentLocale === 'ar' ? 'تابعونا على وسائل التواصل الاجتماعي' : 'Follow ENCAP on social media' }}</span>
+                        <nav class="encap-footer-socials" aria-label="{{ __('Social profiles') }}">
+                            @foreach($socialLinks as $network => $url)
+                                <a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $network }} <span aria-hidden="true">↗</span></a>
+                            @endforeach
+                        </nav>
+                    </div>
+                @endif
             </div>
         </section>
 
