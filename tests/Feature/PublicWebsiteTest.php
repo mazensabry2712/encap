@@ -29,7 +29,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('css/hero-experience.css', false)
         ->assertSee('js/hero-experience.js', false)
         ->assertSee('encap-hero-image', false)
-        ->assertSee(\App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000'), false)
+        ->assertSee(parse_url(\App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000'), PHP_URL_PATH), false)
         ->assertSee('encap-image-label-logo', false)
         ->assertSee('encap-story-brand', false)
         ->assertSee('encap-orbit-brand', false)
@@ -46,7 +46,7 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
         ->assertSee('encap-final-cta', false)
         ->assertSee('encap-frozen-feature', false)
         ->assertSee('Frozen produce, specified for your market.')
-        ->assertSee(\App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260'), false)
+        ->assertSee(parse_url(\App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260'), PHP_URL_PATH), false)
         ->assertSee('Frozen berries prepared for temperature-controlled export supply.')
         ->assertSee('Request a frozen-supply quote')
         ->assertSee('/en/request-a-quote?form=frozen', false)
@@ -964,12 +964,12 @@ test('catalogue and product details resolve crop-specific photos with or without
     $catalogue = $this->get('/en/products')->assertOk();
 
     foreach ($categories as $category) {
-        $catalogue->assertSee(\App\Support\EncapProductImage::url($category), false);
+        $catalogue->assertSee(parse_url(\App\Support\EncapProductImage::url($category), PHP_URL_PATH), false);
     }
 
     $this->get('/ar/products/grapes')
         ->assertOk()
-        ->assertSee(\App\Support\EncapProductImage::url($categories['grapes']), false);
+        ->assertSee(parse_url(\App\Support\EncapProductImage::url($categories['grapes']), PHP_URL_PATH), false);
 });
 
 test('an uploaded category image remains preferred over a stock fallback', function () {
