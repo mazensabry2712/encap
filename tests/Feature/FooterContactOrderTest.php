@@ -1,50 +1,83 @@
 <?php
 
-test('footer shows group companies before regional contacts and places phone numbers before contact details', function () {
+test('footer places group companies first, phone numbers second, and ENCAP brand navigation underneath contacts', function () {
     $layout = file_get_contents(resource_path('views/website/layout.blade.php'));
 
-    $businessGridPosition = strpos($layout, '<div class="encap-footer-business-grid">');
+    $companiesMarkupPosition = strpos($layout, 'class="encap-footer-group-companies"');
+    $businessMarkupPosition = strpos($layout, 'class="encap-footer-business"');
+    $firstPhoneMarkupPosition = strpos($layout, 'href="tel:+966568309656"');
     $lastPhoneMarkupPosition = strpos($layout, 'href="tel:+201060113074"');
-    $followSectionPosition = strpos($layout, 'class="encap-footer-contact-follow"');
-    $socialMarkupPosition = strpos($layout, 'class="encap-footer-contact-socials"');
-
-    expect($businessGridPosition)->not->toBeFalse();
-    expect($lastPhoneMarkupPosition)->not->toBeFalse();
-    expect($followSectionPosition)->not->toBeFalse();
-    expect($socialMarkupPosition)->not->toBeFalse();
-    expect($businessGridPosition)->toBeLessThan($lastPhoneMarkupPosition);
-    expect($lastPhoneMarkupPosition)->toBeLessThan($followSectionPosition);
-    expect($followSectionPosition)->toBeLessThan($socialMarkupPosition);
+    $taglineMarkupPosition = strpos($layout, 'class="encap-footer-contact-tagline"');
+    $wordmarkMarkupPosition = strpos($layout, 'class="encap-footer-wordmark"');
+    $mainMarkupPosition = strpos($layout, 'class="encap-footer-main"');
 
     foreach ([
-        '/ar' => ['contactName' => 'أحمد الشامي', 'tagline' => 'إنتاج زراعي · توريد · تجهيز · تصدير'],
-        '/en' => ['contactName' => 'Ahmed Elshamy', 'tagline' => 'Agricultural production · Sourcing · Processing · Export'],
+        $companiesMarkupPosition,
+        $businessMarkupPosition,
+        $firstPhoneMarkupPosition,
+        $lastPhoneMarkupPosition,
+        $taglineMarkupPosition,
+        $wordmarkMarkupPosition,
+        $mainMarkupPosition,
+    ] as $position) {
+        expect($position)->not->toBeFalse();
+    }
+
+    expect($companiesMarkupPosition)->toBeLessThan($businessMarkupPosition);
+    expect($businessMarkupPosition)->toBeLessThan($firstPhoneMarkupPosition);
+    expect($firstPhoneMarkupPosition)->toBeLessThan($lastPhoneMarkupPosition);
+    expect($lastPhoneMarkupPosition)->toBeLessThan($taglineMarkupPosition);
+    expect($taglineMarkupPosition)->toBeLessThan($wordmarkMarkupPosition);
+    expect($wordmarkMarkupPosition)->toBeLessThan($mainMarkupPosition);
+
+    foreach ([
+        '/ar' => [
+            'contactName' => 'أحمد الشامي',
+            'tagline' => 'إنتاج زراعي · توريد · تجهيز · تصدير',
+        ],
+        '/en' => [
+            'contactName' => 'Ahmed Elshamy',
+            'tagline' => 'Agricultural production · Sourcing · Processing · Export',
+        ],
     ] as $path => $expected) {
         $html = $this->get($path)->assertOk()->getContent();
 
         $companiesPosition = strpos($html, 'class="encap-footer-group-companies"');
         $businessPosition = strpos($html, 'class="encap-footer-business"');
+        $firstPhonePosition = strpos($html, 'href="tel:+966568309656"');
+        $lastPhonePosition = strpos($html, 'href="tel:+201060113074"');
+        $contactNamePosition = strpos($html, $expected['contactName']);
+        $taglinePosition = strpos($html, $expected['tagline']);
+        $wordmarkPosition = strpos($html, 'class="encap-footer-wordmark"');
+        $mainPosition = strpos($html, 'class="encap-footer-main"');
+        $bottomPosition = strpos($html, 'class="encap-footer-bottom"');
 
-        expect($companiesPosition)->not->toBeFalse();
-        expect($businessPosition)->not->toBeFalse();
+        foreach ([
+            $companiesPosition,
+            $businessPosition,
+            $firstPhonePosition,
+            $lastPhonePosition,
+            $contactNamePosition,
+            $taglinePosition,
+            $wordmarkPosition,
+            $mainPosition,
+            $bottomPosition,
+        ] as $position) {
+            expect($position)->not->toBeFalse();
+        }
+
         expect($companiesPosition)->toBeLessThan($businessPosition);
-
-        $businessHtml = substr($html, $businessPosition);
-        $firstPhonePosition = strpos($businessHtml, 'href="tel:+966568309656"');
-        $lastPhonePosition = strpos($businessHtml, 'href="tel:+201060113074"');
-        $contactNamePosition = strpos($businessHtml, $expected['contactName']);
-        $taglinePosition = strpos($businessHtml, $expected['tagline']);
-
-        expect($firstPhonePosition)->not->toBeFalse();
-        expect($lastPhonePosition)->not->toBeFalse();
-        expect($contactNamePosition)->not->toBeFalse();
-        expect($taglinePosition)->not->toBeFalse();
+        expect($businessPosition)->toBeLessThan($firstPhonePosition);
         expect($firstPhonePosition)->toBeLessThan($contactNamePosition);
         expect($lastPhonePosition)->toBeLessThan($taglinePosition);
+        expect($taglinePosition)->toBeLessThan($wordmarkPosition);
+        expect($wordmarkPosition)->toBeLessThan($mainPosition);
+        expect($mainPosition)->toBeLessThan($bottomPosition);
 
-        $renderedSocialsPosition = strpos($businessHtml, 'class="encap-footer-contact-socials"');
+        $renderedSocialsPosition = strpos($html, 'class="encap-footer-contact-socials"');
         if ($renderedSocialsPosition !== false) {
             expect($taglinePosition)->toBeLessThan($renderedSocialsPosition);
+            expect($renderedSocialsPosition)->toBeLessThan($wordmarkPosition);
         }
     }
 });

@@ -132,40 +132,6 @@
 <main id="main-content">@yield('content')</main>
 <footer class="footer encap-footer">
     <div class="container encap-footer-shell">
-        <div class="encap-footer-topline">
-            <span class="encap-footer-wordmark">ENCAP <span aria-hidden="true">/</span> {{ __('GROUP') }}</span>
-        </div>
-
-        <div class="encap-footer-main">
-            <div class="encap-footer-brand-column">
-                <a class="brand encap-footer-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
-                    <img class="brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" loading="lazy" decoding="async">
-                </a>
-                <p class="encap-footer-description">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
-            </div>
-
-            <nav class="encap-footer-column" aria-label="{{ __('Explore') }}">
-                <h2 class="encap-footer-heading">{{ __('Explore') }}</h2>
-                <div class="encap-footer-links">
-                    <a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a>
-                    <a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Agriculture & Farms') }}</a>
-                    <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}">{{ __('Packing Stations') }}</a>
-                    <a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality') }}</a>
-                    <a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export & Logistics') }}</a>
-                </div>
-            </nav>
-
-            <nav class="encap-footer-column" aria-label="{{ __('Products & contact') }}">
-                <h2 class="encap-footer-heading">{{ __('Products & contact') }}</h2>
-                <div class="encap-footer-links">
-                    <a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Our Products') }}</a>
-                    <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}">{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
-                    <a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a>
-                    <a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a>
-                </div>
-            </nav>
-        </div>
-
         <section class="encap-footer-group-companies" aria-labelledby="footer-group-companies-title">
             <div class="encap-footer-group-companies-heading">
                 <div>
@@ -250,6 +216,40 @@
                 @endif
             </div>
         </section>
+
+        <div class="encap-footer-topline">
+            <span class="encap-footer-wordmark">ENCAP <span aria-hidden="true">/</span> {{ __('GROUP') }}</span>
+        </div>
+
+        <div class="encap-footer-main">
+            <div class="encap-footer-brand-column">
+                <a class="brand encap-footer-brand" href="{{ route('home', ['locale' => $currentLocale]) }}" aria-label="ENCAP — home">
+                    <img class="brand-logo" src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="ENCAP — Agriculture and Export" width="250" height="72" loading="lazy" decoding="async">
+                </a>
+                <p class="encap-footer-description">{{ __('From Egyptian agricultural production and trusted partner farms to global markets.') }}</p>
+            </div>
+
+            <nav class="encap-footer-column" aria-label="{{ __('Explore') }}">
+                <h2 class="encap-footer-heading">{{ __('Explore') }}</h2>
+                <div class="encap-footer-links">
+                    <a href="{{ route('about', ['locale' => $currentLocale]) }}">{{ __('About') }}</a>
+                    <a href="{{ route('farms', ['locale' => $currentLocale]) }}">{{ __('Agriculture & Farms') }}</a>
+                    <a href="{{ route('packing-stations', ['locale' => $currentLocale]) }}">{{ __('Packing Stations') }}</a>
+                    <a href="{{ route('quality', ['locale' => $currentLocale]) }}">{{ __('Quality') }}</a>
+                    <a href="{{ route('export', ['locale' => $currentLocale]) }}">{{ __('Export & Logistics') }}</a>
+                </div>
+            </nav>
+
+            <nav class="encap-footer-column" aria-label="{{ __('Products & contact') }}">
+                <h2 class="encap-footer-heading">{{ __('Products & contact') }}</h2>
+                <div class="encap-footer-links">
+                    <a href="{{ route('products.index', ['locale' => $currentLocale]) }}">{{ __('Our Products') }}</a>
+                    <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}">{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
+                    <a href="{{ route('contact', ['locale' => $currentLocale]) }}">{{ __('Contact') }}</a>
+                    <a href="{{ route('quote.create', ['locale' => $currentLocale]) }}">{{ __('Request a Quote') }}</a>
+                </div>
+            </nav>
+        </div>
 
         <div class="encap-footer-bottom">
             <div class="encap-footer-bottom-legal">
