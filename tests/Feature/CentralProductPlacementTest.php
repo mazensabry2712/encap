@@ -1,8 +1,8 @@
 <?php
 
-use App\\Models\\Category;
-use App\\Models\\Company;
-use App\\Models\\User;
+use App\Models\Category;
+use App\Models\Company;
+use App\Models\User;
 
 test('one product editor controls catalogue, homepage, frozen catalogue and company placement', function () {
     $company = Company::query()->where('slug', 'hadaeq-al-shamal')->firstOrFail();

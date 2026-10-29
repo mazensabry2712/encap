@@ -727,5 +727,17 @@
     "Open this page as a visitor": "Open this page as a visitor",
     "Frozen products assigned": "Frozen products assigned",
     "Only published categories marked Frozen appear in this catalogue.": "Only published categories marked Frozen appear in this catalogue.",
-    "No format selected": "No format selected"
+    "No format selected": "No format selected",
+    "Product placement": "Product placement",
+    "Create and maintain each product here once. Select every public location where this same product should appear.": "Create and maintain each product here once. Select every public location where this same product should appear.",
+    "Main product catalogue": "Main product catalogue",
+    "Frozen products catalogue": "Frozen products catalogue",
+    "Homepage products section": "Homepage products section",
+    "Company pages": "Company pages",
+    "Where it appears": "Where it appears",
+    "No display locations selected": "No display locations selected",
+    "Available formats describe the form supplied; display locations are selected separately below.": "Available formats describe the form supplied; display locations are selected separately below.",
+    "Showing a product in the frozen catalogue also enables the Frozen available format.": "Showing a product in the frozen catalogue also enables the Frozen available format.",
+    "Select the company pages where this product should be listed. You can select more than one company.": "Select the company pages where this product should be listed. You can select more than one company.",
+    "No companies are available yet. Create a company first.": "No companies are available yet. Create a company first."
 }

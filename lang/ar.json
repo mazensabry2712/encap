@@ -988,5 +988,17 @@
     "Open this page as a visitor": "افتح هذه الصفحة كما يراها الزوار",
     "Frozen products assigned": "تصنيفات المجمدات",
     "Only published categories marked Frozen appear in this catalogue.": "تظهر في هذا القسم التصنيفات المنشورة والمحدد لها شكل مجمد فقط.",
-    "No format selected": "لم يتم تحديد شكل"
+    "No format selected": "لم يتم تحديد شكل",
+    "Product placement": "أماكن ظهور المنتج",
+    "Create and maintain each product here once. Select every public location where this same product should appear.": "أضف المنتج وأدِر بياناته من هنا مرة واحدة، ثم اختر كل الأماكن العامة التي تريد ظهوره فيها.",
+    "Main product catalogue": "كتالوج المنتجات الرئيسي",
+    "Frozen products catalogue": "كتالوج المنتجات المجمدة",
+    "Homepage products section": "قسم المنتجات في الصفحة الرئيسية",
+    "Company pages": "صفحات الشركات",
+    "Where it appears": "أماكن الظهور",
+    "No display locations selected": "لم يتم تحديد أماكن ظهور",
+    "Available formats describe the form supplied; display locations are selected separately below.": "الأشكال المتاحة تصف شكل التوريد؛ أماكن العرض تُحدد بشكل مستقل أدناه.",
+    "Showing a product in the frozen catalogue also enables the Frozen available format.": "عرض المنتج في كتالوج المجمدات يفعّل أيضًا الشكل المتاح «Frozen».",
+    "Select the company pages where this product should be listed. You can select more than one company.": "اختر صفحات الشركات التي سيظهر بها المنتج. يمكنك اختيار أكثر من شركة.",
+    "No companies are available yet. Create a company first.": "لا توجد شركات حاليًا. أضف شركة أولًا."
 }

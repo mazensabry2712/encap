@@ -727,5 +727,17 @@
     "Open this page as a visitor": "Ouvrir cette page comme un visiteur",
     "Frozen products assigned": "Catégories surgelées",
     "Only published categories marked Frozen appear in this catalogue.": "Seules les catégories publiées avec le format surgelé apparaissent ici.",
-    "No format selected": "Aucun format sélectionné"
+    "No format selected": "Aucun format sélectionné",
+    "Product placement": "Emplacements du produit",
+    "Create and maintain each product here once. Select every public location where this same product should appear.": "Créez et gérez chaque produit ici une seule fois, puis choisissez tous les emplacements publics où il doit apparaître.",
+    "Main product catalogue": "Catalogue principal des produits",
+    "Frozen products catalogue": "Catalogue des produits surgelés",
+    "Homepage products section": "Section produits de l’accueil",
+    "Company pages": "Pages des sociétés",
+    "Where it appears": "Emplacements",
+    "No display locations selected": "Aucun emplacement sélectionné",
+    "Available formats describe the form supplied; display locations are selected separately below.": "Les formats disponibles décrivent la forme fournie ; les emplacements d’affichage se choisissent séparément ci-dessous.",
+    "Showing a product in the frozen catalogue also enables the Frozen available format.": "L’affichage dans le catalogue surgelé active également le format Frozen.",
+    "Select the company pages where this product should be listed. You can select more than one company.": "Choisissez les pages des sociétés où ce produit doit apparaître. Plusieurs sociétés peuvent être sélectionnées.",
+    "No companies are available yet. Create a company first.": "Aucune société n’est disponible. Créez d’abord une société."
 }

@@ -727,5 +727,17 @@
     "Open this page as a visitor": "Открыть страницу как посетитель",
     "Frozen products assigned": "Категории замороженной продукции",
     "Only published categories marked Frozen appear in this catalogue.": "Здесь отображаются только опубликованные категории с форматом Frozen.",
-    "No format selected": "Формат не выбран"
+    "No format selected": "Формат не выбран",
+    "Product placement": "Размещение продукции",
+    "Create and maintain each product here once. Select every public location where this same product should appear.": "Создавайте и редактируйте продукт здесь только один раз, затем выберите все публичные разделы, где он должен отображаться.",
+    "Main product catalogue": "Основной каталог продукции",
+    "Frozen products catalogue": "Каталог замороженной продукции",
+    "Homepage products section": "Раздел продукции на главной",
+    "Company pages": "Страницы компаний",
+    "Where it appears": "Размещение",
+    "No display locations selected": "Разделы отображения не выбраны",
+    "Available formats describe the form supplied; display locations are selected separately below.": "Доступные форматы описывают форму поставки; разделы отображения выбираются отдельно ниже.",
+    "Showing a product in the frozen catalogue also enables the Frozen available format.": "Показ в каталоге замороженной продукции также включает формат Frozen.",
+    "Select the company pages where this product should be listed. You can select more than one company.": "Выберите страницы компаний, на которых должен отображаться продукт. Можно выбрать несколько компаний.",
+    "No companies are available yet. Create a company first.": "Компании пока отсутствуют. Сначала создайте компанию."
 }

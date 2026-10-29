@@ -727,5 +727,17 @@
     "Open this page as a visitor": "Bu sayfayı ziyaretçi olarak aç",
     "Frozen products assigned": "Dondurulmuş ürün kategorileri",
     "Only published categories marked Frozen appear in this catalogue.": "Bu katalogda yalnızca yayımlanmış ve Frozen olarak işaretlenmiş kategoriler görünür.",
-    "No format selected": "Biçim seçilmedi"
+    "No format selected": "Biçim seçilmedi",
+    "Product placement": "Ürün yerleşimi",
+    "Create and maintain each product here once. Select every public location where this same product should appear.": "Her ürünü burada yalnızca bir kez oluşturup yönetin ve aynı ürünün görüneceği tüm herkese açık bölümleri seçin.",
+    "Main product catalogue": "Ana ürün kataloğu",
+    "Frozen products catalogue": "Dondurulmuş ürün kataloğu",
+    "Homepage products section": "Ana sayfa ürünler bölümü",
+    "Company pages": "Şirket sayfaları",
+    "Where it appears": "Görüneceği yerler",
+    "No display locations selected": "Görüntüleme yeri seçilmedi",
+    "Available formats describe the form supplied; display locations are selected separately below.": "Mevcut biçimler tedarik şeklini belirtir; görüntüleme yerleri aşağıdan ayrıca seçilir.",
+    "Showing a product in the frozen catalogue also enables the Frozen available format.": "Ürünü dondurulmuş kataloğunda göstermek Frozen biçimini de etkinleştirir.",
+    "Select the company pages where this product should be listed. You can select more than one company.": "Bu ürünün listeleneceği şirket sayfalarını seçin. Birden fazla şirket seçebilirsiniz.",
+    "No companies are available yet. Create a company first.": "Henüz şirket yok. Önce bir şirket oluşturun."
 }
