@@ -196,37 +196,24 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertSee('مجمّد');
 });
 
-test('the company navigation opens Hadaeq Al-Shamal directly in every supported locale', function () {
+test('the company navigation opens the clean company-page canvas in every supported locale', function () {
     $labels = [
-        'en' => ['navigation' => 'Our Company', 'name' => 'Hadaeq Al-Shamal Company'],
-        'ar' => ['navigation' => 'شركتنا', 'name' => 'شركة حدائق الشمال'],
-        'fr' => ['navigation' => 'Notre société', 'name' => 'Hadaeq Al-Shamal Company'],
-        'ru' => ['navigation' => 'Наша компания', 'name' => 'Hadaeq Al-Shamal Company'],
-        'tr' => ['navigation' => 'Şirketimiz', 'name' => 'Hadaeq Al-Shamal Company'],
+        'en' => 'Our Company',
+        'ar' => 'شركتنا',
+        'fr' => 'Notre société',
+        'ru' => 'Наша компания',
+        'tr' => 'Şirketimiz',
     ];
 
-    foreach ($labels as $locale => $expected) {
+    foreach ($labels as $locale => $navigationLabel) {
         $this->get('/'.$locale.'/companies')
             ->assertOk()
             ->assertSee('lang="'.$locale.'"', false)
-            ->assertSee($expected['navigation'])
-            ->assertSee($expected['name'])
-            ->assertSee('encap-company-detail-section', false)
+            ->assertSee($navigationLabel)
+            ->assertDontSee('encap-company-detail-section', false)
+            ->assertDontSee('encap-catalog-section', false)
             ->assertDontSee('encap-catalog-hero', false);
     }
-
-    $this->get('/en/companies')
-        ->assertOk()
-        ->assertSee('Company overview')
-        ->assertSee('ENCAP subsidiary')
-        ->assertSee('Aljouf - Saudia');
-
-    $this->get('/ar/companies')
-        ->assertOk()
-        ->assertSee('شركة حدائق الشمال')
-        ->assertSee('نبذة عن الشركة')
-        ->assertSee('الجوف، المملكة العربية السعودية')
-        ->assertSee('عملياتنا');
 
     $this->get('/sitemap.xml')
         ->assertOk()
@@ -236,18 +223,17 @@ test('the company navigation opens Hadaeq Al-Shamal directly in every supported 
 });
 
 
-test('the single public company profile shows Hadaeq Al-Shamal and never lists extra companies', function () {
+test('the public company page remains a clean canvas independent of stored company records', function () {
     $this->get('/ar/companies')
         ->assertOk()
-        ->assertSee('product-detail', false)
-        ->assertSee('شركة حدائق الشمال')
-        ->assertSee('نبذة عن الشركة')
-        ->assertSee('الجوف، المملكة العربية السعودية')
-        ->assertSee('encap-img/favicon.png', false)
-        ->assertDontSee('encap-catalog-summary-band', false)
+        ->assertSee('شركتنا')
+        ->assertDontSee('product-detail', false)
+        ->assertDontSee('encap-company-detail-section', false)
+        ->assertDontSee('encap-catalog-section', false)
+        ->assertDontSee('نبذة عن الشركة')
         ->assertDontSee('الشركات المنشورة');
 
-    \App\Models\Company::query()->create([
+    \\App\\Models\\Company::query()->create([
         'name_en' => 'Hidden Company',
         'name_ar' => 'شركة مخفية',
         'slug' => 'hidden-company',
@@ -257,7 +243,6 @@ test('the single public company profile shows Hadaeq Al-Shamal and never lists e
 
     $this->get('/ar/companies')
         ->assertOk()
-        ->assertSee('شركة حدائق الشمال')
         ->assertDontSee('شركة مخفية');
 
     $this->get('/ar/companies/hidden-company')->assertNotFound();
