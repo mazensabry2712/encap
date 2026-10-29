@@ -1,4 +1,5 @@
 @extends('admin.layout')
+@php($selectedCategoryIds = collect(old('category_ids', $company->exists ? $company->categories->pluck('id')->all() : []))->map(fn ($id) => (int) $id)->all())
 @section('page-title', $company->exists ? __('Edit company') : __('Create company'))
 @section('content')
 <div class="admin-page-intro"><div><p>{{ __('Maintain company directory details and publish only information confirmed by the ENCAP team.') }}</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('← All companies') }}</a></div></div>
@@ -21,6 +22,30 @@
     <div class="admin-field"><label for="location_en">{{ __('Location (English)') }}</label><input id="location_en" name="location_en" maxlength="160" value="{{ old('location_en', $company->location_en) }}"></div>
     <div class="admin-field"><label for="location_ar">{{ __('Location (Arabic)') }}</label><input id="location_ar" name="location_ar" maxlength="160" dir="auto" value="{{ old('location_ar', $company->location_ar) }}"></div>
     <div class="admin-field full"><label for="website_url">{{ __('Company website URL') }}</label><input id="website_url" type="url" name="website_url" maxlength="500" value="{{ old('website_url', $company->website_url) }}"></div>
+    <h2 class="admin-section-title">{{ __('Company products') }}</h2>
+    <div class="admin-field full">
+        <p class="admin-company-products-help">{{ __('Select the product categories this company supplies. The selected categories will appear on its public page.') }}</p>
+
+        @if($categories->isEmpty())
+            <p>{{ __('No product categories are available yet. Create categories in the Products section first.') }}</p>
+        @else
+            <div class="admin-company-products-grid">
+                @foreach($categories as $category)
+                    @php($categoryName = app()->getLocale() === 'ar' && $category->name_ar ? $category->name_ar : $category->name_en)
+                    <label class="admin-company-product-option">
+                        <input type="checkbox" name="category_ids[]" value="{{ $category->id }}" @checked(in_array((int) $category->id, $selectedCategoryIds, true))>
+                        <span>
+                            <strong>{{ $categoryName }}</strong>
+                            @if(!$category->is_published)
+                                <small>{{ __('Unpublished') }}</small>
+                            @endif
+                        </span>
+                    </label>
+                @endforeach
+            </div>
+        @endif
+    </div>
+
     <h2 class="admin-section-title">{{ __('Company photography') }}</h2>
     <div class="admin-field full">
         @if($company->image)<div class="admin-company-image-current"><img src="{{ \App\Support\EncapImage::url($company->image) }}" alt="{{ $company->name_en }}" width="180" height="140" loading="lazy"><span>{{ __('Current main image') }}</span></div>@endif

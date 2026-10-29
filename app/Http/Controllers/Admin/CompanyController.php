@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Company;
 use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
@@ -24,6 +25,10 @@ final class CompanyController extends Controller
     {
         return view('admin.companies.form', [
             'company' => new Company(),
+            'categories' => Category::query()
+                ->orderBy('sort_order')
+                ->orderBy('name_en')
+                ->get(['id', 'name_en', 'name_ar', 'is_published']),
             'mediaAssets' => $mediaInventory->options(),
         ]);
     }
@@ -31,6 +36,8 @@ final class CompanyController extends Controller
     public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
     {
         $data = $this->validated($request, $mediaInventory);
+        $categoryIds = array_values(array_unique(array_map('intval', $data['category_ids'] ?? [])));
+        unset($data['category_ids']);
         $libraryImage = $data['library_image'] ?? null;
         $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
         unset($data['library_image'], $data['library_gallery'], $data['gallery'], $data['remove_gallery']);
@@ -53,6 +60,7 @@ final class CompanyController extends Controller
         $data['gallery'] = array_values(array_unique($galleryPaths));
 
         $company = Company::create($data);
+        $company->categories()->sync($categoryIds);
 
         return redirect()->route('admin.companies.edit', $company)
             ->with('success', __('Company created.'));
@@ -62,6 +70,10 @@ final class CompanyController extends Controller
     {
         return view('admin.companies.form', [
             'company' => $company,
+            'categories' => Category::query()
+                ->orderBy('sort_order')
+                ->orderBy('name_en')
+                ->get(['id', 'name_en', 'name_ar', 'is_published']),
             'mediaAssets' => $mediaInventory->options(),
         ]);
     }
@@ -69,6 +81,8 @@ final class CompanyController extends Controller
     public function update(Request $request, Company $company, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
     {
         $data = $this->validated($request, $mediaInventory, $company);
+        $categoryIds = array_values(array_unique(array_map('intval', $data['category_ids'] ?? [])));
+        unset($data['category_ids']);
         $libraryImage = $data['library_image'] ?? null;
         $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
         unset($data['library_image'], $data['library_gallery'], $data['gallery'], $data['remove_gallery']);
@@ -100,6 +114,7 @@ final class CompanyController extends Controller
         // reuse the same asset elsewhere on the website.
         $data['gallery'] = array_values(array_unique($gallery));
         $company->update($data);
+        $company->categories()->sync($categoryIds);
 
         return redirect()->route('admin.companies.edit', $company)
             ->with('success', __('Company updated.'));
@@ -151,6 +166,8 @@ final class CompanyController extends Controller
             'library_gallery.*' => ['string', Rule::in($mediaInventory->paths())],
             'remove_gallery' => ['nullable', 'array'],
             'remove_gallery.*' => ['integer', 'min:0'],
+            'category_ids' => ['nullable', 'array'],
+            'category_ids.*' => ['integer', 'distinct', 'exists:categories,id'],
             'is_published' => ['sometimes', 'boolean'],
             'sort_order' => ['required', 'integer', 'min:0', 'max:100000'],
         ]);
