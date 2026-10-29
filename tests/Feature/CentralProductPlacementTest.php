@@ -55,7 +55,7 @@ test('one product editor controls catalogue, homepage, frozen catalogue and comp
     $this->get('/en/products')->assertOk()->assertSee('Central Frozen Mango');
     $this->get('/en/frozen-products')->assertOk()->assertSee('Central Frozen Mango');
     $this->get('/en')->assertOk()->assertSee('Central Frozen Mango');
-    $this->get('/en/companies/hadaeq-al-shamal')->assertOk()->assertSee('Central Frozen Mango');
+    $this->get('/en/companies')->assertOk()->assertSee('Central Frozen Mango');
 });
 
 test('product placement can keep a published product out of selected catalogue locations', function () {
