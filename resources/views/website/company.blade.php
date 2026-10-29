@@ -40,6 +40,7 @@
             'image_two_alt' => 'محصول البطاطس ضمن صورة توضيحية للمحاصيل الزراعية',
             'image_note' => '',
             'logo_alt' => 'شعار ENCAP، الشركة الأم لحدائق الشمال',
+            'company_logo_alt' => 'شعار شركة حدائق الشمال',
             'map_label' => 'منطقة الجوف، السعودية',
         ],
         'en' => [
@@ -78,6 +79,7 @@
             'image_two_alt' => 'Potatoes used as illustrative imagery for agricultural crops',
             'image_note' => 'These are illustrative images, not verified photographs of Hadaeq Al-Shamal farms.',
             'logo_alt' => 'ENCAP parent-company logo',
+            'company_logo_alt' => 'Hadaeq Al-Shamal Company logo',
             'map_label' => 'Al Jouf, Saudi Arabia',
         ],
         'fr' => [
@@ -116,6 +118,7 @@
             'image_two_alt' => 'Pommes de terre, image illustrative des cultures agricoles',
             'image_note' => 'Ces images sont illustratives et ne sont pas des photographies vérifiées des fermes de Hadaeq Al-Shamal.',
             'logo_alt' => 'Logo de la société mère ENCAP',
+            'company_logo_alt' => 'Logo de la société Hadaeq Al-Shamal',
             'map_label' => 'Al Jouf, Arabie saoudite',
         ],
         'ru' => [
@@ -154,6 +157,7 @@
             'image_two_alt' => 'Картофель, иллюстрирующий сельскохозяйственные культуры',
             'image_note' => 'Это иллюстративные изображения, а не подтверждённые фотографии хозяйств Hadaeq Al-Shamal.',
             'logo_alt' => 'Логотип материнской компании ENCAP',
+            'company_logo_alt' => 'Логотип компании Hadaeq Al-Shamal',
             'map_label' => 'Эль-Джауф, Саудовская Аравия',
         ],
         'tr' => [
@@ -192,6 +196,7 @@
             'image_two_alt' => 'Tarımsal ürünleri temsil eden patates görseli',
             'image_note' => 'Bu görseller temsilîdir; Hadaeq Al-Shamal çiftliklerinden doğrulanmış fotoğraflar değildir.',
             'logo_alt' => 'Ana şirket ENCAP logosu',
+            'company_logo_alt' => 'Hadaeq Al-Shamal şirket logosu',
             'map_label' => 'Al Jouf, Suudi Arabistan',
         ],
     ];
@@ -295,9 +300,9 @@
                     </div>
                 </div>
 
-                <aside class="hs-company__brand-card" aria-label="{{ $copy['parent_label'] }}">
+                <aside class="hs-company__brand-card" aria-label="{{ $copy['title'] }}">
                     <div class="hs-company__brand-logo">
-                        <img src="{{ \App\Support\EncapImage::url('logo.png') }}" alt="{{ $copy['logo_alt'] }}" width="300" height="90" decoding="async">
+                        <img src="{{ \App\Support\EncapImage::url($company->image ?: 'logo.png') }}" alt="{{ $company->image ? $copy['company_logo_alt'] : $copy['logo_alt'] }}" width="300" height="90" decoding="async">
                     </div>
                     <span class="hs-company__brand-tag">{{ $copy['parent_label'] }}</span>
                     <h2 class="hs-company__brand-name">{{ $copy['title'] }}</h2>
