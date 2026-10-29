@@ -4,6 +4,30 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\User;
 
+
+test('recovery migration restores the public company profile when its database row is missing', function () {
+    $company = Company::query()
+        ->where('slug', 'hadaeq-al-shamal')
+        ->firstOrFail();
+
+    $company->delete();
+
+    $migration = require database_path('migrations/2026_10_29_000004_restore_hadaeq_al_shamal_company_profile.php');
+    $migration->up();
+
+    $restored = Company::query()
+        ->where('slug', 'hadaeq-al-shamal')
+        ->firstOrFail();
+
+    expect($restored->name_ar)->toBe('شركة حدائق الشمال')
+        ->and($restored->is_published)->toBeTrue();
+
+    $this->get('/ar/companies')
+        ->assertOk()
+        ->assertSee('شركة حدائق الشمال')
+        ->assertSee('المنتجات التي توفرها هذه الشركة');
+});
+
 test('administrators can assign product categories to a company and unpublished products stay hidden', function () {
     $company = Company::query()
         ->where('slug', 'hadaeq-al-shamal')
