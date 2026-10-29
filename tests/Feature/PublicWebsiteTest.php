@@ -247,7 +247,7 @@ test('the single public company profile shows Hadaeq Al-Shamal and never lists e
         ->assertDontSee('encap-catalog-summary-band', false)
         ->assertDontSee('الشركات المنشورة');
 
-    \\App\\Models\\Company::query()->create([
+    \App\Models\Company::query()->create([
         'name_en' => 'Hidden Company',
         'name_ar' => 'شركة مخفية',
         'slug' => 'hidden-company',
