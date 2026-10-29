@@ -19,7 +19,9 @@ return new class extends Migration
         // Older production databases may already have recorded the original
         // companies-table migration before its initial record was added to it.
         // Repair only the missing record; never overwrite a profile managed by admin.
-        if (! $companyId) {
+        $restoredMissingCompany = ! $companyId;
+
+        if ($restoredMissingCompany) {
             $now = now();
 
             $companyId = DB::table('companies')->insertGetId([
@@ -47,7 +49,9 @@ return new class extends Migration
         // The original setup linked published products when it created the
         // company. Recreate those initial links only when restoring a missing
         // company record, and leave any existing admin-managed links untouched.
-        if (! Schema::hasTable('company_products') || ! Schema::hasTable('categories')) {
+        if (! $restoredMissingCompany
+            || ! Schema::hasTable('company_products')
+            || ! Schema::hasTable('categories')) {
             return;
         }
 

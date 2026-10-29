@@ -28,6 +28,36 @@ test('recovery migration restores the public company profile when its database r
         ->assertSee('ENCAP');
 });
 
+
+test('recovery migration preserves existing admin-managed company product assignments', function () {
+    $company = Company::query()
+        ->where('slug', 'hadaeq-al-shamal')
+        ->firstOrFail();
+
+    $selected = Category::query()->create([
+        'name_en' => 'Selected Citrus',
+        'name_ar' => 'موالح مختارة',
+        'slug' => 'selected-citrus-recovery-test',
+        'is_published' => true,
+        'sort_order' => 1,
+    ]);
+    Category::query()->create([
+        'name_en' => 'Unselected Grapes',
+        'name_ar' => 'عنب غير مختار',
+        'slug' => 'unselected-grapes-recovery-test',
+        'is_published' => true,
+        'sort_order' => 2,
+    ]);
+
+    $company->categories()->sync([$selected->id]);
+
+    $migration = require database_path('migrations/2026_10_29_000004_restore_hadaeq_al_shamal_company_profile.php');
+    $migration->up();
+
+    expect($company->fresh()->categories()->pluck('categories.id')->all())
+        ->toBe([$selected->id]);
+});
+
 test('administrators can assign product categories to a company and unpublished products stay hidden', function () {
     $company = Company::query()
         ->where('slug', 'hadaeq-al-shamal')
