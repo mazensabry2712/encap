@@ -79,7 +79,7 @@
                     <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
                 </div>
             </details>
-            <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Companies') }}</a>
+            <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Company') }}</a>
             <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
             <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}" @if(request()->routeIs('frozen-products')) aria-current="page" @endif>{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
             <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
@@ -118,7 +118,7 @@
                         <a href="{{ route('export', ['locale' => $currentLocale]) }}" @if(request()->routeIs('export')) aria-current="page" @endif>{{ __('Export & Logistics') }}</a>
                         <a href="{{ route('quality', ['locale' => $currentLocale]) }}" @if(request()->routeIs('quality')) aria-current="page" @endif>{{ __('Quality') }}</a>
                     </div>
-                    <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Companies') }}</a>
+                    <a href="{{ route('companies', ['locale' => $currentLocale]) }}" @if(request()->routeIs('companies')) aria-current="page" @endif>{{ __('Our Company') }}</a>
                     <a href="{{ route('products.index', ['locale' => $currentLocale]) }}" @if(request()->routeIs('products.*')) aria-current="page" @endif>{{ __('Products') }}</a>
                     <a href="{{ route('frozen-products', ['locale' => $currentLocale]) }}" @if(request()->routeIs('frozen-products')) aria-current="page" @endif>{{ $currentLocale === 'ar' ? 'المجمدات' : __('Frozen') }}</a>
                     <a href="{{ route('contact', ['locale' => $currentLocale]) }}" @if(request()->routeIs('contact')) aria-current="page" @endif>{{ __('Contact') }}</a>
@@ -136,13 +136,13 @@
             <div class="encap-footer-group-companies-heading">
                 <div>
                     <span class="encap-footer-eyebrow">{{ __('ENCAP GROUP · EGYPT & SAUDI ARABIA') }}</span>
-                    <h2 id="footer-group-companies-title">{{ __('Group Companies') }}</h2>
+                    <h2 id="footer-group-companies-title">{{ __('Our Saudi Company') }}</h2>
                     <p>{{ __('A regional company within the ENCAP group.') }}</p>
                 </div>
             </div>
             <article class="encap-footer-group-company-card">
-                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Companies') }}">🇸🇦</a>
-                <a class="encap-footer-group-company-identity" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Companies') }}">
+                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">🇸🇦</a>
+                <a class="encap-footer-group-company-identity" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
                     <span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span>
                     <h3>{{ __('Hadaeq Al-Shamal Company') }}</h3>
                     @if($currentLocale !== 'ar')<p class="encap-footer-arabic-name" lang="ar" dir="rtl">شركة حدائق الشمال</p>@endif

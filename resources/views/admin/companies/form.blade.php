@@ -1,17 +1,14 @@
 @extends('admin.layout')
 @php($selectedCategoryIds = collect(old('category_ids', $company->exists ? $company->categories->pluck('id')->all() : []))->map(fn ($id) => (int) $id)->all())
-@section('page-title', $company->exists ? __('Edit company') : __('Create company'))
+@section('page-title', __('Edit company profile'))
 @section('content')
-<div class="admin-page-intro"><div><p>{{ __('Maintain company directory details and publish only information confirmed by the ENCAP team.') }}</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('← All companies') }}</a></div></div>
+<div class="admin-page-intro"><div><p>{{ __('Manage the public profile for Hadaeq Al-Shamal Company.') }}</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('Company profile') }}</a></div></div>
 
-<form class="admin-panel admin-form-panel" method="post" enctype="multipart/form-data" action="{{ $company->exists ? route('admin.companies.update', $company) : route('admin.companies.store') }}">
-@csrf @if($company->exists)@method('PUT')@endif
+<form class="admin-panel admin-form-panel" method="post" enctype="multipart/form-data" action="{{ route('admin.companies.update', $company) }}">
+@csrf @method('PUT')
 <div class="admin-form-grid">
     <h2 class="admin-section-title">{{ __('Basic information') }}</h2>
-    <div class="admin-field"><label for="name_en">{{ __('Name (English) *') }}</label><input id="name_en" name="name_en" required maxlength="160" value="{{ old('name_en', $company->name_en) }}"></div>
-    <div class="admin-field"><label for="name_ar">{{ __('Name (Arabic)') }}</label><input id="name_ar" name="name_ar" maxlength="160" dir="auto" value="{{ old('name_ar', $company->name_ar) }}"></div>
-    <div class="admin-field"><label for="slug">{{ __('URL slug *') }}</label><input id="slug" name="slug" required pattern="[A-Za-z0-9_-]+" value="{{ old('slug', $company->slug) }}"></div>
-    <div class="admin-field"><label for="sort_order">{{ __('Display order *') }}</label><input id="sort_order" type="number" min="0" name="sort_order" required value="{{ old('sort_order', $company->sort_order ?? 0) }}"></div>
+    <div class="admin-field full"><label>{{ __('Company') }}</label><p class="admin-company-profile-name">{{ app()->getLocale() === 'ar' && $company->name_ar ? $company->name_ar : $company->name_en }}</p><small>{{ __('The company identity and public URL are fixed.') }}</small></div>
     <div class="admin-field full"><label for="short_description_en">{{ __('Short description (English)') }}</label><input id="short_description_en" name="short_description_en" maxlength="500" value="{{ old('short_description_en', $company->short_description_en) }}"></div>
     <div class="admin-field full"><label for="short_description_ar">{{ __('Short description (Arabic)') }}</label><input id="short_description_ar" name="short_description_ar" maxlength="500" dir="auto" value="{{ old('short_description_ar', $company->short_description_ar) }}"></div>
     <div class="admin-field"><label for="description_en">{{ __('Full description (English)') }}</label><textarea id="description_en" name="description_en" maxlength="20000">{{ old('description_en', $company->description_en) }}</textarea></div>
@@ -71,7 +68,7 @@
         <select id="library_gallery" name="library_gallery[]" multiple size="6">@foreach($mediaAssets as $path => $asset)<option value="{{ $path }}" @selected(in_array($path, old('library_gallery', []), true))>{{ $asset['label'] }} — {{ $path }}</option>@endforeach</select>
         <small>{{ __('Hold Ctrl or Command to select multiple images. Existing files remain in the library when removed from a company profile.') }}</small>
     </div>
-    <div class="admin-field full"><label class="admin-check"><input type="checkbox" name="is_published" value="1" @checked(old('is_published', $company->is_published))> {{ __('Publish this company on the public website') }}</label></div>
-    <div class="admin-field full"><div class="admin-form-actions"><button type="submit">{{ $company->exists ? __('Save changes') : __('Create company') }}</button><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('Cancel') }}</a></div></div>
+    <div class="admin-field full"><p class="admin-muted">{{ __('This profile is published directly at the company page.') }}</p></div>
+    <div class="admin-field full"><div class="admin-form-actions"><button type="submit">{{ __('Save changes') }}</button><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('Cancel') }}</a></div></div>
 </div></form>
 @endsection

@@ -569,35 +569,23 @@ class WebsiteController extends Controller
     public function companies(string $locale): View
     {
         $this->useLocale($locale);
-        $companies = Company::query()
-            ->where('is_published', true)
-            ->orderBy('sort_order')
-            ->orderBy('name_en')
-            ->paginate(12);
 
-        $settings = SeoSetting::current();
-        $companiesContent = data_get($settings->page_content, 'companies.' . $locale, []);
-        $pageSeo = $settings->metadataFor(
-            'companies', $locale,
-            (filled($companiesContent['title'] ?? null) ? $companiesContent['title'] : __('Our Companies')) . ' | ENCAP',
-            $companiesContent['hero_description'] ?? __('Explore the companies affiliated with ENCAP.')
-        );
+        $company = Company::query()
+            ->where('slug', 'hadaeq-al-shamal')
+            ->firstOrFail();
 
-        return view('website.companies', compact('locale', 'companies', 'pageSeo', 'companiesContent'));
+        return $this->renderCompanyProfile($locale, $company);
     }
 
-    public function company(string $locale, Company $company): View
+    private function renderCompanyProfile(string $locale, Company $company): View
     {
-        $this->useLocale($locale);
-        abort_unless($company->is_published, 404);
-
         $name = $locale === 'ar' && $company->name_ar ? $company->name_ar : $company->name_en;
         $description = $locale === 'ar' && $company->description_ar
             ? $company->description_ar
             : ($company->description_en ?? $company->short_description_en ?? '');
         $settings = SeoSetting::current();
         $pageSeo = $settings->metadataFor(
-            'company-' . $company->slug,
+            'companies',
             $locale,
             $name . ' | ENCAP',
             $description

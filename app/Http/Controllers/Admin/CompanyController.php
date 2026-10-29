@@ -14,60 +14,19 @@ use Illuminate\View\View;
 
 final class CompanyController extends Controller
 {
+    private const COMPANY_SLUG = 'hadaeq-al-shamal';
+
     public function index(): View
     {
-        return view('admin.companies.index', [
-            'companies' => Company::query()->orderBy('sort_order')->orderBy('name_en')->paginate(20),
-        ]);
-    }
+        $company = Company::query()->where('slug', self::COMPANY_SLUG)->firstOrFail();
 
-    public function create(EncapMediaInventory $mediaInventory): View
-    {
-        return view('admin.companies.form', [
-            'company' => new Company(),
-            'categories' => Category::query()
-                ->orderBy('sort_order')
-                ->orderBy('name_en')
-                ->get(['id', 'name_en', 'name_ar', 'is_published']),
-            'mediaAssets' => $mediaInventory->options(),
-        ]);
-    }
-
-    public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
-    {
-        $data = $this->validated($request, $mediaInventory);
-        $categoryIds = array_values(array_unique(array_map('intval', $data['category_ids'] ?? [])));
-        unset($data['category_ids']);
-        $libraryImage = $data['library_image'] ?? null;
-        $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
-        unset($data['library_image'], $data['library_gallery'], $data['gallery'], $data['remove_gallery']);
-        $data['is_published'] = $request->boolean('is_published');
-
-        if ($request->hasFile('image')) {
-            $stored = $imageUpload->store($request->file('image'), 'companies', 'image');
-            $data['image'] = $stored['path'];
-        } elseif ($libraryImage) {
-            $data['image'] = $libraryImage;
-        } else {
-            $data['image'] = null;
-        }
-
-        $galleryPaths = $libraryGallery;
-        foreach (array_values(array_filter((array) $request->file('gallery', []))) as $file) {
-            $stored = $imageUpload->store($file, 'companies/gallery', 'gallery');
-            $galleryPaths[] = $stored['path'];
-        }
-        $data['gallery'] = array_values(array_unique($galleryPaths));
-
-        $company = Company::create($data);
-        $company->categories()->sync($categoryIds);
-
-        return redirect()->route('admin.companies.edit', $company)
-            ->with('success', __('Company created.'));
+        return view('admin.companies.index', compact('company'));
     }
 
     public function edit(Company $company, EncapMediaInventory $mediaInventory): View
     {
+        $this->ensureFixedCompany($company);
+
         return view('admin.companies.form', [
             'company' => $company,
             'categories' => Category::query()
@@ -78,15 +37,21 @@ final class CompanyController extends Controller
         ]);
     }
 
-    public function update(Request $request, Company $company, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
-    {
+    public function update(
+        Request $request,
+        Company $company,
+        EncapImageUpload $imageUpload,
+        EncapMediaInventory $mediaInventory
+    ): RedirectResponse {
+        $this->ensureFixedCompany($company);
+
         $data = $this->validated($request, $mediaInventory, $company);
         $categoryIds = array_values(array_unique(array_map('intval', $data['category_ids'] ?? [])));
         unset($data['category_ids']);
+
         $libraryImage = $data['library_image'] ?? null;
         $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
         unset($data['library_image'], $data['library_gallery'], $data['gallery'], $data['remove_gallery']);
-        $data['is_published'] = $request->boolean('is_published');
 
         if ($request->hasFile('image')) {
             $stored = $imageUpload->store($request->file('image'), 'companies', 'image');
@@ -110,9 +75,9 @@ final class CompanyController extends Controller
             $gallery[] = $stored['path'];
         }
 
-        // Do not delete replaced or removed files. The central media library can
-        // reuse the same asset elsewhere on the website.
         $data['gallery'] = array_values(array_unique($gallery));
+        $data['is_published'] = true;
+
         $company->update($data);
         $company->categories()->sync($categoryIds);
 
@@ -120,18 +85,14 @@ final class CompanyController extends Controller
             ->with('success', __('Company updated.'));
     }
 
-    public function destroy(Company $company): RedirectResponse
+    private function ensureFixedCompany(Company $company): void
     {
-        // Keep image files in the central library, even when a company record is removed.
-        $company->delete();
-
-        return redirect()->route('admin.companies.index')
-            ->with('success', __('Company deleted.'));
+        abort_unless($company->slug === self::COMPANY_SLUG, 404);
     }
 
-    private function validated(Request $request, EncapMediaInventory $mediaInventory, ?Company $company = null): array
+    private function validated(Request $request, EncapMediaInventory $mediaInventory, Company $company): array
     {
-        $currentGallery = $company?->gallery ?? [];
+        $currentGallery = $company->gallery ?? [];
         $requestedRemovals = collect($request->input('remove_gallery', []))
             ->filter(fn ($index) => is_scalar($index)
                 && filter_var($index, FILTER_VALIDATE_INT) !== false
@@ -146,9 +107,6 @@ final class CompanyController extends Controller
         $uploadedGallerySlots = max(0, 12 - $remainingGalleryCount - $libraryGalleryCount);
 
         return $request->validate([
-            'name_en' => ['required', 'string', 'max:160'],
-            'name_ar' => ['nullable', 'string', 'max:160'],
-            'slug' => ['required', 'alpha_dash', 'max:180', Rule::unique('companies', 'slug')->ignore($company?->id)],
             'short_description_en' => ['nullable', 'string', 'max:500'],
             'short_description_ar' => ['nullable', 'string', 'max:500'],
             'description_en' => ['nullable', 'string', 'max:20000'],
@@ -168,8 +126,6 @@ final class CompanyController extends Controller
             'remove_gallery.*' => ['integer', 'min:0'],
             'category_ids' => ['nullable', 'array'],
             'category_ids.*' => ['integer', 'distinct', 'exists:categories,id'],
-            'is_published' => ['sometimes', 'boolean'],
-            'sort_order' => ['required', 'integer', 'min:0', 'max:100000'],
         ]);
     }
 }

@@ -58,7 +58,7 @@ test('authenticated users see live catalogue and enquiry summaries on the dashbo
 });
 
 
-test('authenticated administrators can manage companies and centrally replace website images', function () {
+test('authenticated administrators can manage the fixed company profile and centrally replace website images', function () {
     \Illuminate\Support\Facades\Storage::fake('public');
     \Illuminate\Support\Facades\Storage::fake('encap_images');
 
@@ -67,8 +67,10 @@ test('authenticated administrators can manage companies and centrally replace we
     $this->actingAs($admin)
         ->get(route('admin.companies.index'))
         ->assertOk()
-        ->assertSee('دليل شركات المجموعة')
-        ->assertSee('شركة حدائق الشمال');
+        ->assertSee('ملف الشركة')
+        ->assertSee('شركة حدائق الشمال')
+        ->assertDontSee('Add company')
+        ->assertDontSee('حذف الشركة');
 
     $this->get(route('admin.categories.create'))
         ->assertOk()

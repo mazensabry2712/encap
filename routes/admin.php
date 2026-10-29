@@ -34,7 +34,7 @@ Route::prefix('admin')->name('admin.')->middleware(SetAdminLocale::class)->group
         Route::post('/media/upload', [MediaController::class, 'upload'])->middleware('throttle:20,1')->name('media.upload');
         Route::post('/media/replace', [MediaController::class, 'replace'])->middleware('throttle:20,1')->name('media.replace');
         Route::resource('categories', CategoryController::class)->except(['show']);
-        Route::resource('companies', CompanyController::class)->except(['show']);
+        Route::resource('companies', CompanyController::class)->only(['index', 'edit', 'update']);
         Route::get('/seo', [SeoSettingController::class, 'edit'])->name('seo.edit');
         Route::put('/seo', [SeoSettingController::class, 'update'])->name('seo.update');
         Route::get('/quote-requests', [QuoteRequestController::class, 'index'])->name('quote-requests.index');

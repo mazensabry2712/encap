@@ -11,7 +11,6 @@
         <nav class="breadcrumbs" aria-label="{{ __('Breadcrumbs') }}">
             <a href="{{ route('home', ['locale' => $locale]) }}">{{ __('Home') }}</a>
             <span aria-hidden="true">/</span>
-            <a href="{{ route('companies', ['locale' => $locale]) }}">{{ __('Our Companies') }}</a>
             <span aria-hidden="true">/</span>
             <span aria-current="page">{{ $companyName }}</span>
         </nav>

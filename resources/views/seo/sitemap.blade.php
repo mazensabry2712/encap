@@ -42,17 +42,6 @@
         </url>
         @endif
     @endforeach
-    @foreach(($companies ?? collect()) as $company)
-        <url>
-            <loc>{{ $baseUrl . '/' . $locale . '/companies/' . $company->slug }}</loc>
-            <lastmod>{{ optional($company->updated_at)->toAtomString() }}</lastmod>
-            @foreach($locales as $alternateLocale)
-            <xhtml:link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $baseUrl . '/' . $alternateLocale . '/companies/' . $company->slug }}"/>
-            @endforeach
-            <xhtml:link rel="alternate" hreflang="x-default" href="{{ $baseUrl . '/en/companies/' . $company->slug }}"/>
-            <changefreq>monthly</changefreq>
-            <priority>0.6</priority>
-        </url>
-    @endforeach
+
 @endforeach
 </urlset>

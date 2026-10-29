@@ -36,11 +36,6 @@ test('administrators can assign product categories to a company and unpublished 
         ->assertSee('طماطم');
 
     $this->put(route('admin.companies.update', $company), [
-        'name_en' => $company->name_en,
-        'name_ar' => $company->name_ar,
-        'slug' => $company->slug,
-        'sort_order' => $company->sort_order,
-        'is_published' => '1',
         'category_ids' => [$published->id, $unpublished->id],
     ])->assertRedirect(route('admin.companies.edit', $company))
         ->assertSessionHasNoErrors();
@@ -49,7 +44,7 @@ test('administrators can assign product categories to a company and unpublished 
         ->toContain($published->id)
         ->toContain($unpublished->id);
 
-    $this->get('/ar/companies/hadaeq-al-shamal')
+    $this->get('/ar/companies')
         ->assertOk()
         ->assertSee('المنتجات التي توفرها هذه الشركة')
         ->assertSee('طماطم')
