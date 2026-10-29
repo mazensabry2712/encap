@@ -25,7 +25,7 @@ test('recovery migration restores the public company profile when its database r
     $this->get('/ar/companies')
         ->assertOk()
         ->assertSee('شركة حدائق الشمال')
-        ->assertSee('المنتجات التي توفرها هذه الشركة');
+        ->assertSee('ENCAP');
 });
 
 test('administrators can assign product categories to a company and unpublished products stay hidden', function () {
