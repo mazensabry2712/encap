@@ -24,6 +24,7 @@ final class EncapMediaInventory
             SeoSetting::query()->whereNotNull('default_og_image')->pluck('default_og_image')->all(),
             Category::query()->get()->flatMap(fn (Category $item) => $item->gallery ?? [])->all(),
             Company::query()->get()->flatMap(fn (Company $item) => $item->gallery ?? [])->all(),
+            Company::query()->get()->flatMap(fn (Company $item) => collect($item->content_sections ?? [])->flatMap(fn ($section) => $section['images'] ?? [])->all())->all(),
         );
 
         return collect($paths)

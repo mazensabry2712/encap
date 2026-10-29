@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\ContactMessage;
 use App\Models\QuoteRequest;
 use App\Models\SeoSetting;
@@ -568,6 +569,10 @@ class WebsiteController extends Controller
     {
         $this->useLocale($locale);
 
+        $company = Company::query()
+            ->where('slug', 'hadaeq-al-shamal')
+            ->firstOrFail();
+
         $settings = SeoSetting::current();
         $pageSeo = [
             'title' => __('Our Company') . ' | ENCAP',
@@ -576,7 +581,7 @@ class WebsiteController extends Controller
                 : __($settings->site_description_en),
         ];
 
-        return view('website.company', compact('locale', 'pageSeo'));
+        return view('website.company', compact('company', 'locale', 'pageSeo'));
     }
 
     public function contact(string $locale): View

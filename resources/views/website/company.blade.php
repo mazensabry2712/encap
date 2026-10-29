@@ -198,14 +198,8 @@
 
     $copy = $copyByLocale[$locale] ?? $copyByLocale['en'];
 
-    $farmImage = \App\Support\EncapImage::url(
-        'farm-cultivation-2026.jpg',
-        'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=1400&q=85'
-    );
-    $cropImage = \App\Support\EncapImage::url(
-        'potato-sorting-2026.jpg',
-        'https://images.pexels.com/photos/2889093/pexels-photo-2889093.jpeg?auto=compress&cs=tinysrgb&w=1400'
-    );
+    $contentSections = $company->content_sections ?: \App\Models\Company::defaultContentSections();
+    $imageCatalogue = app(\App\Services\EncapImageLibrary::class)->catalogue();
 @endphp
 
 @push('head')
@@ -367,34 +361,34 @@
         </div>
     </section>
 
-    <section class="hs-company__section hs-company__gallery" aria-labelledby="hs-company-gallery-title">
-        <div class="container">
-            <div class="hs-company__section-heading">
-                <div>
-                    <div class="hs-company__kicker">{{ $copy['gallery_kicker'] }}</div>
-                    <h2 id="hs-company-gallery-title" class="hs-company__section-title">{{ $copy['gallery_title'] }}</h2>
+    @foreach($contentSections as $sectionIndex => $contentSection)
+        @php($sectionTitle = $locale === 'ar' ? ($contentSection['title_ar'] ?? $contentSection['title_en'] ?? '') : ($contentSection['title_en'] ?? $contentSection['title_ar'] ?? ''))
+        @php($sectionImages = array_values(array_slice($contentSection['images'] ?? [], 0, 2)))
+        <section class="hs-company__section hs-company__gallery" aria-labelledby="hs-company-gallery-title-{{ $sectionIndex }}">
+            <div class="container">
+                <div class="hs-company__section-heading">
+                    <div>
+                        <div class="hs-company__kicker">{{ $copy['gallery_kicker'] }}</div>
+                        <h2 id="hs-company-gallery-title-{{ $sectionIndex }}" class="hs-company__section-title">{{ $sectionTitle }}</h2>
+                    </div>
+                    <p class="hs-company__section-intro">{{ $copy['gallery_intro'] }}</p>
                 </div>
-                <p class="hs-company__section-intro">{{ $copy['gallery_intro'] }}</p>
-            </div>
 
-            <div class="hs-company__gallery-grid">
-                <figure class="hs-company__photo">
-                    <img src="{{ $farmImage }}" alt="{{ $copy['image_one_alt'] }}" width="1200" height="850" loading="lazy" decoding="async">
-                    <figcaption>
-                        <span>{{ $copy['image_one_title'] }}</span>
-                        <span class="hs-company__photo-index">01 / 02</span>
-                    </figcaption>
-                </figure>
-                <figure class="hs-company__photo">
-                    <img src="{{ $cropImage }}" alt="{{ $copy['image_two_alt'] }}" width="1200" height="850" loading="lazy" decoding="async">
-                    <figcaption>
-                        <span>{{ $copy['image_two_title'] }}</span>
-                        <span class="hs-company__photo-index">02 / 02</span>
-                    </figcaption>
-                </figure>
+                <div class="hs-company__gallery-grid">
+                    @foreach($sectionImages as $imageIndex => $imagePath)
+                        @if(filled($imagePath))
+                            <figure class="hs-company__photo">
+                                <img src="{{ \App\Support\EncapImage::url($imagePath, $imageCatalogue[$imagePath] ?? null) }}" alt="{{ $sectionTitle }} — {{ $imageIndex + 1 }}" width="1200" height="850" loading="lazy" decoding="async">
+                                <figcaption>
+                                    <span>{{ $locale === 'ar' ? 'صورة ' . ($imageIndex + 1) : 'Image ' . ($imageIndex + 1) }}</span>
+                                    <span class="hs-company__photo-index">{{ str_pad((string) ($imageIndex + 1), 2, '0', STR_PAD_LEFT) }} / 02</span>
+                                </figcaption>
+                            </figure>
+                        @endif
+                    @endforeach
+                </div>
             </div>
-            @if(filled($copy['image_note']))<p class="hs-company__image-note">{{ $copy['image_note'] }}</p>@endif
-        </div>
-    </section>
+        </section>
+    @endforeach
 </div>
 @endsection
