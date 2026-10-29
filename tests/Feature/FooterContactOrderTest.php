@@ -30,14 +30,16 @@ test('footer shows group companies before regional contacts and places phone num
         expect($companiesPosition)->toBeLessThan($businessPosition);
 
         $businessHtml = substr($html, $businessPosition);
+        $firstPhonePosition = strpos($businessHtml, 'href="tel:+966568309656"');
         $lastPhonePosition = strpos($businessHtml, 'href="tel:+201060113074"');
         $contactNamePosition = strpos($businessHtml, $expected['contactName']);
         $taglinePosition = strpos($businessHtml, $expected['tagline']);
 
+        expect($firstPhonePosition)->not->toBeFalse();
         expect($lastPhonePosition)->not->toBeFalse();
         expect($contactNamePosition)->not->toBeFalse();
         expect($taglinePosition)->not->toBeFalse();
-        expect($lastPhonePosition)->toBeLessThan($contactNamePosition);
+        expect($firstPhonePosition)->toBeLessThan($contactNamePosition);
         expect($lastPhonePosition)->toBeLessThan($taglinePosition);
 
         $renderedSocialsPosition = strpos($businessHtml, 'class="encap-footer-contact-socials"');
