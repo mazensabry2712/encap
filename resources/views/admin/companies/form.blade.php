@@ -73,7 +73,7 @@
 
     <h2 class="admin-section-title">{{ __('Company content sections') }}</h2>
     <div class="admin-field full">
-        <p>{{ __('Each public section has an Arabic and English heading plus two images. Reorder sections by removing and adding them in the order.') }}</p>
+        <p>{{ __('Add as many content sections and images as you need. Titles and images are optional; empty sections are skipped.') }}</p>
         <div class="admin-actions"><button class="admin-btn" type="button" data-add-company-section>{{ __('Add content section') }}</button></div>
     </div>
     <div class="admin-field full" data-company-section-list>
