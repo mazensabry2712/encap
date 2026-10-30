@@ -124,12 +124,9 @@ test('a stock image that still exists as an external fallback is copied into the
 
 
 test('default company content photos are tracked and replaced by section position only', function () {
-    $company = Company::query()->create([
-        'name_en' => 'Hadaeq Al-Shamal',
-        'name_ar' => 'حدائق الشمال',
-        'slug' => 'hadaeq-al-shamal',
-        'is_published' => true,
-    ]);
+    // The repair migration seeds the fixed Hadaeq Al-Shamal company when needed.
+    // Reuse that record instead of inserting a duplicate unique slug.
+    $company = Company::query()->where('slug', 'hadaeq-al-shamal')->firstOrFail();
 
     $inventory = app(EncapMediaInventory::class);
     $usageKey = "company:{$company->id}:section:0:image:0";
