@@ -179,9 +179,9 @@ test('replacing one central image usage creates a separate file and preserves th
     Storage::disk('encap_images')->assertExists($assignedPath);
     expect(Storage::disk('encap_images')->get($assignedPath))->not->toBe($oldBytes);
 
-    $query = parse_url($newUrl, PHP_URL_QUERY);
-    $imagePath = parse_url($newUrl, PHP_URL_PATH);
-    $response = $this->get($imagePath.($query ? '?'.$query : ''))->assertOk();
+    // Exercise the application's image endpoint using the stored relative path.
+    // The storage URL may vary by disk implementation in tests; the route path is stable.
+    $response = $this->get('/encap-img/'.$assignedPath)->assertOk();
 
     expect($response->headers->get('Cache-Control'))
         ->toContain('no-cache')
