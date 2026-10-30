@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="admin-page-intro">
-    <div><p>{{ __('Manage images used across the public website from one place. Replacing a named asset keeps its URL so the same image updates wherever the site uses it.') }}</p></div>
+    <div><p>{{ app()->getLocale() === 'ar' ? 'كل استخدام للصورة له مكان مستقل. استبدال صورة المنتج أو الشركة يغيّر هذا المكان فقط، ولا يلمس أي مكان آخر يستخدم الصورة الأصلية.' : 'Each image use has its own location. Replacing a product or company image changes only that location and leaves every other use untouched.' }}</p></div>
     <div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.categories.index') }}">{{ __('Product catalogue') }}</a><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('Group companies') }}</a></div>
 </div>
 
@@ -40,25 +40,35 @@
                 <div class="admin-media-card-body">
                     <h3>{{ $asset['label'] }}</h3>
                     <code>{{ $asset['path'] }}</code>
-                    @if(count($asset['categories']) || count($asset['companies']) || $asset['seo'])
-                        <p class="admin-media-usage">
-                            @if(count($asset['categories'])){{ __('Products') }}: {{ implode(', ', $asset['categories']) }}@endif
-                            @if(count($asset['companies'])){{ count($asset['categories']) ? ' · ' : '' }}{{ __('Companies') }}: {{ implode(', ', $asset['companies']) }}@endif
-                            @if($asset['seo']){{ (count($asset['categories']) || count($asset['companies'])) ? ' · ' : '' }}{{ __('SEO and social sharing') }}@endif
-                        </p>
+                    @if(count($asset['usages']))
+                        <div class="admin-media-usage-list">
+                            @foreach($asset['usages'] as $usage)
+                                <div class="admin-media-usage-item">
+                                    <p class="admin-media-usage"><strong>{{ app()->getLocale() === 'ar' ? 'المكان:' : 'Location:' }}</strong> {{ $usage['location'] }}</p>
+                                    <form class="admin-media-replace-form" method="post" enctype="multipart/form-data" action="{{ route('admin.media.replace') }}">
+                                        @csrf
+                                        <input type="hidden" name="path" value="{{ $asset['path'] }}">
+                                        <input type="hidden" name="usage" value="{{ $usage['key'] }}">
+                                        <label for="replace-{{ md5($asset['path'].'-'.$usage['key']) }}">{{ app()->getLocale() === 'ar' ? 'استبدال الصورة في هذا المكان فقط' : 'Replace only in this location' }}</label>
+                                        <input id="replace-{{ md5($asset['path'].'-'.$usage['key']) }}" type="file" name="image" required accept="image/jpeg,image/png,image/webp,image/avif,image/gif">
+                                        <small>{{ app()->getLocale() === 'ar' ? 'سيتم إنشاء ملف مستقل لهذا المكان.' : 'A separate image file will be created for this location.' }}</small>
+                                        <button class="admin-btn secondary" type="submit">{{ app()->getLocale() === 'ar' ? 'استبدال هنا فقط' : 'Replace here only' }}</button>
+                                    </form>
+                                </div>
+                            @endforeach
+                        </div>
+                    @elseif($asset['global_brand_asset'])
+                        <form class="admin-media-replace-form" method="post" enctype="multipart/form-data" action="{{ route('admin.media.replace') }}">
+                            @csrf
+                            <input type="hidden" name="path" value="{{ $asset['path'] }}">
+                            <label for="replace-{{ md5($asset['path']) }}">{{ __('Replace this image') }}</label>
+                            <input id="replace-{{ md5($asset['path']) }}" type="file" name="image" required accept="image/png">
+                            <small>{{ app()->getLocale() === 'ar' ? 'يتم استخدام شعار وهوية الموقع بشكل موحّد في عناصر العلامة التجارية.' : 'Brand marks remain consistent across the site identity.' }}</small>
+                            <button class="admin-btn secondary" type="submit">{{ __('Replace image') }}</button>
+                        </form>
+                    @else
+                        <p class="admin-media-usage">{{ app()->getLocale() === 'ar' ? 'هذه الصورة متاحة في المكتبة للاختيار من داخل صفحة المنتج أو الشركة، ولم يتم ربطها بمكان قابل للاستبدال المباشر.' : 'This image is available in the library to assign from a product or company editor. It is not attached to one editable location yet.' }}</p>
                     @endif
-                    <div class="admin-media-source-line">
-                        <span class="admin-badge {{ $asset['in_main'] ? '' : 'draft' }}">{{ $asset['in_main'] ? __('Main image folder') : ($asset['in_legacy'] ? __('Legacy image folder') : __('Fallback / missing file')) }}</span>
-                        @if($asset['in_main'])<a href="{{ $asset['url'] }}" target="_blank" rel="noopener">{{ __('Open') }} ↗</a>@endif
-                    </div>
-                    <form class="admin-media-replace-form" method="post" enctype="multipart/form-data" action="{{ route('admin.media.replace') }}">
-                        @csrf
-                        <input type="hidden" name="path" value="{{ $asset['path'] }}">
-                        <label for="replace-{{ md5($asset['path']) }}">{{ __('Replace this image') }}</label>
-                        <input id="replace-{{ md5($asset['path']) }}" type="file" name="image" required accept="{{ str_ends_with(strtolower($asset['path']), '.png') ? 'image/png' : (str_ends_with(strtolower($asset['path']), '.webp') ? 'image/webp' : (str_ends_with(strtolower($asset['path']), '.avif') ? 'image/avif' : (str_ends_with(strtolower($asset['path']), '.gif') ? 'image/gif' : 'image/jpeg'))) }}">
-                        <small>{{ __('Use the same file format as the target image.') }}</small>
-                        <button class="admin-btn secondary" type="submit">{{ __('Replace image') }}</button>
-                    </form>
                 </div>
             </article>
         @empty
