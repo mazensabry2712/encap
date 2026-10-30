@@ -58,6 +58,35 @@ test('one product editor controls catalogue, homepage, frozen catalogue and comp
     $this->get('/en/companies')->assertOk()->assertDontSee('Central Frozen Mango')->assertDontSee('encap-company-detail-section', false);
 });
 
+ 
+test('product form can clear all company links and available formats', function () {
+    $company = Company::query()->where('slug', 'hadaeq-al-shamal')->firstOrFail();
+    $category = Category::query()->create([
+        'name_en' => 'Clear Product Options',
+        'slug' => 'clear-product-options',
+        'available_forms' => ['Fresh', 'Frozen'],
+        'is_published' => true,
+        'sort_order' => 3,
+    ]);
+    $category->companies()->attach($company->id);
+
+    $this->actingAs(User::factory()->create())
+        ->put(route('admin.categories.update', $category), [
+            'name_en' => $category->name_en,
+            'slug' => $category->slug,
+            'sort_order' => $category->sort_order,
+            'company_ids_present' => '1',
+            'available_forms_present' => '1',
+        ])
+        ->assertRedirect(route('admin.categories.index'))
+        ->assertSessionHasNoErrors();
+
+    $category->refresh();
+
+    expect($category->available_forms)->toBe([])
+        ->and($category->companies()->exists())->toBeFalse();
+});
+
 test('product placement can keep a published product out of selected catalogue locations', function () {
     Category::query()->create([
         'name_en' => 'Company-only product',
