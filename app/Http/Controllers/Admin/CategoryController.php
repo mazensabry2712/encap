@@ -305,7 +305,7 @@ class CategoryController extends Controller
             ? min(4294967295, max(0, (int) $requestedOrder))
             : (int) ($category?->sort_order ?? 0);
 
-        $rawCompanyIds = $request->exists('company_ids')
+        $rawCompanyIds = ($request->exists('company_ids_present') || $request->exists('company_ids'))
             ? (array) $request->input('company_ids', [])
             : ($category?->companies()->pluck('companies.id')->all() ?? []);
         $companyIds = collect($rawCompanyIds)
@@ -319,7 +319,7 @@ class CategoryController extends Controller
             ->map(fn ($id) => (int) $id)
             ->all();
 
-        $rawForms = $request->exists('available_forms')
+        $rawForms = ($request->exists('available_forms_present') || $request->exists('available_forms'))
             ? (array) $request->input('available_forms', [])
             : ($category?->available_forms ?? []);
         $rawForms = array_values(array_filter($rawForms, fn ($form) => is_string($form)));
