@@ -137,7 +137,8 @@ final class EncapMediaInventory
                 }
             }
 
-            foreach ($company->content_sections ?? [] as $sectionIndex => $section) {
+            $companySections = $company->content_sections ?: Company::defaultContentSections();
+            foreach ($companySections as $sectionIndex => $section) {
                 $sectionTitle = $isArabic
                     ? ($section['title_ar'] ?? $section['title_en'] ?? '')
                     : ($section['title_en'] ?? $section['title_ar'] ?? '');
@@ -321,7 +322,7 @@ final class EncapMediaInventory
                     && ctype_digit($parts[3])
                     && ($parts[4] ?? '') === 'image'
                     && ctype_digit($parts[5])) {
-                    $sections = $company->content_sections ?? [];
+                    $sections = $company->content_sections ?: Company::defaultContentSections();
                     $sectionIndex = (int) $parts[3];
                     $imageIndex = (int) $parts[5];
 
