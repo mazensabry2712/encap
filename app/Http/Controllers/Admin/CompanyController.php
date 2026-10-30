@@ -141,7 +141,7 @@ final class CompanyController extends Controller
         Company $company
     ): array {
         $allowedLibraryPaths = $mediaInventory->paths();
-        $existingCompanyPaths = collect($company->content_sections ?: Company::defaultContentSections())
+        $existingCompanyPaths = collect(is_array($company->content_sections) ? $company->content_sections : Company::defaultContentSections())
             ->flatMap(fn (array $section) => $section['images'] ?? [])
             ->filter(fn ($path) => is_string($path) && $path !== '')
             ->values()
