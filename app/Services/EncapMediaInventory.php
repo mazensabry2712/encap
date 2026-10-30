@@ -137,7 +137,7 @@ final class EncapMediaInventory
                 }
             }
 
-            $companySections = $company->content_sections ?: Company::defaultContentSections();
+            $companySections = is_array($company->content_sections) ? $company->content_sections : Company::defaultContentSections();
             foreach ($companySections as $sectionIndex => $section) {
                 $sectionTitle = $isArabic
                     ? ($section['title_ar'] ?? $section['title_en'] ?? '')
