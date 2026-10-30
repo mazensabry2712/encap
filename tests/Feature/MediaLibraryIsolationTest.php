@@ -65,8 +65,8 @@ test('assigning the same library photo to two content locations creates independ
     $secondAssignment = $assigner->duplicate($source, 'category-second-product-main');
 
     expect($firstAssignment)->not->toBe($secondAssignment)
-        ->and($firstAssignment)->toStartWith('assigned/category-first-product-main/')
-        ->and($secondAssignment)->toStartWith('assigned/category-second-product-main/');
+        ->and(str_starts_with($firstAssignment, 'assigned/category-first-product-main/'))->toBeTrue()
+        ->and(str_starts_with($secondAssignment, 'assigned/category-second-product-main/'))->toBeTrue();
 
     Storage::disk('encap_images')->assertExists($firstAssignment);
     Storage::disk('encap_images')->assertExists($secondAssignment);
@@ -99,4 +99,23 @@ test('replacing one fixed page image slot does not change another slot using the
         ->and(data_get($settings->site_media_slots, 'home.hero_feature'))->toBeNull()
         ->and(EncapImage::slot('home.quality_band', $sourcePath))->toContain($replacementPath)
         ->and(EncapImage::slot('home.hero_feature', $sourcePath))->toContain($sourcePath);
+});
+
+
+test('a stock image that still exists as an external fallback is copied into the library assignment', function () {
+    Storage::fake('encap_images');
+    Storage::fake('public');
+
+    $jpeg = "\\xFF\\xD8\\xFF" . str_repeat('A', 2048);
+    Http::fake([
+        'https://images.pexels.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
+    ]);
+
+    $assigned = app(EncapImageAssignment::class)->duplicate(
+        'orange-orchard-hero-2026.jpg',
+        'homepage-test-slot'
+    );
+
+    expect(str_starts_with($assigned, 'assigned/homepage-test-slot/'))->toBeTrue();
+    Storage::disk('encap_images')->assertExists($assigned);
 });
