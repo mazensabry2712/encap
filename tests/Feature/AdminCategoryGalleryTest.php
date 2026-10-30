@@ -29,6 +29,11 @@ test('category editor presents an organized gallery manager with live image prev
         ->assertSee('js-gallery-remove', false)
         ->assertSee('admin-gallery-manager.js', false)
         ->assertSee('data-gallery-total', false)
+        ->assertDontSee(' required', false)
+        ->assertDontSee('maxlength=', false)
+        ->assertDontSee('pattern=', false)
+        ->assertDontSee('data-max-gallery', false)
+        ->assertDontSee('The gallery has reached the 12-image limit')
         ->assertSee('صور المنتج الإضافية');
 });
 
