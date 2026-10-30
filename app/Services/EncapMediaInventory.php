@@ -193,12 +193,9 @@ final class EncapMediaInventory
 
         $replaced = \Illuminate\Support\Facades\DB::transaction(function () use ($parts, $expectedPath, $newPath): bool {
             $type = $parts[0] ?? '';
-            $id = isset($parts[1]) && ctype_digit($parts[1]) ? (int) $parts[1] : 0;
 
-            if ($id < 1) {
-                return false;
-            }
-
+            // Static site slots use descriptive keys (for example home.hero_feature),
+            // not numeric record IDs, so handle them before validating an entity ID.
             if ($type === 'site' && count($parts) === 2) {
                 $slotKey = $parts[1];
                 $definition = EncapImage::defaultSlots()[$slotKey] ?? null;
@@ -226,6 +223,12 @@ final class EncapMediaInventory
                 }
 
                 return $saved;
+            }
+
+            $id = isset($parts[1]) && ctype_digit($parts[1]) ? (int) $parts[1] : 0;
+
+            if ($id < 1) {
+                return false;
             }
 
             if ($type === 'category') {
