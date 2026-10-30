@@ -368,7 +368,7 @@
 
     @foreach($contentSections as $sectionIndex => $contentSection)
         @php($sectionTitle = $locale === 'ar' ? ($contentSection['title_ar'] ?? $contentSection['title_en'] ?? '') : ($contentSection['title_en'] ?? $contentSection['title_ar'] ?? ''))
-        @php($sectionImages = array_values(array_slice($contentSection['images'] ?? [], 0, 2)))
+        @php($sectionImages = array_values($contentSection['images'] ?? []))
         <section class="hs-company__section hs-company__gallery" aria-labelledby="hs-company-gallery-title-{{ $sectionIndex }}">
             <div class="container">
                 <div class="hs-company__section-heading">
@@ -386,7 +386,7 @@
                                 <img src="{{ \App\Support\EncapImage::url($imagePath, $imageCatalogue[$imagePath] ?? null) }}" alt="{{ $sectionTitle }} — {{ $imageIndex + 1 }}" width="1200" height="850" loading="lazy" decoding="async">
                                 <figcaption>
                                     <span>{{ $locale === 'ar' ? 'صورة ' . ($imageIndex + 1) : 'Image ' . ($imageIndex + 1) }}</span>
-                                    <span class="hs-company__photo-index">{{ str_pad((string) ($imageIndex + 1), 2, '0', STR_PAD_LEFT) }} / 02</span>
+                                    <span class="hs-company__photo-index">{{ str_pad((string) ($imageIndex + 1), 2, '0', STR_PAD_LEFT) }} / {{ str_pad((string) count($sectionImages), 2, '0', STR_PAD_LEFT) }}</span>
                                 </figcaption>
                             </figure>
                         @endif
