@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Company;
+use App\Services\EncapImageAssignment;
 use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
@@ -39,7 +40,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
+    public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory, EncapImageAssignment $imageAssignment): RedirectResponse
     {
         $data = $this->validated($request, $mediaInventory);
         $companyIds = array_values(array_unique(array_map('intval', $data['company_ids'] ?? [])));
@@ -68,11 +69,14 @@ class CategoryController extends Controller
                 $savedImage = $imageUpload->store($primaryImage, 'categories', 'images');
                 $storedUploads[] = $savedImage;
                 $data['image'] = $savedImage['path'];
-            } else {
-                $data['image'] = $libraryImage;
+            } elseif ($libraryImage) {
+                $data['image'] = $imageAssignment->duplicate($libraryImage, 'category-'.$data['slug'].'-main', 'library_image');
             }
 
-            $galleryPaths = $libraryGallery;
+            $galleryPaths = [];
+            foreach ($libraryGallery as $index => $libraryPath) {
+                $galleryPaths[] = $imageAssignment->duplicate($libraryPath, 'category-'.$data['slug'].'-gallery-'.($index + 1), 'library_gallery.'.$index);
+            }
             $galleryUploads = array_merge(
                 array_slice($selectedImages, 1),
                 array_values(array_filter((array) $request->file('gallery', [])))
@@ -119,7 +123,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function update(Request $request, Category $category, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory): RedirectResponse
+    public function update(Request $request, Category $category, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory, EncapImageAssignment $imageAssignment): RedirectResponse
     {
         $data = $this->validated($request, $mediaInventory, $category);
         $companyIds = array_values(array_unique(array_map('intval', $data['company_ids'] ?? [])));
@@ -147,7 +151,7 @@ class CategoryController extends Controller
                 $storedUploads[] = $savedImage;
                 $data['image'] = $savedImage['path'];
             } elseif ($libraryImage) {
-                $data['image'] = $libraryImage;
+                $data['image'] = $imageAssignment->duplicate($libraryImage, 'category-'.$category->slug.'-main', 'library_image');
             }
 
             $gallery = $category->gallery ?? [];
@@ -158,7 +162,10 @@ class CategoryController extends Controller
                 }
             }
 
-            $gallery = array_merge(array_values($gallery), $libraryGallery);
+            $gallery = array_values($gallery);
+            foreach ($libraryGallery as $index => $libraryPath) {
+                $gallery[] = $imageAssignment->duplicate($libraryPath, 'category-'.$category->slug.'-gallery-'.($index + 1), 'library_gallery.'.$index);
+            }
             $galleryUploads = array_merge(
                 array_slice($selectedImages, 1),
                 array_values(array_filter((array) $request->file('gallery', [])))
