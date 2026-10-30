@@ -252,6 +252,32 @@ test('a company content section accepts more than two images and displays all of
     }
 });
 
+
+test('administrators can intentionally clear every company content section', function () {
+    $company = Company::query()->where('slug', 'hadaeq-al-shamal')->firstOrFail();
+    $company->update([
+        'content_sections' => [[
+            'title_ar' => 'قسم سيتم حذفه',
+            'title_en' => 'Section to clear',
+            'images' => ['temporary-company-section.jpg'],
+        ]],
+    ]);
+
+    $this->actingAs(User::factory()->create())
+        ->put(route('admin.companies.update', $company), [
+            'sections_present' => '1',
+        ])
+        ->assertRedirect(route('admin.companies.edit', $company))
+        ->assertSessionHasNoErrors();
+
+    expect($company->fresh()->content_sections)->toBe([]);
+
+    $this->get('/ar/companies')
+        ->assertOk()
+        ->assertDontSee('قسم سيتم حذفه')
+        ->assertDontSee('Production begins in the field');
+});
+
 test('an invalid company website link does not block other changes or erase the saved link', function () {
     $company = Company::query()->where('slug', 'hadaeq-al-shamal')->firstOrFail();
     $company->update(['website_url' => 'https://saved-company.example']);
