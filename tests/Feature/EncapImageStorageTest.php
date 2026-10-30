@@ -157,7 +157,7 @@ test('replacing one central image usage creates a separate file and preserves th
         ->assertRedirect(route('admin.media.index'))
         ->assertSessionHas('success');
 
-    $settings = \\App\\Models\\SeoSetting::query()->firstOrFail();
+    $settings = \App\Models\SeoSetting::query()->firstOrFail();
     $assignedPath = data_get($settings->site_media_slots, 'home.service_export');
     $newUrl = EncapImage::slot('home.service_export', 'cargo-port-2026.jpg');
 
