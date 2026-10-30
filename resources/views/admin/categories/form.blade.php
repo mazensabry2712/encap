@@ -48,7 +48,7 @@
     </div>
 </div>
 @else
-<div class="admin-field full admin-primary-image-field" data-main-image-manager data-current-gallery-count="{{ count($category->gallery ?? []) }}" data-text-no-replacement="{{ __('No product photos selected.') }}" data-text-batch-selected="{{ __(':count product photos selected.') }}" data-text-gallery-count="{{ __(':count will be added to the gallery.') }}" data-text-main-image-label="{{ __('Main image') }}" data-text-gallery-image-label="{{ __('Gallery image :number') }}" data-text-too-many="{{ __('Too many product photos selected. Mark current gallery images for removal or choose fewer files.') }}">
+<div class="admin-field full admin-primary-image-field" data-main-image-manager data-current-gallery-count="{{ count($category->gallery ?? []) }}" data-text-no-replacement="{{ __('No product photos selected.') }}" data-text-batch-selected="{{ __(':count product photos selected.') }}" data-text-gallery-count="{{ __(':count will be added to the gallery.') }}" data-text-main-image-label="{{ __('Main image') }}" data-text-gallery-image-label="{{ __('Gallery image :number') }}">
     <div class="admin-media-field-heading">
         <div><label for="image">{{ __('Product photos') }}</label><p>{{ __('Select multiple product photos at once. The first becomes the main image; the rest are added to the gallery automatically.') }}</p></div>
         <span class="admin-media-tag">{{ __('Primary image') }}</span>
@@ -64,7 +64,7 @@
         <div class="admin-primary-image-controls">
             <label class="admin-upload-label" for="image">{{ __('Choose product photos') }}</label>
             <input id="image" type="file" name="images[]" multiple accept="image/jpeg,image/png,image/webp,image/avif" data-main-image-upload>
-            <small>{{ __('JPG, PNG, WebP or AVIF · maximum 5 MB per image. The first selected photo replaces the main image on save; all remaining selected photos join the gallery.') }}</small>
+            <small>{{ __('JPG, PNG, WebP or AVIF. The first selected photo becomes the main image; the rest are added to the gallery.') }}</small>
             <span class="admin-upload-status" data-main-image-status aria-live="polite">{{ __('No product photos selected.') }}</span>
             <div class="admin-gallery-selection admin-main-image-selection" data-main-image-selection hidden></div>
         </div>
@@ -93,7 +93,7 @@
 </div>
 
 <div class="admin-field full">
-    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-text-no-files="{{ __('No new images selected.') }}" data-text-selected="{{ __(':count images selected.') }}" data-text-available="{{ __(':count gallery slots available.') }}" data-text-too-many="{{ __('Too many images selected. Mark current images for removal or choose fewer files.') }}" data-text-full="{{ __('The gallery has reached the 12-image limit.') }}" data-text-mark-remove="{{ __('Mark for removal') }}" data-text-will-remove="{{ __('Will be removed') }}">
+    <div class="admin-gallery-workspace" data-gallery-manager data-existing-count="{{ count($category->gallery ?? []) }}" data-text-no-files="{{ __('No new images selected.') }}" data-text-selected="{{ __(':count images selected.') }}" data-text-mark-remove="{{ __('Mark for removal') }}" data-text-will-remove="{{ __('Will be removed') }}">
         <div class="admin-media-field-heading admin-gallery-heading">
             <div><label>{{ __('Additional product images') }}</label><p>{{ __('Add detail shots, packaging, harvest and product variations. These appear in a horizontal gallery on the public product page.') }}</p></div>
             <span class="admin-gallery-total" data-gallery-total>{{ count($category->gallery ?? []) }}</span>
