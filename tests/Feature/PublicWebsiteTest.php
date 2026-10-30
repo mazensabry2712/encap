@@ -223,14 +223,16 @@ test('the company navigation opens the clean company-page canvas in every suppor
 });
 
 
-test('the public company page remains a clean canvas independent of stored company records', function () {
+test('the public company page shows the fixed Hadaeq profile without listing unrelated company records', function () {
     $this->get('/ar/companies')
         ->assertOk()
         ->assertSee('شركاتنا')
+        ->assertSee('شركة حدائق الشمال')
+        ->assertSee('نبذة عن الشركة')
+        ->assertSee('زراعة وإنتاج البطاطس')
         ->assertDontSee('product-detail', false)
         ->assertDontSee('encap-company-detail-section', false)
         ->assertDontSee('encap-catalog-section', false)
-        ->assertDontSee('نبذة عن الشركة')
         ->assertDontSee('الشركات المنشورة');
 
     \App\Models\Company::query()->create([
@@ -243,6 +245,7 @@ test('the public company page remains a clean canvas independent of stored compa
 
     $this->get('/ar/companies')
         ->assertOk()
+        ->assertSee('شركة حدائق الشمال')
         ->assertDontSee('شركة مخفية');
 
     $this->get('/ar/companies/hidden-company')->assertNotFound();
