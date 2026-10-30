@@ -17,6 +17,8 @@ final class EncapMediaInventory
         $paths = array_merge(
             ['logo.png', 'favicon.png'],
             array_keys($catalogue),
+            collect(EncapImage::defaultSlots())->map(fn (array $slot) => $slot['path'])->all(),
+            array_values(SeoSetting::current()->site_media_slots ?? []),
             $this->allFiles('encap_images'),
             $this->allFiles('public'),
             Category::query()->whereNotNull('image')->pluck('image')->all(),
@@ -71,6 +73,15 @@ final class EncapMediaInventory
     {
         $usages = [];
         $isArabic = app()->getLocale() === 'ar';
+        $configuredSlots = SeoSetting::current()->site_media_slots ?? [];
+
+        foreach (EncapImage::defaultSlots() as $slotKey => $slot) {
+            $usages[] = [
+                'key' => "site:{$slotKey}",
+                'path' => data_get($configuredSlots, $slotKey, $slot['path']),
+                'location' => $isArabic ? $slot['ar'] : $slot['en'],
+            ];
+        }
 
         foreach (Category::query()->get(['id', 'name_en', 'name_ar', 'image', 'gallery']) as $category) {
             $name = $isArabic && filled($category->name_ar) ? $category->name_ar : $category->name_en;
@@ -176,6 +187,35 @@ final class EncapMediaInventory
 
             if ($id < 1) {
                 return false;
+            }
+
+            if ($type === 'site' && count($parts) === 2) {
+                $slotKey = $parts[1];
+                $definition = EncapImage::defaultSlots()[$slotKey] ?? null;
+
+                if (! $definition) {
+                    return false;
+                }
+
+                $settings = SeoSetting::query()->lockForUpdate()->first();
+                if (! $settings) {
+                    $settings = SeoSetting::query()->create([]);
+                }
+
+                $slots = $settings->site_media_slots ?? [];
+                if (data_get($slots, $slotKey, $definition['path']) !== $expectedPath) {
+                    return false;
+                }
+
+                data_set($slots, $slotKey, $newPath);
+                $settings->site_media_slots = $slots;
+                $saved = $settings->save();
+
+                if ($saved) {
+                    SeoSetting::clearCache();
+                }
+
+                return $saved;
             }
 
             if ($type === 'category') {
