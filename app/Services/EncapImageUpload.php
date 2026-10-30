@@ -110,7 +110,7 @@ final class EncapImageUpload
         }
 
         throw ValidationException::withMessages([
-            $errorField => __('The image could not be saved. Please try a JPG, PNG, WebP or AVIF file up to 5 MB. If this continues, the hosting image-folder permissions need checking.'),
+            $errorField => __('The image could not be saved because the hosting storage could not write the file. Please check the image-folder permissions.'),
         ]);
     }
 
