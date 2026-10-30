@@ -87,10 +87,18 @@ final class EncapMediaInventory
             $name = $isArabic && filled($category->name_ar) ? $category->name_ar : $category->name_en;
             $prefix = $isArabic ? 'المنتج: ' : 'Product: ';
 
-            if (is_string($category->image) && $category->image !== '') {
+            $usesCuratedMangoImage = $category->slug === 'mango';
+            if (is_string($category->image) && $category->image !== '' && ! $usesCuratedMangoImage) {
                 $usages[] = [
                     'key' => "category:{$category->id}:image",
                     'path' => $category->image,
+                    'location' => $prefix.$name.($isArabic ? ' — الصورة الرئيسية' : ' — main image'),
+                ];
+            } else {
+                $fallback = EncapProductImage::fallback($category);
+                $usages[] = [
+                    'key' => "category:{$category->id}:fallback_image",
+                    'path' => data_get($configuredSlots, $fallback['slot'], $fallback['path']),
                     'location' => $prefix.$name.($isArabic ? ' — الصورة الرئيسية' : ' — main image'),
                 ];
             }
@@ -223,6 +231,30 @@ final class EncapMediaInventory
 
                 if (! $category) {
                     return false;
+                }
+
+                if (($parts[2] ?? '') === 'fallback_image' && count($parts) === 3) {
+                    $fallback = EncapProductImage::fallback($category);
+                    $settings = SeoSetting::query()->lockForUpdate()->first();
+
+                    if (! $settings) {
+                        $settings = SeoSetting::query()->create([]);
+                    }
+
+                    $slots = $settings->site_media_slots ?? [];
+                    if (data_get($slots, $fallback['slot'], $fallback['path']) !== $expectedPath) {
+                        return false;
+                    }
+
+                    data_set($slots, $fallback['slot'], $newPath);
+                    $settings->site_media_slots = $slots;
+                    $saved = $settings->save();
+
+                    if ($saved) {
+                        SeoSetting::clearCache();
+                    }
+
+                    return $saved;
                 }
 
                 if (($parts[2] ?? '') === 'image' && count($parts) === 3) {
