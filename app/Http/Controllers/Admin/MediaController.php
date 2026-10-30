@@ -22,13 +22,8 @@ final class MediaController extends Controller
     public function index(Request $request, EncapImageLibrary $imageLibrary, EncapMediaInventory $mediaInventory): View
     {
         $catalogue = $imageLibrary->catalogue();
-        $allPaths = collect($mediaInventory->paths());
-        $paths = $allPaths;
-
+        $usagesByPath = collect($mediaInventory->usages())->groupBy('path');
         $query = trim((string) $request->query('q', ''));
-        if ($query !== '') {
-            $paths = $paths->filter(fn (string $path) => Str::contains(Str::lower($path), Str::lower($query)))->values();
-        }
 
         $staticLabels = [
             'logo.png' => __('Company logo'),
@@ -55,65 +50,79 @@ final class MediaController extends Controller
             'cargo-port-2026.jpg' => __('Export port image'),
         ];
 
-        $categoryNames = [];
-        foreach (Category::query()->get(['name_en', 'name_ar', 'image', 'gallery']) as $category) {
-            foreach (array_merge([$category->image], $category->gallery ?? []) as $path) {
-                if ($path) {
-                    $categoryNames[$path][] = $category->name_en;
-                }
-            }
-        }
-
-        $seoImagePaths = SeoSetting::query()->whereNotNull('default_og_image')->pluck('default_og_image')->filter()->all();
-
-        $companyNames = [];
-        foreach (Company::query()->get(['name_en', 'image', 'gallery']) as $company) {
-            foreach (array_merge([$company->image], $company->gallery ?? []) as $path) {
-                if ($path) {
-                    $companyNames[$path][] = $company->name_en;
-                }
-            }
-        }
-
-        $assets = $paths->map(function (string $path) use ($catalogue, $staticLabels, $categoryNames, $companyNames, $seoImagePaths) {
+        $assets = collect($mediaInventory->paths())->map(function (string $path) use ($catalogue, $staticLabels, $usagesByPath) {
             $mainExists = Storage::disk('encap_images')->exists($path);
             $legacyExists = Storage::disk('public')->exists($path);
             $fallback = $catalogue[$path] ?? null;
-            $url = EncapImage::url($path, $fallback);
 
             return [
                 'path' => $path,
-                'label' => $staticLabels[$path] ?? $path,
-                'url' => $url,
+                'label' => $staticLabels[$path] ?? basename($path),
+                'url' => EncapImage::url($path, $fallback),
                 'in_main' => $mainExists,
                 'in_legacy' => $legacyExists,
-                'categories' => $categoryNames[$path] ?? [],
-                'companies' => $companyNames[$path] ?? [],
-                'seo' => in_array($path, $seoImagePaths, true),
+                'usages' => collect($usagesByPath->get($path, []))->values()->all(),
+                // The site logo and icon are intentional global brand assets.
+                'global_brand_asset' => in_array($path, ['logo.png', 'favicon.png'], true),
                 'is_slot' => array_key_exists($path, $staticLabels) || array_key_exists($path, $catalogue),
             ];
         });
 
+        if ($query !== '') {
+            $needle = Str::lower($query);
+            $assets = $assets->filter(fn (array $asset) =>
+                Str::contains(Str::lower($asset['path']), $needle)
+                || Str::contains(Str::lower((string) $asset['label']), $needle)
+                || collect($asset['usages'])->contains(
+                    fn (array $usage) => Str::contains(Str::lower($usage['location']), $needle)
+                )
+            );
+        }
+
         return view('admin.media.index', [
-            'assets' => $assets,
-            'totalAssets' => $allPaths->count(),
+            'assets' => $assets->values(),
+            'totalAssets' => $mediaInventory->paths() ? count($mediaInventory->paths()) : 0,
             'query' => $query,
         ]);
     }
 
-    public function replace(Request $request, EncapMediaInventory $mediaInventory): RedirectResponse
-    {
+    public function replace(
+        Request $request,
+        EncapMediaInventory $mediaInventory,
+        EncapImageUpload $imageUpload
+    ): RedirectResponse {
         $validated = $request->validate([
             'path' => ['required', 'string', 'max:255'],
+            'usage' => ['nullable', 'string', 'max:255'],
             'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,avif,gif', 'max:5120'],
         ]);
-        $path = ltrim(str_replace('\\', '/', $validated['path']), '/');
+        $path = ltrim(str_replace('\\\\', '/', $validated['path']), '/');
 
-        $safePath = preg_match('/\\A[a-zA-Z0-9][a-zA-Z0-9_\\/.-]*\\z/', $path) === 1
-            && ! collect(explode('/', $path))->contains(fn (string $segment) => in_array($segment, ['', '.', '..'], true))
-            && in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'], true);
+        if (filled($validated['usage'] ?? null)) {
+            $usage = $mediaInventory->usage($validated['usage']);
+            abort_unless($usage && $usage['path'] === $path, 404);
 
-        abort_unless($safePath && in_array($path, $mediaInventory->paths(), true), 404);
+            $file = $request->file('image');
+            $extension = strtolower($file->guessExtension() ?: $file->getClientOriginalExtension());
+            $filename = (string) Str::uuid().'.'.$extension;
+            $stored = $imageUpload->storeAs($file, 'media-replacements', $filename, 'image');
+
+            if (! $mediaInventory->replaceUsage($usage['key'], $path, $stored['path'])) {
+                Storage::disk($stored['disk'])->delete($stored['path']);
+                abort(409, 'This image location has changed. Refresh the media library and try again.');
+            }
+
+            $message = app()->getLocale() === 'ar'
+                ? 'تم استبدال الصورة في هذا المكان فقط، وباقي الأماكن لم تتغير.'
+                : 'Image replaced only in this location. Other places were left unchanged.';
+
+            return back()->with('success', $message)
+                ->with('image_storage_fallback', $stored['disk'] === 'public');
+        }
+
+        // Brand marks are intentionally shared across the header, footer and metadata.
+        // No ordinary content image is allowed to overwrite a shared file path.
+        abort_unless(in_array($path, ['logo.png', 'favicon.png'], true), 404);
 
         $expectedExtension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
         $uploadedExtension = strtolower($request->file('image')->guessExtension() ?: $request->file('image')->getClientOriginalExtension());
@@ -133,16 +142,6 @@ final class MediaController extends Controller
             throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
         }
 
-        $directory = dirname($path);
-        if ($directory !== '.' && ! is_dir($disk->path($directory))) {
-            if (! @mkdir($disk->path($directory), 0755, true) && ! is_dir($disk->path($directory))) {
-                throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
-            }
-        }
-        if (! is_writable($directory === '.' ? $disk->path('') : $disk->path($directory))) {
-            throw ValidationException::withMessages(['image' => __('The image could not be saved. Check the image-folder permissions.')]);
-        }
-
         $stream = fopen($request->file('image')->getRealPath(), 'r');
         try {
             $saved = $disk->put($path, $stream);
@@ -155,7 +154,11 @@ final class MediaController extends Controller
             throw ValidationException::withMessages(['image' => __('The replacement image could not be confirmed as saved.')]);
         }
 
-        return back()->with('success', __('Image replaced across the website wherever this asset is used.'));
+        $message = app()->getLocale() === 'ar'
+            ? 'تم تحديث ملف هوية الموقع.'
+            : 'Brand asset updated.';
+
+        return back()->with('success', $message);
     }
 
     public function upload(Request $request, EncapImageUpload $imageUpload): RedirectResponse
