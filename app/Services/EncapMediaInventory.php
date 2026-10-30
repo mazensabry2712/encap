@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\SeoSetting;
 use App\Support\EncapImage;
+use App\Support\EncapProductImage;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
