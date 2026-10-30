@@ -47,7 +47,7 @@
                 <div class="encap-catalog-orbit encap-catalog-orbit--inner"></div>
 
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--primary">
-                    <img src="{{ $catalogueIsFrozen ? \\App\\Support\\EncapImage::slot('frozen.hero_primary', 'frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260') : \\App\\Support\\EncapImage::slot('products.hero_primary', 'citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
+                    <img src="{{ $catalogueIsFrozen ? \App\Support\EncapImage::slot('frozen.hero_primary', 'frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260') : \App\Support\EncapImage::slot('products.hero_primary', 'citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
                     <figcaption>{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Agricultural production') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
