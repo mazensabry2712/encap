@@ -57,10 +57,17 @@ test('recovery migration preserves existing admin-managed company product assign
         ->toBe([$selected->id]);
 });
 
-test('administrators can still assign company categories while the public company page is a clean canvas', function () {
+test('administrators can assign company categories without overwriting the company sections', function () {
     $company = Company::query()
         ->where('slug', 'hadaeq-al-shamal')
         ->firstOrFail();
+
+    $existingSections = [[
+        'title_ar' => 'قسم موجود قبل تحديث التصنيفات',
+        'title_en' => 'Existing section before category update',
+        'images' => ['existing-first.jpg', 'existing-second.jpg'],
+    ]];
+    $company->update(['content_sections' => $existingSections]);
 
     $published = Category::query()->create([
         'name_en' => 'Test Tomatoes',
@@ -93,9 +100,10 @@ test('administrators can still assign company categories while the public compan
     ])->assertRedirect(route('admin.companies.edit', $company))
         ->assertSessionHasNoErrors();
 
-    expect($company->categories()->pluck('categories.id')->all())
+    expect($company->fresh()->categories()->pluck('categories.id')->all())
         ->toContain($published->id)
-        ->toContain($unpublished->id);
+        ->toContain($unpublished->id)
+        ->and($company->fresh()->content_sections)->toBe($existingSections);
 
     $this->get('/ar/companies')
         ->assertOk()
