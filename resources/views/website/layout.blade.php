@@ -30,7 +30,7 @@
     <meta property="og:image" content="{{ $ogImageUrl }}"><meta property="og:image:alt" content="ENCAP company logo">
     <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{{ $pageTitle }}"><meta name="twitter:description" content="{{ $pageDescription }}"><meta name="twitter:image" content="{{ $ogImageUrl }}"><meta name="twitter:image:alt" content="ENCAP company logo"><meta name="theme-color" content="#08291e">
     @if(request()->routeIs('home'))
-        <link rel="preload" as="image" href="{{ \App\Support\EncapImage::url('orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
+        <link rel="preload" as="image" href="{{ \App\Support\EncapImage::slot('home.hero_background', 'orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
     <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261028-central-media-company-catalogue-2">
