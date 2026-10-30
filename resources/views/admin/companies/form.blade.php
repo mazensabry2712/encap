@@ -48,7 +48,7 @@
     <h2 class="admin-section-title">{{ __('Company photography') }}</h2>
     <div class="admin-field full">
         @if($company->image)<div class="admin-company-image-current"><img src="{{ \App\Support\EncapImage::url($company->image) }}" alt="{{ $company->name_en }}" width="180" height="140" loading="lazy"><span>{{ __('Current main image') }}</span></div>@endif
-        <label for="image">{{ __('Upload main image') }}</label><input id="image" type="file" name="image" accept="image/*"><small>{{ __('Select an image file. A new upload replaces the current main image.') }}</small>
+        <label for="image">{{ __('Upload main image') }}</label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><small>{{ __('Select an image file. A new upload replaces the current main image.') }}</small>
     </div>
     <div class="admin-field full">
         <label for="library_image">{{ __('Or choose an existing image from the central library') }}</label>
@@ -64,7 +64,7 @@
             @endforeach
             </div>
         @endif
-        <input id="gallery" type="file" name="gallery[]" multiple accept="image/*"><small>{{ __('Upload as many additional images as needed. You can select multiple images at once.') }}</small>
+        <input id="gallery" type="file" name="gallery[]" multiple accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><small>{{ __('Upload as many additional images as needed. You can select multiple images at once.') }}</small>
     </div>
     <div class="admin-field full"><label for="library_gallery">{{ __('Or select images already in the central library') }}</label>
         <select id="library_gallery" name="library_gallery[]" multiple size="6">@foreach($mediaAssets as $path => $asset)<option value="{{ $path }}" @selected(in_array($path, old('library_gallery', []), true))>{{ $asset['label'] }} — {{ $path }}</option>@endforeach</select>
@@ -111,7 +111,7 @@
                                 @endforeach
                             </select>
                             <label>{{ __('Or upload a replacement image') }}</label>
-                            <input type="file" name="sections[{{ $sectionIndex }}][upload_images][{{ $imagePosition }}]" accept="image/*">
+                            <input type="file" name="sections[{{ $sectionIndex }}][upload_images][{{ $imagePosition }}]" accept="image/jpeg,image/png,image/webp,image/avif,image/gif">
                             <button type="button" class="admin-btn secondary" data-remove-company-section-image>{{ __('Remove image') }}</button>
                         </div>
                     @endforeach
@@ -134,7 +134,7 @@
                 @endforeach
             </select>
             <label>{{ __('Or upload an image') }}</label>
-            <input type="file" name="sections[__INDEX__][upload_images][__IMAGE_INDEX__]" accept="image/*">
+            <input type="file" name="sections[__INDEX__][upload_images][__IMAGE_INDEX__]" accept="image/jpeg,image/png,image/webp,image/avif,image/gif">
             <button type="button" class="admin-btn secondary" data-remove-company-section-image>{{ __('Remove image') }}</button>
         </div>
     </template>
