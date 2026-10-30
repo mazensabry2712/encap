@@ -47,15 +47,15 @@
                 <div class="encap-catalog-orbit encap-catalog-orbit--inner"></div>
 
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--primary">
-                    <img src="{{ $catalogueIsFrozen ? \App\Support\EncapImage::url('frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260') : \App\Support\EncapImage::url('citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
+                    <img src="{{ $catalogueIsFrozen ? \\App\\Support\\EncapImage::slot('frozen.hero_primary', 'frozen-berries-2026.jpg', 'https://images.pexels.com/photos/9814690/pexels-photo-9814690.jpeg?auto=compress&cs=tinysrgb&w=1260') : \\App\\Support\\EncapImage::slot('products.hero_primary', 'citrus-orchard-2026.jpg', 'https://images.unsplash.com/photo-1705573382809-bbf1a337746f?fit=crop&fm=jpg&w=1000&q=85') }}" alt="" width="900" height="1100" fetchpriority="high" decoding="async">
                     <figcaption>{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Agricultural production') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--secondary">
-                    <img src="{{ \App\Support\EncapImage::url('produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=800&q=85') }}" alt="" width="800" height="900" loading="lazy" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::slot($catalogueIsFrozen ? 'frozen.hero_secondary' : 'products.hero_secondary', 'produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=800&q=85') }}" alt="" width="800" height="900" loading="lazy" decoding="async">
                     <figcaption>{{ $catalogueIsFrozen ? __('Frozen fruit & vegetables') : __('Fresh produce') }}</figcaption>
                 </figure>
                 <figure class="encap-catalog-hero-image encap-catalog-hero-image--tertiary">
-                    <img src="{{ \App\Support\EncapImage::url('farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=650&q=85') }}" alt="" width="650" height="520" loading="lazy" decoding="async">
+                    <img src="{{ \App\Support\EncapImage::slot($catalogueIsFrozen ? 'frozen.hero_tertiary' : 'products.hero_tertiary', 'farm-cultivation-2026.jpg', 'https://images.unsplash.com/photo-1719757168062-3ceb06988532?fit=crop&fm=jpg&w=650&q=85') }}" alt="" width="650" height="520" loading="lazy" decoding="async">
                     <figcaption>{{ __('From origin to market') }}</figcaption>
                 </figure>
 
@@ -183,7 +183,7 @@
 <section class="encap-catalog-cta-section">
     <div class="container">
         <div class="encap-catalog-cta">
-            <img class="encap-catalog-cta-image" src="{{ \App\Support\EncapImage::url('produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=1200&q=85') }}" alt="" width="1200" height="900" loading="lazy" decoding="async" aria-hidden="true">
+            <img class="encap-catalog-cta-image" src="{{ \App\Support\EncapImage::slot($catalogueIsFrozen ? 'frozen.cta' : 'products.cta', 'produce-mix-2026.jpg', 'https://images.unsplash.com/photo-1764390745408-74f0dbbb5bca?fit=crop&fm=jpg&w=1200&q=85') }}" alt="" width="1200" height="900" loading="lazy" decoding="async" aria-hidden="true">
             <div class="encap-catalog-cta-orbit" aria-hidden="true">
                 <span></span><span></span>
                 <div class="encap-shared-brand-core"><img src="{{ \App\Support\EncapImage::url('favicon.png') }}" alt="" width="45" height="45" loading="lazy" decoding="async"><span>ENCAP</span><small>{{ __('Contact ENCAP directly') }}</small></div>
