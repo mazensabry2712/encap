@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\SeoSetting;
 use App\Models\User;
 use App\Services\EncapImageAssignment;
@@ -119,4 +120,30 @@ test('a stock image that still exists as an external fallback is copied into the
 
     expect(str_starts_with($assigned, 'assigned/homepage-test-slot/'))->toBeTrue();
     Storage::disk('encap_images')->assertExists($assigned);
+});
+
+
+test('default company content photos are tracked and replaced by section position only', function () {
+    $company = Company::query()->create([
+        'name_en' => 'Hadaeq Al-Shamal',
+        'name_ar' => 'حدائق الشمال',
+        'slug' => 'hadaeq-al-shamal',
+        'is_published' => true,
+    ]);
+
+    $inventory = app(EncapMediaInventory::class);
+    $usageKey = "company:{$company->id}:section:0:image:0";
+    $usage = $inventory->usage($usageKey);
+    $replacementPath = 'media-replacements/hadaeq-potato-section.jpg';
+
+    expect($usage)->not->toBeNull()
+        ->and($usage['path'])->toBe('product-potatoes-2026.jpg');
+
+    expect($inventory->replaceUsage($usageKey, $usage['path'], $replacementPath))->toBeTrue();
+
+    $company->refresh();
+
+    expect($company->content_sections[0]['images'][0])->toBe($replacementPath)
+        ->and($company->content_sections[0]['images'][1])->toBe('potato-sorting-2026.jpg')
+        ->and($company->content_sections[1]['images'][0])->toBe('farm-cultivation-2026.jpg');
 });
