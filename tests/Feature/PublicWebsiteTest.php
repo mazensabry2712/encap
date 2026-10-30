@@ -233,7 +233,7 @@ test('the public company page remains a clean canvas independent of stored compa
         ->assertDontSee('نبذة عن الشركة')
         ->assertDontSee('الشركات المنشورة');
 
-    \\App\\Models\\Company::query()->create([
+    \App\Models\Company::query()->create([
         'name_en' => 'Hidden Company',
         'name_ar' => 'شركة مخفية',
         'slug' => 'hidden-company',
