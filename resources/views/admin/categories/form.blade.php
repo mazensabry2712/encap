@@ -76,10 +76,10 @@
     <select id="library_image" name="library_image">
         <option value="">{{ __('Use uploaded image / no existing selection') }}</option>
         @foreach($mediaAssets as $path => $asset)
-            <option value="{{ $path }}" @selected(old('library_image', $category->image) === $path)>{{ $asset['label'] }} — {{ $path }}</option>
+            <option value="{{ $path }}" @selected(old('library_image') === $path)>{{ $asset['label'] }} — {{ $path }}</option>
         @endforeach
     </select>
-    <small>{{ __('An uploaded file takes priority. Selecting a library image reuses it and keeps the shared file available to other pages.') }}</small>
+    <small>{{ __('An uploaded file takes priority. A library image is copied into a separate file for this product only.') }}</small>
 </div>
 
 <div class="admin-field full">
