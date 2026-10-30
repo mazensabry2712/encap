@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Company;
+use App\Services\EncapImageAssignment;
 use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
@@ -42,7 +43,8 @@ final class CompanyController extends Controller
         Request $request,
         Company $company,
         EncapImageUpload $imageUpload,
-        EncapMediaInventory $mediaInventory
+        EncapMediaInventory $mediaInventory,
+        EncapImageAssignment $imageAssignment
     ): RedirectResponse {
         $this->ensureFixedCompany($company);
 
@@ -59,7 +61,7 @@ final class CompanyController extends Controller
             $stored = $imageUpload->store($request->file('image'), 'companies', 'image');
             $data['image'] = $stored['path'];
         } elseif ($libraryImage) {
-            $data['image'] = $libraryImage;
+            $data['image'] = $imageAssignment->duplicate($libraryImage, 'company-'.$company->slug.'-profile', 'library_image');
         } else {
             unset($data['image']);
         }
@@ -70,7 +72,10 @@ final class CompanyController extends Controller
                 unset($gallery[(int) $remove]);
             }
         }
-        $gallery = array_values(array_unique(array_merge(array_values($gallery), $libraryGallery)));
+        $gallery = array_values($gallery);
+        foreach ($libraryGallery as $index => $libraryPath) {
+            $gallery[] = $imageAssignment->duplicate($libraryPath, 'company-'.$company->slug.'-gallery-'.($index + 1), 'library_gallery.'.$index);
+        }
 
         foreach (array_values(array_filter((array) $request->file('gallery', []))) as $file) {
             $stored = $imageUpload->store($file, 'companies/gallery', 'gallery');
@@ -78,7 +83,7 @@ final class CompanyController extends Controller
         }
 
         $data['gallery'] = array_values(array_unique($gallery));
-        $data['content_sections'] = $this->buildContentSections($request, $imageUpload, $sectionInput);
+        $data['content_sections'] = $this->buildContentSections($request, $imageUpload, $imageAssignment, $sectionInput, $company->slug);
         $data['is_published'] = true;
 
         $company->update($data);
@@ -103,7 +108,9 @@ final class CompanyController extends Controller
     private function buildContentSections(
         Request $request,
         EncapImageUpload $imageUpload,
-        array $input
+        EncapImageAssignment $imageAssignment,
+        array $input,
+        string $companySlug
     ): array {
         $prepared = [];
 
@@ -182,7 +189,11 @@ final class CompanyController extends Controller
                     );
                     $imagePaths[] = $stored['path'];
                 } elseif (filled($source['library'])) {
-                    $imagePaths[] = $source['library'];
+                    $imagePaths[] = $imageAssignment->duplicate(
+                        $source['library'],
+                        'company-'.$companySlug.'-section-'.$section['index'].'-image-'.($position + 1),
+                        "sections.{$section['index']}.library_images.{$position}"
+                    );
                 } else {
                     $imagePaths[] = $source['existing'];
                 }
