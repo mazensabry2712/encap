@@ -63,7 +63,7 @@
         </div>
         <div class="admin-primary-image-controls">
             <label class="admin-upload-label" for="image">{{ __('Choose product photos') }}</label>
-            <input id="image" type="file" name="images[]" multiple accept="image/*" data-main-image-upload>
+            <input id="image" type="file" name="images[]" multiple accept="image/jpeg,image/png,image/webp,image/avif,image/gif" data-main-image-upload>
             <small>{{ __('JPG, PNG, WebP or AVIF. The first selected photo becomes the main image; the rest are added to the gallery.') }}</small>
             <span class="admin-upload-status" data-main-image-status aria-live="polite">{{ __('No product photos selected.') }}</span>
             <div class="admin-gallery-selection admin-main-image-selection" data-main-image-selection hidden></div>
@@ -127,7 +127,7 @@
             <div class="admin-gallery-upload-heading">
                 <div><strong>{{ __('Add more images') }}</strong><p>{{ __('Select multiple files at once. Add as many additional images as needed.') }}</p></div>
             </div>
-            <input id="gallery" type="file" name="gallery[]" multiple accept="image/*" data-gallery-upload>
+            <input id="gallery" type="file" name="gallery[]" multiple accept="image/jpeg,image/png,image/webp,image/avif,image/gif" data-gallery-upload>
             <div class="admin-gallery-selection" data-gallery-selection hidden></div>
             <div class="admin-gallery-upload-status" data-gallery-status role="status" aria-live="polite">{{ __('No new images selected.') }}</div>
         </div>
