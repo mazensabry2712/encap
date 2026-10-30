@@ -203,7 +203,7 @@
 
     $copy = $copyByLocale[$locale] ?? $copyByLocale['en'];
 
-    $contentSections = $company->content_sections ?: \App\Models\Company::defaultContentSections();
+    $contentSections = is_array($company->content_sections) ? $company->content_sections : \App\Models\Company::defaultContentSections();
     $imageCatalogue = app(\App\Services\EncapImageLibrary::class)->catalogue();
 @endphp
 
