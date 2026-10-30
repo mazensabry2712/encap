@@ -79,7 +79,7 @@
             <option value="{{ $path }}" @selected(old('library_image') === $path)>{{ $asset['label'] }} — {{ $path }}</option>
         @endforeach
     </select>
-    <small>{{ __('An uploaded file takes priority. A library image is copied into a separate file for this product only.') }}</small>
+    <small>{{ app()->getLocale() === 'ar' ? 'الصورة المختارة من المكتبة تُنسخ في ملف مستقل لهذا المنتج فقط، وتظل الصورة الأصلية كما هي.' : 'A library image is copied into a separate file for this product only. The original remains unchanged.' }}</small>
 </div>
 
 <div class="admin-field full">
