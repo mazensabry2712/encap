@@ -133,7 +133,7 @@ test('central-library uploads use the fallback disk if the main image folder can
     }
 });
 
-test('replacing a central image changes its stored bytes and cache-busted URL immediately', function () {
+test('replacing one central image usage creates a separate file and preserves the library original', function () {
     Storage::fake('public');
     Storage::fake('encap_images');
 
@@ -151,21 +151,26 @@ test('replacing a central image changes its stored bytes and cache-busted URL im
         ->from(route('admin.media.index'))
         ->post(route('admin.media.replace'), [
             'path' => 'cargo-port-2026.jpg',
+            'usage' => 'site:home.service_export',
             'image' => $replacement,
         ])
         ->assertRedirect(route('admin.media.index'))
         ->assertSessionHas('success');
 
-    $newBytes = Storage::disk('encap_images')->get('cargo-port-2026.jpg');
-    $newUrl = EncapImage::url('cargo-port-2026.jpg');
+    $settings = \\App\\Models\\SeoSetting::query()->firstOrFail();
+    $assignedPath = data_get($settings->site_media_slots, 'home.service_export');
+    $newUrl = EncapImage::slot('home.service_export', 'cargo-port-2026.jpg');
 
-    expect($newBytes)->not->toBe($oldBytes)
-        ->and($newUrl)->not->toBe($oldUrl);
+    expect($assignedPath)->toStartWith('media-replacements/')
+        ->and($newUrl)->not->toBe($oldUrl)
+        ->and(Storage::disk('encap_images')->get('cargo-port-2026.jpg'))->toBe($oldBytes);
+
+    Storage::disk('encap_images')->assertExists($assignedPath);
+    expect(Storage::disk('encap_images')->get($assignedPath))->not->toBe($oldBytes);
 
     $query = parse_url($newUrl, PHP_URL_QUERY);
-
-    $response = $this->get('/encap-img/cargo-port-2026.jpg'.($query ? '?'.$query : ''))
-        ->assertOk();
+    $imagePath = parse_url($newUrl, PHP_URL_PATH);
+    $response = $this->get($imagePath.($query ? '?'.$query : ''))->assertOk();
 
     expect($response->headers->get('Cache-Control'))
         ->toContain('no-cache')
