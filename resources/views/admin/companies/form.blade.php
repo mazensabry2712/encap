@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @php($selectedCategoryIds = collect(old('category_ids', $company->exists ? $company->categories->pluck('id')->all() : []))->map(fn ($id) => (int) $id)->all())
-@php($sectionRows = old('sections', $company->content_sections ?: \App\Models\Company::defaultContentSections()))
+@php($sectionRows = old('sections', is_array($company->content_sections) ? $company->content_sections : \App\Models\Company::defaultContentSections()))
 @section('page-title', __('Edit company profile'))
 @section('content')
 <div class="admin-page-intro"><div><p>{{ __('Manage the public profile for Hadaeq Al-Shamal Company.') }}</p></div><div class="admin-actions"><a class="admin-btn secondary" href="{{ route('admin.companies.index') }}">{{ __('Company profile') }}</a></div></div>
