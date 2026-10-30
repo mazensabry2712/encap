@@ -83,7 +83,19 @@ final class CompanyController extends Controller
         }
 
         $data['gallery'] = array_values(array_unique($gallery));
-        $data['content_sections'] = $this->buildContentSections($request, $imageUpload, $imageAssignment, $sectionInput, $company->slug);
+
+        // Category-only and partial profile updates must not erase existing
+        // content sections. Rebuild them only when the form submitted sections.
+        if (array_key_exists('sections', $request->all())) {
+            $data['content_sections'] = $this->buildContentSections(
+                $request,
+                $imageUpload,
+                $imageAssignment,
+                $sectionInput,
+                $company->slug
+            );
+        }
+
         $data['is_published'] = true;
 
         $company->update($data);
