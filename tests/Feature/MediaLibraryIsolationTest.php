@@ -8,6 +8,7 @@ use App\Services\EncapMediaInventory;
 use App\Support\EncapImage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 test('replacing an image from the media centre changes only the selected product location', function () {
@@ -106,7 +107,7 @@ test('a stock image that still exists as an external fallback is copied into the
     Storage::fake('encap_images');
     Storage::fake('public');
 
-    $jpeg = "\\xFF\\xD8\\xFF" . str_repeat('A', 2048);
+    $jpeg = str_repeat('A', 2048);
     Http::fake([
         'https://images.pexels.com/*' => Http::response($jpeg, 200, ['Content-Type' => 'image/jpeg']),
     ]);
