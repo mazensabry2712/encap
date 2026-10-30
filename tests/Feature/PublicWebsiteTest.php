@@ -199,7 +199,7 @@ test('product detail gallery renders accessible thumbnail controls', function ()
 test('the company navigation opens the clean company-page canvas in every supported locale', function () {
     $labels = [
         'en' => 'Our Company',
-        'ar' => 'شركتنا',
+        'ar' => 'شركاتنا',
         'fr' => 'Notre société',
         'ru' => 'Наша компания',
         'tr' => 'Şirketimiz',
@@ -226,7 +226,7 @@ test('the company navigation opens the clean company-page canvas in every suppor
 test('the public company page remains a clean canvas independent of stored company records', function () {
     $this->get('/ar/companies')
         ->assertOk()
-        ->assertSee('شركتنا')
+        ->assertSee('شركاتنا')
         ->assertDontSee('product-detail', false)
         ->assertDontSee('encap-company-detail-section', false)
         ->assertDontSee('encap-catalog-section', false)
@@ -290,7 +290,7 @@ test('primary navigation is centered, bilingual, and responsive', function () {
         ->assertSee('اختيار اللغة')
         ->assertSee('aria-current="page"', false)
         ->assertSee('عملياتنا')
-        ->assertSee('شركتنا')
+        ->assertSee('شركاتنا')
         ->assertSee('/ar/companies', false)
         ->assertSee('/ar/about', false)
         ->assertSee('الرئيسية');
