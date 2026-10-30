@@ -142,8 +142,8 @@ class CategoryController extends Controller
         $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
         unset($data['library_image'], $data['library_gallery'], $data['remove_gallery'], $data['images'], $data['gallery'], $data['image']);
 
-        $selectedImages = array_values(array_filter((array) $request->file('images', [])));
-        $primaryImage = $selectedImages[0] ?? $request->file('image');
+        $selectedImages = $this->validImageFiles($request->file('images', []));
+        $primaryImage = $selectedImages[0] ?? $this->validImageFile($request->file('image'));
         $storedUploads = [];
 
         try {
@@ -169,7 +169,7 @@ class CategoryController extends Controller
             }
             $galleryUploads = array_merge(
                 array_slice($selectedImages, 1),
-                array_values(array_filter((array) $request->file('gallery', [])))
+                $this->validImageFiles($request->file('gallery', []))
             );
 
             foreach ($galleryUploads as $file) {
@@ -181,7 +181,7 @@ class CategoryController extends Controller
             $data['gallery'] = array_values(array_unique($gallery));
             $data['is_published'] = $request->boolean('is_published');
             $data['available_forms'] = array_values(array_intersect(
-                $request->input('available_forms', []),
+                $data['available_forms'] ?? [],
                 ['Fresh', 'Frozen', 'Processed']
             ));
             if ($data['show_in_frozen_catalogue']) {
