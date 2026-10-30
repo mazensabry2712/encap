@@ -196,7 +196,7 @@ test('product detail gallery renders accessible thumbnail controls', function ()
         ->assertSee('مجمّد');
 });
 
-test('the company navigation opens the clean company-page canvas in every supported locale', function () {
+test('the company navigation opens the fixed Hadaeq profile in every supported locale', function () {
     $labels = [
         'en' => 'Our Company',
         'ar' => 'شركاتنا',
@@ -210,6 +210,7 @@ test('the company navigation opens the clean company-page canvas in every suppor
             ->assertOk()
             ->assertSee('lang="'.$locale.'"', false)
             ->assertSee($navigationLabel)
+            ->assertSee('hs-company', false)
             ->assertDontSee('encap-company-detail-section', false)
             ->assertDontSee('encap-catalog-section', false)
             ->assertDontSee('encap-catalog-hero', false);
@@ -232,8 +233,7 @@ test('the public company page shows the fixed Hadaeq profile without listing unr
         ->assertSee('زراعة وإنتاج البطاطس')
         ->assertDontSee('product-detail', false)
         ->assertDontSee('encap-company-detail-section', false)
-        ->assertDontSee('encap-catalog-section', false)
-        ->assertDontSee('الشركات المنشورة');
+        ->assertDontSee('encap-catalog-section', false);
 
     \App\Models\Company::query()->create([
         'name_en' => 'Hidden Company',
