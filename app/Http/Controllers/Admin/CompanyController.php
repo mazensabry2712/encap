@@ -11,7 +11,6 @@ use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 final class CompanyController extends Controller
@@ -199,8 +198,13 @@ final class CompanyController extends Controller
                 continue;
             }
 
-            $titleAr = $titleAr ?: ($titleEn ?: 'معرض الصور');
-            $titleEn = $titleEn ?: ($titleAr ?: 'Photo gallery');
+            if ($titleAr === '' && $titleEn === '') {
+                $titleAr = 'معرض الصور';
+                $titleEn = 'Photo gallery';
+            } else {
+                $titleAr = $titleAr ?: $titleEn;
+                $titleEn = $titleEn ?: $titleAr;
+            }
 
             $sections[] = [
                 'title_ar' => $titleAr,
@@ -330,10 +334,13 @@ final class CompanyController extends Controller
         }
 
         $mimeType = strtolower((string) $file->getMimeType());
+        $extension = strtolower($file->getClientOriginalExtension());
 
-        return str_starts_with($mimeType, 'image/') && $mimeType !== 'image/svg+xml'
-            ? $file
-            : null;
+        return str_starts_with($mimeType, 'image/')
+            && $mimeType !== 'image/svg+xml'
+            && in_array($extension, ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'], true)
+                ? $file
+                : null;
     }
 
     /**
