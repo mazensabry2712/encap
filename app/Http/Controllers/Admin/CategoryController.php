@@ -377,12 +377,15 @@ class CategoryController extends Controller
             return null;
         }
 
-        return in_array($file->getMimeType(), [
-            'image/jpeg',
-            'image/png',
-            'image/webp',
-            'image/avif',
-        ], true) ? $file : null;
+        $mimeType = strtolower((string) $file->getMimeType());
+
+        // Allow normal raster formats (including newer formats and GIF) without
+        // constraining the upload to a short extension list. SVG stays excluded
+        // because active SVG content is unsafe to serve as a public image.
+        return str_starts_with($mimeType, 'image/')
+            && $mimeType !== 'image/svg+xml'
+                ? $file
+                : null;
     }
 
     /**
