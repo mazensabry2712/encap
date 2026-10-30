@@ -9,7 +9,7 @@ class SeoSetting extends Model
 {
     protected $fillable = [
         'site_title_en', 'site_title_ar', 'site_description_en', 'site_description_ar',
-        'default_og_image', 'default_robots', 'organization_name', 'organization_url',
+        'default_og_image', 'site_media_slots', 'default_robots', 'organization_name', 'organization_url',
         'contact_email', 'contact_phone', 'whatsapp_number', 'address_en', 'address_ar',
         'business_hours_en', 'business_hours_ar', 'facebook_url', 'instagram_url',
         'linkedin_url', 'youtube_url', 'page_metadata', 'page_content',
@@ -29,6 +29,7 @@ class SeoSetting extends Model
         return [
             'page_metadata' => 'array',
             'page_content' => 'array',
+            'site_media_slots' => 'array',
         ];
     }
 
