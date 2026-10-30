@@ -140,6 +140,7 @@ class CategoryController extends Controller
 
         $libraryImage = $data['library_image'] ?? null;
         $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
+        $removeGallery = $data['remove_gallery'] ?? [];
         unset($data['library_image'], $data['library_gallery'], $data['remove_gallery'], $data['images'], $data['gallery'], $data['image']);
 
         $selectedImages = $this->validImageFiles($request->file('images', []));
@@ -157,7 +158,7 @@ class CategoryController extends Controller
 
             $gallery = $category->gallery ?? [];
 
-            foreach ($data['remove_gallery'] ?? [] as $remove) {
+            foreach ($removeGallery as $remove) {
                 if (array_key_exists((int) $remove, $gallery)) {
                     unset($gallery[(int) $remove]);
                 }
@@ -321,6 +322,7 @@ class CategoryController extends Controller
         $rawForms = $request->exists('available_forms')
             ? (array) $request->input('available_forms', [])
             : ($category?->available_forms ?? []);
+        $rawForms = array_values(array_filter($rawForms, fn ($form) => is_string($form)));
         $data['available_forms'] = array_values(array_intersect(
             $rawForms,
             ['Fresh', 'Frozen', 'Processed']
