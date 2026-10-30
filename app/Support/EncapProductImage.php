@@ -56,23 +56,40 @@ final class EncapProductImage
         ],
     ];
 
+    /**
+     * Resolve the default photo and an independent slot for a category without
+     * an explicit uploaded image. The slot key uses the category ID so two
+     * categories can never share a replaceable fallback by accident.
+     *
+     * @return array{path: string, url: string, slot: string}
+     */
+    public static function fallback(Category $category): array
+    {
+        $fallback = self::FALLBACKS[$category->slug] ?? self::FALLBACKS['other-fruits-vegetables'];
+
+        return [
+            'path' => $fallback[0],
+            'url' => $fallback[1],
+            'slot' => 'products.category.'.$category->id,
+        ];
+    }
+
     public static function url(Category $category): ?string
     {
-        // Use one controlled stock photo for mango even if an older admin upload remains
-        // attached to the database record. This prevents stale uploads from winning.
+        // Mango deliberately uses a curated image instead of an older upload.
         if ($category->slug === 'mango') {
-            [$path, $fallbackUrl] = self::FALLBACKS['mango'];
+            $fallback = self::fallback($category);
 
-            return EncapImage::url($path, $fallbackUrl);
+            return EncapImage::slot($fallback['slot'], $fallback['path'], $fallback['url']);
         }
 
         if (filled($category->image)) {
             return EncapImage::url($category->image);
         }
 
-        $fallback = self::FALLBACKS[$category->slug] ?? self::FALLBACKS['other-fruits-vegetables'];
+        $fallback = self::fallback($category);
 
-        return EncapImage::url($fallback[0], $fallback[1]);
+        return EncapImage::slot($fallback['slot'], $fallback['path'], $fallback['url']);
     }
 
     /**
