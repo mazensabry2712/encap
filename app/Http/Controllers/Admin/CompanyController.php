@@ -10,8 +10,8 @@ use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 final class CompanyController extends Controller
@@ -48,58 +48,73 @@ final class CompanyController extends Controller
     ): RedirectResponse {
         $this->ensureFixedCompany($company);
 
-        $data = $this->validated($request, $mediaInventory, $company);
-        $categoryIds = array_values(array_unique(array_map('intval', $data['category_ids'] ?? [])));
+        $data = $this->formData($request, $mediaInventory, $company);
+        $hasCategorySelection = array_key_exists('category_ids', $data);
+        $categoryIds = $data['category_ids'] ?? [];
+        $hasSections = array_key_exists('sections', $data);
         $sectionInput = $data['sections'] ?? [];
         unset($data['category_ids'], $data['sections']);
 
         $libraryImage = $data['library_image'] ?? null;
-        $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
-        unset($data['library_image'], $data['library_gallery'], $data['gallery'], $data['remove_gallery']);
+        $libraryGallery = $data['library_gallery'] ?? [];
+        $removeGallery = $data['remove_gallery'] ?? [];
+        unset($data['library_image'], $data['library_gallery'], $data['remove_gallery']);
 
-        if ($request->hasFile('image')) {
-            $stored = $imageUpload->store($request->file('image'), 'companies', 'image');
+        $mainImage = $this->validImageFile($request->file('image'));
+        if ($mainImage) {
+            $stored = $imageUpload->store($mainImage, 'companies', 'image');
             $data['image'] = $stored['path'];
         } elseif ($libraryImage) {
-            $data['image'] = $imageAssignment->duplicate($libraryImage, 'company-'.$company->slug.'-profile', 'library_image');
-        } else {
-            unset($data['image']);
+            $data['image'] = $imageAssignment->duplicate(
+                $libraryImage,
+                'company-'.$company->slug.'-profile',
+                'library_image'
+            );
         }
 
         $gallery = $company->gallery ?? [];
-        foreach ($request->input('remove_gallery', []) as $remove) {
+        foreach ($removeGallery as $remove) {
             if (array_key_exists((int) $remove, $gallery)) {
                 unset($gallery[(int) $remove]);
             }
         }
         $gallery = array_values($gallery);
+
         foreach ($libraryGallery as $index => $libraryPath) {
-            $gallery[] = $imageAssignment->duplicate($libraryPath, 'company-'.$company->slug.'-gallery-'.($index + 1), 'library_gallery.'.$index);
+            $gallery[] = $imageAssignment->duplicate(
+                $libraryPath,
+                'company-'.$company->slug.'-gallery-'.($index + 1),
+                'library_gallery.'.$index
+            );
         }
 
-        foreach (array_values(array_filter((array) $request->file('gallery', []))) as $file) {
+        foreach ($this->validImageFiles($request->file('gallery', [])) as $file) {
             $stored = $imageUpload->store($file, 'companies/gallery', 'gallery');
             $gallery[] = $stored['path'];
         }
 
         $data['gallery'] = array_values(array_unique($gallery));
 
-        // Category-only and partial profile updates must not erase existing
-        // content sections. Rebuild them only when the form submitted sections.
-        if (array_key_exists('sections', $request->all())) {
+        // A partial profile update leaves all existing sections untouched.
+        // An explicit empty sections_present marker lets the admin remove them all.
+        if ($hasSections) {
             $data['content_sections'] = $this->buildContentSections(
                 $request,
                 $imageUpload,
                 $imageAssignment,
-                $sectionInput,
-                $company->slug
+                $mediaInventory,
+                is_array($sectionInput) ? $sectionInput : [],
+                $company
             );
         }
 
         $data['is_published'] = true;
 
         $company->update($data);
-        $company->categories()->sync($categoryIds);
+
+        if ($hasCategorySelection) {
+            $company->categories()->sync($categoryIds);
+        }
 
         return redirect()->route('admin.companies.edit', $company)
             ->with('success', __('Company updated.'));
@@ -111,8 +126,8 @@ final class CompanyController extends Controller
     }
 
     /**
-     * Resolve the images for each administrator-defined content section.
-     * Existing and library images are reused; uploaded images are stored separately.
+     * Rebuild only submitted sections. Every section may contain any number of
+     * images; empty titles and image slots are allowed.
      *
      * @param array<int|string, array<string, mixed>> $input
      * @return list<array{title_ar: string, title_en: string, images: list<string>}>
@@ -121,154 +136,215 @@ final class CompanyController extends Controller
         Request $request,
         EncapImageUpload $imageUpload,
         EncapImageAssignment $imageAssignment,
+        EncapMediaInventory $mediaInventory,
         array $input,
-        string $companySlug
+        Company $company
     ): array {
-        $prepared = [];
+        $allowedLibraryPaths = $mediaInventory->paths();
+        $existingCompanyPaths = collect($company->content_sections ?: Company::defaultContentSections())
+            ->flatMap(fn (array $section) => $section['images'] ?? [])
+            ->filter(fn ($path) => is_string($path) && $path !== '')
+            ->values()
+            ->all();
 
-        foreach ($input as $index => $section) {
+        $sections = [];
+
+        foreach ($input as $sectionIndex => $section) {
             if (! is_array($section)) {
                 continue;
             }
 
-            $titleAr = trim((string) ($section['title_ar'] ?? ''));
-            $titleEn = trim((string) ($section['title_en'] ?? ''));
-            $existingImages = (array) ($section['existing_images'] ?? []);
-            $libraryImages = (array) ($section['library_images'] ?? []);
-            $sources = [];
-            $hasAnyContent = $titleAr !== '' || $titleEn !== '';
+            $titleAr = $this->plainText($section['title_ar'] ?? '', 200);
+            $titleEn = $this->plainText($section['title_en'] ?? '', 200);
+            $existingImages = is_array($section['existing_images'] ?? null) ? $section['existing_images'] : [];
+            $libraryImages = is_array($section['library_images'] ?? null) ? $section['library_images'] : [];
+            $uploadedImages = $request->file("sections.{$sectionIndex}.upload_images", []);
+            $uploadedImages = is_array($uploadedImages) ? $uploadedImages : [];
 
-            for ($position = 0; $position < 2; $position++) {
-                $upload = $request->file("sections.{$index}.upload_images.{$position}");
-                $libraryPath = $libraryImages[$position] ?? null;
-                $existingPath = $existingImages[$position] ?? null;
+            $positions = array_unique(array_merge(
+                array_keys($existingImages),
+                array_keys($libraryImages),
+                array_keys($uploadedImages)
+            ));
+            usort($positions, fn ($left, $right) => (int) $left <=> (int) $right);
 
-                $sources[$position] = [
-                    'upload' => $upload,
-                    'library' => is_string($libraryPath) ? $libraryPath : null,
-                    'existing' => is_string($existingPath) ? $existingPath : null,
-                ];
+            $imagePaths = [];
 
-                if ($upload || filled($libraryPath) || filled($existingPath)) {
-                    $hasAnyContent = true;
+            foreach ($positions as $imagePosition) {
+                $upload = $this->validImageFile($uploadedImages[$imagePosition] ?? null);
+                $libraryPath = $libraryImages[$imagePosition] ?? null;
+                $existingPath = $existingImages[$imagePosition] ?? null;
+
+                if ($upload) {
+                    $stored = $imageUpload->store(
+                        $upload,
+                        'companies/sections',
+                        "sections.{$sectionIndex}.upload_images.{$imagePosition}"
+                    );
+                    $imagePaths[] = $stored['path'];
+                } elseif (is_string($libraryPath) && in_array($libraryPath, $allowedLibraryPaths, true)) {
+                    $imagePaths[] = $imageAssignment->duplicate(
+                        $libraryPath,
+                        'company-'.$company->slug.'-section-'.$sectionIndex.'-image-'.$imagePosition,
+                        "sections.{$sectionIndex}.library_images.{$imagePosition}"
+                    );
+                } elseif (is_string($existingPath) && in_array($existingPath, $existingCompanyPaths, true)) {
+                    $imagePaths[] = $existingPath;
                 }
             }
 
-            // Ignore a completely blank, unused repeater row.
-            if (! $hasAnyContent) {
+            // Completely blank repeater rows are ignored; partially completed
+            // sections are kept without demanding titles or a fixed image count.
+            if ($titleAr === '' && $titleEn === '' && $imagePaths === []) {
                 continue;
             }
 
-            if ($titleAr === '' && $titleEn === '') {
-                throw ValidationException::withMessages([
-                    "sections.{$index}.title_ar" => __('Add an Arabic or English title for each section.'),
-                ]);
-            }
-
-            foreach ($sources as $position => $source) {
-                if (! $source['upload'] && ! filled($source['library']) && ! filled($source['existing'])) {
-                    throw ValidationException::withMessages([
-                        "sections.{$index}.upload_images.{$position}" => __('Choose or upload both images for each section.'),
-                    ]);
-                }
-            }
-
-            $prepared[] = [
-                'index' => $index,
-                'title_ar' => $titleAr,
-                'title_en' => $titleEn,
-                'sources' => $sources,
-            ];
-        }
-
-        if ($prepared === []) {
-            throw ValidationException::withMessages([
-                'sections' => __('Keep at least one company content section.'),
-            ]);
-        }
-
-        $sections = [];
-
-        foreach ($prepared as $section) {
-            $imagePaths = [];
-
-            foreach ($section['sources'] as $position => $source) {
-                if ($source['upload']) {
-                    $stored = $imageUpload->store(
-                        $source['upload'],
-                        'companies/sections',
-                        "sections.{$section['index']}.upload_images.{$position}"
-                    );
-                    $imagePaths[] = $stored['path'];
-                } elseif (filled($source['library'])) {
-                    $imagePaths[] = $imageAssignment->duplicate(
-                        $source['library'],
-                        'company-'.$companySlug.'-section-'.$section['index'].'-image-'.($position + 1),
-                        "sections.{$section['index']}.library_images.{$position}"
-                    );
-                } else {
-                    $imagePaths[] = $source['existing'];
-                }
-            }
-
-            $titleAr = $section['title_ar'] ?: $section['title_en'];
-            $titleEn = $section['title_en'] ?: $section['title_ar'];
+            $titleAr = $titleAr ?: ($titleEn ?: 'معرض الصور');
+            $titleEn = $titleEn ?: ($titleAr ?: 'Photo gallery');
 
             $sections[] = [
                 'title_ar' => $titleAr,
                 'title_en' => $titleEn,
-                'images' => $imagePaths,
+                'images' => array_values($imagePaths),
             ];
         }
 
         return $sections;
     }
 
-    private function validated(Request $request, EncapMediaInventory $mediaInventory, Company $company): array
+    /**
+     * Normalize only submitted fields. Missing fields are deliberately omitted
+     * so one-field edits never clear the rest of the company profile.
+     */
+    private function formData(Request $request, EncapMediaInventory $mediaInventory, Company $company): array
     {
-        $currentGallery = $company->gallery ?? [];
-        $requestedRemovals = collect($request->input('remove_gallery', []))
-            ->filter(fn ($index) => is_scalar($index)
-                && filter_var($index, FILTER_VALIDATE_INT) !== false
-                && array_key_exists((int) $index, $currentGallery))
-            ->map(fn ($index) => (int) $index)
-            ->unique()
-            ->count();
-        $remainingGalleryCount = max(0, count($currentGallery) - $requestedRemovals);
-        $libraryGalleryCount = count(array_filter((array) $request->input('library_gallery', [])));
-        $uploadedGalleryCount = count(array_filter((array) $request->file('gallery', [])));
-        $libraryGallerySlots = max(0, 12 - $remainingGalleryCount - $uploadedGalleryCount);
-        $uploadedGallerySlots = max(0, 12 - $remainingGalleryCount - $libraryGalleryCount);
+        $limits = [
+            'short_description_en' => 500,
+            'short_description_ar' => 500,
+            'description_en' => null,
+            'description_ar' => null,
+            'country_en' => 120,
+            'country_ar' => 120,
+            'location_en' => 160,
+            'location_ar' => 160,
+        ];
 
-        return $request->validate([
-            'short_description_en' => ['nullable', 'string', 'max:500'],
-            'short_description_ar' => ['nullable', 'string', 'max:500'],
-            'description_en' => ['nullable', 'string', 'max:20000'],
-            'description_ar' => ['nullable', 'string', 'max:20000'],
-            'country_en' => ['nullable', 'string', 'max:120'],
-            'country_ar' => ['nullable', 'string', 'max:120'],
-            'location_en' => ['nullable', 'string', 'max:160'],
-            'location_ar' => ['nullable', 'string', 'max:160'],
-            'website_url' => ['nullable', 'url', 'max:500'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'library_image' => ['nullable', 'string', Rule::in($mediaInventory->paths())],
-            'gallery' => ['nullable', 'array', 'max:' . $uploadedGallerySlots],
-            'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'library_gallery' => ['nullable', 'array', 'max:' . $libraryGallerySlots],
-            'library_gallery.*' => ['string', Rule::in($mediaInventory->paths())],
-            'remove_gallery' => ['nullable', 'array'],
-            'remove_gallery.*' => ['integer', 'min:0'],
-            'sections' => ['nullable', 'array', 'max:12'],
-            'sections.*.title_ar' => ['nullable', 'string', 'max:200'],
-            'sections.*.title_en' => ['nullable', 'string', 'max:200'],
-            'sections.*.existing_images' => ['nullable', 'array', 'size:2'],
-            'sections.*.existing_images.*' => ['nullable', 'string', Rule::in($mediaInventory->paths())],
-            'sections.*.library_images' => ['nullable', 'array', 'size:2'],
-            'sections.*.library_images.*' => ['nullable', 'string', Rule::in($mediaInventory->paths())],
-            'sections.*.upload_images' => ['nullable', 'array', 'size:2'],
-            'sections.*.upload_images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'category_ids' => ['nullable', 'array'],
-            'category_ids.*' => ['integer', 'distinct', 'exists:categories,id'],
-        ]);
+        $data = [];
+
+        foreach ($limits as $field => $limit) {
+            if (! $request->exists($field)) {
+                continue;
+            }
+
+            $value = $this->plainText($request->input($field), $limit);
+            $data[$field] = $value === '' ? null : $value;
+        }
+
+        if ($request->exists('website_url')) {
+            $url = trim((string) $request->input('website_url', ''));
+
+            if ($url === '') {
+                $data['website_url'] = null;
+            } else {
+                if (! preg_match('/\Ahttps?:\/\//i', $url)) {
+                    $url = 'https://'.$url;
+                }
+
+                $parts = parse_url($url);
+                $isSafeUrl = is_array($parts)
+                    && in_array(strtolower((string) ($parts['scheme'] ?? '')), ['http', 'https'], true)
+                    && filter_var($url, FILTER_VALIDATE_URL) !== false
+                    && filled($parts['host'] ?? null);
+
+                // Ignore malformed links rather than rejecting the whole form.
+                if ($isSafeUrl) {
+                    $data['website_url'] = mb_substr($url, 0, 500);
+                }
+            }
+        }
+
+        if ($request->exists('category_ids_present') || $request->exists('category_ids')) {
+            $rawIds = (array) $request->input('category_ids', []);
+            $ids = collect($rawIds)
+                ->filter(fn ($id) => is_scalar($id) && ctype_digit((string) $id))
+                ->map(fn ($id) => (int) $id)
+                ->unique()
+                ->values();
+
+            $data['category_ids'] = Category::query()
+                ->whereIn('id', $ids)
+                ->pluck('id')
+                ->map(fn ($id) => (int) $id)
+                ->all();
+        }
+
+        if ($request->exists('sections_present') || $request->exists('sections')) {
+            $sections = $request->input('sections', []);
+            $data['sections'] = is_array($sections) ? $sections : [];
+        }
+
+        $allowedPaths = $mediaInventory->paths();
+
+        if ($request->exists('library_image')) {
+            $path = $request->input('library_image');
+            if (is_string($path) && in_array($path, $allowedPaths, true)) {
+                $data['library_image'] = $path;
+            }
+        }
+
+        if ($request->exists('library_gallery')) {
+            $data['library_gallery'] = array_values(array_unique(array_filter(
+                (array) $request->input('library_gallery', []),
+                fn ($path) => is_string($path) && in_array($path, $allowedPaths, true)
+            )));
+        }
+
+        if ($request->exists('remove_gallery')) {
+            $currentGallery = $company->gallery ?? [];
+            $data['remove_gallery'] = array_values(array_unique(array_filter(
+                (array) $request->input('remove_gallery', []),
+                fn ($index) => is_scalar($index)
+                    && filter_var($index, FILTER_VALIDATE_INT) !== false
+                    && array_key_exists((int) $index, $currentGallery)
+            )));
+        }
+
+        return $data;
+    }
+
+    private function plainText(mixed $value, ?int $limit = null): string
+    {
+        if (! is_scalar($value)) {
+            return '';
+        }
+
+        $text = trim((string) $value);
+
+        return $limit === null ? $text : mb_substr($text, 0, $limit);
+    }
+
+    private function validImageFile(mixed $file): ?UploadedFile
+    {
+        if (! $file instanceof UploadedFile || ! $file->isValid()) {
+            return null;
+        }
+
+        $mimeType = strtolower((string) $file->getMimeType());
+
+        return str_starts_with($mimeType, 'image/') && $mimeType !== 'image/svg+xml'
+            ? $file
+            : null;
+    }
+
+    /**
+     * @return array<int, UploadedFile>
+     */
+    private function validImageFiles(mixed $files): array
+    {
+        return collect(is_array($files) ? $files : [])
+            ->map(fn ($file) => $this->validImageFile($file))
+            ->filter()
+            ->values()
+            ->all();
     }
 }
