@@ -10,8 +10,9 @@ use App\Services\EncapImageUpload;
 use App\Services\EncapMediaInventory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Throwable;
 
@@ -42,7 +43,7 @@ class CategoryController extends Controller
 
     public function store(Request $request, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory, EncapImageAssignment $imageAssignment): RedirectResponse
     {
-        $data = $this->validated($request, $mediaInventory);
+        $data = $this->formData($request, $mediaInventory);
         $companyIds = array_values(array_unique(array_map('intval', $data['company_ids'] ?? [])));
         unset($data['company_ids']);
 
@@ -58,8 +59,8 @@ class CategoryController extends Controller
         $libraryGallery = array_values(array_filter($data['library_gallery'] ?? []));
         unset($data['library_image'], $data['library_gallery'], $data['remove_gallery'], $data['images'], $data['gallery']);
 
-        $selectedImages = array_values(array_filter((array) $request->file('images', [])));
-        $primaryImage = $selectedImages[0] ?? $request->file('image');
+        $selectedImages = $this->validImageFiles($request->file('images', []));
+        $primaryImage = $selectedImages[0] ?? $this->validImageFile($request->file('image'));
         $storedUploads = [];
 
         try {
@@ -79,7 +80,7 @@ class CategoryController extends Controller
             }
             $galleryUploads = array_merge(
                 array_slice($selectedImages, 1),
-                array_values(array_filter((array) $request->file('gallery', [])))
+                $this->validImageFiles($request->file('gallery', []))
             );
 
             foreach ($galleryUploads as $file) {
@@ -91,7 +92,7 @@ class CategoryController extends Controller
             $data['gallery'] = $galleryPaths;
             $data['is_published'] = $request->boolean('is_published');
             $data['available_forms'] = array_values(array_intersect(
-                $request->input('available_forms', []),
+                $data['available_forms'] ?? [],
                 ['Fresh', 'Frozen', 'Processed']
             ));
             if ($data['show_in_frozen_catalogue']) {
@@ -125,7 +126,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category, EncapImageUpload $imageUpload, EncapMediaInventory $mediaInventory, EncapImageAssignment $imageAssignment): RedirectResponse
     {
-        $data = $this->validated($request, $mediaInventory, $category);
+        $data = $this->formData($request, $mediaInventory, $category);
         $companyIds = array_values(array_unique(array_map('intval', $data['company_ids'] ?? [])));
         unset($data['company_ids']);
 
@@ -156,7 +157,7 @@ class CategoryController extends Controller
 
             $gallery = $category->gallery ?? [];
 
-            foreach ($request->input('remove_gallery', []) as $remove) {
+            foreach ($data['remove_gallery'] ?? [] as $remove) {
                 if (array_key_exists((int) $remove, $gallery)) {
                     unset($gallery[(int) $remove]);
                 }
@@ -224,80 +225,174 @@ class CategoryController extends Controller
         }
     }
 
-    private function validated(Request $request, EncapMediaInventory $mediaInventory, ?Category $category = null): array
+    /**
+     * Collects product form data without blocking saves for optional fields.
+     * Database-required fields receive safe automatic defaults; invalid optional
+     * relationships and media selections are simply ignored.
+     */
+    private function formData(Request $request, EncapMediaInventory $mediaInventory, ?Category $category = null): array
     {
-        $currentGallery = $category?->gallery ?? [];
-        $requestedRemovals = collect($request->input('remove_gallery', []))
-            ->filter(fn ($index) => is_scalar($index)
-                && filter_var($index, FILTER_VALIDATE_INT) !== false
-                && array_key_exists((int) $index, $currentGallery))
-            ->map(fn ($index) => (int) $index)
-            ->unique()
-            ->count();
-        $remainingGalleryCount = max(0, count($currentGallery) - $requestedRemovals);
-        $selectedImages = array_values(array_filter((array) $request->file('images', [])));
-        $libraryGalleryCount = count(array_filter((array) $request->input('library_gallery', [])));
-        $uploadedSelectionGalleryCount = max(0, count($selectedImages) - 1);
-        $libraryGallerySlots = max(0, 12 - $remainingGalleryCount - $uploadedSelectionGalleryCount);
-        $batchGalleryCount = $uploadedSelectionGalleryCount + $libraryGalleryCount;
-        $gallerySlotsAvailable = max(0, 12 - $remainingGalleryCount - $batchGalleryCount);
-        $productImageBatchLimit = 1 + max(0, 12 - $remainingGalleryCount - $libraryGalleryCount);
+        $limits = [
+            'name_en' => 255,
+            'name_ar' => 255,
+            'short_description_en' => 500,
+            'short_description_ar' => 500,
+            'description_en' => null,
+            'description_ar' => null,
+            'varieties_en' => null,
+            'varieties_ar' => null,
+            'harvest_window_en' => 255,
+            'harvest_window_ar' => 255,
+            'specifications_en' => null,
+            'specifications_ar' => null,
+            'packaging_en' => 255,
+            'packaging_ar' => 255,
+            'overview_heading_en' => 255,
+            'overview_heading_ar' => 255,
+            'enquiry_note_heading_en' => 160,
+            'enquiry_note_heading_ar' => 160,
+            'enquiry_note_text_en' => null,
+            'enquiry_note_text_ar' => null,
+            'bottom_cta_heading_en' => 255,
+            'bottom_cta_heading_ar' => 255,
+            'bottom_cta_text_en' => null,
+            'bottom_cta_text_ar' => null,
+            'seo_title_en' => 255,
+            'seo_title_ar' => 255,
+            'seo_description_en' => 500,
+            'seo_description_ar' => 500,
+        ];
 
-        return $request->validate([
-            'name_en' => ['required', 'string', 'max:160'],
-            'name_ar' => ['nullable', 'string', 'max:160'],
-            'slug' => ['required', 'alpha_dash', 'max:180', Rule::unique('categories', 'slug')->ignore($category?->id)],
-            'short_description_en' => ['nullable', 'string', 'max:500'],
-            'short_description_ar' => ['nullable', 'string', 'max:500'],
-            'description_en' => ['nullable', 'string', 'max:20000'],
-            'description_ar' => ['nullable', 'string', 'max:20000'],
-            'varieties_en' => ['nullable', 'string', 'max:2000'],
-            'varieties_ar' => ['nullable', 'string', 'max:2000'],
-            'harvest_window_en' => ['nullable', 'string', 'max:255'],
-            'harvest_window_ar' => ['nullable', 'string', 'max:255'],
-            'specifications_en' => ['nullable', 'string', 'max:2000'],
-            'specifications_ar' => ['nullable', 'string', 'max:2000'],
-            'packaging_en' => ['nullable', 'string', 'max:255'],
-            'packaging_ar' => ['nullable', 'string', 'max:255'],
-            'overview_heading_en' => ['nullable', 'string', 'max:255'],
-            'overview_heading_ar' => ['nullable', 'string', 'max:255'],
-            'enquiry_note_heading_en' => ['nullable', 'string', 'max:160'],
-            'enquiry_note_heading_ar' => ['nullable', 'string', 'max:160'],
-            'enquiry_note_text_en' => ['nullable', 'string', 'max:1000'],
-            'enquiry_note_text_ar' => ['nullable', 'string', 'max:1000'],
-            'bottom_cta_heading_en' => ['nullable', 'string', 'max:255'],
-            'bottom_cta_heading_ar' => ['nullable', 'string', 'max:255'],
-            'bottom_cta_text_en' => ['nullable', 'string', 'max:2000'],
-            'bottom_cta_text_ar' => ['nullable', 'string', 'max:2000'],
-            'show_in_catalogue' => ['sometimes', 'boolean'],
-            'show_in_frozen_catalogue' => ['sometimes', 'boolean'],
-            'show_on_homepage' => ['sometimes', 'boolean'],
-            'company_ids' => ['nullable', 'array'],
-            'company_ids.*' => ['integer', 'exists:companies,id'],
-            'show_product_images' => ['sometimes', 'boolean'],
-            'show_enquiry_note' => ['sometimes', 'boolean'],
-            'show_description' => ['sometimes', 'boolean'],
-            'show_available_forms' => ['sometimes', 'boolean'],
-            'show_packaging' => ['sometimes', 'boolean'],
-            'show_specifications' => ['sometimes', 'boolean'],
-            'show_bottom_cta' => ['sometimes', 'boolean'],
-            'sort_order' => ['required', 'integer', 'min:0', 'max:100000'],
-            'seo_title_en' => ['nullable', 'string', 'max:255'],
-            'seo_title_ar' => ['nullable', 'string', 'max:255'],
-            'seo_description_en' => ['nullable', 'string', 'max:500'],
-            'seo_description_ar' => ['nullable', 'string', 'max:500'],
-            'images' => ['nullable', 'array', 'max:' . $productImageBatchLimit],
-            'images.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'library_image' => ['nullable', 'string', Rule::in($mediaInventory->paths())],
-            'library_gallery' => ['nullable', 'array', 'max:' . $libraryGallerySlots],
-            'library_gallery.*' => ['string', Rule::in($mediaInventory->paths())],
-            'gallery' => ['nullable', 'array', 'max:' . $gallerySlotsAvailable],
-            'gallery.*' => ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
-            'remove_gallery' => ['nullable', 'array'],
-            'remove_gallery.*' => ['integer', 'min:0'],
-            'available_forms' => ['nullable', 'array'],
-            'available_forms.*' => ['in:Fresh,Frozen,Processed'],
-        ]);
+        $data = [];
+
+        foreach ($limits as $field => $limit) {
+            $value = $request->exists($field)
+                ? $request->input($field)
+                : $category?->{$field};
+
+            $value = is_scalar($value) ? trim((string) $value) : null;
+
+            if ($value === '') {
+                $value = null;
+            }
+
+            if ($value !== null && $limit !== null) {
+                $value = mb_substr($value, 0, $limit);
+            }
+
+            $data[$field] = $value;
+        }
+
+        // Keep the non-null database columns populated without forcing the user
+        // to enter an English name, slug, or display order.
+        $data['name_en'] = $data['name_en']
+            ?: ($data['name_ar'] ?: ($category?->name_en ?: 'Product'));
+
+        $requestedSlug = $request->exists('slug')
+            ? $request->input('slug')
+            : $category?->slug;
+        $requestedSlug = is_scalar($requestedSlug) ? trim((string) $requestedSlug) : '';
+        $slugSource = $requestedSlug !== '' ? $requestedSlug : $data['name_en'];
+        $baseSlug = Str::slug($slugSource);
+        $baseSlug = mb_substr($baseSlug !== '' ? $baseSlug : 'product', 0, 220);
+        $data['slug'] = $this->uniqueSlug($baseSlug, $category);
+
+        $requestedOrder = $request->exists('sort_order')
+            ? $request->input('sort_order')
+            : $category?->sort_order;
+        $data['sort_order'] = is_numeric($requestedOrder)
+            ? min(4294967295, max(0, (int) $requestedOrder))
+            : (int) ($category?->sort_order ?? 0);
+
+        $rawCompanyIds = $request->exists('company_ids')
+            ? (array) $request->input('company_ids', [])
+            : ($category?->companies()->pluck('companies.id')->all() ?? []);
+        $companyIds = collect($rawCompanyIds)
+            ->filter(fn ($id) => is_scalar($id) && ctype_digit((string) $id))
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+        $data['company_ids'] = Company::query()
+            ->whereIn('id', $companyIds)
+            ->pluck('id')
+            ->map(fn ($id) => (int) $id)
+            ->all();
+
+        $rawForms = $request->exists('available_forms')
+            ? (array) $request->input('available_forms', [])
+            : ($category?->available_forms ?? []);
+        $data['available_forms'] = array_values(array_intersect(
+            $rawForms,
+            ['Fresh', 'Frozen', 'Processed']
+        ));
+
+        $allowedLibraryPaths = $mediaInventory->paths();
+        $libraryImage = $request->input('library_image');
+        $data['library_image'] = is_string($libraryImage)
+            && in_array($libraryImage, $allowedLibraryPaths, true)
+                ? $libraryImage
+                : null;
+
+        $data['library_gallery'] = array_values(array_unique(array_filter(
+            (array) $request->input('library_gallery', []),
+            fn ($path) => is_string($path) && in_array($path, $allowedLibraryPaths, true)
+        )));
+
+        $currentGallery = $category?->gallery ?? [];
+        $data['remove_gallery'] = array_values(array_unique(array_filter(
+            (array) $request->input('remove_gallery', []),
+            fn ($index) => is_scalar($index)
+                && filter_var($index, FILTER_VALIDATE_INT) !== false
+                && array_key_exists((int) $index, $currentGallery)
+        )));
+
+        return $data;
     }
+
+    private function uniqueSlug(string $baseSlug, ?Category $category = null): string
+    {
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (Category::query()
+            ->where('slug', $slug)
+            ->when($category, fn ($query) => $query->where('id', '<>', $category->getKey()))
+            ->exists()) {
+            $suffixText = '-'.$suffix++;
+            $slug = mb_substr($baseSlug, 0, 220 - mb_strlen($suffixText)).$suffixText;
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Only real supported image uploads are stored. A missing, oversized, or
+     * unsupported image does not prevent the product's text fields from saving.
+     */
+    private function validImageFile(mixed $file): ?UploadedFile
+    {
+        if (! $file instanceof UploadedFile || ! $file->isValid()) {
+            return null;
+        }
+
+        return in_array($file->getMimeType(), [
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+            'image/avif',
+        ], true) ? $file : null;
+    }
+
+    /**
+     * @return array<int, UploadedFile>
+     */
+    private function validImageFiles(mixed $files): array
+    {
+        return collect(is_array($files) ? $files : [])
+            ->map(fn ($file) => $this->validImageFile($file))
+            ->filter()
+            ->values()
+            ->all();
+    }
+
 }
