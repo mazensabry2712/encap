@@ -146,8 +146,19 @@ test('replacing one central image usage creates a separate file and preserves th
     $oldBytes = Storage::disk('encap_images')->get('cargo-port-2026.jpg');
 
     $replacement = UploadedFile::fake()->image('cargo-replacement.jpg', 160, 90);
+    $admin = User::factory()->create();
 
-    $this->actingAs(User::factory()->create())
+    // A library filename alone is ambiguous and must not overwrite a shared original.
+    $this->actingAs($admin)
+        ->post(route('admin.media.replace'), [
+            'path' => 'cargo-port-2026.jpg',
+            'image' => UploadedFile::fake()->image('rejected-replacement.jpg', 80, 80),
+        ])
+        ->assertNotFound();
+
+    expect(Storage::disk('encap_images')->get('cargo-port-2026.jpg'))->toBe($oldBytes);
+
+    $this->actingAs($admin)
         ->from(route('admin.media.index'))
         ->post(route('admin.media.replace'), [
             'path' => 'cargo-port-2026.jpg',
