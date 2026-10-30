@@ -15,7 +15,7 @@ final class EncapImageAssignment
      */
     public function duplicate(string $sourcePath, string $slot, string $errorField = 'image'): string
     {
-        $sourcePath = ltrim(str_replace('\\\\', '/', $sourcePath), '/');
+        $sourcePath = ltrim(str_replace('\\', '/', $sourcePath), '/');
         $safePath = preg_match('/\\A[a-zA-Z0-9][a-zA-Z0-9_\\/.-]*\\z/', $sourcePath) === 1
             && ! collect(explode('/', $sourcePath))->contains(fn ($segment) => in_array($segment, ['', '.', '..'], true))
             && in_array(strtolower(pathinfo($sourcePath, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'], true);
