@@ -52,7 +52,7 @@
     <div class="admin-field full">
         <label for="library_image">{{ __('Or choose an existing image from the central library') }}</label>
         <select id="library_image" name="library_image"><option value="">{{ __('Keep current image / use uploaded image') }}</option>@foreach($mediaAssets as $path => $asset)<option value="{{ $path }}" @selected(old('library_image') === $path)>{{ $asset['label'] }} — {{ $path }}</option>@endforeach</select>
-        <small>{{ __('A selected library image is reused; it is not copied or deleted.') }}</small>
+        <small>{{ __('A selected library image is copied into a separate file for this company location. The original library image stays unchanged.') }}</small>
     </div>
     <div class="admin-field full">
         <label for="gallery">{{ __('Additional company images') }}</label>
