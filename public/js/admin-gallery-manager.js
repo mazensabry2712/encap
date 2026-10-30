@@ -2,12 +2,11 @@
     'use strict';
 
     const formatSize = (bytes) => {
-        if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+        if (bytes < 1024 * 1024) return Math.max(1, Math.round(bytes / 1024)) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
     };
 
-    // Browsers replace a file input's FileList every time the picker is opened.
-    // Keep prior selections so repeated "add images" actions append instead of replacing.
+    // Keep earlier file selections when the browser replaces the input FileList.
     const appendSelectedFiles = (input, selectedFiles) => {
         const incoming = Array.from(input.files || []);
         if (incoming.length === 0) return;
@@ -30,15 +29,12 @@
             }
         });
 
-        // DataTransfer lets us put the combined selection back on the real input,
-        // so the browser submits every selected file to Laravel.
         try {
             const transfer = new DataTransfer();
             merged.forEach((file) => transfer.items.add(file));
             input.files = transfer.files;
             selectedFiles.splice(0, selectedFiles.length, ...merged);
         } catch (error) {
-            // Keep normal file-input behavior if the browser does not support FileList assignment.
             selectedFiles.splice(0, selectedFiles.length, ...incoming);
         }
     };
@@ -50,7 +46,6 @@
         const total = manager.querySelector('[data-gallery-total]');
         const removals = Array.from(manager.querySelectorAll('.js-gallery-remove'));
         const existingCount = Number(manager.dataset.existingCount) || 0;
-        const maxImages = Number(manager.dataset.maxGallery) || 12;
         const previewUrls = [];
         const selectedFiles = [];
 
@@ -58,7 +53,6 @@
 
         const markedForRemoval = () => removals.filter((input) => input.checked).length;
         const currentImages = () => Math.max(0, existingCount - markedForRemoval());
-        const availableSlots = () => Math.max(0, maxImages - currentImages());
 
         const revokePreviewUrls = () => {
             previewUrls.forEach((url) => URL.revokeObjectURL(url));
@@ -86,7 +80,7 @@
                 const name = document.createElement('strong');
                 name.textContent = file.name;
                 const meta = document.createElement('small');
-                meta.textContent = `${formatSize(file.size)} · ${index + 1}`;
+                meta.textContent = formatSize(file.size) + ' · ' + (index + 1);
                 copy.append(name, meta);
                 card.append(image, copy);
                 selection.append(card);
@@ -100,11 +94,8 @@
             const selectedCount = (upload.files || []).length;
             const batchGalleryCount = selectedBatchGalleryCount();
             const totalSelectedGalleryCount = selectedCount + batchGalleryCount;
-            const slots = availableSlots();
-            const tooMany = totalSelectedGalleryCount > slots;
             const projectedCount = currentImages() + totalSelectedGalleryCount;
 
-            upload.disabled = slots === 0 && selectedCount === 0;
             removals.forEach((input) => {
                 const label = input.closest('label');
                 const text = label && label.querySelector('span');
@@ -116,29 +107,16 @@
                 if (label) label.classList.toggle('is-marked-for-removal', input.checked);
             });
 
-            total.textContent = `${projectedCount} / ${maxImages}`;
-            total.classList.toggle('is-over-limit', projectedCount > maxImages);
+            total.textContent = String(projectedCount);
 
-            if (tooMany) {
-                status.textContent = manager.dataset.textTooMany || 'Too many images selected.';
-                status.classList.add('is-error');
-                upload.setCustomValidity(status.textContent);
-            } else if (selectedCount > 0) {
+            if (totalSelectedGalleryCount > 0) {
                 const template = manager.dataset.textSelected || ':count images selected.';
                 status.textContent = template.replace(':count', String(totalSelectedGalleryCount));
-                const availability = manager.dataset.textAvailable || ':count gallery slots available.';
-                status.textContent += ` ${availability.replace(':count', String(slots - totalSelectedGalleryCount))}`;
-                status.classList.remove('is-error');
-                upload.setCustomValidity('');
-            } else if (slots === 0) {
-                status.textContent = manager.dataset.textFull || 'The gallery has reached the image limit.';
-                status.classList.remove('is-error');
-                upload.setCustomValidity('');
             } else {
                 status.textContent = manager.dataset.textNoFiles || 'No new images selected.';
-                status.classList.remove('is-error');
-                upload.setCustomValidity('');
             }
+
+            status.classList.remove('is-error');
         };
 
         upload.addEventListener('change', () => {
@@ -150,18 +128,6 @@
         removals.forEach((input) => input.addEventListener('change', refresh));
         manager.closest('form')?.addEventListener('encap:category-gallery-change', refresh);
 
-        const form = manager.closest('form');
-        if (form) {
-            form.addEventListener('submit', (event) => {
-                if (upload.files.length + selectedBatchGalleryCount() > availableSlots()) {
-                    event.preventDefault();
-                    refresh();
-                    upload.reportValidity();
-                    upload.focus();
-                }
-            });
-        }
-
         refresh();
     });
 
@@ -171,9 +137,7 @@
         const selection = manager.querySelector('[data-main-image-selection]');
         const status = manager.querySelector('[data-main-image-status]');
         const form = manager.closest('form');
-        const galleryManager = form?.querySelector('[data-gallery-manager]');
-        const galleryUpload = galleryManager?.querySelector('[data-gallery-upload]');
-        const removals = Array.from(galleryManager?.querySelectorAll('.js-gallery-remove') || []);
+        const removals = Array.from(form?.querySelectorAll('.js-gallery-remove') || []);
         const initialPreviewMarkup = preview?.innerHTML || '';
         const previewUrls = [];
         const selectedFiles = [];
@@ -185,17 +149,6 @@
             previewUrls.forEach((url) => URL.revokeObjectURL(url));
             previewUrls.length = 0;
         };
-
-        const remainingGalleryCount = () => {
-            const count = Number(manager.dataset.currentGalleryCount) || 0;
-            const removed = removals.filter((input) => input.checked).length;
-            return Math.max(0, count - removed);
-        };
-
-        const availableGallerySlots = () => Math.max(
-            0,
-            (Number(manager.dataset.maxGallery) || 12) - remainingGalleryCount()
-        );
 
         const renderBatchPreview = (files) => {
             revokePreviews();
@@ -228,15 +181,6 @@
 
         const refresh = () => {
             const files = Array.from(upload.files || []);
-            const batchGalleryCount = Math.max(0, files.length - 1);
-            const slots = availableGallerySlots();
-            const additionalGalleryCount = (galleryUpload?.files?.length || 0) + batchGalleryCount;
-            const tooMany = additionalGalleryCount > slots;
-
-            upload.setCustomValidity(tooMany ? (manager.dataset.textTooMany || 'Too many product photos selected.') : '');
-            if (galleryUpload) galleryUpload.setCustomValidity(
-                tooMany ? (manager.dataset.textTooMany || 'Too many product photos selected.') : ''
-            );
 
             if (files.length > 0) {
                 let primary = preview.querySelector('img');
@@ -257,7 +201,7 @@
                     .replace(':count', String(files.length));
                 if (files.length > 1) {
                     const note = (manager.dataset.textGalleryCount || ':count will be added to the gallery.')
-                        .replace(':count', String(batchGalleryCount));
+                        .replace(':count', String(files.length - 1));
                     status.textContent += ' ' + note;
                 }
             } else {
@@ -269,13 +213,7 @@
                 status.textContent = manager.dataset.textNoReplacement || 'No product photos selected.';
             }
 
-            if (tooMany) {
-                status.classList.add('is-error');
-                status.textContent += ' ' + (manager.dataset.textTooMany || 'Too many product photos selected.');
-            } else {
-                status.classList.remove('is-error');
-            }
-
+            status.classList.remove('is-error');
             renderBatchPreview(files);
             form?.dispatchEvent(new Event('encap:category-gallery-change'));
         };
@@ -284,16 +222,7 @@
             appendSelectedFiles(upload, selectedFiles);
             refresh();
         });
-        galleryUpload?.addEventListener('change', refresh);
         removals.forEach((input) => input.addEventListener('change', refresh));
-        form?.addEventListener('submit', (event) => {
-            if (Math.max(0, upload.files.length - 1) + (galleryUpload?.files?.length || 0) > availableGallerySlots()) {
-                event.preventDefault();
-                refresh();
-                upload.reportValidity();
-                upload.focus();
-            }
-        });
 
         refresh();
     });
