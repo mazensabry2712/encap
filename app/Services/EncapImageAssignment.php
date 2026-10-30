@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -27,6 +28,7 @@ final class EncapImageAssignment
         }
 
         $sourceDisk = null;
+        $remoteBody = null;
 
         foreach (['encap_images', 'public'] as $diskName) {
             try {
@@ -41,9 +43,28 @@ final class EncapImageAssignment
             }
         }
 
+        // Curated stock photos can still be external fallbacks before the
+        // storage-preparation job downloads them. Copy them locally too.
         if ($sourceDisk === null) {
+            $fallbackUrl = app(EncapImageLibrary::class)->catalogue()[$sourcePath] ?? null;
+
+            if (is_string($fallbackUrl)) {
+                try {
+                    $response = Http::connectTimeout(3)->timeout(15)->get($fallbackUrl);
+                    $contentType = strtolower((string) $response->header('Content-Type'));
+
+                    if ($response->successful() && str_starts_with($contentType, 'image/')) {
+                        $remoteBody = $response->body();
+                    }
+                } catch (Throwable) {
+                    // Report the same clear selection error below.
+                }
+            }
+        }
+
+        if ($sourceDisk === null && $remoteBody === null) {
             throw ValidationException::withMessages([
-                $errorField => __('The selected library image is no longer available. Please choose another image.'),
+                $errorField => __('The selected library image is no longer available. Please choose again.'),
             ]);
         }
 
@@ -69,13 +90,17 @@ final class EncapImageAssignment
                     continue;
                 }
 
-                $stream = $sourceDisk->readStream($sourcePath);
+                if ($remoteBody !== null) {
+                    $saved = $targetDisk->put($targetPath, $remoteBody);
+                } else {
+                    $stream = $sourceDisk->readStream($sourcePath);
 
-                if (! is_resource($stream)) {
-                    continue;
+                    if (! is_resource($stream)) {
+                        continue;
+                    }
+
+                    $saved = $targetDisk->put($targetPath, $stream);
                 }
-
-                $saved = $targetDisk->put($targetPath, $stream);
 
                 if ($saved && $targetDisk->exists($targetPath)) {
                     return $targetPath;
