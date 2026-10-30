@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Models\SeoSetting;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
