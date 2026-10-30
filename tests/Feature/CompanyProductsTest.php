@@ -99,7 +99,7 @@ test('administrators can still assign company categories while the public compan
 
     $this->get('/ar/companies')
         ->assertOk()
-        ->assertSee('شركتنا | ENCAP')
+        ->assertSee('شركاتنا | ENCAP')
         ->assertDontSee('encap-company-detail-section', false)
         ->assertDontSee('المنتجات التي توفرها هذه الشركة')
         ->assertDontSee('Test Tomatoes')
