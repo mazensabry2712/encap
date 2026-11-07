@@ -160,7 +160,8 @@ test('the central image library groups active images by the exact website locati
         'is_published' => true,
     ]);
 
-    $this->actingAs(User::factory()->create())
+    $this->withSession(['admin_language' => 'en'])
+        ->actingAs(User::factory()->create())
         ->get(route('admin.media.index'))
         ->assertOk()
         ->assertSee('data-media-group="Products catalogue"', false)
