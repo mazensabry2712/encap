@@ -14,7 +14,7 @@
   <div class="encap-hero-copy">
    <div class="encap-kicker encap-hero-kicker" data-hero-reveal style="--hero-delay:80ms"><span class="encap-kicker-dot"></span><span>{{ filled($homeContent['hero_kicker'] ?? null) ? $homeContent['hero_kicker'] : __('Egyptian agricultural production & export') }}</span></div>
    <h1 id="encap-hero-title" data-hero-reveal style="--hero-delay:160ms">{{ filled($homeContent['hero_title'] ?? null) ? $homeContent['hero_title'] : __('From Egyptian soil to the world’s table.') }}</h1>
-   <p class="encap-hero-lead" data-hero-reveal style="--hero-delay:240ms">{{ filled($homeContent['hero_intro'] ?? null) ? $homeContent['hero_intro'] : __('We bring together our own farms, trusted growers and careful preparation to connect Egyptian produce with global markets.') }}</p>
+   <p class="encap-hero-lead" data-hero-reveal style="--hero-delay:240ms">{{ filled($homeContent['hero_intro'] ?? null) ? $homeContent['hero_intro'] : __('The Egyptian National Company for Agricultural Production brings together output from its own farms, trusted growers and careful preparation to connect Egyptian produce with global markets.') }}</p>
    <div class="encap-hero-actions" data-hero-reveal style="--hero-delay:320ms">
     <a class="encap-button encap-button-primary" href="{{ route('products.index', ['locale' => $locale]) }}">{{ __('Discover our products') }} <span aria-hidden="true">↗</span></a>
     <a class="encap-button encap-button-quiet" href="{{ route('quote.create', ['locale' => $locale]) }}">{{ __('Start a conversation') }} <span aria-hidden="true">→</span></a>

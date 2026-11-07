@@ -75,6 +75,23 @@ test('homepage includes the ENCAP signature design and accessible navigation', f
 });
 
 
+test('homepage hero identifies the Egyptian National Company for Agricultural Production in every locale', function () {
+    $introByLocale = {
+        'en' => 'The Egyptian National Company for Agricultural Production brings together output from its own farms, trusted growers and careful preparation to connect Egyptian produce with global markets.',
+        'ar' => 'تجمع الشركة المصرية الوطنية للإنتاج الزراعي بين إنتاج مزارعها، والتوريد من المزارعين الموثوقين، والتجهيز المدروس؛ لربط المنتجات الزراعية المصرية بالأسواق العالمية.',
+        'fr' => 'La Société nationale égyptienne de production agricole associe la production de ses propres fermes, l’approvisionnement auprès de producteurs partenaires de confiance et une préparation soignée afin de relier les produits agricoles égyptiens aux marchés mondiaux.',
+        'ru' => 'Египетская национальная компания сельскохозяйственного производства объединяет продукцию собственных ферм, поставки от надёжных фермеров-партнёров и тщательную подготовку, чтобы выводить египетскую сельхозпродукцию на мировые рынки.',
+        'tr' => 'Mısır Ulusal Tarımsal Üretim Şirketi, Mısır tarım ürünlerini dünya pazarlarına ulaştırmak için kendi çiftliklerindeki üretimi, güvenilir üreticilerden tedariki ve özenli hazırlık süreçlerini bir araya getiriyor.'
+};
+
+    foreach ($introByLocale as $locale => $intro) {
+        $this->get('/'.$locale)
+            ->assertOk()
+            ->assertSee($intro);
+    }
+});
+
+
 test('site-wide motion assets are loaded on public English and Arabic page templates', function () {
     Category::query()->create([
         'name_en' => 'Motion Mango',
