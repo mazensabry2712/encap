@@ -791,5 +791,6 @@
     "Unused image deleted from the library.": "Kullanılmayan görsel kitaplıktan silindi.",
     "This image is still used on the website and cannot be deleted.": "Bu görsel web sitesinde hâlâ kullanılıyor ve silinemez.",
     "The unused image could not be fully removed. Check image-folder permissions and try again.": "Kullanılmayan görsel tamamen silinemedi. Görsel klasörü izinlerini kontrol edip tekrar deneyin.",
-    "Default site images stay available for future use and cannot be deleted here.": "Varsayılan site görselleri ileride kullanılmak üzere saklanır ve buradan silinemez."
+    "Default site images stay available for future use and cannot be deleted here.": "Varsayılan site görselleri ileride kullanılmak üzere saklanır ve buradan silinemez.",
+    "files in storage": "depolanan dosya"
 }
