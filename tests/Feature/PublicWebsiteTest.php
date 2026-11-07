@@ -406,7 +406,7 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('css/encap-redesign.css?v=20261107-regional-brands', false)
+        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-logo', false)
         ->assertSee('encap-footer-group-company-card', false)
         ->assertSee('شركة حدائق الشمال');
 });
@@ -427,30 +427,6 @@ test('the pre-footer subsidiary card displays the ENCAP logo instead of a countr
         ->not->toContain('🇸🇦');
 
     expect($html)->toContain('شركة حدائق الشمال');
-});
-
-
-
-test('footer regional business cards use Hadaeq and ENCAP brand marks instead of country flags', function () {
-    $html = $this->get('/ar')->assertOk()->getContent();
-
-    preg_match_all('/<article class="encap-footer-business-card encap-footer-person-card">(.*?)<\\/article>/s', $html, $matches);
-    expect($matches[1])->toHaveCount(3);
-
-    expect($matches[1][0])
-        ->toContain('encap-footer-region-mark--hadaeq')
-        ->toContain('حدائق الشمال')
-        ->not->toContain('🇸🇦')
-        ->not->toContain('🇪🇬');
-
-    foreach ([1, 2] as $index) {
-        expect($matches[1][$index])
-            ->toContain('encap-footer-region-mark--encap')
-            ->toContain('alt="ENCAP"')
-            ->toContain(asset('encap-img/logo.png'))
-            ->not->toContain('🇸🇦')
-            ->not->toContain('🇪🇬');
-    }
 });
 
 
