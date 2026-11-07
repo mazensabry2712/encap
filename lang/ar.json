@@ -1051,5 +1051,6 @@
     "Delete unused image": "حذف الصورة غير المستخدمة",
     "Unused image deleted from the library.": "تم حذف الصورة غير المستخدمة من المكتبة.",
     "This image is still used on the website and cannot be deleted.": "هذه الصورة ما زالت مستخدمة في الموقع ولا يمكن حذفها.",
-    "The unused image could not be fully removed. Check image-folder permissions and try again.": "تعذر حذف الصورة بالكامل. راجع صلاحيات مجلد الصور ثم حاول مرة أخرى."
+    "The unused image could not be fully removed. Check image-folder permissions and try again.": "تعذر حذف الصورة بالكامل. راجع صلاحيات مجلد الصور ثم حاول مرة أخرى.",
+    "Default site images stay available for future use and cannot be deleted here.": "تظل صور الموقع الافتراضية متاحة للاستخدام لاحقًا ولا يمكن حذفها من هنا."
 }
