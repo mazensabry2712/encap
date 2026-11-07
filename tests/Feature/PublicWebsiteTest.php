@@ -406,7 +406,7 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-card-gold-frame', false)
+        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-card-refined', false)
         ->assertSee('encap-footer-group-company-card', false)
         ->assertSee('شركة حدائق الشمال');
 });
