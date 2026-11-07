@@ -22,7 +22,6 @@ final class MediaController extends Controller
     public function index(Request $request, EncapImageLibrary $imageLibrary, EncapMediaInventory $mediaInventory): View
     {
         $catalogue = $imageLibrary->catalogue();
-        $usagesByPath = collect($mediaInventory->usages())->groupBy('path');
         $query = trim((string) $request->query('q', ''));
 
         $staticLabels = [
@@ -50,38 +49,137 @@ final class MediaController extends Controller
             'cargo-port-2026.jpg' => __('Export port image'),
         ];
 
-        $assets = collect($mediaInventory->paths())->map(function (string $path) use ($catalogue, $staticLabels, $usagesByPath) {
-            $mainExists = Storage::disk('encap_images')->exists($path);
-            $legacyExists = Storage::disk('public')->exists($path);
-            $fallback = $catalogue[$path] ?? null;
-
+        $allAssets = collect($mediaInventory->paths())->map(function (string $path) use ($catalogue, $staticLabels) {
             return [
                 'path' => $path,
                 'label' => $staticLabels[$path] ?? basename($path),
-                'url' => EncapImage::url($path, $fallback),
-                'in_main' => $mainExists,
-                'in_legacy' => $legacyExists,
-                'usages' => collect($usagesByPath->get($path, []))->values()->all(),
-                // The site logo and icon are intentional global brand assets.
-                'global_brand_asset' => in_array($path, ['logo.png', 'favicon.png'], true),
-                'is_slot' => array_key_exists($path, $staticLabels) || array_key_exists($path, $catalogue),
+                'url' => EncapImage::url($path, $catalogue[$path] ?? null),
+            ];
+        })->keyBy('path');
+
+        $groupForUsage = function (string $key): string {
+            if (str_starts_with($key, 'category:')) {
+                return __('Products catalogue');
+            }
+
+            if (str_starts_with($key, 'company:')) {
+                return __('Company profile');
+            }
+
+            if (str_starts_with($key, 'seo:')) {
+                return __('SEO & social sharing');
+            }
+
+            if (! str_starts_with($key, 'site:')) {
+                return __('Website pages');
+            }
+
+            $slot = substr($key, 5);
+            $parts = explode('.', $slot);
+            $page = ($parts[0] ?? '') === 'content'
+                ? ($parts[1] ?? '')
+                : ($parts[0] ?? '');
+
+            return match ($page) {
+                'home' => __('Homepage'),
+                'about' => __('About page'),
+                'farms' => __('Farms page'),
+                'packing-stations' => __('Packing stations'),
+                'quality' => __('Quality page'),
+                'export' => __('Export page'),
+                'products' => __('Products catalogue'),
+                'frozen' => __('Frozen catalogue'),
+                default => __('Website pages'),
+            };
+        };
+
+        $usages = $mediaInventory->usages();
+        $usedPaths = collect($usages)->pluck('path')->filter()->unique()->values();
+        $placements = collect($usages)->map(function (array $usage) use ($allAssets, $groupForUsage, $catalogue) {
+            $path = $usage['path'];
+            $asset = $allAssets->get($path, []);
+
+            return [
+                'path' => $path,
+                'label' => $asset['label'] ?? basename($path),
+                'url' => $asset['url'] ?? EncapImage::url($path, $catalogue[$path] ?? null),
+                'location' => $usage['location'],
+                'group' => $groupForUsage($usage['key']),
+                'usage_key' => $usage['key'],
+                'global_brand_asset' => false,
             ];
         });
 
+        foreach ([
+            'logo.png' => ['label' => __('Company logo'), 'location' => __('Main site logo')],
+            'favicon.png' => ['label' => __('Site icon'), 'location' => __('Browser and mobile site icon')],
+        ] as $path => $brand) {
+            $asset = $allAssets->get($path, []);
+
+            $placements->push([
+                'path' => $path,
+                'label' => $brand['label'],
+                'url' => $asset['url'] ?? EncapImage::url($path),
+                'location' => $brand['location'],
+                'group' => __('Site identity'),
+                'usage_key' => null,
+                'global_brand_asset' => true,
+            ]);
+        }
+
         if ($query !== '') {
             $needle = Str::lower($query);
-            $assets = $assets->filter(fn (array $asset) =>
+            $matches = fn (array $item) =>
+                Str::contains(Str::lower($item['path']), $needle)
+                || Str::contains(Str::lower((string) $item['label']), $needle)
+                || Str::contains(Str::lower((string) $item['location']), $needle)
+                || Str::contains(Str::lower((string) $item['group']), $needle);
+
+            $placements = $placements->filter($matches)->values();
+        }
+
+        $groupOrder = [
+            __('Homepage'),
+            __('About page'),
+            __('Farms page'),
+            __('Packing stations'),
+            __('Quality page'),
+            __('Export page'),
+            __('Products catalogue'),
+            __('Frozen catalogue'),
+            __('Company profile'),
+            __('Site identity'),
+            __('SEO & social sharing'),
+            __('Website pages'),
+        ];
+
+        $groups = $placements
+            ->groupBy('group')
+            ->sortBy(fn ($items, $group) => array_search($group, $groupOrder, true) === false
+                ? PHP_INT_MAX
+                : array_search($group, $groupOrder, true));
+
+        // Keep unused uploads out of the main location-based library. They remain
+        // available in a collapsed section and can only be deleted after a fresh
+        // database-reference check by deleteUnused().
+        $unusedAssets = $allAssets
+            ->reject(fn (array $asset, string $path) => $usedPaths->contains($path)
+                || ! preg_match('#\\A(?:site-library|media-replacements|assigned)/#', $path))
+            ->values();
+
+        if ($query !== '') {
+            $needle = Str::lower($query);
+            $unusedAssets = $unusedAssets->filter(fn (array $asset) =>
                 Str::contains(Str::lower($asset['path']), $needle)
-                || Str::contains(Str::lower((string) $asset['label']), $needle)
-                || collect($asset['usages'])->contains(
-                    fn (array $usage) => Str::contains(Str::lower($usage['location']), $needle)
-                )
-            );
+                || Str::contains(Str::lower($asset['label']), $needle)
+            )->values();
         }
 
         return view('admin.media.index', [
-            'assets' => $assets->values(),
-            'totalAssets' => $mediaInventory->paths() ? count($mediaInventory->paths()) : 0,
+            'groups' => $groups,
+            'placementCount' => $placements->count(),
+            'totalAssets' => $allAssets->count(),
+            'unusedAssets' => $unusedAssets,
             'query' => $query,
         ]);
     }
@@ -159,6 +257,60 @@ final class MediaController extends Controller
             : 'Brand asset updated.';
 
         return back()->with('success', $message);
+    }
+
+    public function deleteUnused(Request $request, EncapMediaInventory $mediaInventory): RedirectResponse
+    {
+        $validated = $request->validate([
+            'path' => ['required', 'string', 'max:255'],
+        ]);
+
+        $path = ltrim(str_replace('\\\\', '/', $validated['path']), '/');
+        $segments = explode('/', $path);
+
+        abort_unless(
+            in_array($segments[0] ?? '', ['site-library', 'media-replacements', 'assigned'], true)
+            && preg_match('/\\A[a-zA-Z0-9][a-zA-Z0-9_\\/.-]*\\z/', $path) === 1
+            && ! collect($segments)->contains(fn ($segment) => in_array($segment, ['', '.', '..'], true)),
+            404
+        );
+
+        $stillUsed = collect($mediaInventory->usages())->contains(
+            fn (array $usage) => $usage['path'] === $path
+        );
+
+        abort_if($stillUsed, 409, __('This image is still used on the website and cannot be deleted.'));
+
+        $found = false;
+        $failed = false;
+
+        foreach (['encap_images', 'public'] as $diskName) {
+            try {
+                $disk = Storage::disk($diskName);
+
+                if (! $disk->exists($path)) {
+                    continue;
+                }
+
+                $found = true;
+
+                if (! $disk->delete($path) || $disk->exists($path)) {
+                    $failed = true;
+                }
+            } catch (\\Throwable) {
+                $failed = true;
+            }
+        }
+
+        abort_unless($found, 404);
+
+        if ($failed) {
+            return back()->withErrors([
+                'image' => __('The unused image could not be fully removed. Check image-folder permissions and try again.'),
+            ]);
+        }
+
+        return back()->with('success', __('Unused image deleted from the library.'));
     }
 
     public function upload(Request $request, EncapImageUpload $imageUpload): RedirectResponse
