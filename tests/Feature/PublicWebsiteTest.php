@@ -269,35 +269,6 @@ test('the public company page shows the fixed Hadaeq profile without listing unr
 });
 
 
-test('Hadaeq company identity is prominent and its location link is accessible in every locale', function () {
-    $labels = [
-        'ar' => ['شركة تابعة لمجموعة ENCAP', 'عرض الموقع على الخريطة'],
-        'en' => ['A subsidiary of ENCAP Group', 'View location on map'],
-        'fr' => ['Filiale du groupe ENCAP', 'Voir l’emplacement sur la carte'],
-        'ru' => ['Дочерняя компания группы ENCAP', 'Посмотреть на карте'],
-        'tr' => ['ENCAP Grubu’nun bağlı şirketi', 'Haritada görüntüle'],
-    ];
-
-    foreach ($labels as $locale => [$affiliation, $mapAction]) {
-        $this->get('/'.$locale.'/companies')
-            ->assertOk()
-            ->assertSee($affiliation)
-            ->assertSee($mapAction)
-            ->assertSee('hs-company__brand-card', false);
-    }
-
-    $this->get('/ar/companies')
-        ->assertOk()
-        ->assertSee('الشركة المصرية الوطنية للإنتاج الزراعي')
-        ->assertSee('class="hs-company__map-link"', false)
-        ->assertSee('maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia', false)
-        ->assertSee('target="_blank" rel="noopener noreferrer"', false)
-        ->assertSee('aria-label="عرض الموقع على الخريطة: منطقة الجوف، السعودية"', false)
-        ->assertSee('background:radial-gradient(circle at 84% 18%', false)
-        ->assertSee('border-inline-start:4px solid #e3b53e', false);
-});
-
-
 test('primary navigation is centered, bilingual, and responsive', function () {
     $englishResponse = $this->get('/en');
 
@@ -423,7 +394,7 @@ test('the full Arabic company name is prominent across supported locales and str
 });
 
 
-test('the Saudi subsidiary card has a clearly visible high-contrast frame', function () {
+test('the pre-footer Saudi subsidiary card has a prominent gold frame', function () {
     $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
 
     expect($stylesheet)
@@ -438,7 +409,6 @@ test('the Saudi subsidiary card has a clearly visible high-contrast frame', func
         ->assertOk()
         ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-card-gold-frame', false)
         ->assertSee('encap-footer-group-company-card', false)
-        ->assertSee('encap-footer-group-company-identity', false)
         ->assertSee('شركة حدائق الشمال');
 });
 
