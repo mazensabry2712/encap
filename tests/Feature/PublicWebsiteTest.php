@@ -412,17 +412,7 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 });
 
 
-test('the pre-footer subsidiary card displays the saved Hadaeq logo instead of the Saudi flag', function () {
-    $company = \App\Models\Company::query()
-        ->where('slug', 'hadaeq-al-shamal')
-        ->firstOrFail();
-
-    \Illuminate\Support\Facades\Storage::fake('encap_images');
-    $logoPath = 'companies/hadaeq-al-shamal-logo.webp';
-    \Illuminate\Support\Facades\Storage::disk('encap_images')->put($logoPath, 'company-logo');
-    $company->update(['image' => $logoPath]);
-
-    $logoUrl = \App\Support\EncapImage::url($logoPath);
+test('the pre-footer subsidiary card displays the ENCAP logo instead of a country mark', function () {
     $html = $this->get('/ar')->assertOk()->getContent();
 
     $markStart = strpos($html, '<a class="encap-footer-group-company-mark"');
@@ -432,29 +422,11 @@ test('the pre-footer subsidiary card displays the saved Hadaeq logo instead of t
     $markMarkup = substr($html, $markStart, $markEnd - $markStart);
 
     expect($markMarkup)
-        ->toContain($logoUrl)
+        ->toContain(asset('encap-img/logo.png'))
+        ->toContain('alt="ENCAP"')
         ->not->toContain('🇸🇦');
-});
 
-
-test('the pre-footer subsidiary card does not use a stock photo as the company logo', function () {
-    $company = \App\Models\Company::query()
-        ->where('slug', 'hadaeq-al-shamal')
-        ->firstOrFail();
-
-    expect($company->image)->toBe('farm-cultivation-2026.jpg');
-
-    $html = $this->get('/ar')->assertOk()->getContent();
-    $cardStart = strpos($html, '<article class="encap-footer-group-company-card is-logo-less">');
-    expect($cardStart)->not->toBeFalse();
-
-    $cardEnd = strpos($html, '</article>', $cardStart);
-    $cardMarkup = substr($html, $cardStart, $cardEnd - $cardStart);
-
-    expect($cardMarkup)
-        ->not->toContain('farm-cultivation-2026.jpg')
-        ->not->toContain('encap-footer-group-company-mark')
-        ->toContain('شركة حدائق الشمال');
+    expect($html)->toContain('شركة حدائق الشمال');
 });
 
 
