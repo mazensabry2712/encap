@@ -436,6 +436,7 @@ test('the Saudi subsidiary card has a clearly visible high-contrast frame', func
 
     $this->get('/ar')
         ->assertOk()
+        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-card-gold-frame', false)
         ->assertSee('encap-footer-group-company-card', false)
         ->assertSee('encap-footer-group-company-identity', false)
         ->assertSee('شركة حدائق الشمال');

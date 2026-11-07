@@ -6,10 +6,9 @@
     $copyByLocale = [
         'ar' => [
             'home' => 'الرئيسية',
-            'eyebrow' => 'شركة تابعة لمجموعة ENCAP',
-            'map_action' => 'عرض الموقع على الخريطة',
+            'eyebrow' => 'إحدى شركات مجموعة ENCAP',
             'title' => 'شركة حدائق الشمال',
-            'subtitle' => 'شركة تابعة للشركة المصرية الوطنية للإنتاج الزراعي ENCAP',
+            'subtitle' => 'إحدى شركات الشركة المصرية الوطنية للإنتاج الزراعي ENCAP',
             'location_label' => 'مقر الأنشطة الزراعية',
             'location' => 'منطقة الجوف، المملكة العربية السعودية',
             'industry_label' => 'مجال العمل',
@@ -46,8 +45,7 @@
         ],
         'en' => [
             'home' => 'Home',
-            'eyebrow' => 'A subsidiary of ENCAP Group',
-            'map_action' => 'View location on map',
+            'eyebrow' => 'An ENCAP Group Company',
             'title' => 'Hadaeq Al-Shamal Company',
             'subtitle' => 'A subsidiary of The Egyptian National Company for Agricultural Production (ENCAP)',
             'location_label' => 'Agricultural operations',
@@ -86,8 +84,7 @@
         ],
         'fr' => [
             'home' => 'Accueil',
-            'eyebrow' => 'Filiale du groupe ENCAP',
-            'map_action' => 'Voir l’emplacement sur la carte',
+            'eyebrow' => 'Une société du groupe ENCAP',
             'title' => 'Société Hadaeq Al-Shamal',
             'subtitle' => 'Filiale de The Egyptian National Company for Agricultural Production (ENCAP)',
             'location_label' => 'Activités agricoles',
@@ -126,8 +123,7 @@
         ],
         'ru' => [
             'home' => 'Главная',
-            'eyebrow' => 'Дочерняя компания группы ENCAP',
-            'map_action' => 'Посмотреть на карте',
+            'eyebrow' => 'Компания группы ENCAP',
             'title' => 'Компания Hadaeq Al-Shamal',
             'subtitle' => 'Дочерняя компания Egyptian National Company for Agricultural Production (ENCAP)',
             'location_label' => 'Сельскохозяйственная деятельность',
@@ -166,8 +162,7 @@
         ],
         'tr' => [
             'home' => 'Ana sayfa',
-            'eyebrow' => 'ENCAP Grubu’nun bağlı şirketi',
-            'map_action' => 'Haritada görüntüle',
+            'eyebrow' => 'ENCAP Grubu şirketi',
             'title' => 'Hadaeq Al-Shamal Şirketi',
             'subtitle' => 'Mısır Ulusal Tarımsal Üretim Şirketi ENCAP’ın bağlı şirketi',
             'location_label' => 'Tarım faaliyetleri',
@@ -216,36 +211,28 @@
 <style>
     .hs-company{--hs-ink:#17271f;--hs-green:#244b37;--hs-deep:#102b20;--hs-leaf:#b6c88e;--hs-lime:#e4edcf;--hs-cream:#f5f3e9;--hs-paper:#fbfaf5;--hs-muted:#68736b;--hs-line:rgba(29,56,40,.16);color:var(--hs-ink);background:var(--hs-paper)}
     .hs-company *{box-sizing:border-box}
-    .hs-company__hero{position:relative;isolation:isolate;overflow:hidden;padding:25px 0 clamp(58px,7vw,100px);background:radial-gradient(circle at 84% 18%,rgba(227,181,62,.13),transparent 27%),linear-gradient(135deg,#102b20 0%,#173b2a 58%,#244b37 100%);color:#fffdf6}
-    .hs-company__hero:before{content:"";position:absolute;z-index:-1;width:560px;height:560px;max-width:70vw;max-height:70vw;top:-300px;inset-inline-end:-100px;border:1px solid #e3b53e55;border-radius:50%;box-shadow:0 0 0 45px #e3b53e0c,0 0 0 90px #ffffff08}
-    .hs-company__breadcrumbs{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 32px;color:#dce7dc;font-size:13px}
-    .hs-company__breadcrumbs a{color:#f3d37b;font-weight:750;text-decoration:underline;text-decoration-color:#f3d37b77;text-underline-offset:4px}
+    .hs-company__hero{position:relative;isolation:isolate;overflow:hidden;padding:25px 0 clamp(52px,7vw,96px);background:linear-gradient(140deg,#f4f2e7 0%,#fbfaf5 58%,#e8eddd 100%)}
+    .hs-company__hero:before{content:"";position:absolute;z-index:-1;width:560px;height:560px;max-width:70vw;max-height:70vw;top:-300px;inset-inline-end:-100px;border:1px solid #244b3722;border-radius:50%;box-shadow:0 0 0 45px #244b3708,0 0 0 90px #244b3705}
+    .hs-company__breadcrumbs{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:0 0 32px;color:#68736b;font-size:12px}
+    .hs-company__breadcrumbs a{color:var(--hs-green);text-decoration:none}
     .hs-company__breadcrumbs a:hover{text-decoration:underline}
     .hs-company__hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(230px,.65fr);align-items:center;gap:clamp(28px,6vw,90px)}
     .hs-company__eyebrow,.hs-company__kicker{display:flex;align-items:center;gap:10px;color:var(--hs-green);font-size:11px;font-weight:800;letter-spacing:.08em;line-height:1.8}
     .hs-company__eyebrow:before,.hs-company__kicker:before{content:"";width:25px;height:2px;flex:0 0 auto;background:var(--hs-leaf)}
-    .hs-company__eyebrow{width:fit-content;max-width:100%;padding:9px 15px;border:1px solid #e3b53e99;background:#e3b53e1c;color:#ffe39a;font-size:14px;font-weight:850;letter-spacing:0;line-height:1.6}
-    .hs-company__eyebrow:before{width:8px;height:8px;flex-basis:8px;border-radius:50%;background:#e3b53e}
-    .hs-company__title{margin:22px 0 16px;padding-inline-start:20px;border-inline-start:4px solid #e3b53e;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.5rem,5.8vw,5rem)!important;font-weight:800;line-height:1.35!important;letter-spacing:0;color:#fffdf6;text-wrap:balance}
-    .hs-company__subtitle{max-width:780px;margin:0;color:#e5eee5;font-size:clamp(17px,1.8vw,21px)!important;font-weight:650;line-height:1.9!important}
+    .hs-company__title{margin:16px 0 12px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,6.1vw,78px);font-weight:500;line-height:1.08;letter-spacing:-.045em;color:var(--hs-deep);text-wrap:balance}
+    .hs-company__subtitle{max-width:780px;margin:0;color:#4b5c50;font-size:clamp(16px,1.8vw,21px);font-weight:650;line-height:1.8}
     .hs-company__facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-    .hs-company__fact{display:flex;align-items:flex-start;gap:12px;min-width:min(100%,240px);padding:15px 17px;border:1px solid #ffffff45;background:#ffffff12;backdrop-filter:blur(8px)}
-    .hs-company__fact-mark{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#e3b53e;color:#102b20;font-size:17px;font-weight:900}
+    .hs-company__fact{display:flex;align-items:flex-start;gap:10px;min-width:min(100%,240px);padding:13px 15px;border:1px solid var(--hs-line);background:#ffffff80}
+    .hs-company__fact-mark{display:grid;place-items:center;flex:0 0 31px;width:31px;height:31px;border-radius:50%;background:var(--hs-lime);color:var(--hs-green);font-size:15px}
     .hs-company__fact strong,.hs-company__fact span{display:block}
-    .hs-company__fact strong{font-size:12px;color:#f3d37b;margin-bottom:5px;font-weight:800}
-    .hs-company__fact span{font-size:14px;font-weight:750;line-height:1.75;color:#fffdf6}
-    .hs-company__map-link{display:inline-flex;align-items:center;gap:7px;margin-top:7px;color:#ffe39a;font-size:13px;font-weight:800;line-height:1.7;text-decoration:underline;text-decoration-color:#ffe39a88;text-underline-offset:4px}
-    .hs-company__map-link:hover{color:#fff;text-decoration-color:#fff}
-    .hs-company__map-link span{display:inline!important;font-size:inherit!important;line-height:inherit!important}
-    .hs-company__map-link:focus-visible{outline:3px solid #ffe39a;outline-offset:4px;border-radius:2px}
-    .hs-company__brand-card{position:relative;padding:clamp(24px,3vw,38px);border:3px solid #f0c64e;border-radius:9px;background:#fffefa;outline:2px solid #fff0b8;outline-offset:5px;box-shadow:0 0 0 8px #e3b53e,0 28px 76px #061b12b8;text-align:center;backdrop-filter:blur(9px)}
+    .hs-company__fact strong{font-size:11px;color:#778176;margin-bottom:3px}
+    .hs-company__fact span{font-size:12px;font-weight:700;line-height:1.65}
+    .hs-company__brand-card{padding:clamp(22px,3vw,34px);border:1px solid #ffffff;background:#ffffffc9;box-shadow:0 24px 65px #15312012;text-align:center;backdrop-filter:blur(9px)}
     .hs-company__brand-logo{display:grid;place-items:center;min-height:118px;padding:10px 4px 20px;border-bottom:1px solid var(--hs-line)}
     .hs-company__brand-logo img{display:block;max-width:min(100%,285px);width:100%;height:98px;object-fit:contain}
-    .hs-company__brand-tag{display:inline-flex;align-items:center;justify-content:center;max-width:100%;margin:22px 0 12px;padding:8px 14px;border-radius:999px;background:#102b20;color:#fffdf6;font-size:12px;font-weight:850;letter-spacing:0;line-height:1.6;text-transform:none}
+    .hs-company__brand-tag{display:inline-block;margin:22px 0 8px;color:var(--hs-green);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
     .hs-company__brand-name{margin:0;color:var(--hs-deep);font-family:Georgia,"Times New Roman",serif;font-size:clamp(22px,2.2vw,31px);font-weight:500;line-height:1.2}
-    .hs-company__brand-parent{margin:14px 0 0;color:var(--hs-muted);font-size:12px;line-height:1.8}
-    .hs-company__brand-parent-label{display:block;margin-bottom:5px;color:#68776b;font-size:11px;font-weight:750}
-    .hs-company__brand-parent strong{display:block;color:#17271f;font-size:14px!important;font-weight:850;line-height:1.8}
+    .hs-company__brand-parent{margin:12px 0 0;color:var(--hs-muted);font-size:11px;line-height:1.8}
     .hs-company__section{padding-block:clamp(58px,8vw,100px)}
     .hs-company__overview-grid{display:grid;grid-template-columns:minmax(220px,.76fr) minmax(0,1.24fr);gap:clamp(30px,7vw,100px);align-items:start}
     .hs-company__section-title{margin:12px 0 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(31px,4.2vw,51px);font-weight:500;line-height:1.2;letter-spacing:-.035em;color:var(--hs-deep);text-wrap:balance}
@@ -274,7 +261,7 @@
     .hs-company__photo-index{color:#7d8976;font-size:10px;font-weight:800;letter-spacing:.12em}
     .hs-company__image-note{margin:16px 0 0;color:#7a8378;font-size:11px;line-height:1.8}
     @media (max-width:820px){.hs-company__hero-grid,.hs-company__overview-grid{grid-template-columns:minmax(0,1fr)}.hs-company__brand-card{max-width:440px}.hs-company__brand-logo{min-height:98px}.hs-company__section-heading{display:block}.hs-company__section-intro{margin-top:16px}.hs-company__specialty-grid{gap:14px}}
-    @media (max-width:600px){.hs-company__hero{padding-top:18px}.hs-company__breadcrumbs{margin-bottom:24px}.hs-company__facts{display:grid;grid-template-columns:minmax(0,1fr)}.hs-company__fact{min-width:0}.hs-company__specialty-grid,.hs-company__gallery-grid{grid-template-columns:minmax(0,1fr)}.hs-company__photo img{height:270px}.hs-company__section{padding-block:54px}.hs-company__specialty-card{padding:22px}.hs-company__title{font-size:clamp(2.25rem,10vw,3.25rem)!important;line-height:1.4!important;padding-inline-start:14px}.hs-company__subtitle{font-size:16px!important}.hs-company__brand-card{max-width:480px;width:100%}}
+    @media (max-width:600px){.hs-company__hero{padding-top:18px}.hs-company__breadcrumbs{margin-bottom:24px}.hs-company__facts{display:grid;grid-template-columns:minmax(0,1fr)}.hs-company__fact{min-width:0}.hs-company__specialty-grid,.hs-company__gallery-grid{grid-template-columns:minmax(0,1fr)}.hs-company__photo img{height:270px}.hs-company__section{padding-block:54px}.hs-company__specialty-card{padding:22px}.hs-company__title{font-size:clamp(39px,11vw,58px)}}
     @media (prefers-reduced-motion:reduce){.hs-company__photo img{transition:none}.hs-company__photo:hover img{transform:none}}
 </style>
 @endpush
@@ -301,7 +288,6 @@
                             <div>
                                 <strong>{{ $copy['location_label'] }}</strong>
                                 <span>{{ $copy['location'] }}</span>
-                                <a class="hs-company__map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer" aria-label="{{ $copy['map_action'] }}: {{ $copy['map_label'] }}">{{ $copy['map_action'] }} <span aria-hidden="true">↗</span></a>
                             </div>
                         </div>
                         <div class="hs-company__fact">
@@ -320,10 +306,7 @@
                     </div>
                     <span class="hs-company__brand-tag">{{ $copy['eyebrow'] }}</span>
                     <h2 class="hs-company__brand-name">{{ $copy['title'] }}</h2>
-                    <div class="hs-company__brand-parent">
-                        <span class="hs-company__brand-parent-label">{{ $copy['parent_label'] }}</span>
-                        <strong>{{ $copy['parent_name'] }}</strong>
-                    </div>
+                    <p class="hs-company__brand-parent">{{ $copy['parent_name'] }}</p>
                 </aside>
             </div>
         </div>
