@@ -399,11 +399,10 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 
     expect($stylesheet)
         ->toContain('.encap-footer-group-company-card{')
-        ->toContain('border:3px solid #ffd700;')
-        ->toContain('outline:2px solid #fff1a6;')
-        ->toContain('outline-offset:4px;')
-        ->toContain('box-shadow:0 0 0 6px rgba(255,215,0,.42)')
-        ->toContain('height:4px;');
+        ->toContain('border:2px solid #bda36a;')
+        ->toContain('box-shadow:inset 0 0 0 1px rgba(255,255,255,.055)')
+        ->toContain('height:2px;')
+        ->toContain('background:linear-gradient(90deg,#d9c28d 0%,#bda36a 46%,rgba(189,163,106,.18) 100%)');
 
     $this->get('/ar')
         ->assertOk()
