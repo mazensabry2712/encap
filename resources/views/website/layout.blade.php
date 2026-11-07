@@ -141,10 +141,12 @@
                 </div>
             </div>
             @php($footerGroupCompany = \App\Models\Company::query()->where('slug', 'hadaeq-al-shamal')->first(['image']))
-            <article class="encap-footer-group-company-card">
-                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
-                    <img src="{{ \App\Support\EncapImage::url($footerGroupCompany?->image ?: 'logo.png') }}" alt="" width="280" height="96" decoding="async">
-                </a>
+            <article class="encap-footer-group-company-card{{ filled($footerGroupCompany?->image) ? '' : ' is-logo-less' }}">
+                @if(filled($footerGroupCompany?->image))
+                    <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
+                        <img src="{{ \App\Support\EncapImage::url($footerGroupCompany->image) }}" alt="{{ $currentLocale === 'ar' ? 'شعار شركة حدائق الشمال' : __('Hadaeq Al-Shamal Company') . ' logo' }}" width="280" height="96" decoding="async">
+                    </a>
+                @endif
                 <a class="encap-footer-group-company-identity" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
                     <span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span>
                     <h3>{{ __('Hadaeq Al-Shamal Company') }}</h3>
