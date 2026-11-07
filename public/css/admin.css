@@ -429,3 +429,35 @@ html[dir="rtl"] .admin-dashboard-welcome {
         transform: none;
     }
 }
+
+/* Location-first central media library: page groups mirror the product catalogue workflow. */
+.admin-media-library-head{align-items:flex-start}
+.admin-media-group{padding-top:20px;margin-top:22px;border-top:1px solid var(--admin-border,#e2e7df)}
+.admin-media-group:first-of-type{margin-top:0}
+.admin-media-group-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.admin-media-group-heading h3{margin:0;color:var(--admin-text,#182b20);font-size:16px;font-weight:850}
+.admin-media-group-heading span,.admin-media-unused-count{padding:5px 9px;border:1px solid var(--admin-border,#e2e7df);border-radius:4px;background:#f6f8f3;color:#5f7062;font-size:10px;font-weight:800;white-space:nowrap}
+.admin-media-card-body h4{margin:0;color:var(--admin-text,#182b20);font-size:13px;font-weight:850;line-height:1.55;overflow-wrap:anywhere}
+.admin-media-file-label{margin:0;color:#657569;font-size:10px;line-height:1.55}
+.admin-media-replace-form{margin-top:4px}
+.admin-media-replace-form label{font-size:11px}
+.admin-media-replace-form .admin-btn{min-height:37px}
+.admin-media-unused{margin-top:20px;padding:0;overflow:hidden}
+.admin-media-unused>summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;cursor:pointer;list-style:none}
+.admin-media-unused>summary::-webkit-details-marker{display:none}
+.admin-media-unused>summary:after{content:"＋";color:var(--admin-green,#24563b);font-size:18px;font-weight:800}
+.admin-media-unused[open]>summary:after{content:"−"}
+.admin-media-unused>summary>span:first-child{display:grid;gap:4px;min-width:0}
+.admin-media-unused>summary strong{color:var(--admin-text,#182b20);font-size:13px}
+.admin-media-unused>summary small{color:#718076;font-size:10px;line-height:1.6}
+.admin-media-unused-count{margin-inline-start:auto}
+.admin-media-unused>.admin-media-grid{padding:0 18px 18px}
+.admin-media-unused-card .admin-btn.danger{width:100%;justify-content:center;border-color:#e6c5bd;background:#fff7f4;color:#8a382b}
+.admin-media-unused-card .admin-btn.danger:hover{background:#fcede8}
+@media(max-width:620px){
+    .admin-media-library-head{display:grid}
+    .admin-media-group-heading{align-items:flex-start}
+    .admin-media-unused>summary{align-items:flex-start;padding:15px}
+    .admin-media-unused-count{font-size:9px}
+    .admin-media-unused>.admin-media-grid{padding:0 12px 12px}
+}
