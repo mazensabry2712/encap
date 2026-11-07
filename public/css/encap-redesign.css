@@ -1750,31 +1750,3 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
     .encap-footer-contact-tagline{font-size:11px}
     .encap-footer-contact-follow .encap-footer-socials a{padding:8px 9px}
 }
-
-/* Regional brand marks in the footer business cards: Hadaeq in Saudi Arabia, ENCAP in Egypt. */
-.encap-footer-region-mark--hadaeq{
-    flex:0 0 96px;
-    width:96px;
-    padding:2px 7px;
-    border-color:rgba(189,163,106,.58);
-    background:rgba(189,163,106,.11);
-    color:#f2dfb4;
-    font-family:'Cairo',sans-serif;
-    font-size:10px;
-    font-weight:850;
-    line-height:1.35;
-    white-space:nowrap;
-}
-.encap-footer-region-mark--encap{
-    flex:0 0 70px;
-    width:70px;
-    padding:4px;
-    border-color:rgba(189,163,106,.58);
-    background:#fff;
-}
-.encap-footer-region-mark--encap img{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
