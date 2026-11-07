@@ -423,12 +423,17 @@ test('the pre-footer subsidiary card displays the saved Hadaeq logo instead of t
     $company->update(['image' => $logoPath]);
 
     $logoUrl = \App\Support\EncapImage::url($logoPath);
+    $html = $this->get('/ar')->assertOk()->getContent();
 
-    $this->get('/ar')
-        ->assertOk()
-        ->assertSee($logoUrl, false)
-        ->assertSee('encap-footer-group-company-mark', false)
-        ->assertDontSee('🇸🇦');
+    $markStart = strpos($html, '<a class="encap-footer-group-company-mark"');
+    expect($markStart)->not->toBeFalse();
+
+    $markEnd = strpos($html, '</a>', $markStart);
+    $markMarkup = substr($html, $markStart, $markEnd - $markStart);
+
+    expect($markMarkup)
+        ->toContain($logoUrl)
+        ->not->toContain('🇸🇦');
 });
 
 
