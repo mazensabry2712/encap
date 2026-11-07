@@ -1566,7 +1566,7 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
 .encap-footer-group-company-card{
     position:relative;
     display:grid;
-    grid-template-columns:48px minmax(0,1fr) minmax(220px,.7fr);
+    grid-template-columns:78px minmax(0,1fr) minmax(220px,.7fr);
     align-items:center;
     gap:17px;
     min-width:0;
@@ -1587,19 +1587,25 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
 .encap-footer-group-company-mark{
     display:grid;
     place-items:center;
-    width:46px;
-    height:46px;
-    border:1px solid rgba(255,255,255,.15);
+    width:74px;
+    height:58px;
+    padding:6px;
+    overflow:hidden;
+    border:1px solid rgba(189,163,106,.62);
     border-radius:6px;
-    background:rgba(255,255,255,.05);
-    color:inherit;
-    font-size:23px;
+    background:#fff;
     text-decoration:none;
-    transition:border-color .18s ease,background .18s ease,transform .18s ease;
+    transition:border-color .18s ease,transform .18s ease;
+}
+.encap-footer-group-company-mark img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
 }
 .encap-footer-group-company-mark:hover{
-    border-color:rgba(227,181,62,.55);
-    background:rgba(227,181,62,.10);
+    border-color:#d9c28d;
+    background:#fff;
     transform:translateY(-1px);
 }
 .encap-footer-group-company-mark:focus-visible,
@@ -1662,14 +1668,14 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
 .encap-footer-group-company-location a:hover{color:#f6d981}
 @media(max-width:900px){
     .encap-footer-business-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .encap-footer-group-company-card{grid-template-columns:44px minmax(0,1fr) minmax(180px,.7fr);gap:13px;padding:17px}
+    .encap-footer-group-company-card{grid-template-columns:72px minmax(0,1fr) minmax(180px,.7fr);gap:13px;padding:17px}
 }
 @media(max-width:600px){
     .encap-footer-business-grid{grid-template-columns:minmax(0,1fr);gap:11px}
     .encap-footer-group-companies{margin-top:22px;padding-top:20px}
     .encap-footer-group-companies-heading{margin-bottom:12px}
-    .encap-footer-group-company-card{grid-template-columns:40px minmax(0,1fr);gap:12px;padding:16px}
-    .encap-footer-group-company-mark{width:39px;height:39px;font-size:20px}
+    .encap-footer-group-company-card{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:16px}
+    .encap-footer-group-company-mark{width:62px;height:48px;padding:5px}
     .encap-footer-group-company-location{
         grid-column:1/-1;
         padding:12px 0 0;
