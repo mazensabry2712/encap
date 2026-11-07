@@ -144,3 +144,76 @@ test('default company content photos are tracked and replaced by section positio
         ->and($company->content_sections[0]['images'][1])->toBe('potato-sorting-2026.jpg')
         ->and($company->content_sections[1]['images'][0])->toBe('farm-cultivation-2026.jpg');
 });
+
+test('the central image library groups active images by the exact website location', function () {
+    Storage::fake('encap_images');
+    Storage::fake('public');
+
+    $path = 'categories/library-group-product.jpg';
+    Storage::disk('encap_images')->put($path, 'product-image');
+
+    Category::query()->create([
+        'name_en' => 'Library Group Product',
+        'name_ar' => 'منتج تصنيف المكتبة',
+        'slug' => 'library-group-product',
+        'image' => $path,
+        'is_published' => true,
+    ]);
+
+    $this->actingAs(User::factory()->create())
+        ->get(route('admin.media.index'))
+        ->assertOk()
+        ->assertSee('data-media-group="Products catalogue"', false)
+        ->assertSee('Product: Library Group Product — main image')
+        ->assertSee('Images by website location')
+        ->assertSee('Additional images not assigned to a page');
+});
+
+test('unused generated library images can be deleted while active images are kept', function () {
+    Storage::fake('encap_images');
+    Storage::fake('public');
+
+    $unusedPath = 'site-library/old-extra-photo.jpg';
+    $activePath = 'media-replacements/active-product-photo.jpg';
+    Storage::disk('encap_images')->put($unusedPath, 'unused-image');
+    Storage::disk('encap_images')->put($activePath, 'active-image');
+
+    Category::query()->create([
+        'name_en' => 'Active Photo Product',
+        'name_ar' => 'منتج بصورة مستخدمة',
+        'slug' => 'active-photo-product',
+        'image' => $activePath,
+        'is_published' => true,
+    ]);
+
+    $this->actingAs(User::factory()->create())
+        ->delete(route('admin.media.delete-unused'), ['path' => $unusedPath])
+        ->assertRedirect()
+        ->assertSessionHas('success');
+
+    Storage::disk('encap_images')->assertMissing($unusedPath);
+    Storage::disk('encap_images')->assertExists($activePath);
+});
+
+test('the image library refuses to delete an upload that is still referenced by a product', function () {
+    Storage::fake('encap_images');
+    Storage::fake('public');
+
+    $activePath = 'assigned/product-card/main.jpg';
+    Storage::disk('encap_images')->put($activePath, 'active-image');
+
+    Category::query()->create([
+        'name_en' => 'Protected Image Product',
+        'name_ar' => 'منتج بصورة محمية',
+        'slug' => 'protected-image-product',
+        'image' => $activePath,
+        'is_published' => true,
+    ]);
+
+    $this->actingAs(User::factory()->create())
+        ->delete(route('admin.media.delete-unused'), ['path' => $activePath])
+        ->assertStatus(409);
+
+    Storage::disk('encap_images')->assertExists($activePath);
+});
+
