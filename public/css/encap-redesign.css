@@ -1577,6 +1577,7 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
     background:linear-gradient(105deg,rgba(189,163,106,.055),rgba(255,255,255,.025) 68%);
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.055),0 14px 34px rgba(0,0,0,.18);
 }
+.encap-footer-group-company-card.is-logo-less{grid-template-columns:minmax(0,1fr) minmax(220px,.7fr)}
 .encap-footer-group-company-card:before{
     position:absolute;
     inset:0 0 auto;
@@ -1669,12 +1670,14 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
 @media(max-width:900px){
     .encap-footer-business-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .encap-footer-group-company-card{grid-template-columns:72px minmax(0,1fr) minmax(180px,.7fr);gap:13px;padding:17px}
+    .encap-footer-group-company-card.is-logo-less{grid-template-columns:minmax(0,1fr) minmax(180px,.7fr)}
 }
 @media(max-width:600px){
     .encap-footer-business-grid{grid-template-columns:minmax(0,1fr);gap:11px}
     .encap-footer-group-companies{margin-top:22px;padding-top:20px}
     .encap-footer-group-companies-heading{margin-bottom:12px}
     .encap-footer-group-company-card{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:16px}
+    .encap-footer-group-company-card.is-logo-less{grid-template-columns:minmax(0,1fr)}
     .encap-footer-group-company-mark{width:62px;height:48px;padding:5px}
     .encap-footer-group-company-location{
         grid-column:1/-1;
