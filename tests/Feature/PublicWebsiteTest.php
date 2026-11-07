@@ -406,9 +406,29 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-card-refined', false)
+        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-logo', false)
         ->assertSee('encap-footer-group-company-card', false)
         ->assertSee('شركة حدائق الشمال');
+});
+
+
+test('the pre-footer subsidiary card displays the saved Hadaeq logo instead of the Saudi flag', function () {
+    $company = \App\Models\Company::query()
+        ->where('slug', 'hadaeq-al-shamal')
+        ->firstOrFail();
+
+    \Illuminate\Support\Facades\Storage::fake('encap_images');
+    $logoPath = 'companies/hadaeq-al-shamal-logo.webp';
+    \Illuminate\Support\Facades\Storage::disk('encap_images')->put($logoPath, 'company-logo');
+    $company->update(['image' => $logoPath]);
+
+    $logoUrl = \App\Support\EncapImage::url($logoPath);
+
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee($logoUrl, false)
+        ->assertSee('encap-footer-group-company-mark', false)
+        ->assertDontSee('🇸🇦');
 });
 
 
