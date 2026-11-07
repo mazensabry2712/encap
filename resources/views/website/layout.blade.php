@@ -33,7 +33,7 @@
         <link rel="preload" as="image" href="{{ \App\Support\EncapImage::slot('home.hero_background', 'orange-orchard-hero-2026.jpg', 'https://images.pexels.com/photos/10970006/pexels-photo-10970006.jpeg?auto=compress&cs=tinysrgb&w=2000') }}">
     @endif
     <link rel="stylesheet" href="{{ asset('css/website.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261107-subsidiary-card-refined">
+    <link rel="stylesheet" href="{{ asset('css/encap-redesign.css') }}?v=20261107-subsidiary-logo">
     <link rel="stylesheet" href="{{ asset('css/navigation.css') }}?v=20261028-central-media-company-catalogue-2">
     <link rel="stylesheet" href="{{ asset('css/typography.css') }}">
     @if(request()->routeIs('home'))<link rel="stylesheet" href="{{ asset('css/hero-experience.css') }}">@endif
@@ -140,8 +140,11 @@
                     <p>{{ __('A regional company within the ENCAP group.') }}</p>
                 </div>
             </div>
+            @php($footerGroupCompany = \App\Models\Company::query()->where('slug', 'hadaeq-al-shamal')->first(['image']))
             <article class="encap-footer-group-company-card">
-                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">🇸🇦</a>
+                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
+                    <img src="{{ \App\Support\EncapImage::url($footerGroupCompany?->image ?: 'logo.png') }}" alt="" width="280" height="96" decoding="async">
+                </a>
                 <a class="encap-footer-group-company-identity" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
                     <span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span>
                     <h3>{{ __('Hadaeq Al-Shamal Company') }}</h3>
