@@ -171,7 +171,7 @@
 
             <div class="encap-footer-business-grid">
                 <article class="encap-footer-business-card encap-footer-person-card">
-                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇸🇦</span><span class="encap-footer-card-tag">{{ __('Saudi Arabia') }}</span></div>
+                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark encap-footer-region-mark--hadaeq" lang="ar" dir="rtl">حدائق الشمال</span><span class="encap-footer-card-tag">{{ __('Saudi Arabia') }}</span></div>
                     <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }}</h3>
                     <p class="encap-footer-person-role">{{ __('Company Manager in Saudi Arabia') }}</p>
                     <div class="encap-footer-phone-list">
@@ -183,7 +183,7 @@
                 </article>
 
                 <article class="encap-footer-business-card encap-footer-person-card">
-                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇪🇬</span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
+                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark encap-footer-region-mark--encap"><img src="{{ asset('encap-img/logo.png') }}" alt="ENCAP" width="70" height="24" loading="lazy" decoding="async"></span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
                     <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'شعبان شاهين' : 'Shaban Shahen' }}</h3>
                     <p class="encap-footer-person-role">{{ __('Company Manager in Egypt') }}</p>
                     <div class="encap-footer-phone-list">
@@ -194,7 +194,7 @@
                 </article>
 
                 <article class="encap-footer-business-card encap-footer-person-card">
-                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇪🇬</span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
+                    <div class="encap-footer-card-topline"><span class="encap-footer-region-mark encap-footer-region-mark--encap"><img src="{{ asset('encap-img/logo.png') }}" alt="ENCAP" width="70" height="24" loading="lazy" decoding="async"></span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
                     <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'محمد سعد' : 'Mohamed Saad' }}</h3>
                     <p class="encap-footer-person-role">{{ __('Export Sector Manager') }}</p>
                     <div class="encap-footer-phone-list">
