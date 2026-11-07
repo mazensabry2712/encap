@@ -437,6 +437,27 @@ test('the pre-footer subsidiary card displays the saved Hadaeq logo instead of t
 });
 
 
+test('the pre-footer subsidiary card does not use a stock photo as the company logo', function () {
+    $company = \App\Models\Company::query()
+        ->where('slug', 'hadaeq-al-shamal')
+        ->firstOrFail();
+
+    expect($company->image)->toBe('farm-cultivation-2026.jpg');
+
+    $html = $this->get('/ar')->assertOk()->getContent();
+    $cardStart = strpos($html, '<article class="encap-footer-group-company-card is-logo-less">');
+    expect($cardStart)->not->toBeFalse();
+
+    $cardEnd = strpos($html, '</article>', $cardStart);
+    $cardMarkup = substr($html, $cardStart, $cardEnd - $cardStart);
+
+    expect($cardMarkup)
+        ->not->toContain('farm-cultivation-2026.jpg')
+        ->not->toContain('encap-footer-group-company-mark')
+        ->toContain('شركة حدائق الشمال');
+});
+
+
 test('footer closing signature groups ENCAP legal text with the Bahnes developer link', function () {
     $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
 
