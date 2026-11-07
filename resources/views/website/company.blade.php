@@ -238,7 +238,7 @@
     .hs-company__map-link:hover{color:#fff;text-decoration-color:#fff}
     .hs-company__map-link span{display:inline!important;font-size:inherit!important;line-height:inherit!important}
     .hs-company__map-link:focus-visible{outline:3px solid #ffe39a;outline-offset:4px;border-radius:2px}
-    .hs-company__brand-card{position:relative;padding:clamp(24px,3vw,38px);border:2px solid #e3b53e;border-radius:8px;background:#fffefa;box-shadow:0 28px 76px #061b12a8;text-align:center;backdrop-filter:blur(9px)}
+    .hs-company__brand-card{position:relative;padding:clamp(24px,3vw,38px);border:3px solid #f0c64e;border-radius:9px;background:#fffefa;outline:2px solid #fff0b8;outline-offset:5px;box-shadow:0 0 0 8px #e3b53e,0 28px 76px #061b12b8;text-align:center;backdrop-filter:blur(9px)}
     .hs-company__brand-logo{display:grid;place-items:center;min-height:118px;padding:10px 4px 20px;border-bottom:1px solid var(--hs-line)}
     .hs-company__brand-logo img{display:block;max-width:min(100%,285px);width:100%;height:98px;object-fit:contain}
     .hs-company__brand-tag{display:inline-flex;align-items:center;justify-content:center;max-width:100%;margin:22px 0 12px;padding:8px 14px;border-radius:999px;background:#102b20;color:#fffdf6;font-size:12px;font-weight:850;letter-spacing:0;line-height:1.6;text-transform:none}
