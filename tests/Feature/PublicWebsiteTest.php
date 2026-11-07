@@ -423,6 +423,25 @@ test('the full Arabic company name is prominent across supported locales and str
 });
 
 
+test('the Saudi subsidiary card has a clearly visible high-contrast frame', function () {
+    $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
+
+    expect($stylesheet)
+        ->toContain('.encap-footer-group-company-card{')
+        ->toContain('border:2px solid #e3b53e;')
+        ->toContain('outline:1px solid rgba(255,231,161,.88);')
+        ->toContain('outline-offset:3px;')
+        ->toContain('box-shadow:0 0 0 5px rgba(227,181,62,.18)')
+        ->toContain('height:3px;');
+
+    $this->get('/ar')
+        ->assertOk()
+        ->assertSee('encap-footer-group-company-card', false)
+        ->assertSee('encap-footer-group-company-identity', false)
+        ->assertSee('شركة حدائق الشمال');
+});
+
+
 test('footer closing signature groups ENCAP legal text with the Bahnes developer link', function () {
     $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
 
