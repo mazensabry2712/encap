@@ -55,6 +55,10 @@
     <symbol id="icon-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/><path d="M7 12h10M12 7v10"/></symbol>
 </svg>
 <a class="skip-link" href="#main-content">{{ __('Skip to content') }}</a>
+@php($footerHadaeqCompany = isset($company) && $company->slug === 'hadaeq-al-shamal'
+    ? $company
+    : \App\Models\Company::query()->where('slug', 'hadaeq-al-shamal')->first(['slug', 'image']))
+@php($footerHadaeqCompanyImage = $footerHadaeqCompany?->image ?: 'logo.png')
 @php($currentLocale = $locale ?? 'en')
 @php($availableLocales = ['en' => ['code' => 'EN', 'label' => 'English', 'native' => 'English', 'dir' => 'ltr'], 'ar' => ['code' => 'AR', 'label' => 'العربية', 'native' => 'اللغة العربية', 'dir' => 'rtl'], 'fr' => ['code' => 'FR', 'label' => 'Français', 'native' => 'Français', 'dir' => 'ltr'], 'ru' => ['code' => 'RU', 'label' => 'Русский', 'native' => 'Русский', 'dir' => 'ltr'], 'tr' => ['code' => 'TR', 'label' => 'Türkçe', 'native' => 'Türkçe', 'dir' => 'ltr']])
 
@@ -141,8 +145,8 @@
                 </div>
             </div>
             <article class="encap-footer-group-company-card">
-                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('ENCAP Group') }}">
-                    <img src="{{ asset('encap-img/logo.png') }}" alt="ENCAP" width="280" height="96" decoding="async">
+                <a class="encap-footer-group-company-mark" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Hadaeq Al-Shamal Company') }}">
+                    <img src="{{ \App\Support\EncapImage::url($footerHadaeqCompanyImage) }}" alt="{{ $currentLocale === 'ar' ? 'شعار شركة حدائق الشمال' : 'Hadaeq Al-Shamal Company logo' }}" width="300" height="90" decoding="async">
                 </a>
                 <a class="encap-footer-group-company-identity" href="{{ route('companies', ['locale' => $currentLocale]) }}" aria-label="{{ __('Our Company') }}">
                     <span class="encap-footer-card-tag">{{ __('ENCAP subsidiary') }}</span>
