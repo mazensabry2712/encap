@@ -428,11 +428,11 @@ test('the Saudi subsidiary card has a clearly visible high-contrast frame', func
 
     expect($stylesheet)
         ->toContain('.encap-footer-group-company-card{')
-        ->toContain('border:2px solid #e3b53e;')
-        ->toContain('outline:1px solid rgba(255,231,161,.88);')
-        ->toContain('outline-offset:3px;')
-        ->toContain('box-shadow:0 0 0 5px rgba(227,181,62,.18)')
-        ->toContain('height:3px;');
+        ->toContain('border:3px solid #ffd700;')
+        ->toContain('outline:2px solid #fff1a6;')
+        ->toContain('outline-offset:4px;')
+        ->toContain('box-shadow:0 0 0 6px rgba(255,215,0,.42)')
+        ->toContain('height:4px;');
 
     $this->get('/ar')
         ->assertOk()
