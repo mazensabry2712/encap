@@ -791,5 +791,6 @@
     "Delete unused image": "Delete unused image",
     "Unused image deleted from the library.": "Unused image deleted from the library.",
     "This image is still used on the website and cannot be deleted.": "This image is still used on the website and cannot be deleted.",
-    "The unused image could not be fully removed. Check image-folder permissions and try again.": "The unused image could not be fully removed. Check image-folder permissions and try again."
+    "The unused image could not be fully removed. Check image-folder permissions and try again.": "The unused image could not be fully removed. Check image-folder permissions and try again.",
+    "Default site images stay available for future use and cannot be deleted here.": "Default site images stay available for future use and cannot be deleted here."
 }
