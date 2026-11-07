@@ -406,7 +406,7 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 
     $this->get('/ar')
         ->assertOk()
-        ->assertSee('css/encap-redesign.css?v=20261107-subsidiary-logo', false)
+        ->assertSee('css/encap-redesign.css?v=20261107-regional-brands', false)
         ->assertSee('encap-footer-group-company-card', false)
         ->assertSee('شركة حدائق الشمال');
 });
@@ -429,6 +429,28 @@ test('the pre-footer subsidiary card displays the ENCAP logo instead of a countr
     expect($html)->toContain('شركة حدائق الشمال');
 });
 
+
+
+test('footer regional business cards use Hadaeq and ENCAP brand marks instead of country flags', function () {
+    $html = $this->get('/ar')->assertOk()->getContent();
+
+    expect($html)
+        ->toContain('encap-footer-region-mark--hadaeq')
+        ->toContain('حدائق الشمال')
+        ->toContain('encap-footer-region-mark--encap')
+        ->toContain('alt="ENCAP"')
+        ->toContain(asset('encap-img/logo.png'));
+
+    expect(substr_count($html, 'encap-footer-region-mark--encap'))->toBe(2);
+    
+    $businessGridStart = strpos($html, '<div class="encap-footer-business-grid">');
+    $businessGridEnd = strpos($html, '</div>', $businessGridStart);
+    $businessGrid = substr($html, $businessGridStart, $businessGridEnd - $businessGridStart);
+
+    expect($businessGrid)
+        ->not->toContain('🇸🇦')
+        ->not->toContain('🇪🇬');
+});
 
 test('footer closing signature groups ENCAP legal text with the Bahnes developer link', function () {
     $stylesheet = file_get_contents(public_path('css/encap-redesign.css'));
