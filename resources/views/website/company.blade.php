@@ -236,6 +236,7 @@
     .hs-company__fact span{font-size:14px;font-weight:750;line-height:1.75;color:#fffdf6}
     .hs-company__map-link{display:inline-flex;align-items:center;gap:7px;margin-top:7px;color:#ffe39a;font-size:13px;font-weight:800;line-height:1.7;text-decoration:underline;text-decoration-color:#ffe39a88;text-underline-offset:4px}
     .hs-company__map-link:hover{color:#fff;text-decoration-color:#fff}
+    .hs-company__map-link span{display:inline!important;font-size:inherit!important;line-height:inherit!important}
     .hs-company__map-link:focus-visible{outline:3px solid #ffe39a;outline-offset:4px;border-radius:2px}
     .hs-company__brand-card{position:relative;padding:clamp(24px,3vw,38px);border:2px solid #e3b53e;border-radius:8px;background:#fffefa;box-shadow:0 28px 76px #061b12a8;text-align:center;backdrop-filter:blur(9px)}
     .hs-company__brand-logo{display:grid;place-items:center;min-height:118px;padding:10px 4px 20px;border-bottom:1px solid var(--hs-line)}
