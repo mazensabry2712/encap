@@ -791,5 +791,6 @@
     "Unused image deleted from the library.": "Неиспользуемое изображение удалено из библиотеки.",
     "This image is still used on the website and cannot be deleted.": "Это изображение используется на сайте и не может быть удалено.",
     "The unused image could not be fully removed. Check image-folder permissions and try again.": "Не удалось полностью удалить изображение. Проверьте права доступа к папке изображений и повторите попытку.",
-    "Default site images stay available for future use and cannot be deleted here.": "Стандартные изображения сайта остаются доступными для дальнейшего использования и не удаляются здесь."
+    "Default site images stay available for future use and cannot be deleted here.": "Стандартные изображения сайта остаются доступными для дальнейшего использования и не удаляются здесь.",
+    "files in storage": "файлов в хранилище"
 }
