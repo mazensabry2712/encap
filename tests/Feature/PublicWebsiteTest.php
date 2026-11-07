@@ -413,11 +413,11 @@ test('the pre-footer Saudi subsidiary card has a prominent gold frame', function
 
 
 test('the pre-footer subsidiary card uses the same Hadaeq image as the company page', function () {
-    $company = \\App\\Models\\Company::query()
+    $company = \App\Models\Company::query()
         ->where('slug', 'hadaeq-al-shamal')
         ->firstOrFail();
 
-    $expectedImage = \\App\\Support\\EncapImage::url($company->image ?: 'logo.png');
+    $expectedImage = \App\Support\EncapImage::url($company->image ?: 'logo.png');
     $html = $this->get('/ar')->assertOk()->getContent();
 
     $markStart = strpos($html, '<a class="encap-footer-group-company-mark"');
