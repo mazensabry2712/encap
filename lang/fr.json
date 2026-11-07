@@ -791,5 +791,6 @@
     "Unused image deleted from the library.": "L’image inutilisée a été supprimée de la bibliothèque.",
     "This image is still used on the website and cannot be deleted.": "Cette image est encore utilisée sur le site et ne peut pas être supprimée.",
     "The unused image could not be fully removed. Check image-folder permissions and try again.": "L’image inutilisée n’a pas pu être entièrement supprimée. Vérifiez les autorisations du dossier d’images et réessayez.",
-    "Default site images stay available for future use and cannot be deleted here.": "Les images par défaut du site restent disponibles pour un usage ultérieur et ne peuvent pas être supprimées ici."
+    "Default site images stay available for future use and cannot be deleted here.": "Les images par défaut du site restent disponibles pour un usage ultérieur et ne peuvent pas être supprimées ici.",
+    "files in storage": "fichiers stockés"
 }
