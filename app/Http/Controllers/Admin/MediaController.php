@@ -94,7 +94,7 @@ final class MediaController extends Controller
         };
 
         $usages = $mediaInventory->usages();
-        $usedPaths = collect($usages)->pluck('path')->filter()->unique()->values();
+        $usedPaths = collect($usages)->pluck('path')->filter()->merge(['logo.png', 'favicon.png'])->unique()->values();
         $placements = collect($usages)->map(function (array $usage) use ($allAssets, $groupForUsage, $catalogue) {
             $path = $usage['path'];
             $asset = $allAssets->get($path, []);
@@ -163,8 +163,12 @@ final class MediaController extends Controller
         // available in a collapsed section and can only be deleted after a fresh
         // database-reference check by deleteUnused().
         $unusedAssets = $allAssets
-            ->reject(fn (array $asset, string $path) => $usedPaths->contains($path)
-                || ! preg_match('#\\A(?:site-library|media-replacements|assigned)/#', $path))
+            ->reject(fn (array $asset, string $path) => $usedPaths->contains($path))
+            ->map(function (array $asset) {
+                $asset['can_delete'] = preg_match('#\\A(?:site-library|media-replacements|assigned)/#', $asset['path']) === 1;
+
+                return $asset;
+            })
             ->values();
 
         if ($query !== '') {
