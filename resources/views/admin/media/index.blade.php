@@ -40,7 +40,7 @@
     <div class="admin-panel-head admin-media-library-head">
         <div>
             <h2 id="media-library-title">{{ __('Images by website location') }}</h2>
-            <p>{{ number_format($placementCount) }} {{ __('image locations') }} · {{ number_format($totalAssets) }} {{ __('files in storage') }}</p>
+            <p>{{ number_format($placementCount) }} {{ __('image locations') }} · {{ number_format($totalAssets) }} {{ __('All site images') }}</p>
         </div>
         <form method="get" action="{{ route('admin.media.index') }}" class="admin-media-search">
             <label class="sr-only" for="media-query">{{ __('Search image locations') }}</label>
@@ -77,7 +77,7 @@
                                     <input type="hidden" name="usage" value="{{ $asset['usage_key'] }}">
                                 @endif
                                 <label for="replace-{{ md5($asset['path'].'-'.($asset['usage_key'] ?? 'brand')) }}">{{ __('Replace image in this place') }}</label>
-                                <input id="replace-{{ md5($asset['path'].'-'.($asset['usage_key'] ?? 'brand')) }}" type="file" name="image" required accept="image/jpeg,image/png,image/webp,image/avif,image/gif">
+                                <input id="replace-{{ md5($asset['path'].'-'.($asset['usage_key'] ?? 'brand')) }}" type="file" name="image" required accept="{{ $asset['global_brand_asset'] ? 'image/png' : 'image/jpeg,image/png,image/webp,image/avif,image/gif' }}">
                                 <small>{{ __('Only this location changes. Other pages using the same original image stay unchanged.') }}</small>
                                 <button class="admin-btn secondary" type="submit">{{ __('Replace this image') }}</button>
                             </form>
@@ -112,12 +112,16 @@
                     <div class="admin-media-card-body">
                         <h4>{{ $asset['label'] }}</h4>
                         <code>{{ $asset['path'] }}</code>
-                        <form method="post" action="{{ route('admin.media.delete-unused') }}" onsubmit="return confirm('{{ __('Delete this unused image permanently?') }}')">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="path" value="{{ $asset['path'] }}">
-                            <button class="admin-btn danger" type="submit">{{ __('Delete unused image') }}</button>
-                        </form>
+                        @if($asset['can_delete'])
+                            <form method="post" action="{{ route('admin.media.delete-unused') }}" onsubmit="return confirm('{{ __('Delete this unused image permanently?') }}')">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="path" value="{{ $asset['path'] }}">
+                                <button class="admin-btn danger" type="submit">{{ __('Delete unused image') }}</button>
+                            </form>
+                        @else
+                            <p class="admin-media-usage">{{ __('Default site images stay available for future use and cannot be deleted here.') }}</p>
+                        @endif
                     </div>
                 </article>
             @endforeach
