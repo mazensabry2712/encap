@@ -33,6 +33,7 @@ Route::prefix('admin')->name('admin.')->middleware(SetAdminLocale::class)->group
         Route::get('/media', [MediaController::class, 'index'])->name('media.index');
         Route::post('/media/upload', [MediaController::class, 'upload'])->middleware('throttle:20,1')->name('media.upload');
         Route::post('/media/replace', [MediaController::class, 'replace'])->middleware('throttle:20,1')->name('media.replace');
+        Route::delete('/media/unused', [MediaController::class, 'deleteUnused'])->middleware('throttle:20,1')->name('media.delete-unused');
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::resource('companies', CompanyController::class)->only(['index', 'edit', 'update']);
         Route::get('/seo', [SeoSettingController::class, 'edit'])->name('seo.edit');
