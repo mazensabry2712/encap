@@ -297,7 +297,7 @@ final class MediaController extends Controller
                 if (! $disk->delete($path) || $disk->exists($path)) {
                     $failed = true;
                 }
-            } catch (\\Throwable) {
+            } catch (\Throwable) {
                 $failed = true;
             }
         }
