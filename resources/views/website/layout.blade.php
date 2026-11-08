@@ -2,11 +2,17 @@
 <html lang="{{ $locale ?? app()->getLocale() }}" dir="{{ ($locale ?? app()->getLocale()) === 'ar' ? 'rtl' : 'ltr' }}">
 @php($seoDefaults = \App\Models\SeoSetting::current())
 @php
+    $whatsappDigits = preg_replace('/\D+/', '', (string) $seoDefaults->whatsapp_number);
+    $whatsappUrl = preg_match('/\A[1-9][0-9]{7,14}\z/', $whatsappDigits) === 1
+        ? 'https://wa.me/'.$whatsappDigits
+        : null;
+
     $socialProfiles = [
         'facebook' => ['label' => __('Facebook'), 'url' => $seoDefaults->facebook_url, 'hosts' => ['facebook.com', 'fb.com']],
         'instagram' => ['label' => __('Instagram'), 'url' => $seoDefaults->instagram_url, 'hosts' => ['instagram.com']],
         'linkedin' => ['label' => __('LinkedIn'), 'url' => $seoDefaults->linkedin_url, 'hosts' => ['linkedin.com']],
         'youtube' => ['label' => __('YouTube'), 'url' => $seoDefaults->youtube_url, 'hosts' => ['youtube.com', 'youtu.be']],
+        'whatsapp' => ['label' => 'WhatsApp', 'url' => $whatsappUrl, 'hosts' => ['wa.me']],
     ];
 
     $socialProfiles = array_filter($socialProfiles, static function (array $profile): bool {
@@ -278,6 +284,12 @@
                                                 <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
                                                     <rect x="2.4" y="5.2" width="19.2" height="13.6" rx="4" fill="currentColor"/>
                                                     <path d="m10 8.6 5.6 3.4-5.6 3.4V8.6Z" fill="#103b2d"/>
+                                                </svg>
+                                                @break
+                                            @case('whatsapp')
+                                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                                    <path d="M20.2 11.7a8.2 8.2 0 0 1-12.1 7.2L3.7 20l1.2-4.2a8.2 8.2 0 1 1 15.3-4.1Z"/>
+                                                    <path d="M8.6 8.4c.4 2.4 2.2 4.2 4.7 5.2l1.2-1.2 2 .8c-.1 1.1-.9 1.9-2 1.9-3.5-.2-6.8-3.5-7-7 0-1.1.8-1.9 1.9-2l.8 2-1.6 1.3Z"/>
                                                 </svg>
                                                 @break
                                         @endswitch
