@@ -1125,10 +1125,9 @@ html[dir=rtl] .encap-frozen-feature .encap-frozen-copy h2{background-image:linea
     gap:clamp(8px,1.8vw,16px);margin-top:18px
 }
 .encap-footer-socials a{
-    display:inline-flex;flex-direction:column;align-items:center;justify-content:flex-start;
-    gap:7px;min-width:68px;padding:0;border:0;border-radius:0;
-    color:#f2f0e7;font-size:11px;font-weight:750;line-height:1.4;
-    text-decoration:none;transition:color .2s,transform .2s
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:58px;padding:0;border:0;border-radius:50%;
+    color:#f2f0e7;text-decoration:none;transition:color .2s,transform .2s
 }
 .encap-footer-social-icon{
     display:grid;place-items:center;width:58px;height:58px;
@@ -1139,7 +1138,6 @@ html[dir=rtl] .encap-frozen-feature .encap-frozen-copy h2{background-image:linea
 }
 .encap-footer-social-icon svg{display:block;width:29px;height:29px;fill:currentColor}
 .encap-footer-social-icon svg[fill="none"]{fill:none}
-.encap-footer-social-name{display:block;color:inherit;font-size:11px;font-weight:750;line-height:1.4}
 .encap-footer-socials a:hover{transform:translateY(-3px);color:#fff}
 .encap-footer-socials a:hover .encap-footer-social-icon{
     transform:scale(1.06);border-color:#f0d58f;background:#e3b53e;color:#103b2d;
@@ -1763,13 +1761,12 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
 .encap-footer-contact-socials{
     display:flex;flex-direction:column;align-items:center;gap:7px;width:100%
 }
-.encap-footer-contact-socials-label{color:#aebfae;font-size:10px;line-height:1.6}
 .encap-footer-contact-follow .encap-footer-socials{justify-content:center;margin-top:0}
 @media(max-width:640px){
     .encap-footer-contact-follow{gap:8px;margin-top:16px;padding-top:14px}
     .encap-footer-contact-tagline{font-size:11px}
     .encap-footer-contact-follow .encap-footer-socials{gap:10px}
-    .encap-footer-contact-follow .encap-footer-socials a{min-width:64px;padding:0}
+    .encap-footer-contact-follow .encap-footer-socials a{min-width:54px;padding:0}
     .encap-footer-contact-follow .encap-footer-social-icon{width:54px;height:54px}
     .encap-footer-contact-follow .encap-footer-social-icon svg{width:27px;height:27px}
 }
