@@ -24,10 +24,10 @@ test('footer renders a large accessible icon for each configured social profile'
     }
 
     expect($html)
-        ->toContain('aria-label="Facebook"')
-        ->toContain('aria-label="Instagram"')
-        ->toContain('aria-label="LinkedIn"')
-        ->toContain('aria-label="YouTube"')
+        ->toContain('aria-label="فيسبوك"')
+        ->toContain('aria-label="إنستجرام"')
+        ->toContain('aria-label="لينكدإن"')
+        ->toContain('aria-label="يوتيوب"')
         ->toContain('aria-label="WhatsApp"')
         ->toContain('href="https://wa.me/201234567890"')
         ->toContain('target="_blank"')
