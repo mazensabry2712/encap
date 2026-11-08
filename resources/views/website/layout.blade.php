@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ $locale ?? app()->getLocale() }}" dir="{{ ($locale ?? app()->getLocale()) === 'ar' ? 'rtl' : 'ltr' }}">
-@php($seoDefaults = \App\Models\SeoSetting::current())
 @php
+    $seoDefaults = \App\Models\SeoSetting::current();
     $whatsappDigits = preg_replace('/\D+/', '', (string) $seoDefaults->whatsapp_number);
     $whatsappUrl = preg_match('/\A[1-9][0-9]{7,14}\z/', $whatsappDigits) === 1
         ? 'https://wa.me/'.$whatsappDigits
