@@ -249,7 +249,6 @@
                 <p class="encap-footer-contact-tagline">{{ __('Agricultural production · Sourcing · Processing · Export') }}</p>
                 @if(!empty($socialProfiles))
                     <div class="encap-footer-contact-socials">
-                        <span class="encap-footer-contact-socials-label">{{ $currentLocale === 'ar' ? 'تابعونا على وسائل التواصل الاجتماعي' : 'Follow ENCAP on social media' }}</span>
                         <nav class="encap-footer-socials" aria-label="{{ __('Social profiles') }}">
                             @foreach($socialProfiles as $network => $profile)
                                 <a
@@ -294,7 +293,6 @@
                                                 @break
                                         @endswitch
                                     </span>
-                                    <span class="encap-footer-social-name">{{ $profile['label'] }}</span>
                                 </a>
                             @endforeach
                         </nav>
