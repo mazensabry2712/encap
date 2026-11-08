@@ -1,7 +1,38 @@
 <!doctype html>
 <html lang="{{ $locale ?? app()->getLocale() }}" dir="{{ ($locale ?? app()->getLocale()) === 'ar' ? 'rtl' : 'ltr' }}">
 @php($seoDefaults = \App\Models\SeoSetting::current())
-@php($socialLinks = array_filter([__('Facebook') => $seoDefaults->facebook_url, __('Instagram') => $seoDefaults->instagram_url, __('LinkedIn') => $seoDefaults->linkedin_url, __('YouTube') => $seoDefaults->youtube_url]))
+@php
+    $socialProfiles = [
+        'facebook' => ['label' => __('Facebook'), 'url' => $seoDefaults->facebook_url, 'hosts' => ['facebook.com', 'fb.com']],
+        'instagram' => ['label' => __('Instagram'), 'url' => $seoDefaults->instagram_url, 'hosts' => ['instagram.com']],
+        'linkedin' => ['label' => __('LinkedIn'), 'url' => $seoDefaults->linkedin_url, 'hosts' => ['linkedin.com']],
+        'youtube' => ['label' => __('YouTube'), 'url' => $seoDefaults->youtube_url, 'hosts' => ['youtube.com', 'youtu.be']],
+    ];
+
+    $socialProfiles = array_filter($socialProfiles, static function (array $profile): bool {
+        $url = trim((string) ($profile['url'] ?? ''));
+
+        if ($url === '' || filter_var($url, FILTER_VALIDATE_URL) === false) {
+            return false;
+        }
+
+        $parts = parse_url($url);
+
+        if (! is_array($parts) || strtolower((string) ($parts['scheme'] ?? '')) !== 'https') {
+            return false;
+        }
+
+        $host = strtolower(rtrim((string) ($parts['host'] ?? ''), '.'));
+
+        foreach ($profile['hosts'] as $allowedHost) {
+            if ($host === $allowedHost || str_ends_with($host, '.'.$allowedHost)) {
+                return true;
+            }
+        }
+
+        return false;
+    });
+@endphp
 @php($requestPath = request()->path())
 @php($pathAfterLocale = preg_replace('/^(en|ar|fr|ru|tr)(?=\/|$)/', '', $requestPath))
 @php($localizedSuffix = $pathAfterLocale ? '/' . ltrim($pathAfterLocale, '/') : '')
@@ -210,12 +241,49 @@
 
             <div class="encap-footer-contact-follow">
                 <p class="encap-footer-contact-tagline">{{ __('Agricultural production · Sourcing · Processing · Export') }}</p>
-                @if(!empty($socialLinks))
+                @if(!empty($socialProfiles))
                     <div class="encap-footer-contact-socials">
                         <span class="encap-footer-contact-socials-label">{{ $currentLocale === 'ar' ? 'تابعونا على وسائل التواصل الاجتماعي' : 'Follow ENCAP on social media' }}</span>
                         <nav class="encap-footer-socials" aria-label="{{ __('Social profiles') }}">
-                            @foreach($socialLinks as $network => $url)
-                                <a href="{{ $url }}" target="_blank" rel="noopener noreferrer">{{ $network }} <span aria-hidden="true">↗</span></a>
+                            @foreach($socialProfiles as $network => $profile)
+                                <a
+                                    class="encap-footer-social-link encap-footer-social-link--{{ $network }}"
+                                    data-social-network="{{ $network }}"
+                                    href="{{ $profile['url'] }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="{{ $profile['label'] }}"
+                                    title="{{ $profile['label'] }}"
+                                >
+                                    <span class="encap-footer-social-icon" aria-hidden="true">
+                                        @switch($network)
+                                            @case('facebook')
+                                                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
+                                                    <path fill="currentColor" d="M15.12 8.43H17V5.62h-2.21c-2.52 0-4.11 1.5-4.11 4.06v1.69H8.75v2.9h1.93V21h2.95v-6.73h2.49l.39-2.9h-2.88V9.91c0-.86.25-1.48 1.49-1.48z"/>
+                                                </svg>
+                                                @break
+                                            @case('instagram')
+                                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                                                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                                                    <circle cx="12" cy="12" r="4"/>
+                                                    <circle cx="17.5" cy="6.8" r="1" fill="currentColor" stroke="none"/>
+                                                </svg>
+                                                @break
+                                            @case('linkedin')
+                                                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
+                                                    <path fill="currentColor" d="M5.2 8.5H2.4V21h2.8V8.5ZM3.8 2.9a1.65 1.65 0 1 0 0 3.3 1.65 1.65 0 0 0 0-3.3ZM21 13.8c0-3.35-1.79-4.92-4.18-4.92a3.61 3.61 0 0 0-3.25 1.79V9.1h-2.8V21h2.8v-6.17c0-1.63.31-3.2 2.32-3.2s2.03 1.86 2.03 3.3V21h2.8v-7.2Z"/>
+                                                </svg>
+                                                @break
+                                            @case('youtube')
+                                                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
+                                                    <rect x="2.4" y="5.2" width="19.2" height="13.6" rx="4" fill="currentColor"/>
+                                                    <path d="m10 8.6 5.6 3.4-5.6 3.4V8.6Z" fill="#103b2d"/>
+                                                </svg>
+                                                @break
+                                        @endswitch
+                                    </span>
+                                    <span class="encap-footer-social-name">{{ $profile['label'] }}</span>
+                                </a>
                             @endforeach
                         </nav>
                     </div>
