@@ -191,6 +191,7 @@
                                     <a href="tel:+966568309656" dir="ltr">+966 56 830 9656</a>
                                     <a href="tel:+966541533750" dir="ltr">+966 54 153 3750</a>
                                     <a href="tel:+201036199429" dir="ltr">+20 10 36199429</a>
+                                    <a href="mailto:ahmedelshamy@encap-global.com" dir="ltr">ahmedelshamy@encap-global.com</a>
                                 </div>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
@@ -204,6 +205,7 @@
                                 <div class="encap-contact-phone-list">
                                     <a href="tel:+966530750780" dir="ltr">+966 53 075 0780</a>
                                     <a href="tel:+201044735045" dir="ltr">+20 10 44735045</a>
+                                    <a href="mailto:shabanshahen@encap-global.com" dir="ltr">shabanshahen@encap-global.com</a>
                                 </div>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>
@@ -216,6 +218,7 @@
                                 <p class="encap-contact-person-role">{{ __('Export Sector Manager') }}</p>
                                 <div class="encap-contact-phone-list">
                                     <a href="tel:+201060113074" dir="ltr">+20 106 011 3074</a>
+                                    <a href="mailto:mohamedsaad@encap-global.com" dir="ltr">mohamedsaad@encap-global.com</a>
                                 </div>
                             </div>
                             <span class="encap-contact-channel-arrow" aria-hidden="true">↗</span>

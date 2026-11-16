@@ -4,17 +4,17 @@ test('footer places companies first, gives each contact name and role before pho
     foreach ([
         '/ar' => [
             'contacts' => [
-                ['name' => 'أحمد الشامي', 'phone' => 'tel:+966568309656'],
-                ['name' => 'شعبان شاهين', 'phone' => 'tel:+966530750780'],
-                ['name' => 'محمد سعد', 'phone' => 'tel:+201060113074'],
+                ['name' => 'أحمد الشامي', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
+                ['name' => 'شعبان شاهين', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
+                ['name' => 'محمد سعد', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
             ],
             'tagline' => 'إنتاج زراعي · توريد · تجهيز · تصدير',
         ],
         '/en' => [
             'contacts' => [
-                ['name' => 'Ahmed Elshamy', 'phone' => 'tel:+966568309656'],
-                ['name' => 'Shaban Shahen', 'phone' => 'tel:+966530750780'],
-                ['name' => 'Mohamed Saad', 'phone' => 'tel:+201060113074'],
+                ['name' => 'Ahmed Elshamy', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
+                ['name' => 'Shaban Shahen', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
+                ['name' => 'Mohamed Saad', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
             ],
             'tagline' => 'Agricultural production · Sourcing · Processing · Export',
         ],
@@ -59,16 +59,18 @@ test('footer places companies first, gives each contact name and role before pho
             $rolePosition = strpos($card, 'class="encap-footer-person-role"');
             $phoneListPosition = strpos($card, 'class="encap-footer-phone-list"');
             $phonePosition = strpos($card, 'href="' . $contact['phone'] . '"');
+            $emailPosition = strpos($card, 'href="mailto:' . $contact['email'] . '"');
             $locationPosition = strpos($card, 'class="encap-footer-person-location"');
 
-            foreach ([$namePosition, $rolePosition, $phoneListPosition, $phonePosition, $locationPosition] as $position) {
+            foreach ([$namePosition, $rolePosition, $phoneListPosition, $phonePosition, $emailPosition, $locationPosition] as $position) {
                 expect($position)->not->toBeFalse();
             }
 
             expect($namePosition)->toBeLessThan($rolePosition);
             expect($rolePosition)->toBeLessThan($phoneListPosition);
             expect($phoneListPosition)->toBeLessThan($phonePosition);
-            expect($phonePosition)->toBeLessThan($locationPosition);
+            expect($phonePosition)->toBeLessThan($emailPosition);
+            expect($emailPosition)->toBeLessThan($locationPosition);
         }
 
         $renderedSocialsPosition = strpos($footerHtml, 'class="encap-footer-contact-socials"');

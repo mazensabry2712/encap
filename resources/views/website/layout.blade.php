@@ -219,6 +219,7 @@
                     <a class="encap-footer-phone" href="tel:+966568309656"><span aria-hidden="true">↗</span><span dir="ltr">+966 56 830 9656</span></a>
                     <a class="encap-footer-phone" href="tel:+966541533750"><span aria-hidden="true">↗</span><span dir="ltr">+966 54 153 3750</span></a>
                     <a class="encap-footer-phone" href="tel:+201036199429"><span aria-hidden="true">↗</span><span dir="ltr">+20 10 36199429</span></a>
+                    <a class="encap-footer-phone" href="mailto:ahmedelshamy@encap-global.com"><span aria-hidden="true">✉</span><span dir="ltr">ahmedelshamy@encap-global.com</span></a>
                     </div>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Aljouf+Saudi+Arabia" target="_blank" rel="noopener noreferrer">{{ __('Aljouf - Saudia') }} <span aria-hidden="true">↗</span></a>
                 </article>
@@ -230,6 +231,7 @@
                     <div class="encap-footer-phone-list">
                     <a class="encap-footer-phone" href="tel:+966530750780"><span aria-hidden="true">↗</span><span dir="ltr">+966 53 075 0780</span></a>
                     <a class="encap-footer-phone" href="tel:+201044735045"><span aria-hidden="true">↗</span><span dir="ltr">+20 10 44735045</span></a>
+                    <a class="encap-footer-phone" href="mailto:shabanshahen@encap-global.com"><span aria-hidden="true">✉</span><span dir="ltr">shabanshahen@encap-global.com</span></a>
                     </div>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
                 </article>
@@ -240,6 +242,7 @@
                     <p class="encap-footer-person-role">{{ __('Export Sector Manager') }}</p>
                     <div class="encap-footer-phone-list">
                     <a class="encap-footer-phone" href="tel:+201060113074"><span aria-hidden="true">↗</span><span dir="ltr">+20 106 011 3074</span></a>
+                    <a class="encap-footer-phone" href="mailto:mohamedsaad@encap-global.com"><span aria-hidden="true">✉</span><span dir="ltr">mohamedsaad@encap-global.com</span></a>
                     </div>
                     <a class="encap-footer-person-location" href="https://www.google.com/maps/search/?api=1&amp;query=Nubaria+Beheira+Egypt" target="_blank" rel="noopener noreferrer">{{ __('Nubaria — Beheira, Egypt') }} <span aria-hidden="true">↗</span></a>
                 </article>

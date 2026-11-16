@@ -1499,6 +1499,9 @@ html[dir=rtl] .encap-footer-links a:hover{translate:-3px 0}
     content:"☎";
     font-size:11px;
 }
+.encap-contact-business-channels .encap-contact-phone-list a[href^="mailto:"]:before{
+    content:"✉";
+}
 .encap-contact-business-channels .encap-contact-phone-list a:hover{
     border-color:rgba(227,181,62,.5);
     background:rgba(227,181,62,.08);

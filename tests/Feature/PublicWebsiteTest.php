@@ -961,6 +961,9 @@ test('Arabic contact and quote pages show usable regional phone links and transl
         ->assertOk()
         ->assertSee('tel:+966568309656', false)
         ->assertSee('tel:+201060113074', false)
+        ->assertSee('mailto:ahmedelshamy@encap-global.com', false)
+        ->assertSee('mailto:shabanshahen@encap-global.com', false)
+        ->assertSee('mailto:mohamedsaad@encap-global.com', false)
         ->assertSee('تواصل مباشرة مع فرقنا الإقليمية أو استخدم النموذج أدناه.')
         ->assertSee('يساعدنا تحديد المنتج والكمية وشكل المنتج والتعبئة والوجهة على فهم متطلباتك.')
         ->assertDontSee('ستظهر بيانات التواصل هنا بعد إدخالها من لوحة الإدارة.');
