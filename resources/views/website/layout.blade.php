@@ -214,7 +214,7 @@
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇸🇦</span><span class="encap-footer-card-tag">{{ __('Saudi Arabia') }}</span></div>
                     <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }}</h3>
-                    <p class="encap-footer-person-role">{{ __('Company Manager in Saudi Arabia') }}</p>
+                    <p class="encap-footer-person-role">{{ __('General Manager - Saudi Arabia') }}</p>
                     <div class="encap-footer-phone-list">
                     <a class="encap-footer-phone" href="tel:+966568309656"><span aria-hidden="true">↗</span><span dir="ltr">+966 56 830 9656</span></a>
                     <a class="encap-footer-phone" href="tel:+966541533750"><span aria-hidden="true">↗</span><span dir="ltr">+966 54 153 3750</span></a>
@@ -227,7 +227,7 @@
                 <article class="encap-footer-business-card encap-footer-person-card">
                     <div class="encap-footer-card-topline"><span class="encap-footer-region-mark" aria-hidden="true">🇪🇬</span><span class="encap-footer-card-tag">{{ __('Egypt') }}</span></div>
                     <h3>{{ __('Eng.') }} {{ $currentLocale === 'ar' ? 'شعبان شاهين' : 'Shaban Shahen' }}</h3>
-                    <p class="encap-footer-person-role">{{ __('Company Manager in Egypt') }}</p>
+                    <p class="encap-footer-person-role">{{ __('General Manager - Egypt') }}</p>
                     <div class="encap-footer-phone-list">
                     <a class="encap-footer-phone" href="tel:+966530750780"><span aria-hidden="true">↗</span><span dir="ltr">+966 53 075 0780</span></a>
                     <a class="encap-footer-phone" href="tel:+201044735045"><span aria-hidden="true">↗</span><span dir="ltr">+20 10 44735045</span></a>
