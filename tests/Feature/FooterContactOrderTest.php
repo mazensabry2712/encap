@@ -43,22 +43,7 @@ test('footer places companies first, gives each contact name and role before pho
             'tagline' => 'Tarımsal üretim · Tedarik · İşleme · İhracat',
         ],
     ] as $path => $expected) {
-            'contacts' => [
-                ['name' => 'أحمد الشامي', 'role' => 'المدير العام - المملكة العربية السعودية', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
-                ['name' => 'شعبان شاهين', 'role' => 'المدير العام - مصر', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
-                ['name' => 'محمد سعد', 'role' => 'مدير قطاع التصدير', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
-            ],
-            'tagline' => 'إنتاج زراعي · توريد · تجهيز · تصدير',
-        ],
-        '/en' => [
-            'contacts' => [
-                ['name' => 'Ahmed Elshamy', 'role' => 'General Manager - Saudi Arabia', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
-                ['name' => 'Shaban Shahen', 'role' => 'General Manager - Egypt', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
-                ['name' => 'Mohamed Saad', 'role' => 'Export Sector Manager', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
-            ],
-            'tagline' => 'Agricultural production · Sourcing · Processing · Export',
-        ],
-    ] as $path => $expected) {
+
         $html = $this->get($path)->assertOk()->getContent();
         $footerPosition = strpos($html, '<footer class="footer encap-footer">');
         expect($footerPosition)->not->toBeFalse();
