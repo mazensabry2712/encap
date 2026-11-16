@@ -20,7 +20,9 @@ test('footer renders a large accessible icon for each configured social profile'
             ->toContain('data-social-network="'.$network.'"')
             ->toContain('encap-footer-social-link--'.$network)
             ->toContain('class="encap-footer-social-icon"')
-            ->toContain('class="encap-footer-social-name"');
+            ->toContain('class="encap-footer-social-icon"')
+            ->toContain('aria-label="')
+            ->toContain('title="');
     }
 
     expect($html)
