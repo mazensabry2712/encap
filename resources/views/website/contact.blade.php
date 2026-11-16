@@ -186,7 +186,7 @@
                             <div class="encap-contact-person-content">
                                 <span class="encap-contact-person-location">{{ __('Aljouf - Saudia') }}</span>
                                 <p class="encap-contact-person-name">{{ __('Eng.') }} {{ $locale === 'ar' ? 'أحمد الشامي' : 'Ahmed Elshamy' }}</p>
-                                <p class="encap-contact-person-role">{{ __('Company Manager in Saudi Arabia') }}</p>
+                                <p class="encap-contact-person-role">{{ __('General Manager - Saudi Arabia') }}</p>
                                 <div class="encap-contact-phone-list">
                                     <a href="tel:+966568309656" dir="ltr">+966 56 830 9656</a>
                                     <a href="tel:+966541533750" dir="ltr">+966 54 153 3750</a>
@@ -201,7 +201,7 @@
                             <div class="encap-contact-person-content">
                                 <span class="encap-contact-person-location">{{ __('Nubaria — Beheira, Egypt') }}</span>
                                 <p class="encap-contact-person-name">{{ __('Eng.') }} {{ $locale === 'ar' ? 'شعبان شاهين' : 'Shaban Shahen' }}</p>
-                                <p class="encap-contact-person-role">{{ __('Company Manager in Egypt') }}</p>
+                                <p class="encap-contact-person-role">{{ __('General Manager - Egypt') }}</p>
                                 <div class="encap-contact-phone-list">
                                     <a href="tel:+966530750780" dir="ltr">+966 53 075 0780</a>
                                     <a href="tel:+201044735045" dir="ltr">+20 10 44735045</a>
