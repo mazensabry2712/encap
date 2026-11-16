@@ -4,17 +4,17 @@ test('footer places companies first, gives each contact name and role before pho
     foreach ([
         '/ar' => [
             'contacts' => [
-                ['name' => 'أحمد الشامي', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
-                ['name' => 'شعبان شاهين', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
-                ['name' => 'محمد سعد', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
+                ['name' => 'أحمد الشامي', 'role' => 'المدير العام - المملكة العربية السعودية', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
+                ['name' => 'شعبان شاهين', 'role' => 'المدير العام - مصر', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
+                ['name' => 'محمد سعد', 'role' => 'مدير قطاع التصدير', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
             ],
             'tagline' => 'إنتاج زراعي · توريد · تجهيز · تصدير',
         ],
         '/en' => [
             'contacts' => [
-                ['name' => 'Ahmed Elshamy', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
-                ['name' => 'Shaban Shahen', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
-                ['name' => 'Mohamed Saad', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
+                ['name' => 'Ahmed Elshamy', 'role' => 'General Manager - Saudi Arabia', 'phone' => 'tel:+966568309656', 'email' => 'ahmedelshamy@encap-global.com'],
+                ['name' => 'Shaban Shahen', 'role' => 'General Manager - Egypt', 'phone' => 'tel:+966530750780', 'email' => 'shabanshahen@encap-global.com'],
+                ['name' => 'Mohamed Saad', 'role' => 'Export Sector Manager', 'phone' => 'tel:+201060113074', 'email' => 'mohamedsaad@encap-global.com'],
             ],
             'tagline' => 'Agricultural production · Sourcing · Processing · Export',
         ],
@@ -57,17 +57,19 @@ test('footer places companies first, gives each contact name and role before pho
             $card = $cardMatches[1][$index];
             $namePosition = strpos($card, $contact['name']);
             $rolePosition = strpos($card, 'class="encap-footer-person-role"');
+            $roleTextPosition = strpos($card, $contact['role']);
             $phoneListPosition = strpos($card, 'class="encap-footer-phone-list"');
             $phonePosition = strpos($card, 'href="' . $contact['phone'] . '"');
             $emailPosition = strpos($card, 'href="mailto:' . $contact['email'] . '"');
             $locationPosition = strpos($card, 'class="encap-footer-person-location"');
 
-            foreach ([$namePosition, $rolePosition, $phoneListPosition, $phonePosition, $emailPosition, $locationPosition] as $position) {
+            foreach ([$namePosition, $rolePosition, $roleTextPosition, $phoneListPosition, $phonePosition, $emailPosition, $locationPosition] as $position) {
                 expect($position)->not->toBeFalse();
             }
 
             expect($namePosition)->toBeLessThan($rolePosition);
-            expect($rolePosition)->toBeLessThan($phoneListPosition);
+            expect($rolePosition)->toBeLessThan($roleTextPosition);
+            expect($roleTextPosition)->toBeLessThan($phoneListPosition);
             expect($phoneListPosition)->toBeLessThan($phonePosition);
             expect($phonePosition)->toBeLessThan($emailPosition);
             expect($emailPosition)->toBeLessThan($locationPosition);
@@ -79,4 +81,17 @@ test('footer places companies first, gives each contact name and role before pho
             expect($renderedSocialsPosition)->toBeLessThan($wordmarkPosition);
         }
     }
+});
+
+
+test('contact page displays the regional general manager titles in English and Arabic', function () {
+    $this->get('/en/contact')
+        ->assertOk()
+        ->assertSee('General Manager - Saudi Arabia')
+        ->assertSee('General Manager - Egypt');
+
+    $this->get('/ar/contact')
+        ->assertOk()
+        ->assertSee('المدير العام - المملكة العربية السعودية')
+        ->assertSee('المدير العام - مصر');
 });
